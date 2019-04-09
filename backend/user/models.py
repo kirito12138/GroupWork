@@ -8,7 +8,7 @@ class User(models.Model):
     age = models.IntegerField(default=0)
     student_id = models.CharField(max_length=32)
     sex = models.CharField(max_length=32)
-    major = models.CharField(max_length=128)
+    major = models.CharField(max_length=64)
     grade = models.CharField(max_length=32)
     c_time = models.DateTimeField(auto_now_add=True)  # 保存用户创建时间
 
