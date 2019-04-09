@@ -1,16 +1,131 @@
 // pages/register/register.js
+const { $Message } = require('../../vant-weapp/dist/base/index');
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
+    account:"",
+    password:"",
+    check_psw:"",
 
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
+  input_usrname:function(e)
+  {
+    this.setData(
+      {
+        account: e.detail.detail.value
+      }
+
+    )
+  },
+  input_psw: function (e) {
+    this.setData(
+      {
+        password: e.detail.detail.value
+      }
+
+    )
+  },
+  input_checkpsw: function (e) {
+    this.setData(
+      {
+        check_psw: e.detail.detail.value
+      }
+
+    )
+  },
+
+  click_regis:function(e)
+  {
+    var can = true;
+
+    if(this.data.account.length==0)
+    {
+      can = false;
+      $Message({
+        content: '用户名不能为空',
+        type: 'error'
+      });
+    }
+    if (this.data.account.length > 14) {
+      can = false;
+      $Message({
+        content: '用户名长度不能超过14',
+        type: 'error'
+      });
+    }
+    if (!((this.data.account.charAt(0) >= 'a' && this.data.account.charAt(0) <= 'z') || (this.data.account.charAt(0) >= 'A' && this.data.account.charAt(0) <='Z')  )) {
+      can = false;
+      $Message({
+        content: '用户名第一个字符为字母',
+        type: 'error'
+      });
+    }
+    if(this.data.password != this.data.check_psw)
+    {
+      can = false;
+      $Message({
+        content: '两次密码不一致',
+        type: 'error'
+      });
+    }
+    if(this.data.password.length==0)
+    {
+      can = false;
+      $Message({
+        content: '密码不能为空',
+        type: 'error'
+      });
+
+    }
+    if ( !(this.data.password.length >= 8 && this.data.password.length<=16) ) {
+      can = false;
+      $Message({
+        content: '密码字符在8~16之间',
+        type: 'error'
+      });
+
+    }
+    if(can)
+    {
+      wx.request({
+        url: 'https://group.tttaaabbbccc.club/register/',
+        header: {
+          "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
+        },
+        method: "POST",
+        data:
+        {
+          account: this.data.account,
+          password: this.data.password,
+          name:"",
+          age:-1,
+          studentID:"",
+          sex:"",
+          major:"",
+          grade:""
+        },
+        success: function (res) {
+
+          wx.navigateBack({
+
+          }),
+            wx.showToast({
+              title: '注册成功~',
+            })
+        }
+
+      })
+    }
+
+
+  },
   onLoad: function (options) {
 
   },
