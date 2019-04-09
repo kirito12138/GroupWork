@@ -1,0 +1,19 @@
+<i-row>
+    <i-col  span = "15" i-class="col-class" offset = "6">
+      <i-button type="default" size = "large">默认按钮</i-button>
+    </i-col>
+</i-row>
+<i-row>
+<text> \n </text>
+</i-row>
+<i-row>
+<text> \n </text>
+</i-row>
+<i-row>
+<text> \n </text>
+</i-row>
+<i-row offset = "6">
+    <i-col span="8" i-class="col-class">
+      <i-button type="default">默认按钮</i-button>
+    </i-col>
+</i-row>

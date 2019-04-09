@@ -1,0 +1,20 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/logs/logs",
+    "pages/test/test"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "WeChat",
+    "navigationBarTextStyle": "black"
+  },
+  "usingComponents": {
+      "i-button": "../../vant-weapp/dist/button/index",
+      "i-row": "../../vant-weapp/dist/row/index",
+      "i-col": "../../vant-weapp/dist/col/index"
+    
+  }
+
+}
