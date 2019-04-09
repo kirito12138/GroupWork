@@ -20,29 +20,31 @@ def gen_md5(s, salt='9527'):  # 加盐
 
 def login(request):
     if request.method != "POST":
-        return JsonResponse({'ret': False})
+        return JsonResponse({'ret': False, 'error_code': 1})
 
     data = json.loads(request.body)
     try:
         account = data['account']
         password = data['password']
     except KeyError:
-        return JsonResponse({'ret': False})
+        return JsonResponse({'ret': False, 'error_code': 2})
 
     if not account_pattern.match(account) or not password_pattern.match(password):
-        return JsonResponse({'ret': False})
+        return JsonResponse({'ret': False, 'error_code': 3})
 
     try:
-        user = models.User.objects.get(account=account, password=gen_md5(password, SECRET_KEY))
-        token = create_token(account).decode()
-        return JsonResponse({'ret': True, 'ID': str(user.id), 'Token': token})
+        user = models.User.objects.get(account=account)
     except models.User.DoesNotExist:
-        return JsonResponse({'ret': False})
+        return JsonResponse({'ret': False, 'error_code': 4})
+    if user.password != gen_md5(password, SECRET_KEY):
+        return JsonResponse({'ret': False, 'error_code': 5})
+    token = create_token(account).decode()
+    return JsonResponse({'ret': True, 'ID': str(user.id), 'Token': token})
 
 
 def register(request):
     if request.method != "POST":
-        return JsonResponse({'ret': False})
+        return JsonResponse({'ret': False, 'error_code': 1})
 
     data = json.loads(request.body)
     try:
@@ -55,19 +57,19 @@ def register(request):
         major = data['major']
         grade = data['grade']
     except KeyError:
-        return JsonResponse({'ret': False})
+        return JsonResponse({'ret': False, 'error_code': 2})
 
     if not account_pattern.match(account) or \
             not password_pattern.match(password):
-        return JsonResponse({'ret': False})
+        return JsonResponse({'ret': False, 'error_code': 3})
     if not digits.match(student_id):
-        return JsonResponse({'ret': False})
+        return JsonResponse({'ret': False, 'error_code': 3})
     if type(age) != int or age < 0 or age > 200:
-        return JsonResponse({'ret': False})
+        return JsonResponse({'ret': False, 'error_code': 3})
 
     # 注册用户名校验
     if models.User.objects.filter(account=account).exists():
-        return JsonResponse({'ret': False})
+        return JsonResponse({'ret': False, 'error_code': 4})
 
     new_user = models.User.objects.create()
     new_user.account = account
