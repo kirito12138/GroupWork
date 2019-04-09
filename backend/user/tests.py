@@ -56,9 +56,9 @@ def test_register_3():
 
 
 if __name__ == "__main__":
-    test_login_1()
-    test_login_2()
-    test_login_3()
     test_register_1()
     test_register_2()
     test_register_3()
+    test_login_1()
+    test_login_2()
+    test_login_3()
