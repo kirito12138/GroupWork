@@ -18,6 +18,28 @@ def gen_md5(s, salt='9527'):  # 加盐
     return md5.hexdigest()
 
 
+def login(request):
+    if request.method != "POST":
+        return JsonResponse({'ret': False})
+
+    data = json.loads(request.body)
+    try:
+        account = data['account']
+        password = data['password']
+    except KeyError:
+        return JsonResponse({'ret': False})
+
+    if not account_pattern.match(account) or not password_pattern.match(password):
+        return JsonResponse({'ret': False})
+
+    try:
+        user = models.User.objects.get(account=account, password=gen_md5(password, SECRET_KEY))
+        token = create_token(account).decode()
+        return JsonResponse({'ret': True, 'ID': str(user.id), 'Token': token})
+    except models.User.DoesNotExist:
+        return JsonResponse({'ret': False})
+
+
 def register(request):
     if request.method != "POST":
         return JsonResponse({'ret': False})
