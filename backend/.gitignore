@@ -1,0 +1,18 @@
+# Created by .ignore support plugin (hsz.mobi)
+
+# IntelliJ project files
+*.iml
+.idea/
+
+# Virtualenv
+venv/
+
+# Django stuff:
+*.log
+local_settings.py
+db.sqlite3
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
