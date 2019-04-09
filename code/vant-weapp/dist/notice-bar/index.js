@@ -1,128 +1,112 @@
-import { VantComponent } from '../common/component';
-const FONT_COLOR = '#ed6a0c';
-const BG_COLOR = '#fffbe8';
-VantComponent({
-    props: {
-        text: {
-            type: String,
-            value: ''
-        },
-        mode: {
-            type: String,
-            value: ''
-        },
-        url: {
-            type: String,
-            value: ''
-        },
-        openType: {
-            type: String,
-            value: 'navigate'
-        },
-        delay: {
-            type: Number,
-            value: 0
-        },
-        speed: {
-            type: Number,
-            value: 50
-        },
-        scrollable: {
+const VALID_MODE = ['closeable'];
+const FONT_COLOR = '#f60';
+const BG_COLOR = '#fff7cc';
+
+Component({
+    externalClasses: ['i-class'],
+
+    properties: {
+        closable: {
             type: Boolean,
-            value: true
+            value: false
         },
-        leftIcon: {
+        icon: {
             type: String,
             value: ''
         },
+        loop: {
+            type: Boolean,
+            value: false
+        },
+        // 背景颜色
+        backgroundcolor: {
+            type: String,
+            value: '#fefcec'
+        },
+        // 字体及图标颜色
         color: {
             type: String,
-            value: FONT_COLOR
+            value: '#f76a24'
         },
-        backgroundColor: {
-            type: String,
-            value: BG_COLOR
+        // 滚动速度
+        speed: {
+            type: Number,
+            value: 1000
         }
     },
+
     data: {
         show: true,
-        hasRightIcon: false
+        wrapWidth: 0,
+        width: 0,
+        duration: 0,
+        animation: null,
+        timer: null,
     },
-    watch: {
-        text() {
-            this.set({}, this.init);
+    detached() {
+        this.destroyTimer();
+    },
+    ready() {
+        if (this.data.loop) {
+            this.initAnimation();
         }
     },
-    created() {
-        if (this.data.mode) {
-            this.set({
-                hasRightIcon: true
-            });
-        }
-        this.resetAnimation = wx.createAnimation({
-            duration: 0,
-            timingFunction: 'linear'
-        });
-    },
-    destroyed() {
-        this.timer && clearTimeout(this.timer);
-    },
+
     methods: {
-        init() {
-            Promise.all([
-                this.getRect('.van-notice-bar__content'),
-                this.getRect('.van-notice-bar__content-wrap')
-            ]).then((rects) => {
-                const [contentRect, wrapRect] = rects;
-                if (contentRect == null ||
-                    wrapRect == null ||
-                    !contentRect.width ||
-                    !wrapRect.width) {
-                    return;
-                }
-                const { speed, scrollable, delay } = this.data;
-                if (scrollable && wrapRect.width < contentRect.width) {
-                    const duration = (contentRect.width / speed) * 1000;
-                    this.wrapWidth = wrapRect.width;
-                    this.contentWidth = contentRect.width;
-                    this.duration = duration;
-                    this.animation = wx.createAnimation({
-                        duration,
-                        timingFunction: 'linear',
-                        delay
+        initAnimation() {
+            wx.createSelectorQuery().in(this).select('.i-noticebar-content-wrap').boundingClientRect((wrapRect) => {
+                wx.createSelectorQuery().in(this).select('.i-noticebar-content').boundingClientRect((rect) => {
+                    const duration = rect.width / 40 * this.data.speed;
+                    const animation = wx.createAnimation({
+                        duration: duration,
+                        timingFunction: "linear",
                     });
-                    this.scroll();
-                }
-            });
+                    this.setData({
+                        wrapWidth: wrapRect.width,
+                        width: rect.width,
+                        duration: duration,
+                        animation: animation
+                    }, () => {
+                        this.startAnimation();
+                    });
+                }).exec();
+
+            }).exec();
         },
-        scroll() {
-            this.timer && clearTimeout(this.timer);
-            this.timer = null;
-            this.set({
-                animationData: this.resetAnimation
-                    .translateX(this.wrapWidth)
-                    .step()
-                    .export()
-            });
-            setTimeout(() => {
-                this.set({
-                    animationData: this.animation
-                        .translateX(-this.contentWidth)
-                        .step()
-                        .export()
+        startAnimation() {
+            //reset
+            if (this.data.animation.option.transition.duration !== 0) {
+                this.data.animation.option.transition.duration = 0;
+                const resetAnimation = this.data.animation.translateX(this.data.wrapWidth).step();
+                this.setData({
+                    animationData: resetAnimation.export()
                 });
-            }, 20);
-            this.timer = setTimeout(() => {
-                this.scroll();
-            }, this.duration);
+            }
+            this.data.animation.option.transition.duration = this.data.duration;
+            const animationData = this.data.animation.translateX(-this.data.width).step();
+            setTimeout(() => {
+                this.setData({
+                    animationData: animationData.export()
+                });
+            }, 100);
+            const timer = setTimeout(() => {
+                this.startAnimation();
+            }, this.data.duration);
+            this.setData({
+                timer,
+            });
         },
-        onClickIcon() {
-            this.timer && clearTimeout(this.timer);
-            this.timer = null;
-            this.set({ show: false });
+        destroyTimer() {
+            if (this.data.timer) {
+                clearTimeout(this.data.timer);
+            }
         },
-        onClick(event) {
-            this.$emit('click', event);
+        handleClose() {
+            this.destroyTimer();
+            this.setData({
+                show: false,
+                timer: null
+            });
         }
     }
 });

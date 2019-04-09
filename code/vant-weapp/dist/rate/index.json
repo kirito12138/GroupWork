@@ -1,6 +1,6 @@
 {
   "component": true,
-  "usingComponents": {
-    "van-icon": "../icon/index"
+  "usingComponents":{
+      "i-icon": "../icon/index"
   }
 }

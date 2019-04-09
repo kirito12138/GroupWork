@@ -1,6 +1,3 @@
 {
-  "component": true,
-  "usingComponents": {
-    "van-info": "../info/index"
-  }
+  "component": true
 }

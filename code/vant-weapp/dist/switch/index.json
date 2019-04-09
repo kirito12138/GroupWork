@@ -1,6 +1,3 @@
 {
-  "component": true,
-  "usingComponents": {
-    "van-loading": "../loading/index"
-  }
+  "component": true
 }

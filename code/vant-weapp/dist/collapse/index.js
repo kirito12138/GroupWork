@@ -1,52 +1,31 @@
-import { VantComponent } from '../common/component';
-VantComponent({
-    relation: {
-        name: 'collapse-item',
-        type: 'descendant',
-        linked(child) {
-            this.set({
-                items: [...this.data.items, child]
-            }, () => {
-                child.updateExpanded();
-            });
+Component({
+    externalClasses: ['i-class'],
+
+    relations: {
+        '../collapse-item/index': {
+            type: 'child'
         }
     },
-    props: {
-        value: null,
-        accordion: Boolean,
-        border: {
-            type: Boolean,
-            value: true
-        }
-    },
-    data: {
-        items: []
-    },
-    watch: {
-        value() {
-            this.data.items.forEach(child => {
-                child.updateExpanded();
-            });
-        },
-        accordion() {
-            this.data.items.forEach(child => {
-                child.updateExpanded();
-            });
-        }
+    properties: {
+        name: String,
+        accordion: Boolean
     },
     methods: {
-        switch(name, expanded) {
-            const { accordion, value } = this.data;
-            if (!accordion) {
-                name = expanded
-                    ? value.concat(name)
-                    : value.filter(activeName => activeName !== name);
-            }
-            else {
-                name = expanded ? name : '';
-            }
-            this.$emit('change', name);
-            this.$emit('input', name);
-        }
+        clickfn(e) {
+            const params = e.detail;
+            const allList = this.getRelationNodes('../collapse-item/index');
+            allList.forEach((item) => {
+                if (params.name === item.data.name) {
+                    item.setData({
+                        showContent: 'i-collapse-item-show-content'
+                    });
+                } else {
+                    item.setData({
+                        showContent: ''
+                    });
+                }
+            });
+        },
     }
 });
+

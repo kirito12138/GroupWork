@@ -1,41 +1,47 @@
-import { VantComponent } from '../common/component';
-import { safeArea } from '../mixins/safe-area';
-VantComponent({
-    mixins: [safeArea()],
-    props: {
-        show: Boolean,
-        title: String,
-        cancelText: String,
-        zIndex: {
-            type: Number,
-            value: 100
+Component({
+    externalClasses: ['i-class', 'i-class-mask', 'i-class-header'],
+
+    options: {
+        multipleSlots: true
+    },
+
+    properties: {
+        visible: {
+            type: Boolean,
+            value: false
+        },
+        maskClosable: {
+            type: Boolean,
+            value: true
+        },
+        showCancel: {
+            type: Boolean,
+            value: false
+        },
+        cancelText: {
+            type: String,
+            value: '取消'
         },
         actions: {
             type: Array,
             value: []
-        },
-        overlay: {
-            type: Boolean,
-            value: true
-        },
-        closeOnClickOverlay: {
-            type: Boolean,
-            value: true
         }
     },
+
     methods: {
-        onSelect(event) {
-            const { index } = event.currentTarget.dataset;
-            const item = this.data.actions[index];
-            if (item && !item.disabled && !item.loading) {
-                this.$emit('select', item);
-            }
+        handleClickMask () {
+            if (!this.data.maskClosable) return;
+            this.handleClickCancel();
         },
-        onCancel() {
-            this.$emit('cancel');
+
+        handleClickItem ({ currentTarget = {} }) {
+            const dataset = currentTarget.dataset || {};
+            const { index } = dataset;
+            this.triggerEvent('click', { index });
         },
-        onClose() {
-            this.$emit('close');
+
+        handleClickCancel () {
+            this.triggerEvent('cancel');
         }
     }
 });
