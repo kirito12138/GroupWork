@@ -47,14 +47,28 @@ Page({
         },
         method: "POST",
         header: {
-          "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
+          "Content-Type": "application/json;charset=UTF-8"
         },
 
         success(res) {
-          console.log("sucess")
-          wx.navigateTo({
-            url: '../test/test',
-          })
+          if (res.data['ret']) 
+          {
+            console.log("login_sucess");
+            //const _token = JSON.stringify(token);
+            //wx.setStorageSync('jwt', _token);
+            wx.navigateTo({
+              url: '../test/test',
+            });
+          }
+          else
+          {
+            console.log("login_fail");
+            //TODO 错误提示
+            $Message({
+              content: '该用户名未注册',
+              type: 'error'
+            });
+          }
         }
       })
     }
