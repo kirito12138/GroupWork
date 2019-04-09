@@ -2,18 +2,21 @@
   <view class="register">
     <i-panel>  
     <view class = "label_1">
-      <i-input  mode= "normal" title="用户名" placeholder="用户名由英文字母和数字组成且不超过20位" maxlength="18"/>
+
+      <i-input  value = "{{account}}" mode= "normal" title="用户名" bind:change = "input_usrname" placeholder="用户名由英文字母和数字，英文开头，最大不超过20位" />
     </view>
     <view class = "label_1">
-      <i-input  mode= "normal" title="密码" placeholder="密码由英文字母和数字组成且不超过20位" maxlength="18"/>
+      <i-input  value = "{{password}}" mode= "normal" title="密码"  bind:change = "input_psw" placeholder="请输入8到16位得密码" />
     </view>
     <view class = 'label_1'>
-      <i-input  mode= "normal" title="确认密码" placeholder="两次输入的密码需一致" maxlength="18"/>
+      <i-input  value = "{{check_psw}}" mode= "normal" title="确认密码"  bind:change = "input_checkpsw" placeholder="两次输入的密码需一致" />
+
     </view>
     </i-panel>
   </view>
   <view class = "button">
-    <i-button bind:click="register" type="primary" shape="circle" size="large">注册</i-button>
+    <i-button bind:click="click_regis" type="primary" shape="circle" size="large">注册</i-button>
   </view>
+  <i-message id="message" />
 </view>
 
