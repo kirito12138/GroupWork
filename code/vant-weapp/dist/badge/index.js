@@ -1,22 +1,29 @@
-import { VantComponent } from '../common/component';
-VantComponent({
-    relation: {
-        type: 'ancestor',
-        name: 'badge-group'
+Component({
+    externalClasses: ['i-class', 'i-class-alone'],
+
+    properties: {
+        count: {
+            type: Number,
+            value: 0,
+            observer: 'finalCount'
+        },
+        overflowCount: {
+            type: Number,
+            value: 99
+        },
+        dot: {
+            type: Boolean,
+            value: false
+        },
     },
-    props: {
-        info: null,
-        title: String
+    data: {
+        finalCount: 0
     },
     methods: {
-        onClick() {
-            const group = this.getRelationNodes('../badge-group/index')[0];
-            if (group) {
-                group.setActive(this);
-            }
+        finalCount() {
+            this.setData({
+                finalCount: parseInt(this.data.count) >= parseInt(this.data.overflowCount) ? `${this.data.overflowCount}+` : this.data.count
+            });
         },
-        setActive(active) {
-            this.set({ active });
-        }
     }
 });

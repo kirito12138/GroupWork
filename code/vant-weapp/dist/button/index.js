@@ -1,36 +1,80 @@
-import { VantComponent } from '../common/component';
-import { button } from '../mixins/button';
-import { openType } from '../mixins/open-type';
-VantComponent({
-    mixins: [button, openType],
-    classes: ['hover-class', 'loading-class'],
-    props: {
-        plain: Boolean,
-        block: Boolean,
-        round: Boolean,
-        square: Boolean,
-        loading: Boolean,
-        hairline: Boolean,
-        disabled: Boolean,
-        loadingText: String,
+Component({
+    externalClasses: ['i-class'],
+
+    properties: {
+        // default, primary, ghost, info, success, warning, error
         type: {
             type: String,
-            value: 'default'
+            value: '',
         },
+        inline: {
+            type: Boolean,
+            value: false
+        },
+        // default, large, small
         size: {
             type: String,
-            value: 'normal'
+            value: '',
         },
-        loadingSize: {
+        // circle, square
+        shape: {
             type: String,
-            value: '20px'
-        }
+            value: 'square'
+        },
+        disabled: {
+            type: Boolean,
+            value: false,
+        },
+        loading: {
+            type: Boolean,
+            value: false,
+        },
+        long: {
+            type: Boolean,
+            value: false
+        },
+        openType: String,
+        appParameter: String,
+        hoverStopPropagation: Boolean,
+        hoverStartTime: {
+            type: Number,
+            value: 20
+        },
+        hoverStayTime: {
+            type: Number,
+            value: 70
+        },
+        lang: {
+            type: String,
+            value: 'en'
+        },
+        sessionFrom: {
+            type: String,
+            value: ''
+        },
+        sendMessageTitle: String,
+        sendMessagePath: String,
+        sendMessageImg: String,
+        showMessageCard: Boolean
     },
+
     methods: {
-        onClick() {
-            if (!this.data.disabled && !this.data.loading) {
-                this.$emit('click');
-            }
+        handleTap () {
+            if (this.data.disabled) return false;
+
+            this.triggerEvent('click');
+        },
+        bindgetuserinfo({ detail = {} } = {}) {
+            this.triggerEvent('getuserinfo', detail);
+        },
+        bindcontact({ detail = {} } = {}) {
+            this.triggerEvent('contact', detail);
+        },
+        bindgetphonenumber({ detail = {} } = {}) {
+            this.triggerEvent('getphonenumber', detail);
+        },
+        binderror({ detail = {} } = {}) {
+            this.triggerEvent('error', detail);
         }
     }
 });

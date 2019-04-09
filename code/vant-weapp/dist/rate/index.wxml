@@ -1,16 +1,23 @@
-<view
-  class="van-rate custom-class"
-  bind:touchmove="onTouchMove"
->
-  <van-icon
-    wx:for="{{ list }}"
-    wx:key="index"
-    class="van-rate__item"
-    custom-class="icon-class"
-    size="{{ size }}px"
-    data-index="{{ index }}"
-    name="{{ item ? icon : voidIcon }}"
-    color="{{ disabled ? disabledColor : item ? color : voidColor }}"
-    bind:click="onSelect"
-  />
+<view class="i-class i-rate" 
+    bindtouchmove="handleTouchMove">
+    <input type="text" :name="name" wx:value="{{value}}" class="i-rate-hide-input" />
+    <view
+        wx:for="{{count}}"
+        wx:key="{{item}}" 
+        class="i-rate-star {{ parse.getCurrent( value,index ) }}" 
+        data-index="{{index}}" 
+        bindtap="handleClick">
+        <i-icon type="collection_fill" size="{{size}}"></i-icon>
+    </view>
+    <view class="i-rate-text" wx:if="{{ value !== 0 }}"><slot></slot></view>
 </view>
+<wxs module="parse">
+var prefixCls = 'i-rate';
+module.exports = {
+    getCurrent : function( value,index ){
+        if( index < value  ){
+            return prefixCls + '-current'
+        }
+    }
+}
+</wxs>

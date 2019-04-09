@@ -1,19 +1,22 @@
-import { VantComponent } from '../common/component';
-VantComponent({
-    props: {
-        info: null,
-        name: String,
-        size: String,
-        color: String,
-        customStyle: String,
-        classPrefix: {
+Component({
+    externalClasses: ['i-class'],
+
+    properties: {
+        type: {
             type: String,
-            value: 'van-icon'
-        }
-    },
-    methods: {
-        onClick() {
-            this.$emit('click');
+            value: ''
+        },
+        custom: {
+            type: String,
+            value: ''
+        },
+        size: {
+            type: Number,
+            value: 14
+        },
+        color: {
+            type: String,
+            value: ''
         }
     }
 });

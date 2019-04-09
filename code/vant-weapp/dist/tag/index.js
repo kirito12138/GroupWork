@@ -1,30 +1,42 @@
-import { VantComponent } from '../common/component';
-import { RED, BLUE, GREEN } from '../common/color';
-const DEFAULT_COLOR = '#999';
-const COLOR_MAP = {
-    danger: RED,
-    primary: BLUE,
-    success: GREEN
-};
-VantComponent({
-    props: {
-        size: String,
-        type: String,
-        mark: Boolean,
-        color: String,
-        plain: Boolean,
-        round: Boolean,
-        textColor: String
+Component({
+    externalClasses: ['i-class'],
+    properties : {
+        //slot name
+        name : {
+            type : String,
+            value : ''
+        },
+        //can click or not click
+        checkable : {
+            type : Boolean,
+            value : false
+        },
+        //is current choose
+        checked : {
+            type : Boolean,
+            value : true
+        },
+        //background and color setting
+        color : {
+            type : String,
+            value : 'default'
+        },
+        //control fill or not
+        type : {
+            type : String,
+            value : 'dot'
+        } 
     },
-    computed: {
-        style() {
-            const color = this.data.color || COLOR_MAP[this.data.type] || DEFAULT_COLOR;
-            const key = this.data.plain ? 'color' : 'background-color';
-            const style = { [key]: color };
-            if (this.data.textColor) {
-                style.color = this.data.textColor;
+    methods : {
+        tapTag(){
+            const data = this.data;
+            if( data.checkable ){
+                const checked = data.checked ? false : true;
+                this.triggerEvent('change',{
+                    name : data.name || '',
+                    checked : checked
+                });
             }
-            return Object.keys(style).map(key => `${key}: ${style[key]}`).join(';');
         }
     }
-});
+})
