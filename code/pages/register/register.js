@@ -96,9 +96,7 @@ Page({
     {
       wx.request({
         url: 'https://group.tttaaabbbccc.club/register/',
-        header: {
-          "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
-        },
+        
         method: "POST",
         data:
         {
