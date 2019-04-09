@@ -1,61 +1,21 @@
 <!--pages/login/login.wxml-->
-<i-row>
-<text> \n </text>
-</i-row>
-<i-row>
-<text> \n </text>
-</i-row>
 
 
-<image class="widget__arrow" src="../../image/65_3035.jpg" mode="aspectFit">
-</image>
 
+<view class = "login">
+  <i-panel>
+      <i-input value="{{ value1 }}" title="账号" autofocus placeholder="请输入用户账号" />
+      <i-input value="{{ value2 }}" type="text" title="密码" placeholder="请输入用户密码" />
+  </i-panel>
+</view>
 
-<i-row>
-<text> \n </text>
-</i-row>
-<i-row>
-<text> \n </text>
-</i-row>
-<i-row>
-<text> \n </text>
-</i-row>
-<i-row>
-<text> \n </text>
-</i-row>
-
-
-<i-panel title="基础用法">
-    <i-input value="{{ value1 }}" title="账号" autofocus placeholder="请输入用户账号" />
-    <i-input value="{{ value2 }}" type="text" title="密码" placeholder="请输入用户密码" />
-</i-panel>
-
-<i-row>
-<text> \n </text>
-</i-row>
-<i-row>
-<text> \n </text>
-</i-row>
-<i-row>
-<text> \n </text>
-</i-row>
-<i-row>
-<text> \n </text>
-</i-row>
-
-
-<i-row>
-    <i-col  span = "11" i-class="col-class" offset = "1">
-      <i-button type="primary" shape="circle" size = "large">登录</i-button>
-    </i-col>
-    <i-col span="11" i-class="col-class">
-      <i-button type="default" shape="circle" size = "large">注册</i-button>
-    </i-col>
-</i-row>
-
-<i-row>
-<text> \n </text>
-</i-row>
-<i-row>
-<text> \n </text>
-</i-row>
+<view class = "button">
+  <i-row >
+      <i-col  span = "11" i-class="col-class" offset = "1">
+        <i-button type="primary" shape="circle" size = "large">登录</i-button>
+      </i-col>
+      <i-col span="11" i-class="col-class">
+        <i-button type="default" shape="circle" size = "large" bind:click="regist" >注册</i-button>
+      </i-col>
+  </i-row>
+</view>

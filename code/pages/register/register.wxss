@@ -7,6 +7,10 @@ background-size: cover;
 {
   margin-top: 600rpx;
 }
+.label_1
+{
+  margin-top:0rpx;
+}
 .button
 {
     margin-top: 100rpx;
