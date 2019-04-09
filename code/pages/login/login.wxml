@@ -5,46 +5,52 @@
 <i-row>
 <text> \n </text>
 </i-row>
-<i-row>
-<text> \n </text>
-</i-row>
-<i-row>
-<text> \n </text>
-</i-row>
-<i-row>
-<text> \n </text>
-</i-row>
-<i-row>
-<text> \n </text>
-</i-row>
 
+
+<image class="widget__arrow" src="../../image/65_3035.jpg" mode="aspectFit">
+</image>
+
+
+<i-row>
+<text> \n </text>
+</i-row>
+<i-row>
+<text> \n </text>
+</i-row>
+<i-row>
+<text> \n </text>
+</i-row>
+<i-row>
+<text> \n </text>
+</i-row>
 
 
 <i-panel title="基础用法">
-    <i-input value="{{ value1 }}" title="收货人" autofocus placeholder="名字" />
-    <i-input value="{{ value2 }}" type="number" title="联系电话" placeholder="请输入手机号" />
-    <i-input value="{{ value3 }}" type="textarea" title="详细地址" placeholder="请输入详细地址(最多50字)" maxlength="50" />
-    <i-input value="{{ value4 }}" title="用户信息" disabled />
+    <i-input value="{{ value1 }}" title="账号" autofocus placeholder="请输入用户账号" />
+    <i-input value="{{ value2 }}" type="text" title="密码" placeholder="请输入用户密码" />
 </i-panel>
 
+<i-row>
+<text> \n </text>
+</i-row>
+<i-row>
+<text> \n </text>
+</i-row>
+<i-row>
+<text> \n </text>
+</i-row>
+<i-row>
+<text> \n </text>
+</i-row>
 
 
 <i-row>
-    <i-col  span = "15" i-class="col-class" offset = "6">
-      <i-button type="default" size = "large">默认按钮</i-button>
+    <i-col  span = "11" i-class="col-class" offset = "1">
+      <i-button type="primary" shape="circle" size = "large">登录</i-button>
+    </i-col>
+    <i-col span="11" i-class="col-class">
+      <i-button type="default" shape="circle" size = "large">注册</i-button>
     </i-col>
 </i-row>
-<i-row>
-<text> \n </text>
-</i-row>
-<i-row>
-<text> \n </text>
-</i-row>
-<i-row>
-<text> \n </text>
-</i-row>
-<i-row offset = "6">
-    <i-col span="8" i-class="col-class">
-      <i-button type="default">默认按钮</i-button>
-    </i-col>
-</i-row>
+
+
