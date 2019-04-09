@@ -1,0 +1,10 @@
+.logo{
+  align-content: center;
+  width: 200rpx;
+  height: 200rpx;
+  border-radius: 100rpx;
+}
+.button
+{
+    margin-top: 100rpx;
+}
