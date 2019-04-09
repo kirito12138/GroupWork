@@ -4,18 +4,21 @@
 
 <view class = "login">
   <i-panel>
-      <i-input value="{{ value1 }}" title="账号" autofocus placeholder="请输入用户账号" />
-      <i-input value="{{ value2 }}" type="text" title="密码" placeholder="请输入用户密码" />
+      <i-input value="{{ value1 }}" title="账号" autofocus placeholder="请输入用户账号"  maxlength="14" bind:change ="userNameInput" />
+      <i-input value="{{ value2 }}" type="password" title="密码" placeholder="请输入用户密码" maxlength="14" bind:change ="passWdInput" />
   </i-panel>
 </view>
 
 <view class = "button">
   <i-row >
       <i-col  span = "11" i-class="col-class" offset = "1">
-        <i-button type="primary" shape="circle" size = "large">登录</i-button>
+        <i-button type="primary" shape="circle" size = "large" bind:click="loginBtnClick">登录</i-button>
       </i-col>
       <i-col span="11" i-class="col-class">
         <i-button type="default" shape="circle" size = "large" bind:click="regist" >注册</i-button>
       </i-col>
   </i-row>
 </view>
+
+<i-message id="message" />
+
