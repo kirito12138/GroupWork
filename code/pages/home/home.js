@@ -7,7 +7,7 @@ Page({
     mark: 0,
     // newmark 是指移动的最新点的x轴坐标 
     newmark: 0,
-    istoright: true
+    istoright: true,
   },
 
   // 点击左上角小图标事件
@@ -60,10 +60,44 @@ Page({
       });
     }
   },
+  goPersonInfo:function()
+  {
+    wx.navigateTo({
+      url: '../personInfo/personInfo',
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+      var that = this;
+      const _jwt = wx.getStorageSync('jwt');
+      var tk;
+      console.log(_jwt)
+      if (_jwt) {
+        tk= JSON.parse(_jwt);
+        console.log(tk);
+      }
+      else {
+        console.log("no token");
+      }
+    
+
+    wx.request({
+    url: 'https://group.tttaaabbbccc.club/f/processing/',
+    method: "GET",
+    header: {
+    "Content-Type": "application/json;charset=UTF-8",
+    'Authorization': tk
+    },
+    success(res) {
+    console.log(res)
+    that.setData({
+     f_posts:res.data
+    });
+    console.log(res.data)
+    }
+    })
 
   },
 
