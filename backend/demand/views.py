@@ -6,7 +6,7 @@ from user.jwt_token import verify_token
 import datetime
 from django.core import serializers
 
-length = re.compile("^.{1,20}$")
+post_title_pattern = re.compile("^.{1,20}$")
 yyyy_mm_dd = re.compile("^\d\d\d\d-\d\d-\d\d$")
 
 
@@ -29,7 +29,7 @@ def create_post(request):
 
     if type(request_num) != int or request_num <= 0:
         return JsonResponse({'ret': False, 'error_code': 3})
-    if not length.match(title):
+    if not post_title_pattern.match(title):
         return JsonResponse({'ret': False, 'error_code': 3})
     if not yyyy_mm_dd.match(deadline):
         return JsonResponse({'ret': False, 'error_code': 3})
@@ -85,3 +85,5 @@ def get_post_detail(request, post_id):
         {'ret': True, 'title': post.title, 'postDetail': post.post_detail, 'requestNum': post.request_num,
          'acceptedNum': post.accept_num, 'ddl': post.deadline, 'ifEnd': post.if_end, 'postID': str(post.id),
          'posterID': str(post.poster.id)})
+
+
