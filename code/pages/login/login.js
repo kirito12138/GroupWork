@@ -128,18 +128,35 @@ Page({
    */
   onLoad: function (options) {
     //判断Token是否存在
+    var tk;
     try
     {
       const _jwt = wx.getStorageSync('jwt');
       if (_jwt) {
-        const jwt = JSON.parse(_jwt);
-        console.log(this.data.jwt.token);
+        tk = JSON.parse(_jwt);
       }
     }
     catch(e)
     {
       console.log("no token");
     }
+    wx.request({
+      url: 'https://group.tttaaabbbccc.club/GetLoginStatus/',
+      method: "POST",
+      header: {
+        "Content-Type": "application/json;charset=UTF-8",
+        'Authorization': tk
+      },
+      success(res) {
+        console.log(res)
+        if(res.ret)
+        {
+          wx.redirectTo({
+            url: '../home/home',
+          });
+        }
+      }
+    })
     
     
 
