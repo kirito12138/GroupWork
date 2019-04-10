@@ -1,20 +1,19 @@
 import json
 import re
-from django.http import JsonResponse, HttpResponse
+from django.http import JsonResponse
 from demand.models import Post
 from user.jwt_token import verify_token
 import datetime
-from django.core import serializers
 
 post_title_pattern = re.compile("^.{1,20}$")
-yyyy_mm_dd = re.compile("^\d\d\d\d-\d\d-\d\d$")
+deadline_pattern = re.compile("^\d\d\d\d-\d\d-\d\d$")
 
 
 def create_post(request):
     if request.method != "POST":
         return JsonResponse({'ret': False, 'error_code': 1})
 
-    user = verify_token(request.META.get('AUTHORIZATION'))
+    user = verify_token(request.META.get('HTTP_AUTHORIZATION'))
     if not user:
         return JsonResponse({'ret': False, 'error_code': 5})
 
@@ -31,7 +30,7 @@ def create_post(request):
         return JsonResponse({'ret': False, 'error_code': 3})
     if not post_title_pattern.match(title):
         return JsonResponse({'ret': False, 'error_code': 3})
-    if not yyyy_mm_dd.match(deadline):
+    if not deadline_pattern.match(deadline):
         return JsonResponse({'ret': False, 'error_code': 3})
     try:
         deadline = datetime.datetime.strptime(deadline, "%Y-%m-%d").date()
@@ -58,21 +57,30 @@ def get_unclosed_posts(request):
     if request.method != "GET":
         return JsonResponse({'ret': False, 'error_code': 1})
 
-    user = verify_token(request.META.get('AUTHORIZATION'))
+    user = verify_token(request.META.get('HTTP_AUTHORIZATION'))
     if not user:
         return JsonResponse({'ret': False, 'error_code': 5})
 
     unclosed_posts = Post.objects.filter(if_end=False).order_by('-post_time')
-    ret_data = serializers.serialize('json', unclosed_posts, fields=(
-        'title', 'post_detail', 'request_num', 'accept_num', 'deadline', 'id', 'poster'))
-    return HttpResponse(json.dumps(ret_data), content_type="application/json")
+    ret_data = []
+    for post in unclosed_posts:
+        ret_data.append({
+            "title": post.title,
+            "postDetail": post.post_detail,
+            "requestNum": post.request_num,
+            "acceptedNum": post.accept_num,
+            "ddl": post.deadline,
+            "postID": post.id,
+            "posterID": post.poster.id,
+        })
+    return JsonResponse(ret_data, safe=False)
 
 
 def get_post_detail(request, post_id):
     if request.method != "GET":
         return JsonResponse({'ret': False, 'error_code': 1})
 
-    user = verify_token(request.META.get('AUTHORIZATION'))
+    user = verify_token(request.META.get('HTTP_AUTHORIZATION'))
     if not user:
         return JsonResponse({'ret': False, 'error_code': 5})
 
@@ -85,5 +93,3 @@ def get_post_detail(request, post_id):
         {'ret': True, 'title': post.title, 'postDetail': post.post_detail, 'requestNum': post.request_num,
          'acceptedNum': post.accept_num, 'ddl': post.deadline, 'ifEnd': post.if_end, 'postID': str(post.id),
          'posterID': str(post.poster.id)})
-
-

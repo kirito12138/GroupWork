@@ -24,7 +24,7 @@ urlpatterns = [
     path('login/', user.views.login),
     path('register/', user.views.register),
     path('my/profile/', user.views.get_profile),
-
+    path('my/profile/modify/', user.views.modify_profile),
     path('c/post/', demand.views.create_post),
     path('f/processing/', demand.views.get_unclosed_posts),
     path('p/<int:post_id>/', demand.views.get_post_detail),
