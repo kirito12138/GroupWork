@@ -1,1 +1,18 @@
 /* pages/home/home.wxss */
+
+.tit
+{
+  background-color: #99CCFF;
+  height: 80rpx;
+  width: 100%;
+  z-index: 1;
+}
+.card
+{
+  margin-top:  50rpx;
+  z-index: -1;
+}
+.cds
+{
+  margin-top: 90rpx;
+}

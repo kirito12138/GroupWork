@@ -1,11 +1,16 @@
 {
   "pages": [
+    "pages/home/home",
     "pages/login/login",
+    
+    
     "pages/index/index",
     "pages/logs/logs",
     "pages/test/test",
-    "pages/register/register"
-
+    "pages/register/register",
+    "pages/changePwd/changePwd"
+    
+    
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -18,6 +23,12 @@
     "i-row": "../../vant-weapp/dist/row/index",
     "i-col": "../../vant-weapp/dist/col/index",
     "i-input": "../../vant-weapp/dist/input/index",
-    "i-message": "../../vant-weapp/dist/message/index"
+    "i-message": "../../vant-weapp/dist/message/index",
+    "i-drawer": "../../vant-weapp/dist/drawer/index",
+    "i-sticky": "../../vant-weapp/dist/sticky/index",
+    "i-sticky-item": "../../vant-weapp/dist/sticky-item/index",
+    "i-icon": "../../vant-weapp/dist/icon/index",
+    "i-panel": "../../vant-weapp/dist/panel/index",
+    "i-card": "../../vant-weapp/dist/card/index"
   }
 }

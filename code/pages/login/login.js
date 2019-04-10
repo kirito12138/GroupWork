@@ -9,19 +9,20 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    account: "",
+    account: ""
   },
-  regist:function()
+  regist:function(e)
   {
     wx.navigateTo({
       url: '../register/register',
     })
   },
 
-  loginBtnClick: function () 
+  loginBtnClick: function (e) 
   {
     console.log("用户名：" + this.data.account + " 密码：" + this.data.password);
-    if (this.data.account == null)
+    if (this.data.account.length == 0)
     {
       console.log("ERROR:::用户名：" + this.data.account + " 密码：" + this.data.password);
       $Message({
@@ -29,7 +30,7 @@ Page({
         type: 'error'
       });
     }
-    else if (this.data.password == null)
+    else if (this.data.password.length == 0)
     {
       console.log("ERROR:::用户名：" + this.data.account + " 密码：" + this.data.password);
       $Message({
