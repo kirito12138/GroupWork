@@ -1,6 +1,7 @@
 {
   "pages": [
     "pages/login/login",
+    "pages/register/register",
     "pages/index/index",
     "pages/logs/logs",
     "pages/test/test"
@@ -16,6 +17,7 @@
     "i-button": "../../vant-weapp/dist/button/index",
     "i-row": "../../vant-weapp/dist/row/index",
     "i-col": "../../vant-weapp/dist/col/index",
-    "i-input": "../../vant-weapp/dist/input/index"
+    "i-input": "../../vant-weapp/dist/input/index",
+    "i-message":"../../vant-weapp/dist/message/index"
   }
 }
