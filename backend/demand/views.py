@@ -1,3 +1,9 @@
+from django.http import JsonResponse
 from django.shortcuts import render
 
-# Create your views here.
+
+def get_unclosed_posts(request):
+    if request.method != "GET":
+        return JsonResponse({'ret': False, 'error_code': 1})
+
+

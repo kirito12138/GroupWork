@@ -17,9 +17,13 @@ from django.contrib import admin
 from django.urls import path
 
 import user.views
+import demand.views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('login/', user.views.login),
     path('register/', user.views.register),
+    path('f/processing/', demand.views.get_unclosed_posts),
+    path('p/<post_id>', demand.views.get_unclosed_posts),
+
 ]
