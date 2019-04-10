@@ -1,0 +1,30 @@
+<view class = "back">
+  <view class="register">
+    <i-panel>  
+    <view class = "label_1">
+      <i-input  value = "{{account}}" mode= "normal" title="用户名" bind:change = "input_usrname" maxlength="20" />
+    </view>
+    <view class = "label_1">
+      <i-input  value = "{{name}}" mode= "normal" title="真实姓名"  bind:change = "input_name"   maxlength="16"/>
+    </view>
+    <view class = 'label_1'>
+      <i-input  value = "{{sex}}" mode= "normal" title="性别"  bind:change = "input_sex" maxlength="2"/>
+    </view>
+    <view class = 'label_1'>
+      <i-input  value = "{{age}}" mode= "normal" title="年龄"  bind:change = "input_age" maxlength="3"/>
+    </view>
+    <view class = 'label_1'>
+      <i-input  value = "{{studentID}}" mode= "normal" title="学号"  bind:change = "input_ID" maxlength="12"/>
+    </view>
+    <view class = 'label_1'>
+      <i-input  value = "{{major}}" mode= "normal" title="专业"  bind:change = "input_major" maxlength="3"/>
+    </view>
+    <view class = 'label_1'>
+      <i-input  value = "{{grade}}" mode= "normal" title="年级"  bind:change = "input_grade" maxlength="3"/>
+    </view>
+    </i-panel>
+    <view class = "button">
+      <i-button  bind:click="saveChanges" type="success">保存修改</i-button>
+    </view>
+  </view>
+</view>

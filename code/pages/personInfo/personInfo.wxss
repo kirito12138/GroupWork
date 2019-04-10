@@ -1,0 +1,5 @@
+/* pages/personInfo/personInfo.wxss */
+
+.button{
+  margin-top: 100rpx;
+}

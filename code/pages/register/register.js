@@ -53,21 +53,21 @@ Page({
         type: 'error'
       });
     }
-    if (this.data.account.length > 14) {
+    else if (this.data.account.length > 14) {
       can = false;
       $Message({
         content: '用户名长度不能超过14',
         type: 'error'
       });
     }
-    if (!((this.data.account.charAt(0) >= 'a' && this.data.account.charAt(0) <= 'z') || (this.data.account.charAt(0) >= 'A' && this.data.account.charAt(0) <='Z')  )) {
+    else if (!((this.data.account.charAt(0) >= 'a' && this.data.account.charAt(0) <= 'z') || (this.data.account.charAt(0) >= 'A' && this.data.account.charAt(0) <='Z')  )) {
       can = false;
       $Message({
         content: '用户名第一个字符为字母',
         type: 'error'
       });
     }
-    if(this.data.password != this.data.check_psw)
+    else if(this.data.password != this.data.check_psw)
     {
       can = false;
       $Message({
@@ -75,7 +75,7 @@ Page({
         type: 'error'
       });
     }
-    if(this.data.password.length==0)
+    else if(this.data.password.length==0)
     {
       can = false;
       $Message({
@@ -84,7 +84,7 @@ Page({
       });
 
     }
-    if ( !(this.data.password.length >= 8 && this.data.password.length<=16) ) {
+    else if ( !(this.data.password.length >= 8 && this.data.password.length<=16) ) {
       can = false;
       $Message({
         content: '密码字符在8~16之间',
@@ -96,7 +96,9 @@ Page({
     {
       wx.request({
         url: 'https://group.tttaaabbbccc.club/register/',
-        
+        header: {
+          "Content-Type": "application/json;charset=UTF-8"
+        },
         method: "POST",
         data:
         {
@@ -119,17 +121,18 @@ Page({
             wx.showToast({
               title: '注册成功~',
             })
+          var _token = res.data['Token'];
             //const _token = JSON.stringify(token);
-            //wx.setStorageSync('jwt', _token);
-            wx.navigateTo({
-              url: '../test/test',
+           wx.setStorageSync('jwt', _token);
+            wx.redirectTo({
+              url: '../home/home',
             });
           }
           else {
             console.log("login_fail");
             //TODO 错误提示
             $Message({
-              content: '注册失败',
+              content: '账号已经存在',
               type: 'error'
             });
           }
