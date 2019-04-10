@@ -1,6 +1,5 @@
 import jwt
 from datetime import datetime, timedelta
-
 from backend.settings import SECRET_KEY
 
 
