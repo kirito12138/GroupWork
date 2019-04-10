@@ -62,7 +62,7 @@ def get_unclosed_posts(request):
     if not account:
         return JsonResponse({'ret': False, 'error_code': 5})
 
-    data = serializers.serialize('json', Post.objects.filter(if_end=False).order_by('-post_time'),
-                                 fields=(
-                                 'title', 'post_detail', 'request_num', 'accept_num', 'deadline', 'id', 'poster'))
-    return HttpResponse(json.dumps(data), content_type="application/json")
+    unclosed_posts = Post.objects.filter(if_end=False).order_by('-post_time')
+    ret_data = serializers.serialize('json', unclosed_posts, fields=(
+        'title', 'post_detail', 'request_num', 'accept_num', 'deadline', 'id', 'poster'))
+    return HttpResponse(json.dumps(ret_data), content_type="application/json")

@@ -1,6 +1,7 @@
 import jwt
 from datetime import datetime, timedelta
 from backend.settings import SECRET_KEY
+from user.models import User
 
 
 def create_token(account):
@@ -23,5 +24,9 @@ def verify_token(token):
         return None
     if 'account' not in payload:
         return None
+    try:
+        user = User.objects.get(account=payload['account'])
+    except User.DoesNotExist:
+        return None
 
-    return payload['account']
+    return user
