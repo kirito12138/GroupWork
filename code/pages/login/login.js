@@ -54,10 +54,11 @@ Page({
           if (res.data['ret']) 
           {
             console.log("login_sucess");
-            //const _token = JSON.stringify(token);
-            //wx.setStorageSync('jwt', _token);
-            wx.navigateTo({
-              url: '../test/test',
+            var token = res.data['Token'];
+            const _token = JSON.stringify(token);
+            wx.setStorageSync('jwt', _token);
+            wx.redirectTo({
+              url: '../home/home',
             });
           }
           else
@@ -93,6 +94,22 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    //判断Token是否存在
+    try
+    {
+      const _jwt = wx.getStorageSync('jwt');
+      if (_jwt) {
+        const jwt = JSON.parse(_jwt);
+        console.log(this.data.jwt.token);
+      }
+    }
+    catch(e)
+    {
+      console.log("no token");
+    }
+    
+    
+
 
   },
 
