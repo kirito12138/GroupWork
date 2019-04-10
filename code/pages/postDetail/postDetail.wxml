@@ -6,28 +6,6 @@
         <view class="weui-media-box-1 weui-media-box-1_text">
             <view class="weui-media-box-1__title weui-media-box-1__title_in-text">{{title}}</view>
             <view class="weui-media-box-1__desc">{{postDetail}}</view>
-            <text>1\n</text>
-            <text>1\n</text>
-            <text>1\n</text>
-            <text>1\n</text>
-            <text>1\n</text>
-            <text>1\n</text>
-            <text>1\n</text>
-            <text>1\n</text>
-            <text>1\n</text>
-            <text>1\n</text>
-            <text>1\n</text>
-            <text>1\n</text>
-            <text>1\n</text>
-            <text>1\n</text>
-            <text>1\n</text>
-            <text>1\n</text>
-            <text>1\n</text>
-            <text>1\n</text>
-            <text>1\n</text>
-            <text>1\n</text>
-            <text>1\n</text>
-            <text>1\n</text>
             <view class="weui-media-box-1__info">
                 <view class="weui-media-box-1__info__meta">需要人数：{{requestNum}}</view>
                 <view class="weui-media-box-1__info__meta">已招人数：{{acceptedNum}}</view>

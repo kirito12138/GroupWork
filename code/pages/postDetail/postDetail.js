@@ -14,15 +14,16 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    this.data.info=JSON.parse(options.info);
     this.setData({
-      title: options.title,
-      postDetail: options.postDetail,
-      requestNum: options.requestNum,
-      acceptedNum: options.acceptedNum,
-      ddl: options.ddl,
-      ifEnd: options.ifEnd,
-      postID: options.postID,
-      posterID: options.posterID
+      title: this.data.info.title,
+      postDetail: this.data.info.postDetail,
+      requestNum: this.data.info.requestNum,
+      acceptedNum: this.data.info.acceptedNum,
+      ddl: this.data.info.ddl,
+      ifEnd: this.data.info.ifEnd,
+      postID: this.data.info.postID,
+      posterID: this.data.info.posterID
     })
   },
 

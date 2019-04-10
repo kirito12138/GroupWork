@@ -9,19 +9,20 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    account: "",
+    account: ""
   },
-  regist:function()
+  regist:function(e)
   {
     wx.navigateTo({
       url: '../register/register',
     })
   },
 
-  loginBtnClick: function () 
+  loginBtnClick: function (e) 
   {
     console.log("用户名：" + this.data.account + " 密码：" + this.data.password);
-    if (this.data.account == null)
+    if (this.data.account.length == 0)
     {
       console.log("ERROR:::用户名：" + this.data.account + " 密码：" + this.data.password);
       $Message({
@@ -29,7 +30,7 @@ Page({
         type: 'error'
       });
     }
-    else if (this.data.password == null)
+    else if (this.data.password.length == 0)
     {
       console.log("ERROR:::用户名：" + this.data.account + " 密码：" + this.data.password);
       $Message({
@@ -54,6 +55,7 @@ Page({
           if (res.data['ret']) 
           {
             console.log("login_sucess");
+
             var token = res.data['Token'];
             const _token = JSON.stringify(token);
             wx.setStorageSync('jwt', _token);
@@ -127,18 +129,35 @@ Page({
    */
   onLoad: function (options) {
     //判断Token是否存在
+    var tk;
     try
     {
       const _jwt = wx.getStorageSync('jwt');
       if (_jwt) {
-        const jwt = JSON.parse(_jwt);
-        console.log(this.data.jwt.token);
+        tk = JSON.parse(_jwt);
       }
     }
     catch(e)
     {
       console.log("no token");
     }
+    wx.request({
+      url: 'https://group.tttaaabbbccc.club/GetLoginStatus/',
+      method: "POST",
+      header: {
+        "Content-Type": "application/json;charset=UTF-8",
+        'Authorization': tk
+      },
+      success(res) {
+        console.log(res)
+        if(res.ret)
+        {
+          wx.redirectTo({
+            url: '../home/home',
+          });
+        }
+      }
+    })
     
     
 
