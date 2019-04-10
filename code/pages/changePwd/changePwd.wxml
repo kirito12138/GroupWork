@@ -1,0 +1,23 @@
+<!--pages/changePwd/changePwd.wxml-->
+<view class = "back">
+  <view class="register">
+    <i-panel>  
+    <view class = "label_1">
+      <i-input  value = "{{account}}" mode= "normal" title="旧密码" bind:change = "input_old_pwd" placeholder="请输入8到16位的密码" maxlength="16" />
+    </view>
+    <view class = "label_1">
+      <i-input  value = "{{password}}" mode= "normal" title="新密码"  bind:change = "input_psw" placeholder="请输入8到16位的密码"  maxlength="16"/>
+    </view>
+    <view class = 'label_1'>
+      <i-input  value = "{{check_psw}}" mode= "normal" title="确认新密码"  bind:change = "input_checkpsw" placeholder="两次输入的密码需一致" maxlength="16"/>
+
+    </view>
+    </i-panel>
+  </view>
+
+  <view class = "button">
+    <i-button bind:click="change_pwd" type="primary" shape="circle" size="large">保存修改</i-button>
+  </view>
+  <i-message id="message" />
+</view>
+
