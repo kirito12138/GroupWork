@@ -1,2 +1,42 @@
 <!--pages/home/home.wxml-->
-<text>pages/home/home.wxml</text>
+
+<view class="page">
+    <!-- 侧边栏内容 -->
+    <view class="page-slidebar">
+        <view class="page-content">
+          <i-cell-group i-class = 'group'>
+          <i-cell bind:click = "goMyPost" title="我的发布" >
+          <i-icon slot = "icon"  type="document" size="28" color="#0000FF" />
+          </i-cell>
+          <i-cell bind:click = "goMyApply" title="我的申请" >
+            <i-icon slot = "icon"  type="mail" size="28" color="	#0000CD"/>
+          </i-cell>
+          <i-cell bind:click = "goPersonInfo" title="个人资料" >
+            <i-icon slot = 'icon' type="addressbook" size="28" color='#FFD700'/>
+          </i-cell>
+          <i-cell bind:click = "goChangePwd" title="修改密码" >
+              <i-icon slot = 'icon' type="editor" size = "28" color='#FF6A6A' />
+          </i-cell>
+        </i-cell-group>
+
+        </view>
+    </view>
+    
+    <!-- 主页内容 -->
+ 
+    <!-- （open ? 'c-state' : ''）三元运算符： -->
+    <!-- 1.默认情况下 open 为 false -->
+    <!-- 2.当点击左上角图标的时候或者屏幕向左滑动，open 变化 true -->
+    <!-- 3.当 open 为 true 时，会加上类名为 c-state 和 cover 的 css 样式 -->
+ 
+    <!-- bindtouchstart、 bindtouchmove、bindtouchend -->
+    <!-- 当手指触摸屏幕并滑动时，所触发的三个函数 -->
+    <view bindtouchmove="tap_drag" bindtouchend="tap_end" bindtouchstart="tap_start" class="page-top {{open ? ['c-state','cover'] : ''}} ">
+        <view slot="title" class='tit' style="position:fixed;top:0;">
+          <i-cell bind:click = "tap_ch">
+              <i-icon slot = 'icon' type="other" size = "41" />
+          </i-cell>
+        </view>
+
+    </view>
+</view>
