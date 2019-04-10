@@ -8,8 +8,8 @@ from backend.settings import SECRET_KEY
 
 account_pattern = re.compile("^[a-zA-Z][a-zA-Z0-9]{0,13}$")
 password_pattern = re.compile("^[a-z_A-Z0-9-\.!@#\$%\\\^&\*\)\(\+=\{\}\[\]/\",'<>~\·`\?:;|]{8,14}$")
-name_pattern = re.compile("^\d{0,20}$")
-student_id_pattern = re.compile("^.{0,20}$")
+name_pattern = re.compile("^.{0,20}$")
+student_id_pattern = re.compile("^\d{0,20}$")
 
 
 def gen_md5(s, salt='9527'):  # 加盐
