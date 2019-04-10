@@ -16,12 +16,13 @@ def create_token(account):
 
 
 def verify_token(token):
+    if not token:
+        return None
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
     except:
         return None
-
-    if 'account' in payload:
-        return payload['account']
-    else:
+    if 'account' not in payload:
         return None
+
+    return payload['account']

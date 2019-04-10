@@ -13,10 +13,7 @@ def post(request):
     if request.method != "POST":
         return JsonResponse({'ret': False, 'error_code': 1})
 
-    token = request.META.get('AUTHORIZATION')
-    if not token:
-        return JsonResponse({'ret': False, 'error_code': 5})
-    account = verify_token(token)
+    account = verify_token(request.META.get('AUTHORIZATION'))
     if not account:
         return JsonResponse({'ret': False, 'error_code': 5})
 
@@ -59,3 +56,10 @@ def post(request):
 def get_unclosed_posts(request):
     if request.method != "GET":
         return JsonResponse({'ret': False, 'error_code': 1})
+
+    token = request.META.get('AUTHORIZATION')
+    if not token:
+        return JsonResponse({'ret': False, 'error_code': 5})
+    account = verify_token(token)
+    if not account:
+        return JsonResponse({'ret': False, 'error_code': 5})
