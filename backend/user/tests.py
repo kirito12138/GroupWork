@@ -7,9 +7,9 @@ import requests
 def test_login_1():
     print('test_login_1:')
     url = 'https://group.tttaaabbbccc.club/login/'
-    case_new = {'account': 'admin', 'password': 'adminadmin'}
+    case_new = {'account': 'admin', 'password': 'admin_admin'}
     r = requests.post(url, data=json.dumps(case_new))
-    print(r, json.loads(r.content)['ret'])
+    print(r, json.loads(r.content))
 
 
 def test_login_2():
@@ -56,9 +56,9 @@ def test_register_3():
 
 
 if __name__ == "__main__":
-    test_register_1()
-    test_register_2()
-    test_register_3()
+    # test_register_1()
+    # test_register_2()
+    # test_register_3()
     test_login_1()
     test_login_2()
     test_login_3()
