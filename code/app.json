@@ -1,10 +1,14 @@
 {
   "pages": [
+    "pages/home/home",
+    "pages/personInfo/personInfo",
+    "pages/userCenter/userCenter",
     "pages/login/login",
     "pages/index/index",
     "pages/logs/logs",
     "pages/test/test",
     "pages/register/register"
+
 
   ],
   "window": {
@@ -18,6 +22,11 @@
     "i-row": "../../vant-weapp/dist/row/index",
     "i-col": "../../vant-weapp/dist/col/index",
     "i-input": "../../vant-weapp/dist/input/index",
-    "i-message": "../../vant-weapp/dist/message/index"
+    "i-message": "../../vant-weapp/dist/message/index",
+    "i-panel": "../../vant-weapp/dist/panel/index",
+    "i-cell-group": "../../vant-weapp/dist/cell-group/index",
+    "i-cell": "../../vant-weapp/dist/cell/index",
+    "i-icon": "../../vant-weapp/dist/icon/index",
+    "i-input-number": "../../vant-weapp/dist/input-number/index"
   }
 }

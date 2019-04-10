@@ -54,10 +54,12 @@ Page({
           if (res.data['ret']) 
           {
             console.log("login_sucess");
+            var _token = res.data['Token'];
             //const _token = JSON.stringify(token);
-            //wx.setStorageSync('jwt', _token);
-            wx.navigateTo({
-              url: '../test/test',
+            console.log(_token);
+            wx.setStorageSync('jwt', _token);
+            wx.redirectTo({
+              url: '../home/home',
             });
           }
           else
