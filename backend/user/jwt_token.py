@@ -16,14 +16,12 @@ def create_token(account):
 
 
 def verify_token(token):
-    # decode成payload，用payload和当前时间戳重新生成一个token并返回
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
     except:
         return None
 
     if 'account' in payload:
-        token = create_token(payload)
-        return token, payload['account']
+        return payload['account']
     else:
         return None
