@@ -1,4 +1,4 @@
 from django.contrib import admin
 from demand import models
 
-admin.site.register(models.demand)
+admin.site.register(models.Post)

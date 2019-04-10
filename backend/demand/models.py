@@ -9,7 +9,7 @@ class Post(models.Model):
     deadline = models.DateField()
     post_time = models.DateTimeField(auto_now_add=True)  # 发布时间，会自动添加
     if_end = models.BooleanField(default=False)
-    poster = models.ForeignKey('User', on_delete=models.SET_NULL, null=True)
+    poster = models.ForeignKey('user.User', on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
         return self.title

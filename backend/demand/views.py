@@ -3,8 +3,8 @@ import re
 from django.http import JsonResponse
 from demand import models
 
-length = re.compile("^.{1,19}$")
-yyyy_mm_dd = re.compile("/^((?:19|20)\d\d)-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/")
+length = re.compile("^.{1,20}$")
+yyyy_mm_dd = re.compile("^\d\d\d\d-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$")
 
 
 def post(request):
@@ -14,14 +14,17 @@ def post(request):
     data = json.loads(request.body)
     try:
         title = data['title']
-        post_detail = data['post_detail']
-        request_num = data['request']
-        accept_num = data['accept_num']
-        deadline = data['deadline']
-        if_end = data['if_end']
-        poster = data['poster']
+        post_detail = data['postDetail']
+        request_num = data['requestNum']
+        deadline = data['ddl']
+        poster_id = data['posterID']
     except KeyError:
         return JsonResponse({'ret': False, 'error_code': 2})
+
+    try:
+        poster_id = int(poster_id)
+    except ValueError:
+        return JsonResponse({'ret': False, 'error_code': 3})
 
     if type(request_num) != int or request_num <= 0:
         return JsonResponse({'ret': False, 'error_code': 3})
@@ -31,21 +34,16 @@ def post(request):
         return JsonResponse({'ret': False, 'error_code': 3})
 
     # 新建发布校验
-    if (models.Post.objects.filter(title=title).exists() &
-       models.Post.objects.filter(post_detail=post_detail).exists() &
-       models.Post.objects.filter(request_num=request_num).exists() &
-       models.Post.objects.filter(deadline=deadline).exists() &
-       models.Post.objects.filter(poster=poster).exists()):
+    if models.Post.objects.filter(title=title, post_detail=post_detail, request_num=request_num, deadline=deadline,
+                                  poster_id=poster_id).exists():
         return JsonResponse({'ret': False, 'error_code': 4})
 
     new_post = models.Post.objects.create()
     new_post.title = title
     new_post.post_detail = post_detail
     new_post.request_num = request_num
-    new_post.accept_num = accept_num
     new_post.deadline = deadline
-    new_post.if_end = if_end
-    new_post.poster = poster
+    new_post.poster = models.Post.objects.get(id=poster_id)
     new_post.save()
 
     return JsonResponse({'ret': True, 'ID': str(new_post.id)})
