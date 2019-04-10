@@ -1,4 +1,8 @@
 // pages/login/login.js
+
+const { $Message } = require('../../vant-weapp/dist/base/index');
+
+
 Page({
 
   /**
@@ -13,6 +17,78 @@ Page({
       url: '../register/register',
     })
   },
+
+  loginBtnClick: function () 
+  {
+    console.log("用户名：" + this.data.account + " 密码：" + this.data.password);
+    if (this.data.account == null)
+    {
+      console.log("ERROR:::用户名：" + this.data.account + " 密码：" + this.data.password);
+      $Message({
+        content: '用户名为空',
+        type: 'error'
+      });
+    }
+    else if (this.data.password == null)
+    {
+      console.log("ERROR:::用户名：" + this.data.account + " 密码：" + this.data.password);
+      $Message({
+        content: '密码为空',
+        type: 'error'
+      });
+    }
+    else
+    {
+      wx.request({
+        url: 'https://group.tttaaabbbccc.club/login/',
+        data: {
+          account: this.data.account,
+          password: this.data.password
+        },
+        method: "POST",
+        header: {
+          "Content-Type": "application/json;charset=UTF-8"
+        },
+
+        success(res) {
+          if (res.data['ret']) 
+          {
+            console.log("login_sucess");
+            //const _token = JSON.stringify(token);
+            //wx.setStorageSync('jwt', _token);
+            wx.navigateTo({
+              url: '../test/test',
+            });
+          }
+          else
+          {
+            console.log("login_fail");
+            //TODO 错误提示
+            $Message({
+              content: '该用户名未注册',
+              type: 'error'
+            });
+          }
+        }
+      })
+    }
+    
+  },
+
+  userNameInput:function(e)
+  {
+    this.setData({
+      account: e.detail.detail.value
+    })
+  },
+
+  passWdInput: function (e) {
+    this.setData({
+      password: e.detail.detail.value
+    })
+  },
+
+
   /**
    * 生命周期函数--监听页面加载
    */

@@ -96,16 +96,14 @@ Page({
     {
       wx.request({
         url: 'https://group.tttaaabbbccc.club/register/',
-        header: {
-          "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
-        },
+        
         method: "POST",
         data:
         {
           account: this.data.account,
           password: this.data.password,
           name:"",
-          age:-1,
+          age:1,
           studentID:"",
           sex:"",
           major:"",
@@ -113,12 +111,28 @@ Page({
         },
         success: function (res) {
 
-          wx.navigateBack({
+          //wx.navigateBack({
 
-          }),
+          //})
+          
+          if (res.data['ret']) {
             wx.showToast({
               title: '注册成功~',
             })
+            //const _token = JSON.stringify(token);
+            //wx.setStorageSync('jwt', _token);
+            wx.navigateTo({
+              url: '../test/test',
+            });
+          }
+          else {
+            console.log("login_fail");
+            //TODO 错误提示
+            $Message({
+              content: '注册失败',
+              type: 'error'
+            });
+          }
         }
 
       })
