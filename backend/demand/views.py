@@ -70,8 +70,8 @@ def get_unclosed_posts(request):
             "requestNum": post.request_num,
             "acceptedNum": post.accept_num,
             "ddl": post.deadline,
-            "postID": post.id,
-            "posterID": post.poster.id,
+            "postID": str(post.id),
+            "posterID": str(post.poster.id),
         })
     return JsonResponse(ret_data, safe=False)
 
