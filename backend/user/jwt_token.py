@@ -4,9 +4,9 @@ from backend.settings import SECRET_KEY
 from user.models import User
 
 
-def create_token(account):
+def create_token(user_id):
     payload = {
-        'account': account,
+        'user_id': user_id,
         'iat': datetime.utcnow(),
         'exp': datetime.utcnow() + timedelta(days=30),
     }
@@ -22,10 +22,10 @@ def verify_token(token):
         payload = jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
     except:
         return None
-    if 'account' not in payload:
+    if 'user_id' not in payload:
         return None
     try:
-        user = User.objects.get(account=payload['account'])
+        user = User.objects.get(pk=payload['user_id'])
     except User.DoesNotExist:
         return None
 
