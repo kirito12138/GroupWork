@@ -34,7 +34,7 @@
 <i-icon slot = 'icon' type="other" size = "41" />
 </i-cell>
 </view>
-<view class = "cds" >
+<view class = "cds">
 <view wx:for = "{{f_posts}}">
 <view class = "card" bindtap='clickCard' data-index='{{index}}'>
 <i-card title="{{item.title}}" extra="额外内容" full = "true" style="color:red">

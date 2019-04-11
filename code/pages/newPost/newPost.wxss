@@ -1,0 +1,29 @@
+/* pages/newPost/newPost.wxss */
+
+.weui-textarea-1{display:block;width:100%;}
+.weui-textarea-1-counter{color:#b2b2b2;text-align:right}
+.weui-cell_warn{color:#e64340}
+.weui-textarea-1-counter_warn{color:#e64340}
+
+
+.text-box{
+    width:100%;
+    position: relative;
+    min-height:80rpx;
+    margin-top:17rpx;
+}
+.text-box text{
+   display:block;
+   visibility:hidden;
+   word-break:break-all;
+   word-wrap:break-word;
+}
+.text-box .weui-textarea{
+    height:100%;
+    position: absolute;
+    left:0;
+    top:0;
+    overflow-y:hidden;
+    word-break:break-all;
+    word-wrap:break-word;
+}
