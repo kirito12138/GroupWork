@@ -59,6 +59,11 @@ Page({
             var token = res.data['Token'];
             const _token = JSON.stringify(token);
             wx.setStorageSync('jwt', _token);
+
+            var id = res.data['id'];
+            const _id = JSON.stringify(id);
+            wx.setStorageSync('userid', _id);
+
             wx.redirectTo({
               url: '../home/home',
             });
