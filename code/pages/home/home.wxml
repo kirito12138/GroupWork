@@ -5,6 +5,9 @@
 <view class="page-slidebar">
 <view class="page-content">
 <i-cell-group i-class = 'group'>
+<i-cell bind:click = "goHome" title="首页" >
+<i-icon slot = "icon" type="homepage" size="28" color="#80848f" />
+</i-cell>
 <i-cell bind:click = "goMyPost" title="我的发布" >
 <i-icon slot = "icon" type="document" size="28" color="#0000FF" />
 </i-cell>
