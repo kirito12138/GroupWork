@@ -161,7 +161,7 @@ def change_password(request):
 
     user = verify_token(request.META.get('HTTP_AUTHORIZATION'))
     if not user:
-        return JsonResponse({'ret': False, 'error_code': 1})
+        return JsonResponse({'ret': False, 'error_code': 5})
 
     data = json.loads(request.body)
     try:
