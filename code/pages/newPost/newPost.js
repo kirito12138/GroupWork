@@ -8,7 +8,7 @@ Page({
   data: {
     userID:"currentUser",
     requestNum:1,
-    ddl:'',
+    ddl:'日期选择器',
     title:"",
     postDetail:"",
     stringNum:"1",
@@ -36,8 +36,8 @@ Page({
     this.data.ddl=this.data.beginDate;
     year = year+5;
     this.data.lastDate = year + seperator1 + month + seperator1 + strDate;
-    console.log(this.data.beginDate);
-    console.log(this.data.lastDate);
+    //console.log(this.data.beginDate);
+    //console.log(this.data.lastDate);
   },
 
   getTitle: function(e){
@@ -115,8 +115,84 @@ Page({
       });
       }
       else{
-        console.log("legal ddl:"+this.data.ddl);
-      }
+        var that = this;
+        const _jwt = wx.getStorageSync('jwt');
+        var tk;
+        console.log(_jwt)
+        if (_jwt) {
+          tk = JSON.parse(_jwt);
+          console.log(tk);
+        }
+        else {
+          console.log("no token");
+          return;
+        }
+      console.log("输出调试：");
+      console.log(this.data.title);
+      console.log(this.data.postDetail);
+      console.log(this.data.requestNum);
+      console.log(this.data.ddl);
+        wx.request({
+          url: 'https://group.tttaaabbbccc.club/c/post/',
+          data: {
+            title: this.data.title, //标题  : 20字符之内 （可以根据前端需求调整）
+            postDetail: this.data.postDetail,//内容 : text类型，无字数限制
+            requestNum: this.data.requestNum, //所需人数 : >0
+            ddl: this.data.ddl
+          },
+          method: "POST",
+          header: {
+            "Content-Type": "application/json;charset=UTF-8",
+            "Authorization": tk
+          },
+          success(res) {
+            if (res.data["ret"]==false)
+            {
+              if (res.data["error_code"] == 4)
+              {
+                $Toast({
+                  content: '已存在完全相同发布！',
+                  type: 'error'
+                });
+              }
+              else if (res.data["error_code"] == 5) {
+                $Toast({
+                  content: '登录过期，请重新登录！',
+                  type: 'error'
+                });
+              }
+              else
+              {
+                $Toast({
+                  content: '新建发布错误！错误码：' + res.data["error_code"] + '，请联系开发者',
+                  type: 'error'
+                });
+              }
+            }
+            else if (res.data["ret"] == true)
+            {
+              $Toast({
+                content: '新建发布成功！',
+                type: 'success'
+              })
+              setTimeout(function () {
+                wx.redirectTo({
+                  url: '../home/home',
+                })
+              }, 1000)
+              
+              
+            }
+            else{
+              $Toast({
+                content: '无法连接到服务器',
+                type: 'error'
+              })
+            }
+          }
+          
+        })
+      } 
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

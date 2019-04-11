@@ -14,7 +14,7 @@
   <view class="weui-cells weui-cells_after-title">
       <view class="weui-cell">
           <view class="weui-cell__bd">
-              <textarea class="weui-textarea-1" placeholder="请输入详细需求" style="height: 500rpx" bindblur='getDetail' value="{{postDetail}}"/>
+              <textarea class="weui-textarea-1" placeholder="请输入详细需求" style="height: 7em" bindblur='getDetail' value="{{postDetail}}" maxlength='2000'/>
               <view class="weui-textarea-1-counter">0/2000</view>
           </view>
       </view>
@@ -31,10 +31,10 @@
 
   <view class="weui-cells__title">截止日期</view>
   <picker class="weui-btn" mode="date" value="{{ddl}}" start="2019-01-01" end="2050-12-31" bindchange="bindDateChange" style='margin-bottom:50rpx; margin-right:10rpx; margin-left:10rpx'>
-    <button type="default">日期选择器</button>
+    <button type="default">{{ddl}}</button>
   </picker>
 
-  <button class="weui-btn" type="primary" style='width:390rpx; border-radius:72rpx;' bindtap='genPost'>发布招募</button>
+  <button class="weui-btn" type="primary" style='width:390rpx; border-radius:72rpx;margin-top:30rpx;margin-bottom:50rpx;' bindtap='genPost' >发布招募</button>
   <i-toast id="toast" />
 
 

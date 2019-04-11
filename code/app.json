@@ -1,6 +1,6 @@
 {
   "pages": [
-    "pages/newPost/newPost",
+    
     "pages/login/login",
     "pages/personInfo/personInfo",
     "pages/index/index",
@@ -9,7 +9,8 @@
     "pages/register/register",
     "pages/changePwd/changePwd",
     "pages/postDetail/postDetail",
-    "pages/home/home"
+    "pages/home/home",
+    "pages/newPost/newPost"
     
   ],
   "window": {
