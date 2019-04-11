@@ -19,7 +19,7 @@ def test_register_1():
 def test_login_1():
     print('test_login_1:')
     url = domain + 'login/'
-    data = {'account': 'admin', 'password': 'admin_admin'}
+    data = {'account': 'admin999', 'password': 'admin_admin123'}
     r = requests.post(url, data=json.dumps(data))
     print(r, json.loads(r.content))
     try:
@@ -95,14 +95,22 @@ def test_modify_password_1():
     print(r, r.content)
 
 
+def test_get_user_posts_1():
+    print('test_get_user_posts_1:')
+    url = domain + 'my/1/post/'
+    r = requests.get(url, headers=headers)
+    print(r, r.content)
+
+
 if __name__ == "__main__":
-    test_register_1()
+    # test_register_1()
     test_login_1()
-    # test_post_1()
-    # test_post_2()
+    test_post_1()
+    test_post_2()
     # test_get_unclosed_posts_1()
     # test_get_post_detail_1()
-    test_modify_profile_1()
-    test_modify_password_1()
-    test_get_my_profile_1()
-    test_get_profile_1()
+    # test_modify_profile_1()
+    # test_modify_password_1()
+    # test_get_my_profile_1()
+    # test_get_profile_1()
+    test_get_user_posts_1()

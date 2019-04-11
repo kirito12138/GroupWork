@@ -93,3 +93,27 @@ def get_post_detail(request, post_id):
         {'ret': True, 'title': post.title, 'postDetail': post.post_detail, 'requestNum': post.request_num,
          'acceptedNum': post.accept_num, 'ddl': post.deadline, 'ifEnd': post.if_end, 'postID': str(post.id),
          'posterID': str(post.poster.id)})
+
+
+def get_user_posts(request, user_id):
+    if request.method != "GET":
+        return JsonResponse({'ret': False, 'error_code': 1})
+
+    user = verify_token(request.META.get('HTTP_AUTHORIZATION'))
+    if not user:
+        return JsonResponse({'ret': False, 'error_code': 5})
+
+    posts = Post.objects.filter(poster_id=user_id).order_by('-post_time')
+    ret_data = []
+    for post in posts:
+        ret_data.append({
+            "title": post.title,
+            "postDetail": post.post_detail,
+            "requestNum": post.request_num,
+            "acceptedNum": post.accept_num,
+            "ddl": post.deadline,
+            "ifEnd": post.if_end,
+            "postID": str(post.id),
+            "posterID": str(post.poster.id),
+        })
+    return JsonResponse(ret_data, safe=False)
