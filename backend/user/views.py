@@ -23,7 +23,7 @@ def login(request):
     if request.method != "POST":
         return JsonResponse({'ret': False, 'error_code': 1})
 
-    data = json.loads(request.body)
+    data = json.loads(request.body)  # json.decoder.JSONDecodeError
     try:
         account = data['account']
         password = data['password']
