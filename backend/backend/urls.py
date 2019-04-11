@@ -30,4 +30,5 @@ urlpatterns = [
     path('f/processing/', demand.views.get_unclosed_posts),
     path('p/<int:post_id>/', demand.views.get_post_detail),
     path('GetLoginStatus/', user.views.get_login_status),
+    path('my/change_password/', user.views.change_password),
 ]
