@@ -1,4 +1,5 @@
 // pages/home/home.js
+const { $Message } = require('../../vant-weapp/dist/base/index');
 Page({
 
   data: {
@@ -86,6 +87,7 @@ Page({
   * 生命周期函数--监听页面加载
   */
   onLoad: function (options) {
+    var id;
     var that = this;
     const _jwt = wx.getStorageSync('jwt');
     var tk;
@@ -98,9 +100,19 @@ Page({
       console.log("no token");
       return;
     }
-
+    try {
+      const _id = wx.getStorageSync('userid');
+      console.log(_id)
+      if (_id) {
+        console.log(_id)
+        id = JSON.parse(_id);
+      }
+    }
+    catch (e) {
+      console.log("no id");
+    }
     wx.request({
-      url: 'https://group.tttaaabbbccc.club/my/<baishihao>/post/',
+      url: 'https://group.tttaaabbbccc.club/my/'+id+'/post/',
       method: "GET",
       header: {
         "Content-Type": "application/json;charset=UTF-8",
@@ -108,10 +120,24 @@ Page({
       },
       success(res) {
         console.log(res)
+        if(res.data['ret'])
+        {
+          if(res.data['error_code'] == 5)
+          {
+            $Message({
+              content: '登陆状态已失效',
+              type: 'error'
+            });
+            wx.reLaunch({
+              url: '../login/login',
+            })
+          }
+          return;
+        }
         that.setData({
           f_posts: res.data
         });
-        console.log(res.data)
+
       }
     })
   },
