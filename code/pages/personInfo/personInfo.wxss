@@ -3,3 +3,6 @@
 .button{
   margin-top: 100rpx;
 }
+.button_1{
+  margin-top: 20rpx;
+}
