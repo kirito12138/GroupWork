@@ -16,7 +16,7 @@ Page({
     var para = JSON.stringify(this.data.f_posts[i]);
 
     wx.navigateTo({
-      url: '../postDetail/postDetail?info=' + para,
+      url: '../myApplyson/myApplyson?info=' + para,
     })
 
 

@@ -1,0 +1,23 @@
+<!--pages/postDetail/postDetail.wxml-->
+<view class="page">
+  <view class="weui-panel-1">
+    <view class="postUser">发布者昵称</view>
+    <view class="weui-panel-1__bd">
+        <view class="weui-media-box-1 weui-media-box-1_text">
+            <view class="weui-media-box-1__title weui-media-box-1__title_in-text">{{title}}</view>
+            <view class="weui-media-box-1__desc">{{postDetail}}</view>
+            <view class="weui-media-box-1__info">
+                <view class="weui-media-box-1__info__meta">申请状态：{{state}}</view>
+                <text>\n</text>
+                <view class="weui-media-box-1__info__meta">需要人数：{{requestNum}}</view>
+                <view class="weui-media-box-1__info__meta">已招人数：{{acceptedNum}}</view>
+                <text>\n</text>
+                <view class="weui-media-box-1__info__meta">截止日期：{{ddl}}</view>
+                
+            </view>
+
+        </view>
+    </view>
+  </view>
+
+</view>
