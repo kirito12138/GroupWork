@@ -60,7 +60,7 @@ Page({
             const _token = JSON.stringify(token);
             wx.setStorageSync('jwt', _token);
 
-            var id = res.data['id'];
+            var id = res.data['ID'];
             const _id = JSON.stringify(id);
             wx.setStorageSync('userid', _id);
 

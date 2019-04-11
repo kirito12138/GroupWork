@@ -134,6 +134,14 @@ Page({
       url: '../myPost/myPost',
     })
   },
+
+  newPost: function(e)
+  {
+    wx.navigateTo({
+      url: '../newPost/newPost',
+    })
+  },
+
   /**
   * 生命周期函数--监听页面初次渲染完成
   */

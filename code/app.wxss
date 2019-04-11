@@ -9,3 +9,17 @@
   padding: 200rpx 0;
   box-sizing: border-box;
 } 
+
+.page_title{
+  padding:40rpx;
+  text-align:center;
+  font-size: 20px;
+  font-weight: 400;
+  border-bottom:1rpx solid #e5e5e5;
+  margin-left: 40rpx;
+  margin-right: 40rpx;
+}
+
+page{
+  background-color: #F8F8F8;
+}
