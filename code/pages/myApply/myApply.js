@@ -8,17 +8,16 @@ Page({
     // newmark 是指移动的最新点的x轴坐标 
     newmark: 0,
     istoright: true,
-    f_posts:[]
   },
 
-  clickCard: function(e){
+  clickCard: function (e) {
     console.log(e.currentTarget.dataset.index);
     var i = e.currentTarget.dataset.index;
     var para = JSON.stringify(this.data.f_posts[i]);
 
     wx.navigateTo({
-      url: '../postDetail/postDetail?info=' + para,
-    }) 
+      url: '../myApplyson/myApplyson?info=' + para,
+    })
 
 
   },
@@ -77,13 +76,13 @@ Page({
       url: '../personInfo/personInfo',
     })
   },
-  goHome:function(e)
-  {
+  goHome: function (e) {
     wx.redirectTo({
       url: '../home/home',
     })
   },
-  goMyApply: function (e) {
+  goMyApply: function(e)
+  {
     wx.navigateTo({
       url: '../myApply/myApply',
     })
@@ -122,18 +121,12 @@ Page({
     })
   },
 
-  goChangePwd: function(e)
-  {
+  goChangePwd: function (e) {
     wx.navigateTo({
       url: '../changePwd/changePwd',
     })
   },
-  goMyPost:function(e)
-  {
-    wx.navigateTo({
-      url: '../myPost/myPost',
-    })
-  },
+
   /**
   * 生命周期函数--监听页面初次渲染完成
   */

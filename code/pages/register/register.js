@@ -105,7 +105,7 @@ Page({
           account: this.data.account,
           password: this.data.password,
           name:"",
-          age:1,
+          age:-1,
           studentID:"",
           sex:"",
           major:"",
@@ -118,13 +118,14 @@ Page({
           //})
           
           if (res.data['ret']) {
-            wx.showToast({
-              title: '注册成功~',
-            })
-          var _token = res.data['Token'];
-            //const _token = JSON.stringify(token);
-           wx.setStorageSync('jwt', _token);
-            wx.redirectTo({
+            $Message({
+              content: '注册成功',
+              type: 'success'
+            });
+            var token = res.data['Token'];
+            const _token = JSON.stringify(token);
+            wx.setStorageSync('jwt', _token);
+            wx.reLaunch({
               url: '../home/home',
             });
           }

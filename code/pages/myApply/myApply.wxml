@@ -1,3 +1,4 @@
+<!--pages/myApply/myApply.wxml-->
 <!--pages/home/home.wxml-->
 
 <view class="page">
@@ -37,19 +38,21 @@
       <i-icon slot = 'icon' type="other" size = "41" />
       </i-cell>
     </view>
-  <button type="primary" class="circle"style="position:fixed; bottom:30rpx; right :30rpx;z-index: 1;"><i-icon type="add" size = "20"/></button>
+
   <scroll-view class='sv' scroll-y='true' style='z-index: -1;'>
   
     <view class = "cds" >
     
-    <view wx:for = "{{f_posts}}">
+    <view wx:for = "{{f_posts}}" wx:key = "postID">
         <view class = "card" bindtap='clickCard' data-index='{{index}}'>
         <i-card title="{{item.title}}" extra="查看发布" full = "true" style="color:red">
         <view slot="content"><text style = "color: red;">详情：</text>{{item.postDetail}}</view>
-        <view slot="footer">所需人数：（ {{item.acceptedNum}} / {{item.requestNum}} ） 截止时间:{{item.ddl}}</view>
+        <view slot="footer">申请状态：{{item.applyState}}  所需人数：（ {{item.acceptedNum}} / {{item.requestNum}} ） 截止时间:{{item.ddl}}</view>
         </i-card>
         </view>
     </view>
+    
+
     </view>
     </scroll-view>
     

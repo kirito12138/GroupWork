@@ -59,6 +59,11 @@ Page({
             var token = res.data['Token'];
             const _token = JSON.stringify(token);
             wx.setStorageSync('jwt', _token);
+
+            var id = res.data['id'];
+            const _id = JSON.stringify(id);
+            wx.setStorageSync('userid', _id);
+
             wx.redirectTo({
               url: '../home/home',
             });
@@ -143,14 +148,14 @@ Page({
     }
     wx.request({
       url: 'https://group.tttaaabbbccc.club/GetLoginStatus/',
-      method: "POST",
+      method: "GET",
       header: {
         "Content-Type": "application/json;charset=UTF-8",
         'Authorization': tk
       },
       success(res) {
         console.log(res)
-        if(res.ret)
+        if(res.data.ret)
         {
           wx.redirectTo({
             url: '../home/home',

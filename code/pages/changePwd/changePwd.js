@@ -41,6 +41,20 @@ Page({
 
   change_pwd: function(e)
   {
+    var that = this;
+    const _jwt = wx.getStorageSync('jwt');
+    var tk;
+    console.log(_jwt)
+    if (_jwt) {
+      tk = JSON.parse(_jwt);
+      console.log(tk);
+    }
+    else {
+      console.log("no token");
+      return;
+    }
+
+
     var can = true;
     console.log(this.data.password);
     if (this.data.password != this.data.check_psw) 
@@ -81,17 +95,19 @@ Page({
     {
       wx.request({
         //TODO: 修改链接
-        url: 'https://group.tttaaabbbccc.club/register/',
+        url: 'https://group.tttaaabbbccc.club//my/change_password/',
 
         method: "POST",
         header: {
-          "Content-Type": "application/json;charset=UTF-8"
+          "Content-Type": "application/json;charset=UTF-8",
+          'Authorization': tk
         },
         
         //TODO: 修改data
         data:
         {
-         
+          "password": this.data.old_password,  // 数字大小写字母，标点符号，8~14个字符
+          "new_password": this.data.password,  // 数字大小写字母，标点符号，8~14个字符
         },
         success: function (res) 
         {
@@ -99,19 +115,41 @@ Page({
             wx.showToast({
               title: '修改成功',
             })
-            //const _token = JSON.stringify(token);
-            //wx.setStorageSync('jwt', _token);
-            wx.navigateTo({
-              url: '../test/test',
-            });
+           
           }
           else {
             console.log("login_fail");
             //TODO 错误提示
-            $Message({
-              content: '注册失败',
-              type: 'error'
-            });
+            if (res.data['error_code'] == 1) {
+              $Message({
+                content: '不是POST请求',
+                type: 'error'
+              });
+            }
+            else if (res.data['error_code'] == 2) {
+              $Message({
+                content: '缺少必要信息',
+                type: 'error'
+              });
+            }
+            else if (res.data['error_code'] == 3) {
+              $Message({
+                content: '密码格式错误',
+                type: 'error'
+              });
+            }
+            else if (res.data['error_code'] == 4) {
+              $Message({
+                content: '旧密码错误',
+                type: 'error'
+              });
+            }
+            else if (res.data['error_code'] == 5) {
+              $Message({
+                content: '请重新登录',
+                type: 'error'
+              });
+            }
           }
         }
       })
