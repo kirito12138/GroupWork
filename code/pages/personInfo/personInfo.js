@@ -10,7 +10,7 @@ Page({
     account:"未填写",
     name:"未填写",
     sex: "未填写",
-    age: "未填写",
+    age: "0",
     studentID: "未填写",
     major: "未填写",
     grade:"未填写"
@@ -67,7 +67,12 @@ Page({
   },
   loginout:function()
   {
-    
+    var token ="";
+    const _token = JSON.stringify(token);
+    wx.setStorageSync('jwt', _token);
+    wx.reLaunch({
+      url: '../login/login',
+    })
   },
   saveChanges:function()
   {
@@ -77,6 +82,7 @@ Page({
     var student_id = this.data.studentID;
     if(student_id == "未填写")
       student_id = "";
+    
     console.log(student_id);
     if (_jwt) {
       tk = JSON.parse(_jwt);
@@ -105,9 +111,9 @@ Page({
         type: 'error'
       });
     }
-    else if (this.data.age != "未填写" && this.data.age < 0) {
+    else if (this.data.age != "" && !(/^[0-9]+$/.test(this.data.age))) {
       $Message({
-        content:"年龄为大于零的数",
+        content:"年龄均为数字",
         type: 'error'
       });
     }
@@ -131,6 +137,8 @@ Page({
     }
     else
     {
+      var age = this.data.age;
+      if(age == "") age = "0";
       wx.request({
         url: 'https://group.tttaaabbbccc.club//my/profile/modify/',
         method: "POST",
@@ -142,14 +150,14 @@ Page({
         {
           account: this.data.account,
           name: this.data.name,
-          age: this.data.age,
+          age: parseInt(age),
           studentID: student_id,
           sex: this.data.sex,
           major: this.data.major,
           grade: this.data.grade
         },
         success(res) {
-          console.log(res.data.ret)
+          console.log(res.data)
           if(res.data.ret)
           {
             $Message({
