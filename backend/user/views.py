@@ -160,3 +160,14 @@ def modify_profile(request):
     user.save()
 
     return JsonResponse({'ret': True})
+
+
+def get_login_status(request):
+    if request.method != "GET":
+        return JsonResponse({'ret': False, 'error_code': 1})
+
+    user = verify_token(request.META.get('HTTP_AUTHORIZATION'))
+    if not user:
+        return JsonResponse({'ret': False})
+
+    return JsonResponse({'ret': True})
