@@ -25,7 +25,7 @@ urlpatterns = [
     path('register/', user.views.register),
     path('GetLoginStatus/', user.views.get_login_status),
     path('my/profile/', user.views.get_my_profile),
-    path('my/<int:user_id>/detail/', user.views.get_profile),
+    path('my/<int:user_id>/detail/', user.views.get_user_profile),
     path('my/profile/modify/', user.views.modify_profile),
     path('my/change_password/', user.views.change_password),
 

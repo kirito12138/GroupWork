@@ -109,7 +109,7 @@ def get_user_posts(request, user_id):
     try:
         user = User.objects.get(id=user_id)
     except User.DoesNotExist:
-        return JsonResponse({'ret': False, 'error_code': 2})
+        return JsonResponse({'ret': False, 'error_code': 3})
 
     posts = user.post_set.order_by('-post_time')
     ret_data = []

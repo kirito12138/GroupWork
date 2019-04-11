@@ -23,7 +23,7 @@ def login(request):
     if request.method != "POST":
         return JsonResponse({'ret': False, 'error_code': 1})
 
-    data = json.loads(request.body)
+    data = json.loads(request.body)  # json.decoder.JSONDecodeError
     try:
         account = data['account']
         password = data['password']
@@ -101,7 +101,7 @@ def get_my_profile(request):
          'studentID': user.student_id, "sex": user.sex, "major": user.major, "grade": user.grade})
 
 
-def get_profile(request, user_id):
+def get_user_profile(request, user_id):
     if request.method != "GET":
         return JsonResponse({'ret': False, 'error_code': 1})
 
