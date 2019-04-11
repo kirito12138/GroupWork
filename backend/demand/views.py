@@ -1,11 +1,12 @@
 import json
 import re
-from django.http import JsonResponse, HttpResponse
+from django.http import JsonResponse
 from django.shortcuts import render
-
-from demand.models import Post
 from user.jwt_token import verify_token
+from user.models import User
+from demand.models import Post
 import datetime
+
 
 post_title_pattern = re.compile("^.{1,20}$")
 deadline_pattern = re.compile("^\d\d\d\d-\d\d-\d\d$")
@@ -105,7 +106,12 @@ def get_user_posts(request, user_id):
     if not user:
         return JsonResponse({'ret': False, 'error_code': 5})
 
-    posts = Post.objects.filter(poster_id=user_id).order_by('-post_time')
+    try:
+        user = User.objects.get(id=user_id)
+    except User.DoesNotExist:
+        return JsonResponse({'ret': False, 'error_code': 2})
+
+    posts = user.post_set.order_by('-post_time')
     ret_data = []
     for post in posts:
         ret_data.append({
@@ -169,7 +175,6 @@ def modify_post_detail(request, post_id):
     post.save()
 
     return JsonResponse({'ret': True})
-
 
 
 def choose_resume(request):
