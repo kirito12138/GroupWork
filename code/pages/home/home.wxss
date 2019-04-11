@@ -12,13 +12,12 @@ page, .page {
  
 /* 侧边栏样式 */
 .page-slidebar {
-    height: 100%;
-    width: 750rpx;
-    position: fixed;
-    background-color:white;
-    z-index: 0;
+height: 100%;
+width: 750rpx;
+position: fixed;
+background-color:white;
+z-index: 0;
 }
- 
 /* 控制侧边栏的内容距离顶部的距离 */
 .page-content {
     padding-top: 60rpx;
@@ -41,14 +40,31 @@ page, .page {
  
 /* 主页样式 */
 .page-top {
-    height: 100%;
-    position: fixed;
-    width: 750rpx;
-    background-color:ghostwhite;
-    z-index: 0;
-    transition: All 0.4s ease;
-    -webkit-transition: All 0.4s ease;
+height: 100%;
+position: fixed;
+width: 750rpx;
+background-color:ghostwhite;
+z-index: 0;
+transition: All 0.4s ease;
+-webkit-transition: All 0.4s ease;
 }
+
+.tit
+{
+background-color: #99CCFF;
+height: 80rpx;
+width: 100%;
+}
+.butt
+{
+margin-top: 0rpx;
+}
+.cds
+{
+margin-top: 120rpx;
+}
+
+
 /* 遮盖层样式 */
 .cover{
     width: 100%;
@@ -59,5 +75,14 @@ page, .page {
 }
  
 .content{
-    margin-top: 100rpx; 
+margin-top: 100rpx; 
+}
+.sv {
+  background-color: ghostwhite;
+  height: 100%;
+}
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  color: transparent;
 }
