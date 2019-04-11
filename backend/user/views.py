@@ -88,13 +88,31 @@ def register(request):
     return JsonResponse({'ret': True, 'ID': str(new_user.id), 'Token': token})
 
 
-def get_profile(request):
+def get_my_profile(request):
     if request.method != "GET":
         return JsonResponse({'ret': False, 'error_code': 1})
 
     user = verify_token(request.META.get('HTTP_AUTHORIZATION'))
     if not user:
         return JsonResponse({'ret': False, 'error_code': 5})
+
+    return JsonResponse(
+        {'ret': True, 'account': user.account, 'name': user.name, 'age': user.age,
+         'studentID': user.student_id, "sex": user.sex, "major": user.major, "grade": user.grade})
+
+
+def get_profile(request, user_id):
+    if request.method != "GET":
+        return JsonResponse({'ret': False, 'error_code': 1})
+
+    user = verify_token(request.META.get('HTTP_AUTHORIZATION'))
+    if not user:
+        return JsonResponse({'ret': False, 'error_code': 5})
+
+    try:
+        user = models.User.objects.get(id=user_id)
+    except models.User.DoesNotExist:
+        return JsonResponse({'ret': False, 'error_code': 3})
 
     return JsonResponse(
         {'ret': True, 'account': user.account, 'name': user.name, 'age': user.age,

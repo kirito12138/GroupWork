@@ -32,7 +32,7 @@ def test_login_3():
 
 
 def test_register_1():
-    print('test_register_2:')
+    print('test_register_1:')
     url = domain + 'register/'
     case_new = {'account': 'admin', 'password': 'admin_admin', "name": "string", "age": 1,
                 "studentID": "11111111", "sex": "string", "major": "string", "grade": "string"}
@@ -41,7 +41,7 @@ def test_register_1():
 
 
 def test_register_2():
-    print('test_register_1:')
+    print('test_register_2:')
     url = domain + 'register/'
     case_new = {'account': 'a' + str(int(time.time())), 'password': 'admin_admin', "name": "string", "age": 1,
                 "studentID": "11111111", "sex": "string", "major": "string", "grade": "string"}
@@ -59,7 +59,7 @@ def test_register_3():
 
 
 if __name__ == "__main__":
-    # test_register_1()
+    test_register_1()
     test_register_2()
     # test_register_3()
     # test_login_1()
