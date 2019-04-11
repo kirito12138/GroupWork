@@ -153,3 +153,31 @@ def get_login_status(request):
         return JsonResponse({'ret': False})
 
     return JsonResponse({'ret': True})
+
+
+def change_password(request):
+    if request.method != "POST":
+        return JsonResponse({'ret': False, 'error_code': 1})
+
+    user = verify_token(request.META.get('HTTP_AUTHORIZATION'))
+    if not user:
+        return JsonResponse({'ret': False, 'error_code': 1})
+
+    data = json.loads(request.body)
+    try:
+        password = data['password']
+        new_password = data['new_password']
+
+    except KeyError:
+        return JsonResponse({'ret': False, 'error_code': 2})
+
+    if not password_pattern.match(password) or not password_pattern.match(new_password):
+        return JsonResponse({'ret': False, 'error_code': 3})
+
+    if user.password != gen_md5(password, SECRET_KEY):
+        return JsonResponse({'ret': False, 'error_code': 4})
+
+    user.password = gen_md5(new_password, SECRET_KEY)
+    user.save()
+
+    return JsonResponse({'ret': True})
