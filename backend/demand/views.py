@@ -121,6 +121,57 @@ def get_user_posts(request, user_id):
     return JsonResponse(ret_data, safe=False)
 
 
+def modify_post_detail(request, post_id):
+    if request.method != "POST":
+        return JsonResponse({'ret': False, 'error_code': 1})
+
+    user = verify_token(request.META.get('HTTP_AUTHORIZATION'))
+    if not user:
+        return JsonResponse({'ret': False, 'error_code': 5})
+
+    try:
+        post = Post.objects.get(id=post_id)
+    except Post.DoesNotExist:
+        return JsonResponse({'ret': False, 'error_code': 4})
+    if post.poster != user:
+        return JsonResponse({'ret': False, 'error_code': 6})
+
+    data = json.loads(request.body)
+    try:
+        title = data['title']
+        post_detail = data['postDetail']
+        request_num = data['requestNum']
+        deadline = data['ddl']
+    except KeyError:
+        return JsonResponse({'ret': False, 'error_code': 2})
+
+    if type(request_num) != int or request_num <= 0:
+        return JsonResponse({'ret': False, 'error_code': 3})
+    if not post_title_pattern.match(title):
+        return JsonResponse({'ret': False, 'error_code': 3})
+    if not deadline_pattern.match(deadline):
+        return JsonResponse({'ret': False, 'error_code': 3})
+    try:
+        deadline = datetime.datetime.strptime(deadline, "%Y-%m-%d").date()
+    except ValueError:
+        return JsonResponse({'ret': False, 'error_code': 3})
+
+    # 新建发布校验
+    # if Post.objects.filter(title=title, post_detail=post_detail, request_num=request_num, deadline=deadline,
+    #                        poster=user).exists():
+    #     return JsonResponse({'ret': False, 'error_code': 4})
+
+    post.title = title
+    post.post_detail = post_detail
+    post.request_num = request_num
+    post.deadline = deadline
+    post.poster = user
+    post.save()
+
+    return JsonResponse({'ret': True})
+
+
+
 def choose_resume(request):
     if request.method != "GET":
         return JsonResponse({'ret': False, 'error_code': 1})
