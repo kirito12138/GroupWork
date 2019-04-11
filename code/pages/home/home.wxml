@@ -34,7 +34,9 @@
       <i-icon slot = 'icon' type="other" size = "41" />
       </i-cell>
     </view>
-<scroll-view class='sv' scroll-y='true' style='z-index: -1;'>
+  <button type="primary" class="circle"style="position:fixed; bottom:30rpx; right :30rpx;z-index: 1;"><i-icon type="add" size = "20"/></button>
+  <scroll-view class='sv' scroll-y='true' style='z-index: -1;'>
+  
     <view class = "cds" >
     
     <view wx:for = "{{f_posts}}">
@@ -49,5 +51,7 @@
 
     </view>
     </scroll-view>
+    
   </view>
 </view>
+
