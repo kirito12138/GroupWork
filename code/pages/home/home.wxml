@@ -39,8 +39,8 @@
     
     <view wx:for = "{{f_posts}}">
         <view class = "card" bindtap='clickCard' data-index='{{index}}'>
-        <i-card title="{{item.title}}" extra="额外内容" full = "true" style="color:red">
-        <view slot="content">{{item.postDetail}}</view>
+        <i-card title="{{item.title}}" extra="查看发布" full = "true" style="color:red">
+        <view slot="content"><text style = "color: red;">详情：</text>{{item.postDetail}}</view>
         <view slot="footer">所需人数：（ {{item.acceptedNum}} / {{item.requestNum}} ） 截止时间:{{item.ddl}}</view>
         </i-card>
         </view>
