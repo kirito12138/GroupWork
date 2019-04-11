@@ -1,6 +1,5 @@
 {
   "pages": [
-    
     "pages/login/login",
     "pages/personInfo/personInfo",
     "pages/index/index",
@@ -11,7 +10,8 @@
     "pages/postDetail/postDetail",
     "pages/home/home",
     "pages/myPost/myPost",
-    "pages/newPost/newPost"
+    "pages/newPost/newPost",
+    "pages/modifyPostDetail/modifyPostDetail"
   ],
   "window": {
     "backgroundTextStyle": "light",

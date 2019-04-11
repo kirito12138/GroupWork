@@ -18,10 +18,8 @@ Page({
     var para = JSON.stringify(this.data.f_posts[i]);
 
     wx.navigateTo({
-      url: '../postDetail/postDetail?info=' + para,
+      url: '../modifyPostDetail/modifyPostDetail?info=' + para,
     })
-
-
   },
   // 点击左上角小图标事件
   tap_ch: function (e) {
@@ -119,8 +117,8 @@ Page({
         'Authorization': tk
       },
       success(res) {
-        console.log(res)
-        if(res.data['ret'])
+        console.log(res.data['ret'])
+        if(res.data['ret']!=null)
         {
           if(res.data['error_code'] == 5)
           {
