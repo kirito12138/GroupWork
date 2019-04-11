@@ -83,6 +83,11 @@ Page({
       url: '../home/home',
     })
   },
+  goMyApply: function (e) {
+    wx.navigateTo({
+      url: '../myApply/myApply',
+    })
+  },
   /**
   * 生命周期函数--监听页面加载
   */

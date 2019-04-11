@@ -38,7 +38,7 @@
       <i-icon slot = 'icon' type="other" size = "41" />
       </i-cell>
     </view>
-  <button type="primary" class="circle"style="position:fixed; bottom:30rpx; right :30rpx;z-index: 1;"><i-icon type="add" size = "20"/></button>
+
   <scroll-view class='sv' scroll-y='true' style='z-index: -1;'>
   
     <view class = "cds" >
