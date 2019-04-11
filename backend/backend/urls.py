@@ -23,13 +23,18 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('login/', user.views.login),
     path('register/', user.views.register),
+    path('GetLoginStatus/', user.views.get_login_status),
     path('my/profile/', user.views.get_my_profile),
     path('my/<int:user_id>/detail/', user.views.get_profile),
     path('my/profile/modify/', user.views.modify_profile),
-    path('c/post/', demand.views.create_post),
-    path('f/processing/', demand.views.get_unclosed_posts),
-    path('p/<int:post_id>/', demand.views.get_post_detail),
-    path('GetLoginStatus/', user.views.get_login_status),
     path('my/change_password/', user.views.change_password),
+
     path('my/<int:user_id>/post/', demand.views.get_user_posts),
+    path('f/processing/', demand.views.get_unclosed_posts),
+    path('c/post/', demand.views.create_post),
+    path('p/<int:post_id>/', demand.views.get_post_detail),
+    path('p/<int:post_id>/modify/', demand.views.modify_post_detail),
+
+    path('resume/upload/', demand.views.upload_resume),
+    path('resume/choose/', demand.views.choose_resume),
 ]

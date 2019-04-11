@@ -14,6 +14,10 @@ def test_register_1():
                 "studentID": "", "sex": "", "major": "", "grade": ""}
     r = requests.post(url, data=json.dumps(case_new))
     print(r, r.content)
+    try:
+        headers['Authorization'] = json.loads(r.content)['Token']
+    except KeyError:
+        pass
 
 
 def test_login_1():
@@ -30,24 +34,32 @@ def test_login_1():
 
 def test_get_unclosed_posts_1():
     print('test_get_unclosed_posts_1:')
-    url = domain + 'f/processing/'
+    url = domain + 'f/processing'
     r = requests.get(url, headers=headers)
-    print(r, r.content)
+    print(r, json.loads(r.content))
 
 
 def test_post_1():
     print('test_post_1:')
     url = domain + 'c/post/'
-    case_new = {'title': 'aadwwddwaa', 'postDetail': 'wddwqdqdwq', 'requestNum': 3, 'ddl': '2019-04-01'}
-    r = requests.post(url, data=json.dumps(case_new), headers=headers)
+    data = {'title': 'avvvvv', 'postDetail': 'wddwqdqdwq', 'requestNum': 3, 'ddl': '2019-04-01'}
+    r = requests.post(url, data=json.dumps(data), headers=headers)
     print(r, r.content)
 
 
 def test_post_2():
     print('test_post_2:')
     url = domain + 'c/post/'
-    case_new = {'title': 'aawawdwa', 'postDetail': 'wdqdqdwq', 'requestNum': 3, 'ddl': '2019-04-01'}
-    r = requests.post(url, data=json.dumps(case_new), headers=headers)
+    data = {'title': 'aawawdwa', 'postDetail': 'wdqdqdwq', 'requestNum': 3, 'ddl': '2019-04-01'}
+    r = requests.post(url, data=json.dumps(data), headers=headers)
+    print(r, r.content)
+
+
+def test_modify_post_1():
+    print('test_modify_post_1:')
+    url = domain + 'p/2/modify/'
+    data = {'title': 'qqqqqq', 'postDetail': 'qqqqq', 'requestNum': 3, 'ddl': '2019-04-01'}
+    r = requests.post(url, data=json.dumps(data), headers=headers)
     print(r, r.content)
 
 
@@ -102,9 +114,16 @@ def test_get_user_posts_1():
     print(r, r.content)
 
 
+def test_choose_resume_1():
+    print('test_choose_resume_1:')
+    url = domain + 'resume/choose/'
+    r = requests.get(url, headers=headers)
+    print(r, r.content)
+
+
 if __name__ == "__main__":
-    # test_register_1()
-    test_login_1()
+    test_register_1()
+    # test_login_1()
     test_post_1()
     test_post_2()
     # test_get_unclosed_posts_1()
@@ -113,4 +132,6 @@ if __name__ == "__main__":
     # test_modify_password_1()
     # test_get_my_profile_1()
     # test_get_profile_1()
-    test_get_user_posts_1()
+    # test_get_user_posts_1()
+    # test_choose_resume_1()
+    test_modify_post_1()
