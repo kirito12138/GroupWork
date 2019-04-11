@@ -171,7 +171,6 @@ def modify_post_detail(request, post_id):
     post.post_detail = post_detail
     post.request_num = request_num
     post.deadline = deadline
-    post.poster = user
     post.save()
 
     return JsonResponse({'ret': True})
