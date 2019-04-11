@@ -21,7 +21,6 @@ Page({
       requestNum: this.data.info.requestNum,
       acceptedNum: this.data.info.acceptedNum,
       ddl: this.data.info.ddl,
-
       postID: this.data.info.postID,
       posterID: this.data.info.posterID
     })
