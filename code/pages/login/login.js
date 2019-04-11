@@ -143,14 +143,14 @@ Page({
     }
     wx.request({
       url: 'https://group.tttaaabbbccc.club/GetLoginStatus/',
-      method: "POST",
+      method: "GET",
       header: {
         "Content-Type": "application/json;charset=UTF-8",
         'Authorization': tk
       },
       success(res) {
         console.log(res)
-        if(res.ret)
+        if(res.data.ret)
         {
           wx.redirectTo({
             url: '../home/home',
