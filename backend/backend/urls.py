@@ -29,4 +29,5 @@ urlpatterns = [
     path('c/post/', demand.views.create_post),
     path('f/processing/', demand.views.get_unclosed_posts),
     path('p/<int:post_id>/', demand.views.get_post_detail),
+    path('GetLoginStatus/', user.views.get_login_status),
 ]
