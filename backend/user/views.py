@@ -40,7 +40,7 @@ def login(request):
 
     if user.password != gen_md5(password, SECRET_KEY):
         return JsonResponse({'ret': False, 'error_code': 5})
-    token = create_token(account).decode()
+    token = create_token(user.id).decode()
     return JsonResponse({'ret': True, 'ID': str(user.id), 'Token': token})
 
 
@@ -84,7 +84,7 @@ def register(request):
     new_user.grade = grade
     new_user.save()
 
-    token = create_token(account).decode()
+    token = create_token(new_user.id).decode()
     return JsonResponse({'ret': True, 'ID': str(new_user.id), 'Token': token})
 
 
