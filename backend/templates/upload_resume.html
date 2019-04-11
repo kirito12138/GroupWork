@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"/>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.js"></script>
+</head>
+
+<body>
+<form enctype="multipart/form-data">
+    <input type="file" id="file">
+    <button id="upload">上传</button>
+</form>
+
+<script type="application/javascript">
+    $("#upload").click(function () {
+        var formData = new FormData();
+        formData.append('file', $('#file')[0].files[0]);
+
+        $.ajax({
+            type: 'POST',
+            url: "http://127.0.0.1:8000/resume/upload/",
+            headers: {"Authorization": "{{ jwt_token }}" },
+            data: formData,
+            cache: false,
+            async: false,
+            processData: false,
+            contentType: false,
+        }).done(function (res) {
+            if (res['ret'] == true) {
+                alert('上传成功！');
+            }
+            else {
+                alert('上传失败！');
+            }
+        }).fail(function (res) {
+            alert('上传失败！');
+        });
+
+    });
+</script>
+</body>

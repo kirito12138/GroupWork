@@ -1,6 +1,8 @@
 import json
 import re
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
+from django.shortcuts import render
+
 from demand.models import Post
 from user.jwt_token import verify_token
 import datetime
@@ -117,3 +119,25 @@ def get_user_posts(request, user_id):
             "posterID": str(post.poster.id),
         })
     return JsonResponse(ret_data, safe=False)
+
+
+def choose_resume(request):
+    if request.method != "GET":
+        return JsonResponse({'ret': False, 'error_code': 1})
+    jwt_token = request.META.get('HTTP_AUTHORIZATION')
+    user = verify_token(jwt_token)
+    if not user:
+        return JsonResponse({'ret': False, 'error_code': 5})
+    return render(request, 'upload_resume.html', locals())
+
+
+def upload_resume(request):
+    if request.method != "POST":
+        return JsonResponse({'ret': False, 'error_code': 1})
+
+    user = verify_token(request.META.get('HTTP_AUTHORIZATION'))
+    if not user:
+        return JsonResponse({'ret': False, 'error_code': 5})
+
+    print(request.FILES.get('file'))
+    return JsonResponse({'ret': True})
