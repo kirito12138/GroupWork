@@ -1,7 +1,7 @@
 <!--pages/postDetail/postDetail.wxml-->
 <view class="page">
   <view class="weui-panel-1">
-    <view class="postUser">发布者昵称</view>
+    <view class="postUser">{{name}}</view>
     <view class="weui-panel-1__bd">
         <view class="weui-media-box-1 weui-media-box-1_text">
             <view class="weui-media-box-1__title weui-media-box-1__title_in-text">{{title}}</view>

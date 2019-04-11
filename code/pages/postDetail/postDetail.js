@@ -7,13 +7,26 @@ Page({
   data: {
       num1:1,
       num2:2,
-      date:"19/05/01"
+      date:"19/05/01",
+      name:"111"
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    var that = this;
+    const _jwt = wx.getStorageSync('jwt');
+    var tk;
+    console.log(_jwt)
+    if (_jwt) {
+      tk = JSON.parse(_jwt);
+      console.log(tk);
+    }
+    else {
+      console.log("no token");
+      return;
+    }
     this.data.info=JSON.parse(options.info);
     this.setData({
       title: this.data.info.title,
@@ -24,6 +37,22 @@ Page({
       
       postID: this.data.info.postID,
       posterID: this.data.info.posterID
+    })
+    wx.request({
+      url: 'https://group.tttaaabbbccc.club/my/'+that.data.posterID+'/detail/',
+      method: "GET",
+      header: {
+        "Content-Type": "application/json;charset=UTF-8",
+        'Authorization': tk
+      },
+      success(res) {
+        console.log(res)
+        if (res.data['ret']) {
+          that.setData({
+            name: res.data['name']
+          })
+        }
+      }
     })
   },
 

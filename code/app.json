@@ -9,6 +9,8 @@
     "pages/changePwd/changePwd",
     "pages/postDetail/postDetail",
     "pages/home/home",
+    "pages/myApply/myApply",
+    "pages/myApplyson/myApplyson",
     "pages/myPost/myPost",
     "pages/newPost/newPost",
     "pages/modifyPostDetail/modifyPostDetail"
