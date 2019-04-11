@@ -90,6 +90,7 @@ Page({
     }
     else {
       console.log("no token");
+      return;
     }
 
     wx.request({

@@ -27,8 +27,8 @@
 <!-- 2.当点击左上角图标的时候或者屏幕向左滑动，open 变化 true -->
 <!-- 3.当 open 为 true 时，会加上类名为 c-state 和 cover 的 css 样式 -->
 <!-- bindtouchstart、 bindtouchmove、bindtouchend -->
-<!-- 当手指触摸屏幕并滑动时，所触发的三个函数 -->
-<view bindtouchmove="tap_drag" bindtouchend="tap_end" bindtouchstart="tap_start" class="page-top {{open ? ['c-state','cover'] : ''}} ">
+<!-- 当手指触摸屏幕并滑动时，所触发的三个函数 bindtouchmove="tap_drag" bindtouchend="tap_end" bindtouchstart="tap_start" -->
+<view  class="page-top {{open ? ['c-state','cover'] : ''}} ">
 <view slot="title" class='tit' style="position:fixed;top:0;">
 <i-cell bind:click = "tap_ch">
 <i-icon slot = 'icon' type="other" size = "41" />
