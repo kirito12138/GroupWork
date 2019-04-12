@@ -114,6 +114,20 @@ def test_get_user_posts_1():
     print(r, r.content)
 
 
+def test_get_user_applies_1():
+    print('test_get_user_applies_1:')
+    url = domain + 'my/1/apply/'
+    r = requests.get(url, headers=headers)
+    print(r, r.content)
+
+
+def test_get_post_applies_1():
+    print('test_get_post_applies_1:')
+    url = domain + 'p/18/apply/'
+    r = requests.get(url, headers=headers)
+    print(r, r.content)
+
+
 def test_choose_resume_1():
     print('test_choose_resume_1:')
     url = domain + 'resume/choose/'
@@ -136,3 +150,5 @@ if __name__ == "__main__":
     # test_choose_resume_1()
     # test_modify_post_1()
     # test_get_unclosed_posts_1()
+    test_get_user_applies_1()
+    test_get_post_applies_1()
