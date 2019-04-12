@@ -13,7 +13,8 @@
     "pages/myApplyson/myApplyson",
     "pages/myPost/myPost",
     "pages/newPost/newPost",
-    "pages/modifyPostDetail/modifyPostDetail"
+    "pages/modifyPostDetail/modifyPostDetail",
+    "pages/modifyPostSon/modifyPostSon"
   ],
   "window": {
     "backgroundTextStyle": "light",
