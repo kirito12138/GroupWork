@@ -1,6 +1,6 @@
 {
   "pages": [
-    "pages/myResume/myResume",
+    
     "pages/login/login",
     "pages/personInfo/personInfo",
     "pages/index/index",
@@ -14,8 +14,11 @@
     "pages/myApplyson/myApplyson",
     "pages/myPost/myPost",
     "pages/newPost/newPost",
-    "pages/modifyPostDetail/modifyPostDetail"
-    
+
+    "pages/modifyPostDetail/modifyPostDetail",
+    "pages/modifyPostSon/modifyPostSon",
+    "pages/myResume/myResume"
+
   ],
   "window": {
     "backgroundTextStyle": "light",
