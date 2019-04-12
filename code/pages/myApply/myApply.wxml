@@ -18,6 +18,9 @@
 <i-cell bind:click = "goPersonInfo" title="个人资料" >
 <i-icon slot = 'icon' type="addressbook" size="28" color='#FFD700'/>
 </i-cell>
+<i-cell bind:click = "goMyResume" title="我的简历" >
+<i-icon slot = 'icon' type="businesscard" size = "28" color='#FF9933' />
+</i-cell>
 <i-cell bind:click = "goChangePwd" title="修改密码" >
 <i-icon slot = 'icon' type="editor" size = "28" color='#FF6A6A' />
 </i-cell>
@@ -39,13 +42,16 @@
       </i-cell>
     </view>
 
+
+
+
   <scroll-view class='sv' scroll-y='true' style='z-index: -1;'>
   
     <view class = "cds" >
     
     <view wx:for = "{{f_posts}}" wx:key = "postID">
         <view class = "card" bindtap='clickCard' data-index='{{index}}'>
-        <i-card title="{{item.title}}" extra="查看发布" full = "true" style="color:red">
+        <i-card title="{{item.title}}" extra="查看发布"  style="color:red">
         <view slot="content"><text style = "color: red;">详情：</text>{{item.postDetail}}</view>
         <view slot="footer">申请状态：{{item.applyState}}  所需人数：（ {{item.acceptedNum}} / {{item.requestNum}} ） 截止时间:{{item.ddl}}</view>
         </i-card>
@@ -59,3 +65,5 @@
   </view>
 </view>
 
+
+<i-message id="message" />

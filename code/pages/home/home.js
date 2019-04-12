@@ -11,6 +11,9 @@ Page({
     f_posts:[]
   },
 
+
+
+
   clickCard: function(e){
     console.log(e.currentTarget.dataset.index);
     var i = e.currentTarget.dataset.index;
@@ -128,6 +131,12 @@ Page({
       url: '../changePwd/changePwd',
     })
   },
+  goMyResume: function(e)
+  {
+    wx.navigateTo({
+      url: '../myResume/myResume',
+    })
+  },
   goMyPost:function(e)
   {
     wx.navigateTo({
@@ -174,7 +183,42 @@ Page({
   * 页面相关事件处理函数--监听用户下拉动作
   */
   onPullDownRefresh: function () {
+    wx.showNavigationBarLoading() //在标题栏中显示加载
+    var that = this;
+    const _jwt = wx.getStorageSync('jwt');
+    var tk;
+    console.log(_jwt)
+    if (_jwt) {
+      tk = JSON.parse(_jwt);
+      console.log(tk);
+    }
+    else {
+      console.log("no token");
+      return;
+    }
 
+    wx.request({
+      url: 'https://group.tttaaabbbccc.club/f/processing/',
+      method: "GET",
+      header: {
+        "Content-Type": "application/json;charset=UTF-8",
+        'Authorization': tk
+      },
+      success(res) {
+        console.log(res)
+        that.setData({
+          f_posts: res.data
+        });
+        console.log(res.data)
+      }
+    })
+    //模拟加载
+    setTimeout(function () {
+      // complete
+      wx.hideNavigationBarLoading() //完成停止加载
+      wx.stopPullDownRefresh() //停止下拉刷新
+
+    }, 150);
   },
 
   /**

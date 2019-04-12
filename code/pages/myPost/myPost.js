@@ -145,6 +145,11 @@ Page({
       url: '../changePwd/changePwd',
     })
   },
+  goMyResume: function (e) {
+    wx.navigateTo({
+      url: '../myResume/myResume',
+    })
+  },
 
   /**
   * 生命周期函数--监听页面初次渲染完成

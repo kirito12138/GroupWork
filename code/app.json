@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/myResume/myResume",
     "pages/login/login",
     "pages/personInfo/personInfo",
     "pages/index/index",
@@ -14,6 +15,7 @@
     "pages/myPost/myPost",
     "pages/newPost/newPost",
     "pages/modifyPostDetail/modifyPostDetail"
+    
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -33,6 +35,7 @@
     "i-icon": "../../vant-weapp/dist/icon/index",
     "i-input-number": "../../vant-weapp/dist/input-number/index",
     "i-card": "../../vant-weapp/dist/card/index",
-    "i-toast": "../../vant-weapp/dist/toast/index"
+    "i-toast": "../../vant-weapp/dist/toast/index",
+    "i-divider": "../../vant-weapp/dist/divider/index"
   }
 }

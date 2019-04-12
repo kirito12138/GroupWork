@@ -17,6 +17,9 @@
 <i-cell bind:click = "goPersonInfo" title="个人资料" >
 <i-icon slot = 'icon' type="addressbook" size="28" color='#FFD700'/>
 </i-cell>
+<i-cell bind:click = "goMyResume" title="我的简历" >
+<i-icon slot = 'icon' type="businesscard" size = "28" color='#FF9933' />
+</i-cell>
 <i-cell bind:click = "goChangePwd" title="修改密码" >
 <i-icon slot = 'icon' type="editor" size = "28" color='#FF6A6A' />
 </i-cell>

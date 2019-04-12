@@ -1,0 +1,166 @@
+    
+<view class="page-container">
+
+  <!-- 个人信息-->
+  <view class='card-view' style='margin-top:40rpx;'>
+    <view class='item-title' >
+      <i-icon type="mine_fill" size = "70" />
+      <text style='font:"微软雅黑";font-size:18px; margin-left: 20rpx'>{{name}}</text>
+    </view>
+    
+
+    <view class='margin-top' >
+      <view class='user-info-item'>
+        <i-row >
+          <i-col  span = "12" i-class="col-class" >
+            <i-input  title="性别:" value= "{{sex}}" />
+          </i-col>
+          <i-col span="12" i-class="col-class">
+              <i-input  title="年龄：" value= "{{age}}" />
+          </i-col>  
+        </i-row>   
+      </view>
+      <view class='user-info-item'>
+        <i-row >
+          <i-col  span = "12" i-class="col-class" >
+            <i-input  title="学历:" value= "{{education}}" />
+          </i-col>
+          <i-col span="12" i-class="col-class">
+              <i-input title="城市：" value= "{{city}}" />
+          </i-col>
+        </i-row>   
+      </view>
+    </view>
+  </view>
+  <view class='card-view' style='margin-top:40rpx;'>
+    <view class='item-title'>
+      <text class="item-info-title">联系方式</text>
+    </view>
+
+    <view style='background:gray;margin-top:20rpx' >
+      <i-divider lineColor="gray" height = "1"></i-divider>
+    </view>
+    
+    <i-input  title="电话:" value= "{{phone}}" />
+    
+    <view style='background:gray' >
+      <i-divider lineColor="#CCCCCC" height = "1"></i-divider>
+    </view>
+
+    <i-input  title="邮箱:" value= "{{email}}" />
+  </view>
+
+   <view class='card-view' style='margin-top:40rpx;'>
+    <view class='item-title'>
+      <text class="item-info-title">教育经历</text>
+    </view>
+
+    <view style='background:gray;margin-top:20rpx' >
+      <i-divider lineColor="#CCCCCC" height = "1"></i-divider>
+    </view>
+
+    <text style = 'font-family:"Arial";font-size:18px;margin-top:20rpx;'>本科</text>
+
+    <i-input  title="入学年份:" value= "{{expEdu1['year']}}" />
+    <view style='background:#e9eaec' >
+      <i-divider lineColor="#e9eaec" height = "1"></i-divider>
+    </view>
+
+    <i-input  title="毕业院校:" value= "{{expEdu1['year']}}" />
+    <view style='background:#e9eaec' >
+      <i-divider lineColor="#e9eaec" height = "1"></i-divider>
+    </view>
+
+    <i-input  title="所学专业:" value= "{{expEdu1['year']}}" />
+    
+    <view style='background:gray' >
+      <i-divider lineColor="#CCCCCC" height = "1"></i-divider>
+    </view>
+
+    <text style = 'font-family:"Arial";font-size:18px;margin-top:20rpx;'>硕士</text>
+    <i-input  title="入学年份:" value= "{{expEdu2['year']}}" />
+    <view style='background:#e9eaec' >
+      <i-divider lineColor="#e9eaec" height = "1"></i-divider>
+    </view>
+
+    <i-input  title="毕业院校:" value= "{{expEdu2['year']}}" />
+    <view style='background:#e9eaec' >
+      <i-divider lineColor="#e9eaec" height = "1"></i-divider>
+    </view>
+
+    <i-input  title="所学专业:" value= "{{expEdu2['year']}}" />
+
+    <view style='background:gray' >
+      <i-divider lineColor="#CCCCCC" height = "1"></i-divider>
+    </view>
+
+    <text style = 'font-family:"Arial";font-size:18px;margin-top:20rpx;'>博士</text>
+    <i-input  title="入学年份:" value= "{{expEdu3['year']}}" />
+    <view style='background:#e9eaec' >
+      <i-divider lineColor="#e9eaec" height = "1"></i-divider>
+    </view>
+
+    <i-input  title="毕业院校:" value= "{{expEdu3['year']}}" />
+    <view style='background:#e9eaec' >
+      <i-divider lineColor="#e9eaec" height = "1"></i-divider>
+    </view>
+
+    <i-input  title="所学专业:" value= "{{expEdu3['year']}}" />
+
+  </view>
+
+   <view class='card-view' style='margin-top:40rpx;'>
+    <view class='item-title'>
+      <text class="item-info-title">获奖情况</text>
+    </view>
+
+    <view style='background:gray;margin-top:20rpx' >
+      <i-divider lineColor="#CCCCCC" height = "1"></i-divider>
+    </view>
+
+    <textarea style='font-size:14px; margin-top: 20rpx'>{{email}}</textarea>
+
+  </view>
+
+
+   <view class='card-view' style='margin-top:40rpx;'>
+    <view class='item-title'>
+      <text class="item-info-title">英语技能</text>
+    </view>
+
+    <view style='background:gray;margin-top:20rpx' >
+      <i-divider lineColor="#CCCCCC" height = "1"></i-divider>
+    </view>
+    
+    <textarea style='font-size:14px; margin-top: 20rpx'>{{email}}</textarea>
+  </view>
+
+  <view class='card-view' style='margin-top:40rpx;'>
+    <view class='item-title'>
+      <text class="item-info-title">项目经历</text>
+    </view>
+
+    <view style='background:gray;margin-top:20rpx' >
+      <i-divider lineColor="#CCCCCC" height = "1"></i-divider>
+    </view>
+    
+    <textarea style='font-size:14px; margin-top: 20rpx'>{{email}}</textarea>
+  </view>
+
+  <view class='card-view' style='margin-top:40rpx;'>
+    <view class='item-title'>
+      <text class="item-info-title">自我评价</text>
+    </view>
+
+    <view style='background:gray;margin-top:20rpx' >
+      <i-divider lineColor="#CCCCCC" height = "1"></i-divider>
+    </view>
+    
+    <textarea style='font-size:14px; margin-top: 20rpx'>{{email}}</textarea>
+  </view>
+
+  <view class = "button">
+    <i-button bind:click="click_save_resume" type="primary" shape="circle" size="large">保存修改</i-button>
+  </view>
+
+</view>

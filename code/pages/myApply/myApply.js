@@ -1,4 +1,5 @@
 // pages/home/home.js
+const { $Message } = require('../../vant-weapp/dist/base/index');
 Page({
 
   data: {
@@ -91,6 +92,7 @@ Page({
   * 生命周期函数--监听页面加载
   */
   onLoad: function (options) {
+    var id;
     var that = this;
     const _jwt = wx.getStorageSync('jwt');
     var tk;
@@ -103,20 +105,59 @@ Page({
       console.log("no token");
       return;
     }
+    try {
+      const _id = wx.getStorageSync('userid');
+      console.log(_id)
+      if (_id) {
+        console.log(_id)
+        id = JSON.parse(_id);
+      }
+    }
+    catch (e) {
+      console.log("no id");
+    }
 
     wx.request({
-      url: 'https://group.tttaaabbbccc.club/f/processing/',
+      url: 'https://group.tttaaabbbccc.club//my/'+id+'/apply/',
       method: "GET",
       header: {
         "Content-Type": "application/json;charset=UTF-8",
         'Authorization': tk
       },
       success(res) {
-        console.log(res)
-        that.setData({
-          f_posts: res.data
-        });
-        console.log(res.data)
+        if(res.data['ret'] == false)
+        {
+          if (res.data['error_code'] == 1)
+          {
+            $Message({
+              content: '不是GET请求',
+              type: 'error'
+            });
+          }
+          else if (res.data['error_code'] == 3)
+          {
+            $Message({
+              content: '该 ID 对应的用户不存在',
+              type: 'error'
+            });
+          }
+          else if (res.data['error_code'] == 5)
+          {
+            $Message({
+              content: '请重新登录',
+              type: 'error'
+            });
+          }
+        }
+        else
+        {
+          console.log(res)
+          that.setData({
+            f_posts: res.data
+          });
+          console.log(res.data)
+        }
+        
       }
     })
   },
@@ -126,7 +167,11 @@ Page({
       url: '../changePwd/changePwd',
     })
   },
-
+  goMyResume: function (e) {
+    wx.navigateTo({
+      url: '../myResume/myResume',
+    })
+  },
   /**
   * 生命周期函数--监听页面初次渲染完成
   */
