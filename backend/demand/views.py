@@ -206,12 +206,12 @@ def get_post_applies(request, post_id):
 
     user = verify_token(request.META.get('HTTP_AUTHORIZATION'))
     if not user:
-        return JsonResponse({'ret': False, 'error_code': 3})
+        return JsonResponse({'ret': False, 'error_code': 5})
 
     try:
         post = Post.objects.get(id=post_id)
     except Post.DoesNotExist:
-        return JsonResponse({'ret': False, 'error_code': 2})
+        return JsonResponse({'ret': False, 'error_code': 3})
 
     applies = post.apply_set.all()
     ret_data = []
