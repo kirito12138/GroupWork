@@ -9,7 +9,13 @@ Page({
     num2: 2,
     date: "19/05/01"
   },
-
+  modifyPost:function()
+  {
+    var para = JSON.stringify(this.data.info);
+    wx.navigateTo({
+      url: '../modifyPostSon/modifyPostSon?info=' + para,
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
