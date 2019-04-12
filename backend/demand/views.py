@@ -5,6 +5,7 @@ from django.shortcuts import render
 from user.jwt_token import verify_token
 from user.models import User
 from demand.models import Post
+from demand.models import Apply
 import datetime
 
 
@@ -196,3 +197,55 @@ def upload_resume(request):
 
     print(request.FILES.get('file'))
     return JsonResponse({'ret': True})
+
+
+def get_post_applies(request, post_id):
+    if request.method != "GET":
+        return JsonResponse({'ret': False, 'error_code': 1})
+
+    user = verify_token(request.META.get('HTTP_AUTHORIZATION'))
+    if not user:
+        return JsonResponse({'ret': False, 'error_code': 5})
+
+    try:
+        post = Post.objects.get(id=post_id)
+    except Post.DoesNotExist:
+        return JsonResponse({'ret': False, 'error_code': 3})
+
+    applies = post.apply_set.all()
+    ret_data = []
+    for apply in applies:
+        ret_data.append({
+            "applyID": str(apply.id),
+            "resume": apply.resume,
+            "applyStatus": apply.status,
+            "applicantID": str(apply.applicant.id),
+        })
+    return JsonResponse(ret_data, safe=False)
+
+
+def get_user_applies(request, user_id):
+    if request.method != "GET":
+        return JsonResponse({'ret': False, 'error_code': 1})
+
+    user = verify_token(request.META.get('HTTP_AUTHORIZATION'))
+    if not user:
+        return JsonResponse({'ret': False, 'error_code': 5})
+
+    try:
+        user = User.objects.get(id=user_id)
+    except User.DoesNotExist:
+        return JsonResponse({'ret': False, 'error_code': 3})
+
+    applies = user.apply_set.all()
+    ret_data = []
+    for apply in applies:
+        ret_data.append({
+            "applyID": str(apply.id),
+            "resume": apply.resume,
+            "applyStatus": apply.status,
+            "postID": str(apply.post.id),
+        })
+    return JsonResponse(ret_data, safe=False)
+
+
