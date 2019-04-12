@@ -1,0 +1,30 @@
+<!--pages/postDetail/postDetail.wxml-->
+<view class="page">
+  <view class="weui-panel-1">
+    <view class="postUser">发布者昵称</view>
+    <view class="weui-panel-1__bd">
+        <view class="weui-media-box-1 weui-media-box-1_text">
+            <view class="weui-media-box-1__title weui-media-box-1__title_in-text">{{title}}</view>
+            <view class="weui-media-box-1__desc">{{postDetail}}</view>
+            <view class="weui-media-box-1__info">
+                <view class="weui-media-box-1__info__meta">需要人数：{{requestNum}}</view>
+                <view class="weui-media-box-1__info__meta">已招人数：{{acceptedNum}}</view>
+                <text>\n</text>
+                <view class="weui-media-box-1__info__meta">截止日期：{{ddl}}</view>
+                
+            </view>
+
+        </view>
+    </view>
+  </view>
+  <view class = "button">
+    <i-row >
+        <i-col  span = "11" i-class="col-class" offset = "1">
+          <i-button type="primary" shape="circle" size = "large" bind:click="modifyPost">修改发布信息</i-button>
+        </i-col>
+        <i-col span="11" i-class="col-class">
+          <i-button type="default" shape="circle" size = "large" bind:click="checkApply" >查看申请人数</i-button>
+        </i-col>
+    </i-row>
+  </view>
+</view>
