@@ -24,7 +24,7 @@ class Post(models.Model):
 
 
 class Apply(models.Model):
-    resume = models.TextField(default='')
+    resume = models.OneToOneField('user.Resume', on_delete=models.SET_NULL, null=True)
     status = models.CharField(max_length=32, default='pending')  # pending(待定) accepted(接受), closed(结束)
     post = models.ForeignKey('Post', on_delete=models.SET_NULL, null=True)
     applicant = models.ForeignKey('user.User', on_delete=models.SET_NULL, null=True)
