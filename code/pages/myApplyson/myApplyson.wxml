@@ -1,14 +1,12 @@
 <!--pages/postDetail/postDetail.wxml-->
 <view class="page">
   <view class="weui-panel-1">
-    <view class="postUser">发布者昵称</view>
+    <view class="postUser">{{name}}</view>
     <view class="weui-panel-1__bd">
         <view class="weui-media-box-1 weui-media-box-1_text">
             <view class="weui-media-box-1__title weui-media-box-1__title_in-text">{{title}}</view>
             <view class="weui-media-box-1__desc">{{postDetail}}</view>
             <view class="weui-media-box-1__info">
-                <view class="weui-media-box-1__info__meta">申请状态：{{state}}</view>
-                <text>\n</text>
                 <view class="weui-media-box-1__info__meta">需要人数：{{requestNum}}</view>
                 <view class="weui-media-box-1__info__meta">已招人数：{{acceptedNum}}</view>
                 <text>\n</text>
@@ -19,5 +17,11 @@
         </view>
     </view>
   </view>
-
+<view class="weui-panel-2 apply" style="z-index:1;">
+                <view class="weui-media-box weui-media-box_text">
+                    <view>
+                      <button class="weui-btn" type="primary" style='width:390rpx; border-radius:72rpx;' bindtap='applyFor'>查看我的简历</button>
+                    </view>
+                </view>
+    </view>
 </view>

@@ -17,7 +17,9 @@
 
     "pages/modifyPostDetail/modifyPostDetail",
     "pages/modifyPostSon/modifyPostSon",
-    "pages/myResume/myResume"
+    "pages/myResume/myResume",
+    "pages/applyThis/applyThis",
+    "pages/seeMyResume/seeMyResume"
 
   ],
   "window": {

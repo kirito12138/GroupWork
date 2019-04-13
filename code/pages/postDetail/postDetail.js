@@ -10,6 +10,8 @@ Page({
       date:"19/05/01",
       name:"111"
   },
+  
+
 
   /**
    * 生命周期函数--监听页面加载
@@ -107,5 +109,9 @@ Page({
   
   applyFor: function(e){
     //TODO:完成申请按钮功能
+
+    wx.navigateTo({
+      url: '../applyThis/applyThis',
+    })
   }
 })

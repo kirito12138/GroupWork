@@ -118,7 +118,8 @@ Page({
     }
 
     wx.request({
-      url: 'https://group.tttaaabbbccc.club//my/'+id+'/apply/',
+      //url: 'https://group.tttaaabbbccc.club//my/'+id+'/apply/',
+      url: 'https://group.tttaaabbbccc.club/f/processing/',
       method: "GET",
       header: {
         "Content-Type": "application/json;charset=UTF-8",
