@@ -26,10 +26,10 @@ class Resume(models.Model):
     name = models.CharField(max_length=20, blank=True)
     sex = models.CharField(max_length=20, blank=True)
     age = models.IntegerField(default=0)  # 0-200
-    education = models.CharField(max_length=20, blank=True)
+    degree = models.CharField(max_length=20, blank=True)
     phone = models.CharField(max_length=20, blank=True)
     email = models.EmailField(blank=True)
-    city = models.CharField(max_length=20, blank=True)
+    city = models.CharField(max_length=120, blank=True)
     awards = models.TextField(blank=True)
     english_skill = models.TextField(blank=True)
     edu_exp = models.TextField(blank=True)
