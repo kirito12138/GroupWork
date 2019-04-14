@@ -313,3 +313,53 @@ def create_apply(request):
 
     apply = Apply.objects.create(resume=resume, post=post, applicant=user)
     return JsonResponse({'ret': True, 'apply_id': str(apply.id)})
+
+
+def get_apply_detail(request, apply_id):
+    if request.method != "GET":
+        return JsonResponse({'ret': False, 'error_code': 1})
+
+    user = verify_token(request.META.get('HTTP_AUTHORIZATION'))
+    if not user:
+        return JsonResponse({'ret': False, 'error_code': 5})
+
+    try:
+        apply = Apply.objects.get(id=apply_id)
+    except Apply.DoesNotExist:
+        return JsonResponse({'ret': False, 'error_code': 2})
+    if apply.applicant != user and apply.post.poster != user:
+        return JsonResponse({'ret': False, 'error_code': 3})
+
+    return JsonResponse(
+        {'ret': True, 'applyStatus': apply.status, 'name': apply.resume.name, 'sex': apply.resume.sex,
+         'age': apply.resume.age, 'degree': apply.resume.degree, 'phone': apply.resume.phone,
+         'email': apply.resume.email, 'city': apply.resume.city, 'edu_exp': apply.resume.edu_exp,
+         'awards': apply.resume.awards, 'english_skill': apply.resume.english_skill,
+         'project_exp': apply.resume.project_exp, 'self_review': apply.resume.self_review})
+
+
+def accept_apply(request, apply_id):
+    if request.method != "POST":
+        return JsonResponse({'ret': False, 'error_code': 1})
+
+    user = verify_token(request.META.get('HTTP_AUTHORIZATION'))
+    if not user:
+        return JsonResponse({'ret': False, 'error_code': 5})
+
+    try:
+        apply = Apply.objects.get(id=apply_id)
+    except Apply.DoesNotExist:
+        return JsonResponse({'ret': False, 'error_code': 2})
+
+    post = apply.post
+    if post.poster != user:
+        return JsonResponse({'ret': False, 'error_code': 3})
+
+    apply.status = 'accepted'
+    apply.save()
+
+    post.accept_num += 1
+    post.save()
+    if post.accept_num >= post.request_num:
+        post.apply_set.filter(status='pending').update(status='closed')
+    return JsonResponse({'ret': True})
