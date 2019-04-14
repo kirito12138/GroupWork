@@ -41,9 +41,9 @@ urlpatterns = [
     path('p/<int:post_id>/modify/', demand.views.modify_post_detail),
     path('p/<int:post_id>/apply/', demand.views.get_post_applies),
 
-    path('c/apply/', demand.views.create_apply),
-    path('apply/<int:apply_id>/', demand.views.get_apply_detail),
-    path('apply/<int:apply_id>/accept/', demand.views.accept_apply),
+    # path('c/apply/', demand.views.create_apply),
+    # path('apply/<int:apply_id>/', demand.views.get_apply_detail),
+    # path('apply/<int:apply_id>/accept/', demand.views.accept_apply),
 
     path('resume/upload/', demand.views.upload_resume),
     path('resume/choose/', demand.views.choose_resume),
