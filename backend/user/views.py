@@ -119,7 +119,7 @@ def get_user_profile(request, user_id):
          'studentID': user.student_id, "sex": user.sex, "major": user.major, "grade": user.grade})
 
 
-def modify_profile(request):
+def modify_my_profile(request):
     if request.method != "POST":
         return JsonResponse({'ret': False, 'error_code': 1})
 
