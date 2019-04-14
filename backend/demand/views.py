@@ -328,7 +328,7 @@ def get_apply_detail(request, apply_id):
         apply = Apply.objects.get(id=apply_id)
     except Apply.DoesNotExist:
         return JsonResponse({'ret': False, 'error_code': 2})
-    if apply.applicant != user or apply.post.poster != user:
+    if apply.applicant != user and apply.post.poster != user:
         return JsonResponse({'ret': False, 'error_code': 3})
 
     return JsonResponse(
@@ -351,7 +351,16 @@ def accept_apply(request, apply_id):
         apply = Apply.objects.get(id=apply_id)
     except Apply.DoesNotExist:
         return JsonResponse({'ret': False, 'error_code': 2})
-    if apply.post.poster != user:
+
+    post = apply.post
+    if post.poster != user:
         return JsonResponse({'ret': False, 'error_code': 3})
 
+    apply.status = 'accepted'
+    apply.save()
+
+    post.accept_num += 1
+    post.save()
+    if post.accept_num >= post.request_num:
+        post.apply_set.filter(status='pending').update(status='closed')
     return JsonResponse({'ret': True})
