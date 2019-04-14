@@ -218,9 +218,9 @@ def get_post_applies(request, post_id):
     for apply in applies:
         ret_data.append({
             "applyID": str(apply.id),
-            "resume": apply.resume,
             "applyStatus": apply.status,
             "applicantID": str(apply.applicant.id),
+            "applicant_account": apply.applicant.account,
         })
     return JsonResponse(ret_data, safe=False)
 
@@ -243,9 +243,9 @@ def get_user_applies(request, user_id):
     for apply in applies:
         ret_data.append({
             "applyID": str(apply.id),
-            "resume": apply.resume,
             "applyStatus": apply.status,
             "postID": str(apply.post.id),
+            "post_title": apply.post.title,
         })
     return JsonResponse(ret_data, safe=False)
 
