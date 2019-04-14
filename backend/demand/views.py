@@ -1,5 +1,6 @@
 import json
 import re
+from json import JSONDecodeError
 from django.http import JsonResponse
 from django.shortcuts import render
 from user.jwt_token import verify_token
@@ -21,7 +22,10 @@ def create_post(request):
     if not user:
         return JsonResponse({'ret': False, 'error_code': 5})
 
-    data = json.loads(request.body)
+    try:
+        data = json.loads(request.body)
+    except JSONDecodeError:
+        return JsonResponse({'ret': False, 'error_code': 3})
     try:
         title = data['title']
         post_detail = data['postDetail']
@@ -143,7 +147,10 @@ def modify_post_detail(request, post_id):
     if post.poster != user:
         return JsonResponse({'ret': False, 'error_code': 6})
 
-    data = json.loads(request.body)
+    try:
+        data = json.loads(request.body)
+    except JSONDecodeError:
+        return JsonResponse({'ret': False, 'error_code': 3})
     try:
         title = data['title']
         post_detail = data['postDetail']

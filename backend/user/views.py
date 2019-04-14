@@ -1,5 +1,6 @@
 import json
 import re
+from json import JSONDecodeError
 
 from django.core.exceptions import ValidationError
 from django.http import JsonResponse
@@ -25,7 +26,11 @@ def login(request):
     if request.method != "POST":
         return JsonResponse({'ret': False, 'error_code': 1})
 
-    data = json.loads(request.body)  # json.decoder.JSONDecodeError
+    try:
+        data = json.loads(request.body)
+    except JSONDecodeError:
+        return JsonResponse({'ret': False, 'error_code': 3})
+
     try:
         account = data['account']
         password = data['password']
@@ -50,7 +55,11 @@ def register(request):
     if request.method != "POST":
         return JsonResponse({'ret': False, 'error_code': 1})
 
-    data = json.loads(request.body)
+    try:
+        data = json.loads(request.body)
+    except JSONDecodeError:
+        return JsonResponse({'ret': False, 'error_code': 3})
+
     try:
         account = data['account']
         password = data['password']
@@ -129,7 +138,11 @@ def modify_my_profile(request):
     if not user:
         return JsonResponse({'ret': False, 'error_code': 5})
 
-    data = json.loads(request.body)
+    try:
+        data = json.loads(request.body)
+    except JSONDecodeError:
+        return JsonResponse({'ret': False, 'error_code': 3})
+
     try:
         account = data['account']
         name = data['name']
@@ -183,7 +196,11 @@ def change_password(request):
     if not user:
         return JsonResponse({'ret': False, 'error_code': 5})
 
-    data = json.loads(request.body)
+    try:
+        data = json.loads(request.body)
+    except JSONDecodeError:
+        return JsonResponse({'ret': False, 'error_code': 3})
+
     try:
         password = data['password']
         new_password = data['new_password']
@@ -213,7 +230,12 @@ def modify_my_resume(request):
     if not user.resume:
         user.resume = models.Resume.objects.create()
     resume = user.resume
-    data = json.loads(request.body)
+
+    try:
+        data = json.loads(request.body)
+    except JSONDecodeError:
+        return JsonResponse({'ret': False, 'error_code': 3})
+
     try:
         resume.name = data['name']
         resume.sex = data['sex']
