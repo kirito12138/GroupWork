@@ -1,5 +1,8 @@
 import json
 import re
+from json import JSONDecodeError
+
+from django.core.exceptions import ValidationError
 from django.http import JsonResponse
 import hashlib
 from user import models
@@ -23,7 +26,11 @@ def login(request):
     if request.method != "POST":
         return JsonResponse({'ret': False, 'error_code': 1})
 
-    data = json.loads(request.body)  # json.decoder.JSONDecodeError
+    try:
+        data = json.loads(request.body)
+    except JSONDecodeError:
+        return JsonResponse({'ret': False, 'error_code': 3})
+
     try:
         account = data['account']
         password = data['password']
@@ -48,7 +55,11 @@ def register(request):
     if request.method != "POST":
         return JsonResponse({'ret': False, 'error_code': 1})
 
-    data = json.loads(request.body)
+    try:
+        data = json.loads(request.body)
+    except JSONDecodeError:
+        return JsonResponse({'ret': False, 'error_code': 3})
+
     try:
         account = data['account']
         password = data['password']
@@ -119,7 +130,7 @@ def get_user_profile(request, user_id):
          'studentID': user.student_id, "sex": user.sex, "major": user.major, "grade": user.grade})
 
 
-def modify_profile(request):
+def modify_my_profile(request):
     if request.method != "POST":
         return JsonResponse({'ret': False, 'error_code': 1})
 
@@ -127,7 +138,11 @@ def modify_profile(request):
     if not user:
         return JsonResponse({'ret': False, 'error_code': 5})
 
-    data = json.loads(request.body)
+    try:
+        data = json.loads(request.body)
+    except JSONDecodeError:
+        return JsonResponse({'ret': False, 'error_code': 3})
+
     try:
         account = data['account']
         name = data['name']
@@ -181,11 +196,14 @@ def change_password(request):
     if not user:
         return JsonResponse({'ret': False, 'error_code': 5})
 
-    data = json.loads(request.body)
+    try:
+        data = json.loads(request.body)
+    except JSONDecodeError:
+        return JsonResponse({'ret': False, 'error_code': 3})
+
     try:
         password = data['password']
         new_password = data['new_password']
-
     except KeyError:
         return JsonResponse({'ret': False, 'error_code': 2})
 
@@ -199,3 +217,73 @@ def change_password(request):
     user.save()
 
     return JsonResponse({'ret': True})
+
+
+def modify_my_resume(request):
+    if request.method != "POST":
+        return JsonResponse({'ret': False, 'error_code': 1})
+
+    user = verify_token(request.META.get('HTTP_AUTHORIZATION'))
+    if not user:
+        return JsonResponse({'ret': False, 'error_code': 5})
+
+    if not user.resume:
+        user.resume = models.Resume.objects.create()
+    resume = user.resume
+
+    try:
+        data = json.loads(request.body)
+    except JSONDecodeError:
+        return JsonResponse({'ret': False, 'error_code': 3})
+
+    try:
+        resume.name = data['name']
+        resume.sex = data['sex']
+        resume.age = data['age']
+        resume.degree = data['degree']
+        resume.phone = data['phone']
+        resume.email = data['email']
+        resume.city = data['city']
+        resume.edu_exp = data['edu_exp']
+        resume.awards = data['awards']
+        resume.english_skill = data['english_skill']
+        resume.project_exp = data['project_exp']
+        resume.self_review = data['self_review']
+    except KeyError:
+        return JsonResponse({'ret': False, 'error_code': 2})
+
+    try:
+        resume.full_clean()  # 检查格式
+        resume.save()
+    except ValidationError:
+        return JsonResponse({'ret': False, 'error_code': 3})
+
+    return JsonResponse({'ret': True})
+
+
+def get_my_resume(request):
+    if request.method != "GET":
+        return JsonResponse({'ret': False, 'error_code': 1})
+
+    user = verify_token(request.META.get('HTTP_AUTHORIZATION'))
+    if not user:
+        return JsonResponse({'ret': False, 'error_code': 5})
+
+    if not user.resume:
+        user.resume = models.Resume.objects.create()
+    resume = user.resume
+    return JsonResponse({
+        "ret": True,
+        "name": resume.name,
+        "age": resume.age,
+        "sex": resume.sex,
+        "degree": resume.degree,
+        "phone": resume.phone,
+        "email": resume.email,
+        "city": resume.city,
+        "edu_exp": resume.edu_exp,
+        "awards": resume.awards,
+        "english_skill": resume.english_skill,
+        "project_exp": resume.project_exp,
+        "self_review": resume.self_review,
+    })
