@@ -1,14 +1,15 @@
 import json
 import re
 from json import JSONDecodeError
+
+from django.core.exceptions import ValidationError
 from django.http import JsonResponse
 from django.shortcuts import render
 from user.jwt_token import verify_token
-from user.models import User
+from user.models import User, Resume
 from demand.models import Post
 from demand.models import Apply
 import datetime
-
 
 post_title_pattern = re.compile("^.{1,20}$")
 deadline_pattern = re.compile("^\d\d\d\d-\d\d-\d\d$")
@@ -257,3 +258,59 @@ def get_user_applies(request, user_id):
     return JsonResponse(ret_data, safe=False)
 
 
+def create_apply(request):
+    if request.method != "POST":
+        return JsonResponse({'ret': False, 'error_code': 1})
+
+    user = verify_token(request.META.get('HTTP_AUTHORIZATION'))
+    if not user:
+        return JsonResponse({'ret': False, 'error_code': 5})
+
+    try:
+        data = json.loads(request.body)
+    except JSONDecodeError:
+        return JsonResponse({'ret': False, 'error_code': 3})
+
+    try:
+        post_id = data['post_id']
+    except KeyError:
+        return JsonResponse({'ret': False, 'error_code': 2})
+
+    try:
+        post = Post.objects.get(pk=post_id)
+    except Post.DoesNotExist:
+        return JsonResponse({'ret': False, 'error_code': 4})
+
+    if post.accept_num >= post.request_num:
+        return JsonResponse({'ret': False, 'error_code': 7})
+
+    if user.apply_set.filter(post=post).exists():
+        return JsonResponse({'ret': False, 'error_code': 6})
+
+    resume = Resume.objects.create()
+    try:
+        resume.name = data['name']
+        resume.sex = data['sex']
+        resume.age = data['age']
+        resume.degree = data['degree']
+        resume.phone = data['phone']
+        resume.email = data['email']
+        resume.city = data['city']
+        resume.edu_exp = data['edu_exp']
+        resume.awards = data['awards']
+        resume.english_skill = data['english_skill']
+        resume.project_exp = data['project_exp']
+        resume.self_review = data['self_review']
+    except KeyError:
+        resume.delete()
+        return JsonResponse({'ret': False, 'error_code': 2})
+
+    try:
+        resume.full_clean()  # 检查格式
+        resume.save()
+    except ValidationError:
+        resume.delete()
+        return JsonResponse({'ret': False, 'error_code': 3})
+
+    apply = Apply.objects.create(resume=resume, post=post, applicant=user)
+    return JsonResponse({'ret': True, 'apply_id': str(apply.id)})
