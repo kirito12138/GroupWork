@@ -19,7 +19,9 @@
     "pages/modifyPostSon/modifyPostSon",
     "pages/myResume/myResume",
     "pages/applyThis/applyThis",
-    "pages/seeMyResume/seeMyResume"
+    "pages/seeMyResume/seeMyResume",
+    "pages/agree/agree",
+    "pages/applyers/applyers"
 
   ],
   "window": {

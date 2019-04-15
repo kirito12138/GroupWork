@@ -16,6 +16,15 @@ Page({
       url: '../modifyPostSon/modifyPostSon?info=' + para,
     })
   },
+
+  checkApply:function(e)
+  {
+    wx.navigateTo({
+      url: '../applyers/applyers',
+    })
+  },
+
+
   /**
    * 生命周期函数--监听页面加载
    */

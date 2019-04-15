@@ -81,6 +81,11 @@ Page({
       url: '../home/home',
     })
   },
+  goMyApply: function (e) {
+    wx.navigateTo({
+      url: '../myApply/myApply',
+    })
+  },
   /**
   * 生命周期函数--监听页面加载
   */
@@ -148,6 +153,11 @@ Page({
   goMyResume: function (e) {
     wx.navigateTo({
       url: '../myResume/myResume',
+    })
+  },
+  goMyPost: function (e) {
+    wx.navigateTo({
+      url: '../myPost/myPost',
     })
   },
 
