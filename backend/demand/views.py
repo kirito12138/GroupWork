@@ -254,6 +254,12 @@ def get_user_applies(request, user_id):
             "applyStatus": apply.status,
             "postID": str(apply.post.id),
             "post_title": apply.post.title,
+            "postDetail": apply.post.post_detail,
+            "requestNum": apply.post.request_num,
+            "acceptedNum": apply.post.accept_num,
+            "ddl": apply.post.deadline,
+            "ifEnd": apply.post.if_end,
+            "posterID": str(apply.applicant.id),
         })
     return JsonResponse(ret_data, safe=False)
 
