@@ -7,13 +7,14 @@ Page({
    * 页面的初始数据
    */
   data: {
-    account:"未填写",
-    name:"未填写",
-    sex: "未填写",
+    update:true,
+    account:"",
+    name:"",
+    sex: "",
     age: "0",
-    studentID: "未填写",
-    major: "未填写",
-    grade:"未填写"
+    studentID: "",
+    major: "",
+    grade:"",
   },
   input_usrname: function (e) {
     this.setData(
@@ -74,6 +75,11 @@ Page({
       url: '../login/login',
     })
   },
+
+  goUpdate:function()
+  {
+    this.setData({update:false});
+  },
   saveChanges:function()
   {
     var that = this;
@@ -131,7 +137,7 @@ Page({
     }
     else if (!(this.data.grade.length <= 3)) {
       $Message({
-        content: '年纪不能超过三个字符',
+        content: '年级不能超过三个字符',
         type: 'error'
       });
     }
@@ -160,6 +166,7 @@ Page({
           console.log(res.data)
           if(res.data.ret)
           {
+            that.setData({ update: true });
             $Message({
               content: '修改成功',
               type: 'success'
@@ -196,6 +203,26 @@ Page({
         'Authorization': tk
       },
       success(res) {
+        var major_map = {
+          "01": "材料科学与工程学院",
+          "02": "电子信息工程学院",
+          "03": "自动化科学与电气工程学院",
+          "04": "能源与动力工程学院",
+          "05": "航空科学与工程学院",
+          "06": "计算机学院",
+          "07": "机械工程及自动化学院",
+          "08": "经济管理学院",
+          "09": "数学与系统科学学院",
+          "10": "生物医学工程系",
+          "11": "人文社会科学学院",
+          "12": "外国语学院",
+          "13": "交通科学与工程学院",
+          "14": "可靠性与系统工程学院",
+          "15": "宇航学院",
+          "16": "飞行学院"
+        }
+
+
         that.setData({
           account: res.data.account,
         });
@@ -217,8 +244,15 @@ Page({
         }
         if (res.data.studentID != "") {
           that.setData({
-            studentID: res.data.studentID,
+            studentID: res.data.studentID
           });
+          // console.log(res.data.studentID.slice(2, 4));
+          // // that.setData({
+          // //   major: major_map[res.data.studentID.slice(2, 4)]
+          // // });
+          // // that.setData({
+          // //   grade: res.data.studentID.slice(0, 2)+"级"
+          // // });
         }
         if (res.data.major != "") {
           that.setData({

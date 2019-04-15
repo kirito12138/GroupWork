@@ -2,29 +2,33 @@
   <view class="register">
     <i-panel>  
     <view class = "label_1">
-      <i-input  value = "{{account}}" mode= "normal" title="用户名" bind:change = "input_usrname" maxlength="20" />
+      <i-input  value = "{{account}}" mode= "normal" title="用户名" bind:change = "input_usrname" maxlength="20"  placeholder="未填写" disabled="{{update}}"/>
     </view>
     <view class = "label_1">
-      <i-input  value = "{{name}}" mode= "normal" title="真实姓名"  bind:change = "input_name"   maxlength="16"/>
+      <i-input  value = "{{name}}" mode= "normal" title="真实姓名"  bind:change = "input_name"   maxlength="16"  placeholder="未填写" disabled="{{update}}"/>
     </view>
     <view class = 'label_1'>
-      <i-input  value = "{{sex}}" mode= "normal" title="性别"  bind:change = "input_sex" maxlength="3"/>
+      <i-input  value = "{{sex}}" mode= "normal" title="性别"  bind:change = "input_sex" maxlength="3" placeholder="未填写" disabled="{{update}}"/>
     </view>
     <view class = 'label_1'>
-      <i-input  value = "{{age}}" mode= "normal" title="年龄"  bind:change = "input_age" maxlength="3"/>
+      <i-input  value = "{{age}}" mode= "normal" title="年龄"  bind:change = "input_age" maxlength="3" placeholder="未填写" disabled="{{update}}"/>
     </view>
     <view class = 'label_1'>
-      <i-input  value = "{{studentID}}" mode= "normal" title="学号"  bind:change = "input_ID" maxlength="12"/>
+      <i-input  value = "{{studentID}}" mode= "normal" title="学号"  bind:change = "input_ID" maxlength="12" placeholder="未填写" disabled="{{update}}"/>
     </view>
     <view class = 'label_1'>
-      <i-input  value = "{{major}}" mode= "normal" title="专业"  bind:change = "input_major" maxlength="20"/>
+      <i-input  value = "{{major}}" mode= "normal" title="专业"  bind:change = "input_major" maxlength="20" placeholder="未填写" disabled="{{update}}"/>
     </view>
     <view class = 'label_1'>
-      <i-input  value = "{{grade}}" mode= "normal" title="年级"  bind:change = "input_grade" maxlength="3"/>
+      <i-input  value = "{{grade}}" mode= "normal" title="年级"  bind:change = "input_grade" maxlength="3" placeholder="未填写" disabled="{{update}}"/>
     </view>
     </i-panel>
-    <view class = "button">
-      <i-button  bind:click="saveChanges" type="success">保存修改</i-button>
+    
+    <view wx:if="{{update}}" class = "button">
+      <i-button  bind:click="goUpdate" type="warning">修改信息</i-button>
+    </view>
+    <view wx:if="{{!update}}" class = "button" >
+      <i-button  bind:click="saveChanges" type="success">确定修改</i-button>
     </view>
     <view class = "button_1">
       <i-button  bind:click="loginout" type="error">退出当前账号</i-button>
