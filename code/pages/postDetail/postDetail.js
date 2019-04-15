@@ -109,9 +109,9 @@ Page({
   
   applyFor: function(e){
     //TODO:完成申请按钮功能
-
+    var para = JSON.stringify(this.data.postID);
     wx.navigateTo({
-      url: '../applyThis/applyThis',
+      url: '../applyThis/applyThis?info=' + para,
     })
   }
 })

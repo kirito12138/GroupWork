@@ -9,6 +9,7 @@ Page({
     // newmark 是指移动的最新点的x轴坐标 
     newmark: 0,
     istoright: true,
+    f_posts: [],
   },
 
   clickCard: function (e) {
@@ -118,8 +119,8 @@ Page({
     }
 
     wx.request({
-      //url: 'https://group.tttaaabbbccc.club//my/'+id+'/apply/',
-      url: 'https://group.tttaaabbbccc.club/f/processing/',
+      url: 'https://group.tttaaabbbccc.club//my/'+id+'/apply/',
+      //url: 'https://group.tttaaabbbccc.club/f/processing/',
       method: "GET",
       header: {
         "Content-Type": "application/json;charset=UTF-8",

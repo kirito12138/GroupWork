@@ -30,12 +30,14 @@ Page({
       return;
     }
     this.data.info = JSON.parse(options.info);
+    console.log("out::::",this.data.info)
     this.setData({
-      title: this.data.info.title,
+      title: this.data.info.post_title,
       postDetail: this.data.info.postDetail,
       requestNum: this.data.info.requestNum,
       acceptedNum: this.data.info.acceptedNum,
       ddl: this.data.info.ddl,
+      applyID:this.data.info.applyID,
 
       postID: this.data.info.postID,
       posterID: this.data.info.posterID
@@ -109,9 +111,9 @@ Page({
 
   applyFor: function (e) {
     //TODO:完成申请按钮功能
-
+    var para = JSON.stringify(this.data.applyID);
     wx.navigateTo({
-      url: '../seeMyResume/seeMyResume',
+      url: '../seeMyResume/seeMyResume?info=' + para,
     })
   }
 })
