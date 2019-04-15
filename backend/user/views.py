@@ -229,6 +229,7 @@ def modify_my_resume(request):
 
     if not user.resume:
         user.resume = models.Resume.objects.create()
+        user.save()
     resume = user.resume
 
     try:
@@ -271,6 +272,7 @@ def get_my_resume(request):
 
     if not user.resume:
         user.resume = models.Resume.objects.create()
+        user.save()
     resume = user.resume
     return JsonResponse({
         "ret": True,

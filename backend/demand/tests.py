@@ -135,6 +135,13 @@ def test_choose_resume_1():
     print(r, r.content)
 
 
+def modify_my_resume():
+    url = domain + 'my/resume/modify/'
+    data = {}
+    r = requests.post(url, data=json.dumps(data), headers=headers)
+    print(r, r.content)
+
+
 if __name__ == "__main__":
     # test_register_1()
     test_login_1()
