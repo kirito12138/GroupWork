@@ -135,10 +135,30 @@ def test_choose_resume_1():
     print(r, r.content)
 
 
-def modify_my_resume():
+def test_modify_my_resume():
+    print('test_modify_resume_1:')
     url = domain + 'my/resume/modify/'
-    data = {}
+    data = {"name": "as",
+            "age": 12,
+            "sex": "",
+            "degree": "",
+            "phone": "",
+            "email": "",
+            "city": "",
+            "edu_exp": "",
+            "awards": "",
+            "english_skill": "",
+            "project_exp": "",
+            "self_review": ""
+            }
     r = requests.post(url, data=json.dumps(data), headers=headers)
+    print(r, r.content)
+
+
+def test_get_my_resume():
+    print('test_get_resume_1:')
+    url = domain + 'my/resume/'
+    r = requests.get(url, headers=headers)
     print(r, r.content)
 
 
@@ -159,3 +179,5 @@ if __name__ == "__main__":
     # test_get_unclosed_posts_1()
     test_get_user_applies_1()
     test_get_post_applies_1()
+    test_modify_my_resume()
+    test_get_my_resume()

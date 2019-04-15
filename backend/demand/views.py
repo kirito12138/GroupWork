@@ -317,6 +317,11 @@ def create_apply(request):
         resume.delete()
         return JsonResponse({'ret': False, 'error_code': 3})
 
+    user.resume = resume
+    user.save()
+    resume.pk = None
+    resume.save()
+
     apply = Apply.objects.create(resume=resume, post=post, applicant=user)
     return JsonResponse({'ret': True, 'apply_id': str(apply.id)})
 
