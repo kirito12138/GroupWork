@@ -5,7 +5,7 @@
     <view class = "card" bindtap='clickCard' data-index='{{index}}'>
     <i-card title="{{item.name}}" extra="查看简历" full = "true" style="color:#555555 font-weight:bolder">
     <view slot="content"><text style = "color: black; font-weight:bold;">详情：</text>{{item.self_review}}</view>
-    <view slot="footer">性别：{{item.sex}}    年龄:{{item.age}}     城市:{{item.city}}</view>
+    <view slot="footer">性别：{{item.sex}}    年龄:{{item.age}}     城市:{{item.city}}  申请状态：{{item.applyStatus}}</view>
     </i-card>
     </view>
 </view>
