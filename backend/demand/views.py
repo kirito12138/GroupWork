@@ -35,7 +35,7 @@ def create_post(request):
     except KeyError:
         return JsonResponse({'ret': False, 'error_code': 2})
 
-    if type(request_num) != int or request_num <= 0:
+    if type(request_num) != int or request_num < 1 or request_num > 100:
         return JsonResponse({'ret': False, 'error_code': 3})
     if not post_title_pattern.match(title):
         return JsonResponse({'ret': False, 'error_code': 3})
@@ -70,7 +70,7 @@ def get_unclosed_posts(request):
     if not user:
         return JsonResponse({'ret': False, 'error_code': 5})
 
-    unclosed_posts = Post.objects.filter(if_end=False).order_by('-post_time')
+    unclosed_posts = Post.objects.filter(if_end=False, deadline__gte=datetime.date.today()).order_by('-post_time')
     ret_data = []
     for post in unclosed_posts:
         ret_data.append({
@@ -160,7 +160,7 @@ def modify_post_detail(request, post_id):
     except KeyError:
         return JsonResponse({'ret': False, 'error_code': 2})
 
-    if type(request_num) != int or request_num <= 0:
+    if type(request_num) != int or request_num < 1 or request_num > 100:
         return JsonResponse({'ret': False, 'error_code': 3})
     if not post_title_pattern.match(title):
         return JsonResponse({'ret': False, 'error_code': 3})
@@ -182,6 +182,15 @@ def modify_post_detail(request, post_id):
     post.deadline = deadline
     post.poster = user
     post.save()
+
+    if post.accept_num >= post.request_num:
+        post.apply_set.filter(status='waiting').update(status='closed')
+        post.if_end = True
+        post.save()
+    else:
+        post.apply_set.filter(status='closed').update(status='waiting')
+        post.if_end = False
+        post.save()
 
     return JsonResponse({'ret': True})
 
@@ -290,6 +299,9 @@ def create_apply(request):
     if post.accept_num >= post.request_num:
         return JsonResponse({'ret': False, 'error_code': 7})
 
+    if post.deadline < datetime.date.today():
+        return JsonResponse({'ret': False, 'error_code': 8})
+
     if user.apply_set.filter(post=post).exists():
         return JsonResponse({'ret': False, 'error_code': 6})
 
@@ -367,8 +379,14 @@ def accept_apply(request, apply_id):
     if post.poster != user:
         return JsonResponse({'ret': False, 'error_code': 3})
 
-    if apply.status == 'accept':
+    if apply.status == 'accepted':
         return JsonResponse({'ret': False, 'error_code': 4})
+
+    # if post.accept_num >= post.request_num:
+    #     post.apply_set.filter(status='waiting').update(status='closed')
+    #     post.if_end = True
+    #     post.save()
+    #     return JsonResponse({'ret': False, 'error_code': 6})
 
     if apply.status == 'closed':
         return JsonResponse({'ret': False, 'error_code': 6})
