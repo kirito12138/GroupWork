@@ -33,6 +33,9 @@ Page({
     project_exp: "未填写",
     self_review: "未填写",
 
+    edu_exp: "",
+    info: "",
+
   },
 
   input_sex: function (e) {
@@ -158,60 +161,28 @@ Page({
       return;
     }
 
-    if (this.data.age != "" && !(/^[0-9]+$/.test(this.data.age))) {
-      $Message({
-        content: "年龄均为数字",
-        type: 'error'
-      });
-    }
-    else if (this.data.phone != "" && !(/^[0-9]+$/.test(this.data.phone))) {
-      $Message({
-        content: '电话号码全由数字组成',
-        type: 'error'
-      });
-    }
-
-    else {
-      var age = this.data.age;
-      var edu_exp, edu_exp1, edu_exp2, edu_exp3;
-      edu_exp1 = this.data.expEdu1['year'] + "&" + this.data.expEdu1['major'] + "&" + this.data.expEdu1['school'];
-      edu_exp2 = this.data.expEdu2['year'] + "&" + this.data.expEdu2['major'] + "&" + this.data.expEdu2['school'];
-      edu_exp3 = this.data.expEdu3['year'] + "&" + this.data.expEdu3['major'] + "&" + this.data.expEdu3['school'];
-      edu_exp = edu_exp1 + "|" + edu_exp2 + "|" + edu_exp3;
-      if (age == "") age = "0";
-      wx.request({
-        url: 'https://group.tttaaabbbccc.club//my/resume/modify/',
-        method: "POST",
-        header: {
-          "Content-Type": "application/json;charset=UTF-8",
-          'Authorization': tk
-        },
-        data:
-        {
-          name: this.data.name,
-          sex: this.data.sex,
-          age: parseInt(age),
-          degree: this.data.degree,
-          phone: this.data.phone,
-          email: this.data.email,
-          city: this.data.city,
-          awards: this.data.awards,
-          english_skill: this.data.english_skill,
-          project_exp: this.data.project_exp,
-          self_review: this.data.self_review,
-          edu_exp: edu_exp,
-        },
-        success(res) {
-          console.log(res.data)
-          if (res.data.ret) {
-            $Message({
-              content: '修改成功',
-              type: 'success'
-            });
-          }
+    
+    wx.request({
+      url: 'https://group.tttaaabbbccc.club//apply/' + this.data.applyID + '/accept/',
+      method: "POST",
+      header: {
+        "Content-Type": "application/json;charset=UTF-8",
+        'Authorization': tk
+      },
+      data:
+      {
+      },
+      success(res) {
+        console.log(res.data)
+        if (res.data.ret) {
+          $Message({
+            content: '已同意',
+            type: 'success'
+          });
         }
-      })
-    }
+      }
+    })
+    
   },
 
 
@@ -220,117 +191,68 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    var that = this;
-    const _jwt = wx.getStorageSync('jwt');
-    var tk;
-    console.log(_jwt)
-    if (_jwt) {
-      tk = JSON.parse(_jwt);
-      console.log(tk);
-    }
-    else {
-      console.log("no token");
-      return;
-    }
+    console.log("2222" + options.info)
+    this.data.info = JSON.parse(options.info);
+    
+    this.setData({
+      name: this.data.info.name,
+      sex: this.data.info.sex,
+      age: this.data.info.age,
+      degree: this.data.info.degree,
+      city: this.data.info.city,
+      phone: this.data.info.phone,
+      email: this.data.info.email,
 
-    wx.request({
-      url: 'https://group.tttaaabbbccc.club/my/resume/',
-      method: "GET",
-      header: {
-        "Content-Type": "application/json;charset=UTF-8",
-        'Authorization': tk
-      },
-      success(res) {
+      edu_exp: this.data.info.edu_exp,
 
-        console.log("1111" + res.data.sex)
-        if (res.data.name != "") {
+      awards: this.data.info.awards,
+      english_skill: this.data.info.english_skill,
+      project_exp: this.data.info.project_exp,
+      self_review: this.data.info.self_review,
 
-          that.setData({
-            name: res.data.name,
-          });
-        }
-        if (res.data.sex != "") {
-          that.setData({
-            sex: res.data.sex,
-          });
-        }
-        if (res.data.age != -1) {
-          that.setData({
-            age: res.data.age,
-          });
-        }
-        if (res.data.degree != "") {
-          console.log("1111" + res.data.degree);
-          that.setData({
-            degree: res.data.degree,
-          });
-        }
-        if (res.data.city != "") {
-          that.setData({
-            city: res.data.city,
-          });
-        }
-        if (res.data.phone != "") {
-          that.setData({
-            phone: res.data.phone,
-          });
-        }
-        if (res.data.email != "") {
-          that.setData({
-            email: res.data.email,
-          });
-        }
-        if (res.data.awards != "") {
-          that.setData({
-            awards: res.data.awards,
-          });
-        }
-        if (res.data.english_skill != "") {
-          that.setData({
-            english_skill: res.data.english_skill,
-          });
-        }
-        if (res.data.project_exp != "") {
-          that.setData({
-            project_exp: res.data.project_exp,
-          });
-        }
-        if (res.data.self_review != "") {
-          that.setData({
-            self_review: res.data.self_review,
-          });
-        }
-        if (res.data.edu_exp != "") {
-          var arr_deg;
-          console.log(res.data.edu_exp)
-          arr_deg = res.data.edu_exp.split("|");
-          if (arr_deg[0] != "") {
-            console.log(JSON.stringify(arr_deg[0].split("&")));
-            that.setData({
-              "expEdu1.year": arr_deg[0].split("&")[0],
-              "expEdu1.major": arr_deg[0].split("&")[1],
-              "expEdu1.school": arr_deg[0].split("&")[2]
-            });
-          }
-          if (arr_deg[1] != "") {
 
-            that.setData({
-              "expEdu2.year": arr_deg[1].split("&")[0],
-              "expEdu2.major": arr_deg[1].split("&")[1],
-              "expEdu2.school": arr_deg[1].split("&")[2]
-            });
-          }
-          if (arr_deg[2] != "") {
 
-            that.setData({
-              "expEdu3.year": arr_deg[2].split("&")[0],
-              "expEdu3.major": arr_deg[2].split("&")[1],
-              "expEdu3.school": arr_deg[2].split("&")[2]
-            });
-          }
-        }
-      }
+      /*postDetail: this.data.info.postDetail,
+      requestNum: this.data.info.requestNum,
+      acceptedNum: this.data.info.acceptedNum,
+      ddl: this.data.info.ddl,*/
+
+      applyID: this.data.info.applyID,
+      //posterID: this.data.info.posterID,
     })
+
+    if (this.data.edu_exp != "") {
+      var arr_deg;
+
+      arr_deg = this.data.edu_exp.split("|");
+      if (arr_deg[0] != "") {
+        console.log(JSON.stringify(arr_deg[0].split("!")));
+        this.setData({
+          "expEdu1.year": arr_deg[0].split("!")[0],
+          "expEdu1.major": arr_deg[0].split("!")[1],
+          "expEdu1.school": arr_deg[0].split("!")[2]
+        });
+      }
+      if (arr_deg[1] != "") {
+
+        this.setData({
+          "expEdu2.year": arr_deg[1].split("!")[0],
+          "expEdu2.major": arr_deg[1].split("!")[1],
+          "expEdu2.school": arr_deg[1].split("!")[2]
+        });
+      }
+      if (arr_deg[2] != "") {
+
+        this.setData({
+          "expEdu3.year": arr_deg[2].split("!")[0],
+          "expEdu3.major": arr_deg[2].split("!")[1],
+          "expEdu3.school": arr_deg[2].split("!")[2]
+        });
+      }
+    }
+    
+        
+     
   },
 
   /**

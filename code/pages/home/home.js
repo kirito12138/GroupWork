@@ -18,7 +18,7 @@ Page({
     console.log(e.currentTarget.dataset.index);
     var i = e.currentTarget.dataset.index;
     var para = JSON.stringify(this.data.f_posts[i]);
-
+    //console.log("111111111" + this.data.f_posts[i]);
     wx.navigateTo({
       url: '../postDetail/postDetail?info=' + para,
     }) 

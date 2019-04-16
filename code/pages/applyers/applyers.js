@@ -5,9 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    f_posts: [
-      "1"
-    ],
+    f_posts: [],
   },
 
   /**
@@ -17,18 +15,66 @@ Page({
 
   clickCard: function (e) {
     //TODO  jie kou
-    console.log(e.currentTarget.dataset.index);
+    //console.log(e.currentTarget.dataset.index);
     var i = e.currentTarget.dataset.index;
-    var para = JSON.stringify(this.data.f_posts[i]);
+    var fp = this.data.f_posts[i];
+    
+    fp.edu_exp = fp.edu_exp.replace(/&/g, "!");
+
+    console.log(fp.edu_exp)
+    var para = JSON.stringify(fp);
+
+    console.log("111111111" + para);
 
     wx.navigateTo({
-      url: '../agree/agree',
+      url: '../agree/agree?info=' + para,
     })
 
 
   },
   onLoad: function (options) {
+    var that = this;
+    this.data.info = JSON.parse(options.info);
+    this.setData({
+      title: this.data.info.title,
+      postDetail: this.data.info.postDetail,
+      requestNum: this.data.info.requestNum,
+      acceptedNum: this.data.info.acceptedNum,
+      ddl: this.data.info.ddl,
 
+      postID: this.data.info.postID,
+      posterID: this.data.info.posterID
+    })
+    
+    console.log("postid" + that.data.postID);
+    const _jwt = wx.getStorageSync('jwt');
+    var tk;
+    console.log(_jwt)
+    if (_jwt) {
+      tk = JSON.parse(_jwt);
+      console.log(tk);
+    }
+    else {
+      console.log("no token");
+      return;
+    }
+    console.log("kkkkkkkkkk");
+    wx.request({
+      
+      url: 'https://group.tttaaabbbccc.club/p/' + that.data.postID + '/apply',
+      method: "GET",
+      header: {
+        "Content-Type": "application/json;charset=UTF-8",
+        'Authorization': tk
+      },
+      success(res) {
+        console.log(res)
+        that.setData({
+          f_posts: res.data
+        });
+        console.log(res.data)
+      }
+    })
   },
 
   /**

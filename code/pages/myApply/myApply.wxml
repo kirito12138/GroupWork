@@ -52,8 +52,8 @@
     <view wx:for = "{{f_posts}}" wx:key = "postID">
         <view class = "card" bindtap='clickCard' data-index='{{index}}'>
         <i-card title="{{item.post_title}}" extra="查看发布"  style="color:red">
-        <view slot="content"><text style = "color: red;">详情：</text>{{item.postDetail}}</view>
-        <view slot="footer">申请状态：{{item.applyStatus}}  所需人数：（ {{item.acceptedNum}} / {{item.requestNum}} ） 截止时间:{{item.ddl}}</view>
+        <view slot="content"><text style = "color: black;">详情：</text>{{item.postDetail}}</view>
+        <view slot="footer"> <text style = "color: black;" >\n申请状态：</text>{{item.applyStatus}}  <text style = "color: black;" >\n所需人数：</text>（ {{item.acceptedNum}} / {{item.requestNum}} ） <text style = "color: black;">\n 截止时间:</text>{{item.ddl}}</view>
         </i-card>
         </view>
     </view>

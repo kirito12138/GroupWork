@@ -30,6 +30,7 @@ Page({
       return;
     }
     this.data.info=JSON.parse(options.info);
+    
     this.setData({
       title: this.data.info.title,
       postDetail: this.data.info.postDetail,

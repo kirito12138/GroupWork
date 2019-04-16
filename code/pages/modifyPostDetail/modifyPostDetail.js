@@ -19,8 +19,9 @@ Page({
 
   checkApply:function(e)
   {
+    var para = JSON.stringify(this.data.info);
     wx.navigateTo({
-      url: '../applyers/applyers',
+      url: '../applyers/applyers?info=' + para,
     })
   },
 
@@ -30,6 +31,7 @@ Page({
    */
   onLoad: function (options) {
     this.data.info = JSON.parse(options.info);
+    console.log(this.data.info);
     this.setData({
       title: this.data.info.title,
       postDetail: this.data.info.postDetail,
@@ -90,7 +92,5 @@ Page({
 
   },
 
-  applyFor: function (e) {
-    //TODO:完成申请按钮功能
-  }
+
 })
