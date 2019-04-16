@@ -379,4 +379,6 @@ def accept_apply(request, apply_id):
     post.save()
     if post.accept_num >= post.request_num:
         post.apply_set.filter(status='waiting').update(status='closed')
+        post.if_end = True
+        post.save()
     return JsonResponse({'ret': True})
