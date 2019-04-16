@@ -331,7 +331,7 @@ def create_apply(request):
 
     user.resume = resume
     user.save()
-    resume.pk = None
+    resume.pk = None  # 复制一个新的resume
     resume.save()
 
     apply = Apply.objects.create(resume=resume, post=post, applicant=user)
@@ -384,5 +384,5 @@ def accept_apply(request, apply_id):
     post.accept_num += 1
     post.save()
     if post.accept_num >= post.request_num:
-        post.apply_set.filter(status='pending').update(status='closed')
+        post.apply_set.filter(status='waiting').update(status='closed')
     return JsonResponse({'ret': True})

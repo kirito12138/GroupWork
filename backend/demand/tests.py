@@ -10,7 +10,7 @@ headers = {'Authorization': ''}
 def test_register_1():
     print('test_register_1:')
     url = domain + 'register/'
-    case_new = {'account': 'admin', 'password': 'admin_admin', "name": "", "age": 0,
+    case_new = {'account': 'admintest2', 'password': 'admin_admin', "name": "", "age": 0,
                 "studentID": "", "sex": "", "major": "", "grade": ""}
     r = requests.post(url, data=json.dumps(case_new))
     print(r, r.content)
@@ -23,7 +23,7 @@ def test_register_1():
 def test_login_1():
     print('test_login_1:')
     url = domain + 'login/'
-    data = {'account': 'admin999', 'password': 'admin_admin123'}
+    data = {'account': 'admintest2', 'password': 'admin_admin'}
     r = requests.post(url, data=json.dumps(data))
     print(r, r.content)
     try:
@@ -163,7 +163,7 @@ def test_get_my_resume():
 
 
 if __name__ == "__main__":
-    # test_register_1()
+    test_register_1()
     test_login_1()
     # test_post_1()
     # test_post_2()
@@ -171,13 +171,14 @@ if __name__ == "__main__":
     # test_get_post_detail_1()
     # test_modify_profile_1()
     # test_modify_password_1()
-    # test_get_my_profile_1()
+    test_get_my_profile_1()
     # test_get_profile_1()
     # test_get_user_posts_1()
     # test_choose_resume_1()
     # test_modify_post_1()
     # test_get_unclosed_posts_1()
-    test_get_user_applies_1()
-    test_get_post_applies_1()
-    test_modify_my_resume()
-    test_get_my_resume()
+    # test_get_user_applies_1()
+    # test_get_post_applies_1()
+    # test_modify_my_resume()
+    # test_get_my_resume()
+
