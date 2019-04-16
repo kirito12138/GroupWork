@@ -378,9 +378,14 @@ def accept_apply(request, apply_id):
     if post.poster != user:
         return JsonResponse({'ret': False, 'error_code': 3})
 
+    if apply.status == 'accept':
+        return JsonResponse({'ret': False, 'error_code': 4})
+
+    if apply.status == 'closed':
+        return JsonResponse({'ret': False, 'error_code': 6})
+
     apply.status = 'accepted'
     apply.save()
-
     post.accept_num += 1
     post.save()
     if post.accept_num >= post.request_num:
