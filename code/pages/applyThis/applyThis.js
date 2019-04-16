@@ -199,7 +199,7 @@ Page({
           console.log(res.data)
           if (res.data.ret) {
             $Message({
-              content: '修改成功',
+              content: '申请成功',
               type: 'success'
             });
           }
