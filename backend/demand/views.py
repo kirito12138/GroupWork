@@ -238,6 +238,18 @@ def get_post_applies(request, post_id):
             "applyStatus": apply.status,
             "applicantID": str(apply.applicant.id),
             "applicant_account": apply.applicant.account,
+            "name": apply.resume.name,
+            "sex": apply.resume.sex,
+            "age": apply.resume.age,
+            "degree": apply.resume.degree,
+            "phone": apply.resume.phone,
+            "email": apply.resume.email,
+            "city": apply.resume.city,
+            "edu_exp": apply.resume.edu_exp,
+            "awards": apply.resume.awards,
+            "english_skill": apply.resume.english_skill,
+            "project_exp": apply.resume.project_exp,
+            "self_review": apply.resume.self_review,
         })
     return JsonResponse(ret_data, safe=False)
 
