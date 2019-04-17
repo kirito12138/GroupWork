@@ -10,7 +10,7 @@ headers = {'Authorization': ''}
 def test_register_1():
     print('test_register_1:')
     url = domain + 'register/'
-    case_new = {'account': 'jackma', 'password': 'admin_admin', "name": "", "age": 0,
+    case_new = {'account': 'jackma', 'password': 'mayunyun', "name": "", "age": 0,
                 "studentID": "", "sex": "", "major": "", "grade": ""}
     r = requests.post(url, data=json.dumps(case_new))
     print(r, r.content)
@@ -23,7 +23,7 @@ def test_register_1():
 def test_login_1():
     print('test_login_1:')
     url = domain + 'login/'
-    data = {'account': 'admintest2', 'password': 'admin_admin'}
+    data = {'account': 'jackma', 'password': 'mayunyun'}
     r = requests.post(url, data=json.dumps(data))
     print(r, r.content)
     try:

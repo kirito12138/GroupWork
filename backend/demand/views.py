@@ -230,7 +230,7 @@ def get_post_applies(request, post_id):
     except Post.DoesNotExist:
         return JsonResponse({'ret': False, 'error_code': 3})
 
-    applies = post.apply_set.all()
+    applies = post.apply_set.order_by('-c_time')
     ret_data = []
     for apply in applies:
         ret_data.append({
@@ -255,7 +255,7 @@ def get_user_applies(request, user_id):
     except User.DoesNotExist:
         return JsonResponse({'ret': False, 'error_code': 3})
 
-    applies = user.apply_set.all()
+    applies = user.apply_set.order_by('-c_time')
     ret_data = []
     for apply in applies:
         ret_data.append({
