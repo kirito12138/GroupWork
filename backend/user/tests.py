@@ -8,7 +8,7 @@ from backend.settings import SECRET_KEY
 
 class LoginViewTests(TestCase):
     def setUp(self):  # 测试所用数据库为空，需手动插入数据
-        User.objects.create(account='admin', password=gen_md5('admin_admin', SECRET_KEY))
+        User.objects.create(account='admin', password=gen_md5('admin_admin', SECRET_KEY))  # 数据库中插入用户
 
     def test_login_successful(self):
         data = {'account': 'admin', 'password': 'admin_admin'}
@@ -63,7 +63,7 @@ class LoginViewTests(TestCase):
 
 class RegisterViewTests(TestCase):
     def setUp(self):  # 测试所用数据库为空，需手动插入数据
-        User.objects.create(account='admin1', password=gen_md5('admin_admin', SECRET_KEY))
+        User.objects.create(account='admin1', password=gen_md5('admin_admin', SECRET_KEY))  # 数据库中插入用户
 
     def test_register_successful(self):
         data = {'account': 'admin', 'password': 'admin_admin', "name": "", "age": 0,
@@ -133,8 +133,8 @@ class RegisterViewTests(TestCase):
 
 class GetLoginStatusViewTests(TestCase):
     def setUp(self):  # 测试所用数据库为空，需手动插入数据
-        user = User.objects.create(account='admin', password=gen_md5('admin_admin', SECRET_KEY))
-        self.token = create_token(user.id).decode()
+        user = User.objects.create(account='admin', password=gen_md5('admin_admin', SECRET_KEY))  # 数据库中插入用户
+        self.token = create_token(user.id).decode()  # 获取token
 
     def test_get_login_status_successful(self):
         response = self.client.get('/GetLoginStatus/', HTTP_AUTHORIZATION=self.token)
@@ -156,8 +156,8 @@ class GetLoginStatusViewTests(TestCase):
 
 class ChangePasswordViewTests(TestCase):
     def setUp(self):  # 测试所用数据库为空，需手动插入数据
-        user = User.objects.create(account='admin', password=gen_md5('admin_admin', SECRET_KEY))
-        self.token = create_token(user.id).decode()
+        user = User.objects.create(account='admin', password=gen_md5('admin_admin', SECRET_KEY))  # 数据库中插入用户
+        self.token = create_token(user.id).decode()  # 获取token
 
     def test_change_password_successful(self):
         data = {'password': 'admin_admin', 'new_password': 'admin_new'}
