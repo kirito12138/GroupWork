@@ -4,15 +4,15 @@ from json import JSONDecodeError
 
 from django.core.exceptions import ValidationError
 from django.http import JsonResponse
-from django.shortcuts import render
+# from django.shortcuts import render
 from user.jwt_token import verify_token
 from user.models import User, Resume
 from demand.models import Post
 from demand.models import Apply
 import datetime
 
-post_title_pattern = re.compile("^.{1,20}$")
-deadline_pattern = re.compile("^\d\d\d\d-\d\d-\d\d$")
+post_title_pattern = re.compile(r"^.{1,20}$")
+deadline_pattern = re.compile(r"^\d\d\d\d-\d\d-\d\d$")
 
 
 def create_post(request):
@@ -195,26 +195,26 @@ def modify_post_detail(request, post_id):
     return JsonResponse({'ret': True})
 
 
-def choose_resume(request):
-    if request.method != "GET":
-        return JsonResponse({'ret': False, 'error_code': 1})
-    jwt_token = request.META.get('HTTP_AUTHORIZATION')
-    user = verify_token(jwt_token)
-    if not user:
-        return JsonResponse({'ret': False, 'error_code': 5})
-    return render(request, 'upload_resume.html', locals())
+# def choose_resume(request):
+#     if request.method != "GET":
+#         return JsonResponse({'ret': False, 'error_code': 1})
+#     jwt_token = request.META.get('HTTP_AUTHORIZATION')
+#     user = verify_token(jwt_token)
+#     if not user:
+#         return JsonResponse({'ret': False, 'error_code': 5})
+#     return render(request, 'upload_resume.html', locals())
 
 
-def upload_resume(request):
-    if request.method != "POST":
-        return JsonResponse({'ret': False, 'error_code': 1})
-
-    user = verify_token(request.META.get('HTTP_AUTHORIZATION'))
-    if not user:
-        return JsonResponse({'ret': False, 'error_code': 5})
-
-    print(request.FILES.get('file'))
-    return JsonResponse({'ret': True})
+# def upload_resume(request):
+#     if request.method != "POST":
+#         return JsonResponse({'ret': False, 'error_code': 1})
+#
+#     user = verify_token(request.META.get('HTTP_AUTHORIZATION'))
+#     if not user:
+#         return JsonResponse({'ret': False, 'error_code': 5})
+#
+#     print(request.FILES.get('file'))
+#     return JsonResponse({'ret': True})
 
 
 def get_post_applies(request, post_id):
