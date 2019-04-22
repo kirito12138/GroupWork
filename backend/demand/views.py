@@ -311,6 +311,8 @@ def create_apply(request):
     if post.accept_num >= post.request_num:
         return JsonResponse({'ret': False, 'error_code': 7})
 
+    print(post.deadline)
+    print(datetime.date.today())
     if post.deadline < datetime.date.today():
         return JsonResponse({'ret': False, 'error_code': 8})
 
@@ -393,12 +395,6 @@ def accept_apply(request, apply_id):
 
     if apply.status == 'accepted':
         return JsonResponse({'ret': False, 'error_code': 4})
-
-    # if post.accept_num >= post.request_num:
-    #     post.apply_set.filter(status='waiting').update(status='closed')
-    #     post.if_end = True
-    #     post.save()
-    #     return JsonResponse({'ret': False, 'error_code': 6})
 
     if apply.status == 'closed':
         return JsonResponse({'ret': False, 'error_code': 6})
