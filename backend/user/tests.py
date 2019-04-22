@@ -224,9 +224,9 @@ class ModifyResumeTests(TestCase):
 
     def test_modify_resume_successful(self):
         data = {'name': 'User1', 'sex': 'male', 'age': 10, 'degree': 'high school', 'phone': '13579',
-                'email': '4521@126.com', 'city': 'beijing', 'edu_exp': 'abc', 'english_skill': 'A', 'project_exp': 'B',
+                'email': '4521@126.com', 'city': 'beijing', 'edu_exp': 'abc', 'awards': 'null', 'english_skill': 'A', 'project_exp': 'B',
                 'self_review': 'not bad'}
-        response = self.client.post('/my/resume/modify', data=data, content_type='application/json',
+        response = self.client.post('/my/resume/modify/', data=data, content_type='application/json',
                                     HTTP_AUTHORIZATION=self.token)
         print(response.content, response.status_code)
         ret_data = response.json()
@@ -234,9 +234,9 @@ class ModifyResumeTests(TestCase):
 
     def test_modify_resume_failed_1(self):
         data = {'name': 'User1', 'sex': 'male', 'age': 10, 'degree': 'high school', 'phone': '13579',
-                'email': '4521@126.com', 'city': 'beijing', 'edu_exp': 'abc', 'english_skill': 'A', 'project_exp': 'B',
+                'email': '4521@126.com', 'city': 'beijing', 'edu_exp': 'abc', 'awards': 'null', 'english_skill': 'A', 'project_exp': 'B',
                 'self_review': 'not bad'}
-        response = self.client.get('/my/resume/modify', data=data, content_type='application/json',
+        response = self.client.get('/my/resume/modify/', data=data, content_type='application/json',
                                    HTTP_AUTHORIZATION=self.token)
         ret_data = response.json()
         self.assertFalse(ret_data['ret'])
@@ -244,8 +244,8 @@ class ModifyResumeTests(TestCase):
 
     def test_modify_resume_failed_2(self):
         data = {'sex': 'male', 'age': 10, 'degree': 'high school', 'phone': '13579', 'email': '4521@126.com',
-                'city': 'beijing', 'edu_exp': 'abc', 'english_skill': 'A', 'project_exp': 'B', 'self_review': 'not bad'}
-        response = self.client.post('/my/resume/modify', data=data, content_type='application/json',
+                'city': 'beijing', 'edu_exp': 'abc', 'awards': 'null', 'english_skill': 'A', 'project_exp': 'B', 'self_review': 'not bad'}
+        response = self.client.post('/my/resume/modify/', data=data, content_type='application/json',
                                     HTTP_AUTHORIZATION=self.token)
         ret_data = response.json()
         self.assertFalse(ret_data['ret'])
@@ -254,7 +254,7 @@ class ModifyResumeTests(TestCase):
     def test_modify_resume_failed_3(self):
         data = {'name': 1, 'sex': 'male', 'age': 10, 'degree': 'high school', 'phone': '13579', 'email': '4521@126.com',
                 'city': 'beijing', 'edu_exp': 'abc', 'english_skill': 'A', 'project_exp': 'B', 'self_review': 'not bad'}
-        response = self.client.post('/my/resume/modify', data=data, content_type='application/json',
+        response = self.client.post('/my/resume/modify/', data=data, content_type='application/json',
                                     HTTP_AUTHORIZATION=self.token)
         ret_data = response.json()
         self.assertFalse(ret_data['ret'])
@@ -262,9 +262,9 @@ class ModifyResumeTests(TestCase):
 
     def test_modify_resume_failed_5(self):
         data = {'name': 'User1', 'sex': 'male', 'age': 10, 'degree': 'high school', 'phone': '13579',
-                'email': '4521@126.com', 'city': 'beijing', 'edu_exp': 'abc', 'english_skill': 'A', 'project_exp': 'B',
+                'email': '4521@126.com', 'city': 'beijing', 'edu_exp': 'abc', 'awards': 'null', 'english_skill': 'A', 'project_exp': 'B',
                 'self_review': 'not bad'}
-        response = self.client.post('/my/resume/modify', data=data, content_type='application/json')
+        response = self.client.post('/my/resume/modify/', data=data, content_type='application/json')
         ret_data = response.json()
         self.assertFalse(ret_data['ret'])
         self.assertEqual(ret_data['error_code'], 5)
