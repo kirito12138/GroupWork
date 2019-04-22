@@ -3,8 +3,8 @@ import time
 import json
 import requests
 
-domain_list = ['http://127.0.0.1:8000/', 'https://group.tttaaabbbccc.club/']
-domain = domain_list[1]
+domain_list = ['http://127.0.0.1:8000/']
+domain = domain_list[0]
 
 
 def test_login_1():
