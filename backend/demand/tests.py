@@ -997,7 +997,7 @@ class ModifyProfileTest(TestCase):
         # self.assertEqual(ret_data['error_code'], 1)
 
 
-class GetProfileTest(TestCase):
+class GetResumeTest(TestCase):
     url = 'a'
 
     def setUp(self):  # 测试所用数据库为空，需手动插入数据
