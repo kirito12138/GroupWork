@@ -5,7 +5,8 @@ from user.models import User
 from user.views import gen_md5
 from backend.settings import SECRET_KEY
 
-#===========LW==============================================================================
+
+# ===========LW==============================================================================
 class LoginViewTests(TestCase):
     def setUp(self):  # 测试所用数据库为空，需手动插入数据
         User.objects.create(account='admin', password=gen_md5('admin_admin', SECRET_KEY))  # 数据库中插入用户
@@ -211,119 +212,124 @@ class ChangePasswordViewTests(TestCase):
         ret_data = response.json()
         self.assertFalse(ret_data['ret'])
         self.assertEqual(ret_data['error_code'], 5)
-    #---------------------------------------------------------------------------------------
-    
-    
-    
-    #===byw====================================================================================
-    
+    # ---------------------------------------------------------------------------------------
+
+    # ===byw====================================================================================
+
+
 class ModifyResumeTests(TestCase):
     def setUp(self):  # 测试所用数据库为空，需手动插入数据
         user = User.objects.create(account='admin', password=gen_md5('admin_admin', SECRET_KEY))  # 数据库中插入用户
         self.token = create_token(user.id).decode()  # 获取token
 
     def test_modify_resume_successful(self):
-        data = {'name': 'User1', 'sex'= 'male', 'age'= 10, 'degree'= 'high school', 'phone'= '13579', 'email'= '4521@126.com', 'city' ='beijing', 'edu_exp'= 'abc', 'english_skill'= 'A', 'project_exp'= 'B', 'self_review'= 'not bad'}
+        data = {'name': 'User1', 'sex': 'male', 'age': 10, 'degree': 'high school', 'phone': '13579',
+                'email': '4521@126.com', 'city': 'beijing', 'edu_exp': 'abc', 'english_skill': 'A', 'project_exp': 'B',
+                'self_review': 'not bad'}
         response = self.client.post('/my/resume/modify', data=data, content_type='application/json',
-                                        HTTP_AUTHORIZATION=self.token)
+                                    HTTP_AUTHORIZATION=self.token)
         ret_data = response.json()
         self.assertTrue(ret_data['ret'])
 
     def test_modify_resume_failed_1(self):
-        data = {'name': 'User1', 'sex'= 'male', 'age'= 10, 'degree'= 'high school', 'phone'= '13579', 'email'= '4521@126.com', 'city' ='beijing', 'edu_exp'= 'abc', 'english_skill'= 'A', 'project_exp'= 'B', 'self_review'= 'not bad'}
+        data = {'name': 'User1', 'sex': 'male', 'age': 10, 'degree': 'high school', 'phone': '13579',
+                'email': '4521@126.com', 'city': 'beijing', 'edu_exp': 'abc', 'english_skill': 'A', 'project_exp': 'B',
+                'self_review': 'not bad'}
         response = self.client.get('/my/resume/modify', data=data, content_type='application/json',
-                                        HTTP_AUTHORIZATION=self.token)
+                                   HTTP_AUTHORIZATION=self.token)
         ret_data = response.json()
         self.assertFalse(ret_data['ret'])
         self.assertEqual(ret_data['error_code'], 1)
 
     def test_modify_resume_failed_2(self):
-        data = {'sex'= 'male', 'age'= 10, 'degree'= 'high school', 'phone'= '13579', 'email'= '4521@126.com', 'city' ='beijing', 'edu_exp'= 'abc', 'english_skill'= 'A', 'project_exp'= 'B', 'self_review'= 'not bad'}
+        data = {'sex': 'male', 'age': 10, 'degree': 'high school', 'phone': '13579', 'email': '4521@126.com',
+                'city': 'beijing', 'edu_exp': 'abc', 'english_skill': 'A', 'project_exp': 'B', 'self_review': 'not bad'}
         response = self.client.post('/my/resume/modify', data=data, content_type='application/json',
-                                        HTTP_AUTHORIZATION=self.token)
+                                    HTTP_AUTHORIZATION=self.token)
         ret_data = response.json()
         self.assertFalse(ret_data['ret'])
         self.assertEqual(ret_data['error_code'], 2)
 
     def test_modify_resume_failed_3(self):
-        data = {'name': 1, 'sex'= 'male', 'age'= 10, 'degree'= 'high school', 'phone'= '13579', 'email'= '4521@126.com', 'city' ='beijing', 'edu_exp'= 'abc', 'english_skill'= 'A', 'project_exp'= 'B', 'self_review'= 'not bad'}
+        data = {'name': 1, 'sex': 'male', 'age': 10, 'degree': 'high school', 'phone': '13579', 'email': '4521@126.com',
+                'city': 'beijing', 'edu_exp': 'abc', 'english_skill': 'A', 'project_exp': 'B', 'self_review': 'not bad'}
         response = self.client.post('/my/resume/modify', data=data, content_type='application/json',
-                                        HTTP_AUTHORIZATION=self.token)
+                                    HTTP_AUTHORIZATION=self.token)
         ret_data = response.json()
         self.assertFalse(ret_data['ret'])
         self.assertEqual(ret_data['error_code'], 3)
 
     def test_modify_resume_failed_5(self):
-        data = {'name': 'User1', 'sex'= 'male', 'age'= 10, 'degree'= 'high school', 'phone'= '13579', 'email'= '4521@126.com', 'city' ='beijing', 'edu_exp'= 'abc', 'english_skill'= 'A', 'project_exp'= 'B', 'self_review'= 'not bad'}
+        data = {'name': 'User1', 'sex': 'male', 'age': 10, 'degree': 'high school', 'phone': '13579',
+                'email': '4521@126.com', 'city': 'beijing', 'edu_exp': 'abc', 'english_skill': 'A', 'project_exp': 'B',
+                'self_review': 'not bad'}
         response = self.client.post('/my/resume/modify', data=data, content_type='application/json')
         ret_data = response.json()
         self.assertFalse(ret_data['ret'])
         self.assertEqual(ret_data['error_code'], 5)
 
+
 class GetMyProfileTests(TestCase):
-    url = 'a'
     def setUp(self):  # 测试所用数据库为空，需手动插入数据
         user = User.objects.create(account='admin', password=gen_md5('admin_admin', SECRET_KEY))  # 数据库中插入用户
         self.token = create_token(user.id).decode()  # 获取token
-        url = '/my/'+str(user.id)+'/detail/'
+        self.url = '/my/' + str(user.id) + '/detail/'
 
+    def test_get_my_profile_successful(self):
+        response = self.client.get(self.url, HTTP_AUTHORIZATION=self.token)
+        ret_data = response.json()
+        self.assertTrue(ret_data['ret'])
 
-	def test_get_my_profile_successful(self):
-		response = self.client.get(url, HTTP_AUTHORIZATION=self.token)
-		ret_data = response.json()
-		self.assertTrue(ret_data['ret'])
+    def test_get_my_profile_filed_1(self):
+        data = {'user': '1'}
+        response = self.client.post(self.url, data=data, content_type='application/json', HTTP_AUTHORIZATION=self.token)
+        ret_data = response.json()
+        self.assertFalse(ret_data['ret'])
+        self.assertEqual(ret_data['error_code'], 1)
 
-	def test_get_my_profile_filed_1(self):
-		data = {'user' = '1'}
-		response = self.client.post(url, data=data, content_type='application/json', HTTP_AUTHORIZATION=self.token)
-		ret_data = response.json()
-		self.assertFalse(ret_data['ret'])
-		self.assertEqual(ret_data['error_code'], 1)
+    def test_get_my_profile_filed_5(self):
+        response = self.client.get(self.url)
+        ret_data = response.json()
+        self.assertFalse(ret_data['ret'])
+        self.assertEqual(ret_data['error_code'], 5)
 
-	def test_get_my_profile_filed_5(self):
-		response = self.client.get(url)
-		ret_data = response.json()
-		self.assertFalse(ret_data['ret'])
-		self.assertEqual(ret_data['error_code'], 5)
+    def test_get_my_profile_filed_3(self):
+        url = '/my/' + str(123) + '/detail/'
+        response = self.client.get(url, HTTP_AUTHORIZATION=self.token)
+        ret_data = response.json()
+        self.assertFalse(ret_data['ret'])
+        self.assertEqual(ret_data['error_code'], 3)
 
-	def test_get_my_profile_filed_3(self):
-		response = self.client.get(url, HTTP_AUTHORIZATION=self.token)
-		ret_data = response.json()
-		url = '/my/'+str(123)+'/detail/'
-		self.assertFalse(ret_data['ret'])
-		self.assertEqual(ret_data['error_code'], 3)
 
 class GetMyPostTests(TestCase):
-    url = 'a'
     def setUp(self):  # 测试所用数据库为空，需手动插入数据
         user = User.objects.create(account='admin', password=gen_md5('admin_admin', SECRET_KEY))  # 数据库中插入用户
         self.token = create_token(user.id).decode()  # 获取token
-        url = '/my/'+str(user.id)+'/post/'
+        self.url = '/my/' + str(user.id) + '/post/'
 
+    def test_get_my_post_successful(self):
+        response = self.client.get(self.url, HTTP_AUTHORIZATION=self.token)
+        ret_data = response.json()
+        self.assertTrue(ret_data['ret'])
 
-	def test_get_my_post_successful(self):
-		response = self.client.get(url, HTTP_AUTHORIZATION=self.token)
-		ret_data = response.json()
-		self.assertTrue(ret_data['ret'])
+    def test_get_my_post_filed_1(self):
+        data = {'user': '1'}
+        response = self.client.post(self.url, data=data, content_type='application/json', HTTP_AUTHORIZATION=self.token)
+        ret_data = response.json()
+        self.assertFalse(ret_data['ret'])
+        self.assertEqual(ret_data['error_code'], 1)
 
-	def test_get_my_post_filed_1(self):
-		data = {'user' = '1'}
-		response = self.client.post(url, data=data, content_type='application/json', HTTP_AUTHORIZATION=self.token)
-		ret_data = response.json()
-		self.assertFalse(ret_data['ret'])
-		self.assertEqual(ret_data['error_code'], 1)
+    def test_get_my_post_filed_5(self):
+        response = self.client.get(self.url)
+        ret_data = response.json()
+        self.assertFalse(ret_data['ret'])
+        self.assertEqual(ret_data['error_code'], 5)
 
-	def test_get_my_post_filed_5(self):
-		response = self.client.get(url)
-		ret_data = response.json()
-		self.assertFalse(ret_data['ret'])
-		self.assertEqual(ret_data['error_code'], 5)
+    def test_get_my_post_filed_3(self):
+        url = '/my/' + str(123) + '/detail/'
+        response = self.client.get(url, HTTP_AUTHORIZATION=self.token)
+        ret_data = response.json()
+        self.assertFalse(ret_data['ret'])
+        self.assertEqual(ret_data['error_code'], 3)
 
-	def test_get_my_post_filed_3(self):
-		response = self.client.get(url, HTTP_AUTHORIZATION=self.token)
-		ret_data = response.json()
-		url = '/my/'+str(123)+'/detail/'
-		self.assertFalse(ret_data['ret'])
-		self.assertEqual(ret_data['error_code'], 3)
-    
-    #------------------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------------------
