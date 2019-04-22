@@ -1,3 +1,5 @@
+import datetime
+
 from django.test import TestCase
 from demand.models import Post
 from user.models import User
@@ -6,6 +8,7 @@ from user.jwt_token import create_token
 from user.views import gen_md5
 from backend.settings import SECRET_KEY
 from demand.models import Apply
+from user.models import Resume
 
 
 # ===============================ycd========================================================
@@ -219,10 +222,11 @@ class GetPostIAppliesTest(TestCase):
 
 class GetUserAppliesTest(TestCase):
     def setUp(self):  # 测试所用数据库为空，需手动插入数据
-        user = User.objects.create(account='admin', password=gen_md5('admin_admin', SECRET_KEY))  # 数据库中插入用户
+        resume = Resume.objects.create(age=10)
+        user = User.objects.create(account='admin', password=gen_md5('admin_admin', SECRET_KEY), resume = resume)  # 数据库中插入用户
         user2 = User.objects.create(account='admin2', password=gen_md5('admin_admin2', SECRET_KEY))  # 数据库中插入用户
-        post = Post.objects.create(title="test", post_detail="test_test", request_num=2, accept_num=1, if_end=True,
-                                   poster=user2)
+        post = Post.objects.create(title="test", post_detail="test_test", request_num=2,
+                                   deadline=datetime.datetime.strptime("2019-05-20", "%Y-%m-%d").date(), poster=user2)
         apply = Apply.objects.create(resume=user.resume, post=post, applicant=user)
         self.token = create_token(user.id).decode()
         self.url = '/my/' + str(user.id) + '/apply/'
@@ -230,7 +234,7 @@ class GetUserAppliesTest(TestCase):
     def test_get_user_applies_successful(self):
         response = self.client.get(self.url, HTTP_AUTHORIZATION=self.token)
         ret_data = response.json()
-        self.assertTrue(ret_data['ret'])
+        self.assertEqual(ret_data[0]['post_title'], "test")
 
     def test_get_user_applies_filed_1(self):
         response = self.client.post(self.url, HTTP_AUTHORIZATION=self.token)
@@ -245,7 +249,7 @@ class GetUserAppliesTest(TestCase):
         self.assertEqual(ret_data['error_code'], 5)
 
     def test_get_user_applies_filed_3(self):
-        url_wrong = '/my/' + str(123) + 'apply/'
+        url_wrong = '/my/' + str(123) + '/apply/'
         response = self.client.get(url_wrong, HTTP_AUTHORIZATION=self.token)
         ret_data = response.json()
         self.assertFalse(ret_data['ret'])
@@ -257,15 +261,15 @@ class GetUnclosedPostsTest(TestCase):
 
     def setUp(self):  # 测试所用数据库为空，需手动插入数据
         user = User.objects.create(account='admin', password=gen_md5('admin_admin', SECRET_KEY))  # 数据库中插入用户
-        post = Post.objects.create(title="test", post_detail="test_test", request_num=2, accept_num=1, if_end=False,
-                                   poster=user)
+        post = Post.objects.create(title="test", post_detail="test_test", request_num=2,
+                                   deadline=datetime.datetime.strptime("2019-05-20", "%Y-%m-%d").date(), poster=user)
         self.token = create_token(user.id).decode()
         self.url = '/f/processing/'
 
     def test_get_unclosed_posts_successful(self):
         response = self.client.get(self.url, HTTP_AUTHORIZATION=self.token)
         ret_data = response.json()
-        self.assertTrue(ret_data['ret'])
+        self.assertEqual(ret_data[0]['title'], "test")
 
     def test_get_unclosed_posts_filed_1(self):
         response = self.client.post(self.url, HTTP_AUTHORIZATION=self.token)
@@ -285,8 +289,8 @@ class CreatPostTest(TestCase):
 
     def setUp(self):  # 测试所用数据库为空，需手动插入数据
         user = User.objects.create(account='admin', password=gen_md5('admin_admin', SECRET_KEY))  # 数据库中插入用户
-        post2 = Post.objects.create(title="test", post_detail="test_test2", request_num=5, accept_num=1,
-                                    deadline="2019-5-20", if_end=False, poster=user)
+        post2 = Post.objects.create(title="test", post_detail="test_test2", request_num=5,
+                                    deadline=datetime.datetime.strptime("2019-05-20", "%Y-%m-%d").date(), poster=user)
         self.token = create_token(user.id).decode()
         self.url = '/c/post/'
 
@@ -295,7 +299,7 @@ class CreatPostTest(TestCase):
             "title": "test2",
             "postDetail": "test_test2",
             "requestNum": 5,
-            "ddl": "2019-5-20",
+            "ddl": "2019-05-20",
         }
         response = self.client.post(self.url, HTTP_AUTHORIZATION=self.token, data=data, content_type='application/json')
         ret_data = response.json()
@@ -306,9 +310,9 @@ class CreatPostTest(TestCase):
             "title": "test2",
             "postDetail": "test_test2",
             "requestNum": 5,
-            "ddl": "2019-5-20",
+            "ddl": "2019-05-20",
         }
-        response = self.client.get(self.url, data=data, HTTP_AUTHORIZATION=self.token)
+        response = self.client.get(self.url, HTTP_AUTHORIZATION=self.token, data=data, content_type='application/json')
         ret_data = response.json()
         self.assertFalse(ret_data['ret'])
         self.assertEqual(ret_data['error_code'], 1)
@@ -319,7 +323,7 @@ class CreatPostTest(TestCase):
             "postDetail": "test_test2",
             "requestNum": 5,
         }
-        response = self.client.post(self.url, data=data, HTTP_AUTHORIZATION=self.token)
+        response = self.client.post(self.url, HTTP_AUTHORIZATION=self.token, data=data, content_type='application/json')
         ret_data = response.json()
         self.assertFalse(ret_data['ret'])
         self.assertEqual(ret_data['error_code'], 2)
@@ -329,9 +333,9 @@ class CreatPostTest(TestCase):
             "title": "test2",
             "postDetail": "test_test2",
             "requestNum": 0,
-            "ddl": "2019-5-20",
+            "ddl": "2019-05-20",
         }
-        response = self.client.post(self.url, data=data, HTTP_AUTHORIZATION=self.token)
+        response = self.client.post(self.url, HTTP_AUTHORIZATION=self.token, data=data, content_type='application/json')
         ret_data = response.json()
         self.assertFalse(ret_data['ret'])
         self.assertEqual(ret_data['error_code'], 3)
@@ -341,9 +345,9 @@ class CreatPostTest(TestCase):
             "title": "test2",
             "postDetail": "test_test2",
             "requestNum": 101,
-            "ddl": "2019-5-20",
+            "ddl": "2019-05-20",
         }
-        response = self.client.post(self.url, data=data, HTTP_AUTHORIZATION=self.token)
+        response = self.client.post(self.url, HTTP_AUTHORIZATION=self.token, data=data, content_type='application/json')
         ret_data = response.json()
         self.assertFalse(ret_data['ret'])
         self.assertEqual(ret_data['error_code'], 3)
@@ -353,9 +357,9 @@ class CreatPostTest(TestCase):
             "title": "test2",
             "postDetail": "test_test2",
             "requestNum": 1.2,
-            "ddl": "2019-5-20",
+            "ddl": "2019-05-20",
         }
-        response = self.client.post(self.url, data=data, HTTP_AUTHORIZATION=self.token)
+        response = self.client.post(self.url, HTTP_AUTHORIZATION=self.token, data=data, content_type='application/json')
         ret_data = response.json()
         self.assertFalse(ret_data['ret'])
         self.assertEqual(ret_data['error_code'], 3)
@@ -365,9 +369,9 @@ class CreatPostTest(TestCase):
             "title": "test222222222222222222222222222222222222222222222222222222222222",
             "postDetail": "test_test2",
             "requestNum": 5,
-            "ddl": "2019-5-20",
+            "ddl": "2019-05-20",
         }
-        response = self.client.post(self.url, data=data, HTTP_AUTHORIZATION=self.token)
+        response = self.client.post(self.url, HTTP_AUTHORIZATION=self.token, data=data, content_type='application/json')
         ret_data = response.json()
         self.assertFalse(ret_data['ret'])
         self.assertEqual(ret_data['error_code'], 3)
@@ -379,7 +383,7 @@ class CreatPostTest(TestCase):
             "requestNum": 5,
             "ddl": "2019",
         }
-        response = self.client.post(self.url, data=data, HTTP_AUTHORIZATION=self.token)
+        response = self.client.post(self.url, HTTP_AUTHORIZATION=self.token, data=data, content_type='application/json')
         ret_data = response.json()
         self.assertFalse(ret_data['ret'])
         self.assertEqual(ret_data['error_code'], 3)
@@ -389,33 +393,33 @@ class CreatPostTest(TestCase):
             "title": "test2",
             "postDetail": "test_test2",
             "requestNum": 5,
-            "ddl": "2019-5-32",
+            "ddl": "2019-05-32",
         }
-        response = self.client.post(self.url, data=data, HTTP_AUTHORIZATION=self.token)
+        response = self.client.post(self.url, HTTP_AUTHORIZATION=self.token, data=data, content_type='application/json')
         ret_data = response.json()
         self.assertFalse(ret_data['ret'])
         self.assertEqual(ret_data['error_code'], 3)
 
-    def test_creat_post_filed_8(self):
+    def test_creat_post_filed_9(self):
         data = {
             "title": "test",
             "postDetail": "test_test2",
             "requestNum": 5,
-            "ddl": "2019-5-20",
+            "ddl": "2019-05-20",
         }
-        response = self.client.post(self.url, data=data, HTTP_AUTHORIZATION=self.token)
+        response = self.client.post(self.url, HTTP_AUTHORIZATION=self.token, data=data, content_type='application/json')
         ret_data = response.json()
         self.assertFalse(ret_data['ret'])
         self.assertEqual(ret_data['error_code'], 4)
 
-    def test_creat_post_filed_9(self):
+    def test_creat_post_filed_10(self):
         data = {
             "title": "test2",
             "postDetail": "test_test2",
             "requestNum": 5,
-            "ddl": "2019-5-20",
+            "ddl": "2019-05-20",
         }
-        response = self.client.post(self.url, data=data, HTTP_AUTHORIZATION="self.token")
+        response = self.client.post(self.url, HTTP_AUTHORIZATION="self.token", data=data, content_type='application/json')
         ret_data = response.json()
         self.assertFalse(ret_data['ret'])
         self.assertEqual(ret_data['error_code'], 5)
