@@ -304,15 +304,14 @@ def create_apply(request):
         return JsonResponse({'ret': False, 'error_code': 2})
 
     try:
+        post_id = int(post_id)
         post = Post.objects.get(pk=post_id)
-    except Post.DoesNotExist:
+    except ValueError or Post.DoesNotExist:
         return JsonResponse({'ret': False, 'error_code': 4})
 
     if post.accept_num >= post.request_num:
         return JsonResponse({'ret': False, 'error_code': 7})
 
-    print(post.deadline)
-    print(datetime.date.today())
     if post.deadline < datetime.date.today():
         return JsonResponse({'ret': False, 'error_code': 8})
 

@@ -467,7 +467,6 @@ class CreatApplyTest(TestCase):
         }
         response = self.client.post(self.url, data=data, HTTP_AUTHORIZATION=self.token, content_type='application/json')
         ret_data = response.json()
-        print(ret_data)
         self.assertTrue(ret_data['ret'])
         # self.assertEqual(ret_data['error_code'], 1)
 
@@ -571,7 +570,7 @@ class CreatApplyTest(TestCase):
             该发布不存在
         '''
         data = {
-            "post_id": '666',
+            "post_id": '',
             "name": "nan",
             "sex": "nan",
             "age": 10,
