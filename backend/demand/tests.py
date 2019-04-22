@@ -438,7 +438,7 @@ class CreatApplyTest(TestCase):
                                     deadline="2019-5-20", if_end=False, poster=user)
         self.token = create_token(user.id).decode()
         self.url = '/c/apply/'
-        self.post_ID = post2.id
+        self.post_ID = self.post2.id
 
 
     def test_creat_apply(self):
@@ -634,7 +634,7 @@ class CreatApplyTest(TestCase):
         '''
             重复申请
         '''
-        test_creat_apply()
+        self.test_creat_apply()
         data = {
             "post_id": self.post_ID,
             "name": "nan",
@@ -713,8 +713,8 @@ class GetApplyTest(TestCase):
         self.apply_exp = Apply.objects.create(resume = resume, post = self.post2, applicant =user)
         self.token = create_token(user.id).decode()
         self.url = '/apply/'+ str(self.apply_exp.id)+'//'
-        self.post_ID = post2.id
-    def getapply():
+        self.post_ID = self.post2.id
+    def getapply(self):
         '''
         成功获取
         '''
@@ -722,7 +722,7 @@ class GetApplyTest(TestCase):
         ret_data = response.json()
         self.assertTrue(ret_data['ret'])
         #self.assertEqual(ret_data['error_code'], 3) 
-    def getapply_err1():
+    def getapply_err1(self):
         '''
         不是 get 方法
         '''
@@ -731,7 +731,7 @@ class GetApplyTest(TestCase):
         self.assertFalse(ret_data['ret'])
         self.assertEqual(ret_data['error_code'], 1)         
         
-    def getapply_err2():
+    def getapply_err2(self):
         '''
         用户登陆已过期
         '''
@@ -740,7 +740,7 @@ class GetApplyTest(TestCase):
         self.assertFalse(ret_data['ret'])
         self.assertEqual(ret_data['error_code'], 5)     
 
-    def getapply_err3():
+    def getapply_err3(self):
         '''
         该申请不存在
         '''
@@ -750,7 +750,7 @@ class GetApplyTest(TestCase):
         self.assertFalse(ret_data['ret'])
         self.assertEqual(ret_data['error_code'], 2)     
 
-    def getapply_err4():
+    def getapply_err4(self):
         '''
         当前登陆的用户 既不是申请者 也不是发布者
         '''
@@ -773,7 +773,7 @@ class AcceptApplyTest(TestCase):
         self.apply_exp = Apply.objects.create(resume = self.resume, post = self.post2, applicant =user)
         self.token = create_token(user.id).decode()
         self.url = '/apply/'+ str(self.apply_exp.id)+'/accept'
-        self.post_ID = post2.id
+        self.post_ID = self.post2.id
     def acapplytest(self):
         '''
         成功获取
@@ -823,10 +823,213 @@ class AcceptApplyTest(TestCase):
         '''
         bushi  post
         '''
-        apply_acc = Apply.objects.create(resume = self.resume, post = self.post2, applicant =user, status = 'closed')
+        apply_acc = Apply.objects.create(resume = self.resume, post = self.post2, applicant =self.user, status = 'closed')
         self.url = '/apply/'+ str(apply_acc.id)+'/accept'
         response = self.client.post(self.url, HTTP_AUTHORIZATION=self.token)
         ret_data = response.json()
         self.assertTrue(ret_data['ret'])
-        self.assertEqual(ret_data['error_code'], 6) 
+        self.assertEqual(ret_data['error_code'], 6)
+    # ===============================================wb======================================================================
 
+
+class GetProfileTest(TestCase):
+    url = 'a'
+
+    def setUp(self):  # 测试所用数据库为空，需手动插入数据
+        user = User.objects.create(account='wb_test', password=gen_md5('admin_admin', SECRET_KEY))  # 数据库中插入用户
+        self.profile = Profile.objects.create(account="wbwb", name="test1", age=4, studentID=16061155,
+                                              sex="female", major="CS", grade="three")
+        self.token = create_token(user.id).decode()
+        self.url = '/my/profile/'
+        self.post_ID = self.post2.id
+
+    def test_get_profile(self):
+        '''
+            正确创建
+        '''
+
+        response = self.client.get(self.url, HTTP_AUTHORIZATION=self.token)
+        ret_data = response.json()
+        self.assertTrue(ret_data['ret'])
+        # self.assertEqual(ret_data['error_code'], 1)
+
+    def test_get_profile_err1(self):
+        '''
+            方法不为 post
+        '''
+
+        response = self.client.post(self.url, HTTP_AUTHORIZATION=self.token)
+        ret_data = response.json()
+        self.assertFalse(ret_data['ret'])
+        self.assertEqual(ret_data['error_code'], 1)
+
+    def test_get_profile_err2(self):
+        response = self.client.get(self.url, HTTP_AUTHORIZATION='')
+        ret_data = response.json()
+        self.assertFalse(ret_data['ret'])
+        self.assertEqual(ret_data['error_code'], 5)
+
+
+class ModifyProfileTest(TestCase):
+    url = 'a'
+
+    def setUp(self):  # 测试所用数据库为空，需手动插入数据
+        user = User.objects.create(account='wb_test', password=gen_md5('admin_admin', SECRET_KEY))  # 数据库中插入用户
+        self.profile = Profile.objects.create(account="wbwb", name="test1", age=4, studentID=16061155,
+                                              sex="female", major="CS", grade="three")
+        self.profile1 = Profile.objects.create(account="wbwb1", name="test1", age=4, studentID=16061155,
+                                               sex="female", major="CS", grade="three")
+        self.token = create_token(user.id).decode()
+        self.url = '/my/profile/modify/'
+        self.post_ID = self.post2.id
+
+    def test_mod_profile(self):
+        '''
+            正确创建
+        '''
+        data = {
+            "account": "wb",
+            "name": "test1",
+            "age": 1,
+            "studentID": "16060000",
+            "sex": "male",
+            "major": "CS",
+            "grade": "one"
+        }
+        response = self.client.post(self.url, data=data, HTTP_AUTHORIZATION=self.token)
+        ret_data = response.json()
+        self.assertTrue(ret_data['ret'])
+        # self.assertEqual(ret_data['error_code'], 1)
+
+    def test_mod_profile_err1(self):
+        '''
+            正确创建
+        '''
+        data = {
+            "account": "wb",
+            "name": "test1",
+            "age": 1,
+            "studentID": "16060000",
+            "sex": "male",
+            "major": "CS",
+            "grade": "one"
+        }
+        response = self.client.get(self.url, data=data, HTTP_AUTHORIZATION=self.token)
+        ret_data = response.json()
+        self.assertFalse(ret_data['ret'])
+        self.assertEqual(ret_data['error_code'], 1)
+        # self.assertEqual(ret_data['error_code'], 1)
+
+    def test_mod_profile_err2(self):
+        '''
+            正确创建
+        '''
+        data = {
+            "account": "wb",
+            "name": "test1",
+            "age": 1,
+            "studentID": "16060000",
+            "sex": "male",
+            "major": "CS"
+        }
+        response = self.client.get(self.url, data=data, HTTP_AUTHORIZATION=self.token)
+        ret_data = response.json()
+        self.assertFalse(ret_data['ret'])
+        self.assertEqual(ret_data['error_code'], 1)
+        # self.assertEqual(ret_data['error_code'], 1)
+
+    def test_mod_profile_err3(self):
+        '''
+            正确创建
+        '''
+        data = {
+            "account": "wbwb",
+            "name": "test1",
+            "age": 1,
+            "studentID": "16060000",
+            "sex": "male",
+            "major": "CS",
+            "grade": "one"
+        }
+        response = self.client.get(self.url, data='', HTTP_AUTHORIZATION=self.token)
+        ret_data = response.json()
+        self.assertFalse(ret_data['ret'])
+        self.assertEqual(ret_data['error_code'], 1)
+        # self.assertEqual(ret_data['error_code'], 1)
+
+    def test_mod_profile_err4(self):
+        '''
+            正确创建
+        '''
+        data = {
+            "account": "wbwb1",
+            "name": "test1",
+            "age": 1,
+            "studentID": "16060000",
+            "sex": "male",
+            "major": "CS",
+            "grade": "one"
+        }
+        response = self.client.get(self.url, data=data, HTTP_AUTHORIZATION=self.token)
+        ret_data = response.json()
+        self.assertFalse(ret_data['ret'])
+        self.assertEqual(ret_data['error_code'], 1)
+        # self.assertEqual(ret_data['error_code'], 1)
+
+    def test_mod_profile_err5(self):
+        '''
+            正确创建
+        '''
+        data = {
+            "account": "wbwb",
+            "name": "test1",
+            "age": 1,
+            "studentID": "16060000",
+            "sex": "male",
+            "major": "CS",
+            "grade": "one"
+        }
+        response = self.client.get(self.url, data='', HTTP_AUTHORIZATION='')
+        ret_data = response.json()
+        self.assertFalse(ret_data['ret'])
+        self.assertEqual(ret_data['error_code'], 1)
+        # self.assertEqual(ret_data['error_code'], 1)
+
+
+class GetProfileTest(TestCase):
+    url = 'a'
+
+    def setUp(self):  # 测试所用数据库为空，需手动插入数据
+        user = User.objects.create(account='wb_test', password=gen_md5('admin_admin', SECRET_KEY))  # 数据库中插入用户
+        self.profile = Resume.objects.create(name="wb", sex="male", age=4, degree="16061155",
+                                             phone="131", email="a@qq.com", city="BJ", edu_exp="", awards="hah",
+                                             english_skill="most", project_exp="", self_review="")
+        self.token = create_token(user.id).decode()
+        self.url = '/my/resume/'
+        self.post_ID = self.post2.id
+
+    def test_get_resume(self):
+        '''
+            正确创建
+        '''
+
+        response = self.client.get(self.url, HTTP_AUTHORIZATION=self.token)
+        ret_data = response.json()
+        self.assertTrue(ret_data['ret'])
+        # self.assertEqual(ret_data['error_code'], 1)
+
+    def test_get_resume_err1(self):
+        '''
+            方法不为 post
+        '''
+
+        response = self.client.post(self.url, HTTP_AUTHORIZATION=self.token)
+        ret_data = response.json()
+        self.assertFalse(ret_data['ret'])
+        self.assertEqual(ret_data['error_code'], 1)
+
+    def test_get_resume_err2(self):
+        response = self.client.get(self.url, HTTP_AUTHORIZATION='')
+        ret_data = response.json()
+        self.assertFalse(ret_data['ret'])
+        self.assertEqual(ret_data['error_code'], 5)
