@@ -1,6 +1,7 @@
 from django.test import TestCase
 from demand.models import Post
 from user.models import User
+from user.models import Resume
 from user.jwt_token import create_token
 from user.views import gen_md5
 from backend.settings import SECRET_KEY
@@ -54,6 +55,7 @@ class ModifyPostITest(TestCase):
 
     def test_modify_post_detail_successful_1(self):
         data = {
+            "ddl":"2019-05-01",
             "title": "test2",
             "postDetail": "test_test2",
             "requestNum": 5,
@@ -64,6 +66,7 @@ class ModifyPostITest(TestCase):
 
     def test_modify_post_detail_success_2(self):
         data = {
+            "ddl":"2019-05-01",
             "title": "a",
             "postDetail": "test_test2",
             "requestNum": 1,
@@ -74,6 +77,7 @@ class ModifyPostITest(TestCase):
 
     def test_modify_post_detail_filed_1(self):
         data = {
+            "ddl":"2019-05-01",
             "title": "test2",
             "postDetail": "test_test2",
             "requestNum": 5,
@@ -85,6 +89,7 @@ class ModifyPostITest(TestCase):
 
     def test_modify_post_detail_filed_2(self):
         data = {
+            "ddl":"2019-05-01",
             "title": "test2",
             "postDetail": "test_test2",
             "requestNum": 5,
@@ -97,6 +102,7 @@ class ModifyPostITest(TestCase):
 
     def test_modify_post_detail_filed_3(self):
         data = {
+            "ddl":"2019-05-01",
             "title": "test2",
             "postDetail": "test_test2",
             "requestNum": 5,
@@ -110,6 +116,7 @@ class ModifyPostITest(TestCase):
 
     def test_modify_post_detail_filed_4(self):
         data = {
+            "ddl":"2019-05-01",
             "title": "test2",
             "postDetail": "test_test2",
             "requestNum": 5,
@@ -122,6 +129,7 @@ class ModifyPostITest(TestCase):
 
     def test_modify_post_detail_filed_5(self):
         data = {
+            "ddl":"2019-05-01",
             "title": "test2",
             "postDetail": "test_test2",
             "requestNum": 5,
@@ -133,6 +141,7 @@ class ModifyPostITest(TestCase):
 
     def test_modify_post_detail_filed_6(self):
         data = {
+            "ddl":"2019-05-01",
             "title": "test2",
             "postDetail": "test_test2",
             "requestNum": None,
@@ -144,6 +153,7 @@ class ModifyPostITest(TestCase):
 
     def test_modify_post_detail_filed_7(self):
         data = {
+            "ddl":"2019-05-01",
             "title": "test2",
             "postDetail": "test_test2",
             "requestNum": 101,
@@ -155,6 +165,7 @@ class ModifyPostITest(TestCase):
 
     def test_modify_post_detail_filed_8(self):
         data = {
+            "ddl":"2019-05-01",
             "title": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
             "postDetail": "test_test2",
             "requestNum": 10,
@@ -167,7 +178,8 @@ class ModifyPostITest(TestCase):
 
 class GetPostIAppliesTest(TestCase):
     def setUp(self):  # 测试所用数据库为空，需手动插入数据
-        user = User.objects.create(account='admin', password=gen_md5('admin_admin', SECRET_KEY))  # 数据库中插入用户
+        resume = Resume.objects.create(age=10)
+        user = User.objects.create(account='admin', password=gen_md5('admin_admin', SECRET_KEY),resume=resume)  # 数据库中插入用户
         self.user2 = User.objects.create(account='admin2', password=gen_md5('admin_admin2', SECRET_KEY))  # 数据库中插入用户
         post = Post.objects.create(title="test", post_detail="test_test", request_num=2, accept_num=1, if_end=True,
                                    poster=user)
