@@ -261,7 +261,7 @@ class ModifyResumeTests(TestCase):
         self.assertEqual(ret_data['error_code'], 5)
 
 class GetMyProfileTests(TestCase):
-	url = 'a'
+    url = 'a'
     def setUp(self):  # 测试所用数据库为空，需手动插入数据
         user = User.objects.create(account='admin', password=gen_md5('admin_admin', SECRET_KEY))  # 数据库中插入用户
         self.token = create_token(user.id).decode()  # 获取token
@@ -294,7 +294,7 @@ class GetMyProfileTests(TestCase):
 		self.assertEqual(ret_data['error_code'], 3)
 
 class GetMyPostTests(TestCase):
-	url = 'a'
+    url = 'a'
     def setUp(self):  # 测试所用数据库为空，需手动插入数据
         user = User.objects.create(account='admin', password=gen_md5('admin_admin', SECRET_KEY))  # 数据库中插入用户
         self.token = create_token(user.id).decode()  # 获取token
