@@ -306,7 +306,7 @@ def create_apply(request):
     try:
         post_id = int(post_id)
         post = Post.objects.get(pk=post_id)
-    except ValueError or Post.DoesNotExist:
+    except (ValueError, Post.DoesNotExist):
         return JsonResponse({'ret': False, 'error_code': 4})
 
     if post.accept_num >= post.request_num:
