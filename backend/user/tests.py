@@ -228,6 +228,7 @@ class ModifyResumeTests(TestCase):
                 'self_review': 'not bad'}
         response = self.client.post('/my/resume/modify', data=data, content_type='application/json',
                                     HTTP_AUTHORIZATION=self.token)
+        print(response.content, response.status_code)
         ret_data = response.json()
         self.assertTrue(ret_data['ret'])
 
@@ -310,7 +311,7 @@ class GetMyPostTests(TestCase):
     def test_get_my_post_successful(self):
         response = self.client.get(self.url, HTTP_AUTHORIZATION=self.token)
         ret_data = response.json()
-        self.assertTrue(ret_data['ret'])
+        self.assertTrue('ret' not in ret_data)
 
     def test_get_my_post_filed_1(self):
         data = {'user': '1'}

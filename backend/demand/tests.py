@@ -144,7 +144,6 @@ class ModifyPostITest(TestCase):
             "ddl":"2019-05-01",
             "title": "test2",
             "postDetail": "test_test2",
-            "requestNum": None,
         }
         response = self.client.post(self.url, HTTP_AUTHORIZATION=self.token, data=data, content_type='application/json')
         ret_data = response.json()
@@ -190,7 +189,7 @@ class GetPostIAppliesTest(TestCase):
     def test_get_post_applies_success(self):
         response = self.client.get(self.url, HTTP_AUTHORIZATION=self.token)
         ret_data = response.json()
-        self.assertEqual(ret_data[0]["applicantID"], self.uesr2.id)
+        self.assertEqual(ret_data[0]["applicantID"], str(self.user2.id))
 
     def test_get_post_applies_filed_1(self):
         response = self.client.post(self.url, HTTP_AUTHORIZATION=self.token)
