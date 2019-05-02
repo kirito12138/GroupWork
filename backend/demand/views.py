@@ -309,7 +309,7 @@ def create_apply(request):
     except (ValueError, Post.DoesNotExist):
         return JsonResponse({'ret': False, 'error_code': 4})
 
-    if post.accept_num >= post.request_num:
+    if post.if_end or post.accept_num >= post.request_num:
         return JsonResponse({'ret': False, 'error_code': 7})
 
     if post.deadline < datetime.date.today():
@@ -395,15 +395,16 @@ def accept_apply(request, apply_id):
     if apply.status == 'accepted':
         return JsonResponse({'ret': False, 'error_code': 4})
 
-    if apply.status == 'closed':
+    if post.if_end or post.accept_num >= post.request_num or apply.status == 'closed':
         return JsonResponse({'ret': False, 'error_code': 6})
 
-    apply.status = 'accepted'
-    apply.save()
     post.accept_num += 1
     post.save()
     if post.accept_num >= post.request_num:
         post.apply_set.filter(status='waiting').update(status='closed')
         post.if_end = True
         post.save()
+    apply.status = 'accepted'
+    apply.save()
+
     return JsonResponse({'ret': True})
