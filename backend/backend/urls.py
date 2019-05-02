@@ -20,9 +20,10 @@ import user.views
 import demand.views
 
 urlpatterns = [
-    # path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls),
 
     path('login/', user.views.login),
+    path('login/wechat/', user.views.wechat_login),
     path('register/', user.views.register),
     path('GetLoginStatus/', user.views.get_login_status),
     path('my/change_password/', user.views.change_password),

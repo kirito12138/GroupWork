@@ -121,3 +121,7 @@ STATICFILES_DIRS = [
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+APP_ID = ''
+APP_SECRET = ''
+APP_ID_URL = "https://api.weixin.qq.com/sns/jscode2session"

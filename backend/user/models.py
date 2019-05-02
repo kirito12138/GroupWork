@@ -14,6 +14,7 @@ class User(models.Model):
     grade = models.CharField(max_length=32)
     resume = models.OneToOneField('Resume', on_delete=models.SET_NULL, null=True)
     c_time = models.DateTimeField(auto_now_add=True)  # 保存用户创建时间
+    open_id = models.CharField(max_length=256, default='')
 
     def __str__(self):
         return self.account
