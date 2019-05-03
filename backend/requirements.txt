@@ -6,6 +6,7 @@ cffi==1.12.2
 chardet==3.0.4
 colorama==0.4.1
 cryptography==2.6.1
+coverage==4.5.3
 Django==2.2
 django-extensions==2.1.6
 django-sslserver==0.20

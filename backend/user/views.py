@@ -1,18 +1,23 @@
 import json
+import random
 import re
+import string
 from json import JSONDecodeError
 
 from django.core.exceptions import ValidationError
+from django.db.utils import IntegrityError
 from django.http import JsonResponse
 import hashlib
-from user import models
+
+from user.models import User, Resume
+from user.api_wechat import get_openid
 from user.jwt_token import create_token, verify_token
 from backend.settings import SECRET_KEY
 
-account_pattern = re.compile("^[a-zA-Z][a-zA-Z0-9]{0,13}$")
-password_pattern = re.compile("^[a-z_A-Z0-9-\.!@#\$%\\\^&\*\)\(\+=\{\}\[\]/\",'<>~\·`\?:;|]{8,14}$")
-name_pattern = re.compile("^.{0,20}$")
-student_id_pattern = re.compile("^\d{0,20}$")
+account_pattern = re.compile(r"^[a-zA-Z][a-zA-Z0-9]{0,13}$")
+password_pattern = re.compile(r"^[a-z_A-Z0-9-.!@#$%\\^&*)(+={}\[\]/\",'<>~·`?:;|]{8,14}$")
+name_pattern = re.compile(r"^.{0,20}$")
+student_id_pattern = re.compile(r"^\d{0,20}$")
 
 
 def gen_md5(s, salt='9527'):  # 加盐
@@ -20,6 +25,11 @@ def gen_md5(s, salt='9527'):  # 加盐
     md5 = hashlib.md5()
     md5.update(s.encode(encoding='utf-8'))  # update方法只接收bytes类型
     return md5.hexdigest()
+
+
+def gen_password(length):
+    chars = string.ascii_letters + string.digits
+    return ''.join([random.choice(chars) for _ in range(length)])  # 得出的结果中字符会有重复的
 
 
 def login(request):
@@ -41,12 +51,39 @@ def login(request):
         return JsonResponse({'ret': False, 'error_code': 3})
 
     try:
-        user = models.User.objects.get(account=account)
-    except models.User.DoesNotExist:
+        user = User.objects.get(account=account)
+    except User.DoesNotExist:
         return JsonResponse({'ret': False, 'error_code': 4})
 
     if user.password != gen_md5(password, SECRET_KEY):
         return JsonResponse({'ret': False, 'error_code': 5})
+    token = create_token(user.id).decode()
+    return JsonResponse({'ret': True, 'ID': str(user.id), 'Token': token})
+
+
+def wechat_login(request):
+    if request.method != "POST":
+        return JsonResponse({'ret': False, 'error_code': 1})
+
+    try:
+        data = json.loads(request.body)
+    except JSONDecodeError:
+        return JsonResponse({'ret': False, 'error_code': 3})
+
+    try:
+        code = data['code']
+    except KeyError:
+        return JsonResponse({'ret': False, 'error_code': 2})
+
+    open_id = get_openid(code)
+    if not open_id:
+        return JsonResponse({'ret': False, 'error_code': 4})
+
+    try:
+        user = User.objects.get(open_id=open_id)
+    except User.DoesNotExist:
+        user = User.objects.create(account=open_id, open_id=open_id)
+
     token = create_token(user.id).decode()
     return JsonResponse({'ret': True, 'ID': str(user.id), 'Token': token})
 
@@ -87,19 +124,14 @@ def register(request):
         return JsonResponse({'ret': False, 'error_code': 3})
 
     # 注册用户名校验
-    if models.User.objects.filter(account=account).exists():
-        print({'ret': False, 'error_code': 4})
-        return JsonResponse({'ret': False, 'error_code': 4})
+    # if models.User.objects.filter(account=account).exists():
+    #     return JsonResponse({'ret': False, 'error_code': 4})
 
-    new_user = models.User.objects.create(account=account)
-    new_user.password = gen_md5(password, SECRET_KEY)
-    new_user.name = name
-    new_user.age = age
-    new_user.student_id = student_id
-    new_user.sex = sex
-    new_user.major = major
-    new_user.grade = grade
-    new_user.save()
+    try:
+        new_user = User.objects.create(account=account, password=gen_md5(password, SECRET_KEY), name=name,
+                                              age=age, student_id=student_id, sex=sex, major=major, grade=grade)
+    except IntegrityError:  # 用户名已存在
+        return JsonResponse({'ret': False, 'error_code': 4})
 
     token = create_token(new_user.id).decode()
     print({'ret': True, 'ID': str(new_user.id), 'Token': token})
@@ -128,8 +160,8 @@ def get_user_profile(request, user_id):
         return JsonResponse({'ret': False, 'error_code': 5})
 
     try:
-        user = models.User.objects.get(id=user_id)
-    except models.User.DoesNotExist:
+        user = User.objects.get(id=user_id)
+    except User.DoesNotExist:
         return JsonResponse({'ret': False, 'error_code': 3})
 
     return JsonResponse(
@@ -169,8 +201,8 @@ def modify_my_profile(request):
         return JsonResponse({'ret': False, 'error_code': 3})
 
     # 注册用户名校验
-    if account != user.account and models.User.objects.filter(account=account).exists():
-        return JsonResponse({'ret': False, 'error_code': 4})
+    # if account != user.account and models.User.objects.filter(account=account).exists():
+    #     return JsonResponse({'ret': False, 'error_code': 4})
 
     user.account = account
     user.name = name
@@ -179,7 +211,11 @@ def modify_my_profile(request):
     user.sex = sex
     user.major = major
     user.grade = grade
-    user.save()
+
+    try:
+        user.save()
+    except IntegrityError:  # 用户名已存在
+        return JsonResponse({'ret': False, 'error_code': 4})
 
     return JsonResponse({'ret': True})
 
@@ -190,7 +226,7 @@ def get_login_status(request):
 
     user = verify_token(request.META.get('HTTP_AUTHORIZATION'))
     if not user:
-        return JsonResponse({'ret': False})
+        return JsonResponse({'ret': False, 'error_code': 2})
 
     return JsonResponse({'ret': True})
 
@@ -235,7 +271,7 @@ def modify_my_resume(request):
         return JsonResponse({'ret': False, 'error_code': 5})
 
     if not user.resume:
-        user.resume = models.Resume.objects.create()
+        user.resume = Resume.objects.create()
         user.save()
     resume = user.resume
 
@@ -278,7 +314,7 @@ def get_my_resume(request):
         return JsonResponse({'ret': False, 'error_code': 5})
 
     if not user.resume:
-        user.resume = models.Resume.objects.create()
+        user.resume = Resume.objects.create()
         user.save()
     resume = user.resume
     return JsonResponse({
