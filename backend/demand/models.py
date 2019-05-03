@@ -6,6 +6,11 @@ def resume_file_path(instance, filename):
     return 'resume/{1}.{2}'.format(instance.id, filename.split('.')[-1])
 
 
+def post_image_path(instance, filename):
+    # 图片上传到MEDIA_ROOT/img/post/<filename>目录中
+    return 'img/post/{1}.{2}'.format(instance.id, filename.split('.')[-1])
+
+
 class Post(models.Model):
     title = models.CharField(max_length=32)
     post_detail = models.TextField(default='')
@@ -15,6 +20,7 @@ class Post(models.Model):
     post_time = models.DateTimeField(auto_now_add=True)  # 发布时间，会自动添加
     if_end = models.BooleanField(default=False)
     poster = models.ForeignKey('user.User', on_delete=models.SET_NULL, null=True)
+    image = models.FileField(max_length=256, upload_to=post_image_path, null=True)
 
     def __str__(self):
         return self.title
