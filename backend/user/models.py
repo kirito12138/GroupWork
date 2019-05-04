@@ -5,16 +5,16 @@ from django.db import models
 
 class User(models.Model):
     account = models.CharField(max_length=32, unique=True)
-    password = models.CharField(max_length=64)
-    name = models.CharField(max_length=32)
+    password = models.CharField(max_length=64, blank=True)
+    name = models.CharField(max_length=32, blank=True)
     age = models.IntegerField(default=0)
-    student_id = models.CharField(max_length=32)
-    sex = models.CharField(max_length=32)
-    major = models.CharField(max_length=64)
-    grade = models.CharField(max_length=32)
-    resume = models.OneToOneField('Resume', on_delete=models.SET_NULL, null=True)
+    student_id = models.CharField(max_length=32, blank=True)
+    sex = models.CharField(max_length=32, blank=True)
+    major = models.CharField(max_length=64, blank=True)
+    grade = models.CharField(max_length=32, blank=True)
+    resume = models.OneToOneField('Resume', on_delete=models.SET_NULL, null=True, blank=True)
     c_time = models.DateTimeField(auto_now_add=True)  # 保存用户创建时间
-    open_id = models.CharField(max_length=256, default='')
+    open_id = models.CharField(max_length=256, default='', blank=True)
 
     def __str__(self):
         return self.account
