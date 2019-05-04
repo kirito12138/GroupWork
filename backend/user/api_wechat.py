@@ -8,7 +8,6 @@ def get_openid(js_code):
           + "&js_code=" + js_code + "&grant_type=authorization_code"
     r = requests.get(url)
     data = r.json()
-    print(data)
     if 'errcode' not in data or data['errcode'] == 0:
         return data['openid']
     return None

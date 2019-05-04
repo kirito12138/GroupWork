@@ -2,12 +2,12 @@ import json
 import random
 import re
 import string
-from json import JSONDecodeError
+import hashlib
 
+from json import JSONDecodeError
 from django.core.exceptions import ValidationError
 from django.db.utils import IntegrityError
 from django.http import JsonResponse
-import hashlib
 
 from user.models import User, Resume
 from user.api_wechat import get_openid
@@ -72,6 +72,8 @@ def wechat_login(request):
 
     try:
         code = data['code']
+        name = data['name']
+        avatar_url = data['avatar_url']
     except KeyError:
         return JsonResponse({'ret': False, 'error_code': 2})
 
@@ -81,9 +83,12 @@ def wechat_login(request):
 
     try:
         user = User.objects.get(open_id=open_id)
+        if user.name == '':
+            user.name = name
     except User.DoesNotExist:
-        user = User.objects.create(account=open_id, open_id=open_id, password=gen_md5('group_work', SECRET_KEY))
-
+        user = User.objects.create(account=open_id, open_id=open_id, name=name)
+    user.avatar_url = avatar_url
+    user.save()
     token = create_token(user.id).decode()
     return JsonResponse({'ret': True, 'ID': str(user.id), 'Token': token})
 
@@ -129,7 +134,7 @@ def register(request):
 
     try:
         new_user = User.objects.create(account=account, password=gen_md5(password, SECRET_KEY), name=name,
-                                              age=age, student_id=student_id, sex=sex, major=major, grade=grade)
+                                       age=age, student_id=student_id, sex=sex, major=major, grade=grade)
     except IntegrityError:  # 用户名已存在
         return JsonResponse({'ret': False, 'error_code': 4})
 
@@ -148,7 +153,8 @@ def get_my_profile(request):
 
     return JsonResponse(
         {'ret': True, 'account': user.account, 'name': user.name, 'age': user.age,
-         'studentID': user.student_id, "sex": user.sex, "major": user.major, "grade": user.grade})
+         'studentID': user.student_id, "sex": user.sex, "major": user.major, "grade": user.grade,
+         "avatar_url": user.avatar_url})
 
 
 def get_user_profile(request, user_id):
@@ -166,7 +172,8 @@ def get_user_profile(request, user_id):
 
     return JsonResponse(
         {'ret': True, 'account': user.account, 'name': user.name, 'age': user.age,
-         'studentID': user.student_id, "sex": user.sex, "major": user.major, "grade": user.grade})
+         'studentID': user.student_id, "sex": user.sex, "major": user.major, "grade": user.grade,
+         "avatar_url": user.avatar_url})
 
 
 def modify_my_profile(request):

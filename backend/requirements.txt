@@ -13,6 +13,7 @@ django-sslserver==0.20
 django-werkzeug-debugger-runserver==0.3.1
 idna==2.8
 more-itertools==7.0.0
+Pillow==6.0.0
 pluggy==0.9.0
 py==1.8.0
 pycparser==2.19
