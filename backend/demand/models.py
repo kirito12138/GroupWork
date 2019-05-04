@@ -25,7 +25,7 @@ class Post(models.Model):
     if_end = models.BooleanField(default=False)
     poster = models.ForeignKey('user.User', on_delete=models.CASCADE, null=True, blank=True)
     image = models.ImageField(max_length=256, upload_to=post_image_path,
-                              default=os.sep.join([MEDIA_ROOT, 'img/post/example/1.jpg']))
+                              default='img/post/example/1.jpg')
 
     def __str__(self):
         return self.title
