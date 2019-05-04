@@ -1,9 +1,8 @@
 {
   "pages": [
-    
+    "pages/index/index",
     "pages/login/login",
     "pages/personInfo/personInfo",
-    "pages/index/index",
     "pages/logs/logs",
     "pages/test/test",
     "pages/register/register",
@@ -14,15 +13,14 @@
     "pages/myApplyson/myApplyson",
     "pages/myPost/myPost",
     "pages/newPost/newPost",
-
     "pages/modifyPostDetail/modifyPostDetail",
     "pages/modifyPostSon/modifyPostSon",
     "pages/myResume/myResume",
     "pages/applyThis/applyThis",
     "pages/seeMyResume/seeMyResume",
     "pages/agree/agree",
-    "pages/applyers/applyers"
-
+    "pages/applyers/applyers",
+    "pages/personCenter/personCenter"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -44,5 +42,34 @@
     "i-card": "../../vant-weapp/dist/card/index",
     "i-toast": "../../vant-weapp/dist/toast/index",
     "i-divider": "../../vant-weapp/dist/divider/index"
-  }
+  },
+  "tabBar": {
+    "list": [
+      {
+        "pagePath": "pages/home/home",
+        "text": "首页",
+        "iconPath": "image/main1.png",
+        "selectedIconPath": "image/main2.png"
+      },
+      {
+        "pagePath": "pages/myPost/myPost",
+        "text": "我的发布",
+        "iconPath": "image/post1.png",
+        "selectedIconPath": "image/post2.png"
+      },
+      {
+        "pagePath": "pages/myApply/myApply",
+        "text": "我的申请",
+        "iconPath": "image/apply1.png",
+        "selectedIconPath": "image/apply2.png"
+      },
+      {
+        "pagePath": "pages/personCenter/personCenter",
+        "text": "个人中心",
+        "iconPath": "image/user1.png",
+        "selectedIconPath": "image/user2.png"
+      }
+    ]
+  },
+  "sitemapLocation": "sitemap.json"
 }
