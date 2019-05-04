@@ -14,6 +14,7 @@ from user.jwt_token import verify_token
 from user.models import User, Resume
 from demand.models import Post
 from demand.models import Apply
+from demand.models import Label
 
 post_title_pattern = re.compile(r"^.{1,20}$")
 deadline_pattern = re.compile(r"^\d\d\d\d-\d\d-\d\d$")
@@ -121,6 +122,8 @@ def get_unclosed_posts(request):
     unclosed_posts = Post.objects.filter(if_end=False, deadline__gte=datetime.date.today()).order_by('-post_time')
     ret_data = []
     for post in unclosed_posts:
+        labelList = Label.objects.filter(post = post).all()
+        labels = '&'.join(labelList)
         ret_data.append({
             "title": post.title,
             "postDetail": post.post_detail,
@@ -130,6 +133,7 @@ def get_unclosed_posts(request):
             "postID": str(post.id),
             "posterID": str(post.poster.id),
             "image_url": post.image.url,
+            "labels": labels,
         })
     return JsonResponse(ret_data, safe=False)
 
@@ -147,10 +151,13 @@ def get_post_detail(request, post_id):
     except Post.DoesNotExist:
         return JsonResponse({'ret': False, 'error_code': 3})
 
+    labelList = Label.objects.filter(post=post).all()
+    labels = '&'.join(labelList)
+
     return JsonResponse(
         {'ret': True, 'title': post.title, 'postDetail': post.post_detail, 'requestNum': post.request_num,
          'acceptedNum': post.accept_num, 'ddl': post.deadline, 'ifEnd': post.if_end, 'postID': str(post.id),
-         'posterID': str(post.poster.id), 'image_url': post.image.url})
+         'posterID': str(post.poster.id), 'image_url': post.image.url, 'labels': labels})
 
 
 def get_user_posts(request, user_id):
@@ -169,6 +176,10 @@ def get_user_posts(request, user_id):
     posts = user.post_set.order_by('-post_time')
     ret_data = []
     for post in posts:
+
+        labelList = Label.objects.filter(post=post).all()
+        labels = '&'.join(labelList)
+
         ret_data.append({
             "title": post.title,
             "postDetail": post.post_detail,
@@ -179,6 +190,7 @@ def get_user_posts(request, user_id):
             "postID": str(post.id),
             "posterID": str(post.poster.id),
             "image_url": post.image.url,
+            "labels": labels,
         })
     return JsonResponse(ret_data, safe=False)
 
@@ -207,8 +219,15 @@ def modify_post_detail(request, post_id):
         post_detail = data['postDetail']
         request_num = data['requestNum']
         deadline = data['ddl']
+        labels = data['labels']
     except KeyError:
         return JsonResponse({'ret': False, 'error_code': 2})
+
+    labelList = labels.split('&')
+    for i in range(0, len(labelList)):
+        labelList[i] = int(labelList[i])
+        if labelList[i] <= 0 or labelList[i] > 20:
+            return JsonResponse({'ret': False, 'error_code': 3})
 
     if type(request_num) != int or request_num < 1 or request_num > 100:
         return JsonResponse({'ret': False, 'error_code': 3})
@@ -232,6 +251,13 @@ def modify_post_detail(request, post_id):
     post.deadline = deadline
     post.poster = user
     post.save()
+
+    labelListPast = Label.objects.filter(post=post).all()
+    for i in labelListPast:
+        i.delete()
+
+    for i in labelList:
+        post.label_set.create(label=i)
 
     if post.accept_num >= post.request_num:
         post.apply_set.filter(status='waiting').update(status='closed')
