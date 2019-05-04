@@ -1,15 +1,19 @@
 import json
+import os
 import re
-from json import JSONDecodeError
+import datetime
 
+from random import randint
+from json import JSONDecodeError
 from django.core.exceptions import ValidationError
 from django.http import JsonResponse
 # from django.shortcuts import render
+
+from backend.settings import MEDIA_ROOT
 from user.jwt_token import verify_token
 from user.models import User, Resume
 from demand.models import Post
 from demand.models import Apply
-import datetime
 
 post_title_pattern = re.compile(r"^.{1,20}$")
 deadline_pattern = re.compile(r"^\d\d\d\d-\d\d-\d\d$")
@@ -57,9 +61,42 @@ def create_post(request):
     new_post.request_num = request_num
     new_post.deadline = deadline
     new_post.poster = user
+    new_post.image = os.sep.join([MEDIA_ROOT, 'img/post/example/' + str(randint(1, 4)) + '.jpg'])  # 设置默认图片
     new_post.save()
 
     return JsonResponse({'ret': True, 'postID': str(new_post.id)})
+
+
+def upload_post_image(request, post_id):
+    if request.method != "POST":
+        return JsonResponse({'ret': False, 'error_code': 1})
+
+    user = verify_token(request.META.get('HTTP_AUTHORIZATION'))
+    if not user:
+        return JsonResponse({'ret': False, 'error_code': 5})
+
+    print(request.FILES)
+    image = request.FILES.get('image')
+    if not image:
+        return JsonResponse({'ret': False, 'error_code': 2})
+
+    try:
+        post = Post.objects.get(id=post_id)
+    except Post.DoesNotExist:
+        return JsonResponse({'ret': False, 'error_code': 4})
+    if post.poster != user:
+        return JsonResponse({'ret': False, 'error_code': 6})
+
+    try:
+        post.image = image
+        post.if_end = False
+        post.full_clean()  # 检查格式
+        post.save()
+    except ValidationError:
+        return JsonResponse({'ret': False, 'error_code': 3})
+
+    print(post.image.url, post.image.path)
+    return JsonResponse({'ret': True, 'image_url': post.image.url})
 
 
 def get_unclosed_posts(request):
@@ -81,6 +118,7 @@ def get_unclosed_posts(request):
             "ddl": post.deadline,
             "postID": str(post.id),
             "posterID": str(post.poster.id),
+            "image_url": post.image.url,
         })
     return JsonResponse(ret_data, safe=False)
 
@@ -101,7 +139,7 @@ def get_post_detail(request, post_id):
     return JsonResponse(
         {'ret': True, 'title': post.title, 'postDetail': post.post_detail, 'requestNum': post.request_num,
          'acceptedNum': post.accept_num, 'ddl': post.deadline, 'ifEnd': post.if_end, 'postID': str(post.id),
-         'posterID': str(post.poster.id)})
+         'posterID': str(post.poster.id), 'image_url': post.image.url})
 
 
 def get_user_posts(request, user_id):
@@ -129,6 +167,7 @@ def get_user_posts(request, user_id):
             "ifEnd": post.if_end,
             "postID": str(post.id),
             "posterID": str(post.poster.id),
+            "image_url": post.image.url,
         })
     return JsonResponse(ret_data, safe=False)
 
@@ -281,6 +320,7 @@ def get_user_applies(request, user_id):
             "ddl": apply.post.deadline,
             "ifEnd": apply.post.if_end,
             "posterID": str(apply.applicant.id),
+            "image_url": apply.post.image.url,
         })
     return JsonResponse(ret_data, safe=False)
 

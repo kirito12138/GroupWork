@@ -39,6 +39,7 @@ urlpatterns = [
     path('my/<int:user_id>/apply/', demand.views.get_user_applies),
     path('f/processing/', demand.views.get_unclosed_posts),
     path('c/post/', demand.views.create_post),
+    path('p/<int:post_id>/upload_image/', demand.views.upload_post_image),
 
     path('p/<int:post_id>/', demand.views.get_post_detail),
     path('p/<int:post_id>/modify/', demand.views.modify_post_detail),

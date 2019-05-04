@@ -2,12 +2,12 @@ import json
 import random
 import re
 import string
-from json import JSONDecodeError
+import hashlib
 
+from json import JSONDecodeError
 from django.core.exceptions import ValidationError
 from django.db.utils import IntegrityError
 from django.http import JsonResponse
-import hashlib
 
 from user.models import User, Resume
 from user.api_wechat import get_openid
@@ -82,10 +82,11 @@ def wechat_login(request):
     try:
         user = User.objects.get(open_id=open_id)
     except User.DoesNotExist:
+        # user = User.objects.create(account=open_id, open_id=open_id, password=gen_md5('group_work', SECRET_KEY))
         user = User.objects.create(account=open_id, open_id=open_id)
 
     token = create_token(user.id).decode()
-    return JsonResponse({'ret': True, 'ID': str(user.id), 'Token': token})
+    return JsonResponse({'ret': True, 'ID': str(user.id), 'Token': token, 'if_set_password': user.password != ''})
 
 
 def register(request):
@@ -123,7 +124,7 @@ def register(request):
 
     try:
         new_user = User.objects.create(account=account, password=gen_md5(password, SECRET_KEY), name=name,
-                                              age=age, student_id=student_id, sex=sex, major=major, grade=grade)
+                                       age=age, student_id=student_id, sex=sex, major=major, grade=grade)
     except IntegrityError:  # 用户名已存在
         return JsonResponse({'ret': False, 'error_code': 4})
 
