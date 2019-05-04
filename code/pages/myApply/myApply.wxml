@@ -1,69 +1,12 @@
-<!--pages/myApply/myApply.wxml-->
-<!--pages/home/home.wxml-->
-
-<view class="page">
-<!-- 侧边栏内容 -->
-<view class="page-slidebar">
-<view class="page-content">
-<i-cell-group i-class = 'group'>
-<i-cell bind:click = "goHome" title="首页" >
-<i-icon slot = "icon" type="homepage" size="28" color="#80848f" />
-</i-cell>
-<i-cell bind:click = "goMyPost" title="我的发布" >
-<i-icon slot = "icon" type="document" size="28" color="#0000FF" />
-</i-cell>
-<i-cell bind:click = "goMyApply" title="我的申请" >
-<i-icon slot = "icon" type="mail" size="28" color="  #0000CD"/>
-</i-cell>
-<i-cell bind:click = "goPersonInfo" title="个人资料" >
-<i-icon slot = 'icon' type="addressbook" size="28" color='#FFD700'/>
-</i-cell>
-<i-cell bind:click = "goMyResume" title="我的简历" >
-<i-icon slot = 'icon' type="businesscard" size = "28" color='#FF9933' />
-</i-cell>
-<i-cell bind:click = "goChangePwd" title="修改密码" >
-<i-icon slot = 'icon' type="editor" size = "28" color='#FF6A6A' />
-</i-cell>
-</i-cell-group>
-
-</view>
-</view>
-<!-- 主页内容 -->
-<!-- （open ? 'c-state' : ''）三元运算符： -->
-<!-- 1.默认情况下 open 为 false -->
-<!-- 2.当点击左上角图标的时候或者屏幕向左滑动，open 变化 true -->
-<!-- 3.当 open 为 true 时，会加上类名为 c-state 和 cover 的 css 样式 -->
-<!-- bindtouchstart、 bindtouchmove、bindtouchend -->
-<!-- 当手指触摸屏幕并滑动时，所触发的三个函数 bindtouchmove="tap_drag" bindtouchend="tap_end" bindtouchstart="tap_start" -->
-  <view class="page-top {{open ? ['c-state','cover'] : ''}} ">
-    <view slot="title" class='tit' style="position:fixed;top:0;z-index: 1;">
-      <i-cell bind:click = "tap_ch">
-      <i-icon slot = 'icon' type="other" size = "41" />
-      </i-cell>
-    </view>
-
-
-
-
   <scroll-view class='sv' scroll-y='true' style='z-index: -1;'>
-  
     <view class = "cds" >
-    
-    <view wx:for = "{{f_posts}}" wx:key = "postID">
+    <view wx:for = "{{f_posts}}">
         <view class = "card" bindtap='clickCard' data-index='{{index}}'>
-        <i-card title="{{item.post_title}}" extra="查看发布"  style="color:red">
-        <view slot="content"><text style = "color: black;">详情：</text>{{item.postDetail}}</view>
-        <view slot="footer"> <text style = "color: black;" >\n申请状态：</text>{{item.applyStatus}}  <text style = "color: black;" >\n所需人数：</text>（ {{item.acceptedNum}} / {{item.requestNum}} ） <text style = "color: black;">\n 截止时间:</text>{{item.ddl}}</view>
+        <i-card title="{{item.title}}" extra="查看发布" full = "true" style="color:#555555 font-weight:bolder">
+        <view slot="content"><text style = "color: black; font-weight:bold;">详情：</text>{{item.postDetail}}</view>
+        <view slot="footer">所需人数：（ {{item.acceptedNum}} / {{item.requestNum}} ） 截止时间:{{item.ddl}}</view>
         </i-card>
         </view>
     </view>
-    
-
     </view>
     </scroll-view>
-    
-  </view>
-</view>
-
-
-<i-message id="message" />

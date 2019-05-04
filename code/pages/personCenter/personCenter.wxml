@@ -1,0 +1,27 @@
+
+<view class="all">
+    <!-- 用户未登录就没有头像-->
+    <block wx:if="{{userimg!= ''}}">
+      <view class="userup">
+        <view class="userimage">
+            <image class="userimage" src="{{userimg}}" />
+        </view>
+      </view>
+    </block>
+    <view class="username">
+      <text>{{username}}</text>
+    </view>
+  
+
+<i-cell-group i-class = 'group'>
+<i-cell bind:click = "goPersonInfo" title="个人资料" >
+<i-icon slot = 'icon' type="addressbook" size="28" color='#FFD700'/>
+</i-cell>
+<i-cell bind:click = "goMyResume" title="我的简历" >
+<i-icon slot = 'icon' type="businesscard" size = "28" color='#FF9933' />
+</i-cell>
+<i-cell bind:click = "aboutUS" title="关于我们" >
+<i-icon slot = 'icon' type="group" size = "28" color='#EE7600' />
+</i-cell>
+</i-cell-group>
+</view>

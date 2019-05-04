@@ -1,0 +1,25 @@
+/* pages/personCenter/personCenter.wxss */
+
+.all{
+  width: 100%;
+  height: 100%;
+}
+
+.userup{
+  display: flex;
+  justify-content:center;
+  height: 300rpx;
+  background-color: white
+}
+.userimage{
+margin-top: 40rpx;
+align-content: center;
+width: 200rpx;
+height: 200rpx;
+border-radius: 100rpx;
+}
+.username{
+  background-color: white;
+  text-align: center;
+  margin-bottom: 50rpx;
+}
