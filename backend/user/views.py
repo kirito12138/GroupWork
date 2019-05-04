@@ -82,7 +82,7 @@ def wechat_login(request):
     try:
         user = User.objects.get(open_id=open_id)
     except User.DoesNotExist:
-        user = User.objects.create(account=open_id, open_id=open_id)
+        user = User.objects.create(account=open_id, open_id=open_id, password=gen_md5('group_work', SECRET_KEY))
 
     token = create_token(user.id).decode()
     return JsonResponse({'ret': True, 'ID': str(user.id), 'Token': token})

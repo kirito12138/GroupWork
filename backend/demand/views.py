@@ -66,9 +66,9 @@ def get_unclosed_posts(request):
     if request.method != "GET":
         return JsonResponse({'ret': False, 'error_code': 1})
 
-    user = verify_token(request.META.get('HTTP_AUTHORIZATION'))
-    if not user:
-        return JsonResponse({'ret': False, 'error_code': 5})
+    # user = verify_token(request.META.get('HTTP_AUTHORIZATION'))
+    # if not user:
+    #     return JsonResponse({'ret': False, 'error_code': 5})
 
     unclosed_posts = Post.objects.filter(if_end=False, deadline__gte=datetime.date.today()).order_by('-post_time')
     ret_data = []
