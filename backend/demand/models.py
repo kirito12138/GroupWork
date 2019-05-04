@@ -21,7 +21,7 @@ class Post(models.Model):
     request_num = models.IntegerField(default=0)
     accept_num = models.IntegerField(default=0)
     deadline = models.DateField(auto_now_add=True)
-    post_time = models.DateTimeField(auto_now_add=True)  # 发布时间，会自动添加
+    post_time = models.DateTimeField(null=True, blank=True)  # 发布时间，会自动添加
     if_end = models.BooleanField(default=False)
     poster = models.ForeignKey('user.User', on_delete=models.CASCADE, null=True, blank=True)
     image = models.ImageField(max_length=256, upload_to=post_image_path,

@@ -63,14 +63,14 @@ def create_post(request):
                            poster=user).exists():
         return JsonResponse({'ret': False, 'error_code': 4})
 
-    new_post = Post.objects.create()
-    new_post.title = title
-    new_post.post_detail = post_detail
-    new_post.request_num = request_num
-    new_post.deadline = deadline
-    new_post.poster = user
-    new_post.image = os.sep.join([MEDIA_ROOT, 'img/post/example/' + str(randint(1, 4)) + '.jpg'])  # 设置默认图片
-    new_post.save()
+    new_post = Post.objects.create(
+        title=title,
+        post_detail=post_detail,
+        request_num=request_num,
+        deadline=deadline,
+        poster=user,
+        image=os.sep.join([MEDIA_ROOT, 'img/post/example/' + str(randint(1, 4)) + '.jpg']),  # 设置默认图片
+    )
 
     for i in labelList:
         new_post.label_set.create(label=i)
@@ -101,6 +101,7 @@ def upload_post_image(request, post_id):
 
     try:
         post.image = image
+        # post.if_end = False
         post.full_clean()  # 检查格式
         post.save()
     except ValidationError:
@@ -420,7 +421,10 @@ def create_apply(request):
     if user.apply_set.filter(post=post).exists():
         return JsonResponse({'ret': False, 'error_code': 6})
 
-    resume = Resume.objects.create()
+    if not user.resume:
+        user.resume = Resume.objects.create()
+        user.save()
+    resume = user.resume
     try:
         resume.name = data['name']
         resume.sex = data['sex']
@@ -435,18 +439,14 @@ def create_apply(request):
         resume.project_exp = data['project_exp']
         resume.self_review = data['self_review']
     except KeyError:
-        resume.delete()
         return JsonResponse({'ret': False, 'error_code': 2})
 
     try:
         resume.full_clean()  # 检查格式
         resume.save()
     except ValidationError:
-        resume.delete()
         return JsonResponse({'ret': False, 'error_code': 3})
 
-    user.resume = resume
-    user.save()
     resume.pk = None  # 复制一个新的resume
     resume.save()
 
