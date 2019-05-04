@@ -6,10 +6,10 @@
       <i-input  value = "{{account}}" mode= "normal" title="用户名" bind:change = "input_usrname" placeholder="用户名由英文字母和数字，英文开头，最大不超过20位" maxlength="20" />
     </view>
     <view class = "label_1">
-      <i-input  value = "{{password}}" mode= "normal" title="密码"  bind:change = "input_psw" placeholder="请输入8到16位得密码"  maxlength="16"/>
+      <i-input  value = "{{password}}" mode= "normal" title="密码"  type = "password" bind:change = "input_psw" placeholder="请输入8到16位得密码"  maxlength="16"/>
     </view>
     <view class = 'label_1'>
-      <i-input  value = "{{check_psw}}" mode= "normal" title="确认密码"  bind:change = "input_checkpsw" placeholder="两次输入的密码需一致" maxlength="16"/>
+      <i-input  value = "{{check_psw}}" mode= "normal" title="确认密码"  type = "password" bind:change = "input_checkpsw" placeholder="两次输入的密码需一致" maxlength="16"/>
 
     </view>
     </i-panel>
