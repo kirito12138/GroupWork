@@ -36,8 +36,15 @@ def create_post(request):
         post_detail = data['postDetail']
         request_num = data['requestNum']
         deadline = data['ddl']
+        labels = data['labels']
     except KeyError:
         return JsonResponse({'ret': False, 'error_code': 2})
+
+    labelList = labels.split('&')
+    for i in range(0, len(labelList)):
+        labelList[i] = int(labelList[i])
+        if labelList[i] <= 0 or labelList[i] > 20:
+            return JsonResponse({'ret': False, 'error_code': 3})
 
     if type(request_num) != int or request_num < 1 or request_num > 100:
         return JsonResponse({'ret': False, 'error_code': 3})
@@ -63,6 +70,9 @@ def create_post(request):
     new_post.poster = user
     new_post.image = os.sep.join([MEDIA_ROOT, 'img/post/example/' + str(randint(1, 4)) + '.jpg'])  # 设置默认图片
     new_post.save()
+
+    for i in labelList:
+        new_post.label_set.create(i)
 
     return JsonResponse({'ret': True, 'postID': str(new_post.id)})
 

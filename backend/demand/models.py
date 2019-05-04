@@ -43,3 +43,11 @@ class Apply(models.Model):
 
     class Meta:
         ordering = ["c_time"]
+
+
+class Label(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    label = models.IntegerField(default=0)
+
+    def __str__(self):
+        return '(' + str(self.post_id) + ',' + str(self.label) + ')'
