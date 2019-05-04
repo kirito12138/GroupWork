@@ -2,13 +2,14 @@
   "pages": [
     "pages/newPost/newPost",
     "pages/index/index",
+    "pages/postDetail/postDetail",
     "pages/login/login",
     "pages/personInfo/personInfo",
     "pages/logs/logs",
     "pages/test/test",
     "pages/register/register",
     "pages/changePwd/changePwd",
-    "pages/postDetail/postDetail",
+
     "pages/home/home",
     "pages/myApply/myApply",
     "pages/myApplyson/myApplyson",
@@ -41,7 +42,8 @@
     "i-input-number": "../../vant-weapp/dist/input-number/index",
     "i-card": "../../vant-weapp/dist/card/index",
     "i-toast": "../../vant-weapp/dist/toast/index",
-    "i-divider": "../../vant-weapp/dist/divider/index"
+    "i-divider": "../../vant-weapp/dist/divider/index",
+    "i-tag": "../../vant-weapp/dist/tag/index"
   },
   "tabBar": {
     "list": [
