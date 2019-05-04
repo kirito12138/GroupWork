@@ -86,7 +86,8 @@ def upload_post_image(request, post_id):
     if not user:
         return JsonResponse({'ret': False, 'error_code': 5})
 
-    print(request.FILES)
+    if request.content_type != 'multipart/form-data':
+        return JsonResponse({'ret': False, 'error_code': 3})
     image = request.FILES.get('image')
     if not image:
         return JsonResponse({'ret': False, 'error_code': 2})
@@ -105,7 +106,6 @@ def upload_post_image(request, post_id):
     except ValidationError:
         return JsonResponse({'ret': False, 'error_code': 3})
 
-    print(post.image.url, post.image.path)
     return JsonResponse({'ret': True, 'image_url': post.image.url})
 
 

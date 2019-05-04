@@ -7,12 +7,12 @@ from backend.settings import MEDIA_ROOT
 
 def resume_file_path(instance, filename):
     # 文件上传到MEDIA_ROOT/resume/<filename>目录中
-    return 'resume/{1}.{2}'.format(instance.id, filename.split('.')[-1])
+    return 'resume/{0}.{1}'.format(instance.id, filename.split('.')[-1])
 
 
 def post_image_path(instance, filename):
     # 图片上传到MEDIA_ROOT/img/post/<filename>目录中
-    return 'img/post/{1}.{2}'.format(instance.id, filename.split('.')[-1])
+    return 'img/post/{0}.{1}'.format(instance.id, filename.split('.')[-1])
 
 
 class Post(models.Model):
