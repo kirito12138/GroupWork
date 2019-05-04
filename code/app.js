@@ -1,6 +1,5 @@
 //app.js
 App({
-
   onLaunch: function () {
     // 展示本地存储能力
     var logs = wx.getStorageSync('logs') || []
@@ -8,12 +7,53 @@ App({
     wx.setStorageSync('logs', logs)
 
     // 登录
+    var that = this
     wx.login({
-      success: res => {
-        // 发送 res.code 到后台换取 openId, sessionKey, unionId
+      success: function (res) {
+        //code 获取用户信息的凭证
+        var code = res.code;
+        console.log(code);
+        var appId = 'wx19f90473bf0a781f';
+        var secret = '96f7d24c077626b944119b75bd587f4d';
+        if (res.code) {
+          //请求获取用户详细信息
+          wx.request({
+            url: 'https://group.tttaaabbbccc.club/login/wechat/',
+            header: {
+              'Content-type': 'application/json'
+            },
+            method: "POST",
+            data: {
+              code: res.code
+            },
+
+
+            success: function (res) {
+              //保存openid 
+              if(res.data.ret)
+              {
+                that.globalData.openId = res.data.ID;
+                var token = res.data['Token'];
+                const _token = JSON.stringify(token);
+                wx.setStorageSync('jwt', _token);
+
+                var id = res.data['ID'];
+                const _id = JSON.stringify(id);
+                wx.setStorageSync('userid', _id);
+
+              }
+              else
+              {
+                wx.showToast({ title: "登录失败" })
+              }
+
+            }
+          });
+        } else {
+          wx.showToast({ title: "请求超时~" })
+        }
       }
     })
-    // 获取用户信息
     wx.getSetting({
       success: res => {
         if (res.authSetting['scope.userInfo']) {
@@ -36,7 +76,7 @@ App({
 
   },
   globalData: {
-    userInfo: null
+    userInfo: null,
+    openId: ""
   }
-
 })
