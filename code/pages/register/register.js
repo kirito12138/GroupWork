@@ -105,7 +105,7 @@ Page({
           account: this.data.account,
           password: this.data.password,
           name:"",
-          age:-1,
+          age:0,
           studentID:"",
           sex:"",
           major:"",
@@ -125,12 +125,16 @@ Page({
             var token = res.data['Token'];
             const _token = JSON.stringify(token);
             wx.setStorageSync('jwt', _token);
+            var id = res.data['ID'];
+            const _id = JSON.stringify(id);
+            wx.setStorageSync('userid', _id);
             wx.reLaunch({
               url: '../home/home',
             });
           }
           else {
             console.log("login_fail");
+            console.log(res.data.error_code)
             //TODO 错误提示
             $Message({
               content: '账号已经存在',
