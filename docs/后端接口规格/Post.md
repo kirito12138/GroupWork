@@ -21,6 +21,8 @@
         "requestNum":"int", //所需人数 : >0
         "ddl":"datetime", //结束时间 ：以 YYYY-MM-DD 的形式传递
         "labels":"string", //项目标签代码，以‘&’为分隔符拼接，如：1&2&3&4&5
+        "userimg": "string" //用户头像
+        "username": "string" //用户名
     }
   ```
 
@@ -41,6 +43,10 @@
   | 3          | 信息格式错误                                                 |
   | 4          | 帖子已存在，判断title，postDetail，requestNum，ddl，posterID都一样时为已存在 |
   | 5          | 用户未登录（未检测到token）或登录已过期（token过期）         |
+
+### /c/upLoading/<postID>  发布帖子 [已实现]
+
+​	上传图片接口
 
 ### /p/\<post_id\>/modify/   修改一个帖子的的信息，该帖子的发布者必须是当前登陆的用户 [已实现]
 
