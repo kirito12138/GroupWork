@@ -134,6 +134,9 @@
         "ddl":"datetime", //YYYY-MM-DD
         "ifEnd":"bool",
         "posterID":"string",
+        "poster_name": "string", //帖子发布者用户名
+        "poster_avatar_url": "string", //帖子发布者头像url
+        "image_url": "string", //帖子的图片url，没有加上域名
   	},
        ...
    ]
