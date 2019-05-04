@@ -60,7 +60,7 @@ def create_post(request):
 
     # 新建发布校验
     if Post.objects.filter(title=title, post_detail=post_detail, request_num=request_num, deadline=deadline,
-                           poster=user).exists():
+                           poster = user).exists():
         return JsonResponse({'ret': False, 'error_code': 4})
 
     new_post = Post.objects.create()
@@ -123,7 +123,11 @@ def get_unclosed_posts(request):
     ret_data = []
     for post in unclosed_posts:
         labelList = Label.objects.filter(post = post).all()
-        labels = '&'.join(labelList)
+        labels = []
+        for obj in labelList:
+            labels.append(str(obj.label))
+        labels = '&'.join(labels)
+
         ret_data.append({
             "title": post.title,
             "postDetail": post.post_detail,
@@ -152,7 +156,10 @@ def get_post_detail(request, post_id):
         return JsonResponse({'ret': False, 'error_code': 3})
 
     labelList = Label.objects.filter(post=post).all()
-    labels = '&'.join(labelList)
+    labels = []
+    for obj in labelList:
+        labels.append(str(obj.label))
+    labels = '&'.join(labels)
 
     return JsonResponse(
         {'ret': True, 'title': post.title, 'postDetail': post.post_detail, 'requestNum': post.request_num,
@@ -178,7 +185,10 @@ def get_user_posts(request, user_id):
     for post in posts:
 
         labelList = Label.objects.filter(post=post).all()
-        labels = '&'.join(labelList)
+        labels = []
+        for obj in labelList:
+            labels.append(str(obj.label))
+        labels = '&'.join(labels)
 
         ret_data.append({
             "title": post.title,
