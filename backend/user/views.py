@@ -72,6 +72,8 @@ def wechat_login(request):
 
     try:
         code = data['code']
+        name = data['name']
+        avatar_url = data['avatar_url']
     except KeyError:
         return JsonResponse({'ret': False, 'error_code': 2})
 
@@ -81,12 +83,14 @@ def wechat_login(request):
 
     try:
         user = User.objects.get(open_id=open_id)
+        if user.name == '':
+            user.name = name
     except User.DoesNotExist:
-        # user = User.objects.create(account=open_id, open_id=open_id, password=gen_md5('group_work', SECRET_KEY))
-        user = User.objects.create(account=open_id, open_id=open_id)
-
+        user = User.objects.create(account=open_id, open_id=open_id, name=name)
+    user.avatar_url = avatar_url
+    user.save()
     token = create_token(user.id).decode()
-    return JsonResponse({'ret': True, 'ID': str(user.id), 'Token': token, 'if_set_password': user.password != ''})
+    return JsonResponse({'ret': True, 'ID': str(user.id), 'Token': token})
 
 
 def register(request):
@@ -142,7 +146,8 @@ def get_my_profile(request):
 
     return JsonResponse(
         {'ret': True, 'account': user.account, 'name': user.name, 'age': user.age,
-         'studentID': user.student_id, "sex": user.sex, "major": user.major, "grade": user.grade})
+         'studentID': user.student_id, "sex": user.sex, "major": user.major, "grade": user.grade,
+         "avatar_url": user.avatar_url})
 
 
 def get_user_profile(request, user_id):
@@ -160,7 +165,8 @@ def get_user_profile(request, user_id):
 
     return JsonResponse(
         {'ret': True, 'account': user.account, 'name': user.name, 'age': user.age,
-         'studentID': user.student_id, "sex": user.sex, "major": user.major, "grade": user.grade})
+         'studentID': user.student_id, "sex": user.sex, "major": user.major, "grade": user.grade,
+         "avatar_url": user.avatar_url})
 
 
 def modify_my_profile(request):

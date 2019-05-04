@@ -15,6 +15,7 @@ class User(models.Model):
     resume = models.OneToOneField('Resume', on_delete=models.SET_NULL, null=True, blank=True)
     c_time = models.DateTimeField(auto_now_add=True)  # 保存用户创建时间
     open_id = models.CharField(max_length=256, default='', blank=True)
+    avatar_url = models.CharField(max_length=256, default='', blank=True)
 
     def __str__(self):
         return self.account

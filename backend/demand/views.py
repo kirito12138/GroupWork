@@ -60,7 +60,7 @@ def create_post(request):
 
     # 新建发布校验
     if Post.objects.filter(title=title, post_detail=post_detail, request_num=request_num, deadline=deadline,
-                           poster = user).exists():
+                           poster=user).exists():
         return JsonResponse({'ret': False, 'error_code': 4})
 
     new_post = Post.objects.create()
@@ -74,7 +74,6 @@ def create_post(request):
 
     for i in labelList:
         new_post.label_set.create(label=i)
-
 
     return JsonResponse({'ret': True, 'postID': str(new_post.id)})
 
@@ -101,7 +100,6 @@ def upload_post_image(request, post_id):
 
     try:
         post.image = image
-        post.if_end = False
         post.full_clean()  # 检查格式
         post.save()
     except ValidationError:
@@ -122,7 +120,7 @@ def get_unclosed_posts(request):
     unclosed_posts = Post.objects.filter(if_end=False, deadline__gte=datetime.date.today()).order_by('-post_time')
     ret_data = []
     for post in unclosed_posts:
-        labelList = Label.objects.filter(post = post).all()
+        labelList = Label.objects.filter(post=post).all()
         labels = []
         for obj in labelList:
             labels.append(str(obj.label))
@@ -136,6 +134,8 @@ def get_unclosed_posts(request):
             "ddl": post.deadline,
             "postID": str(post.id),
             "posterID": str(post.poster.id),
+            "poster_name": post.poster.name,
+            "poster_avatar_url": post.poster.avatar_url,
             "image_url": post.image.url,
             "labels": labels,
         })
@@ -161,10 +161,21 @@ def get_post_detail(request, post_id):
         labels.append(str(obj.label))
     labels = '&'.join(labels)
 
-    return JsonResponse(
-        {'ret': True, 'title': post.title, 'postDetail': post.post_detail, 'requestNum': post.request_num,
-         'acceptedNum': post.accept_num, 'ddl': post.deadline, 'ifEnd': post.if_end, 'postID': str(post.id),
-         'posterID': str(post.poster.id), 'image_url': post.image.url, 'labels': labels})
+    return JsonResponse({
+        'ret': True,
+        'title': post.title,
+        'postDetail': post.post_detail,
+        'requestNum': post.request_num,
+        'acceptedNum': post.accept_num,
+        'ddl': post.deadline,
+        'ifEnd': post.if_end,
+        'postID': str(post.id),
+        'posterID': str(post.poster.id),
+        "poster_name": post.poster.name,
+        "poster_avatar_url": post.poster.avatar_url,
+        'image_url': post.image.url,
+        'labels': labels
+    })
 
 
 def get_user_posts(request, user_id):
@@ -199,6 +210,8 @@ def get_user_posts(request, user_id):
             "ifEnd": post.if_end,
             "postID": str(post.id),
             "posterID": str(post.poster.id),
+            "poster_name": post.poster.name,
+            "poster_avatar_url": post.poster.avatar_url,
             "image_url": post.image.url,
             "labels": labels,
         })
@@ -366,7 +379,9 @@ def get_user_applies(request, user_id):
             "acceptedNum": apply.post.accept_num,
             "ddl": apply.post.deadline,
             "ifEnd": apply.post.if_end,
-            "posterID": str(apply.applicant.id),
+            "posterID": str(apply.post.poster.id),
+            "poster_name": apply.post.poster.name,
+            "poster_avatar_url": apply.post.poster.avatar_url,
             "image_url": apply.post.image.url,
         })
     return JsonResponse(ret_data, safe=False)
