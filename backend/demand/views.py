@@ -23,9 +23,9 @@ def create_post(request):
     if request.method != "POST":
         return JsonResponse({'ret': False, 'error_code': 1})
 
-    # user = verify_token(request.META.get('HTTP_AUTHORIZATION'))
-    # if not user:
-    #     return JsonResponse({'ret': False, 'error_code': 5})
+    user = verify_token(request.META.get('HTTP_AUTHORIZATION'))
+    if not user:
+        return JsonResponse({'ret': False, 'error_code': 5})
 
     try:
         data = json.loads(request.body)
@@ -47,31 +47,33 @@ def create_post(request):
             return JsonResponse({'ret': False, 'error_code': 3})
 
     if type(request_num) != int or request_num < 1 or request_num > 100:
-        return JsonResponse({'ret': False, 'error_code': 4})
+        return JsonResponse({'ret': False, 'error_code': 3})
     if not post_title_pattern.match(title):
-        return JsonResponse({'ret': False, 'error_code': 5})
+        return JsonResponse({'ret': False, 'error_code': 3})
     if not deadline_pattern.match(deadline):
-        return JsonResponse({'ret': False, 'error_code': 6})
+        return JsonResponse({'ret': False, 'error_code': 3})
     try:
         deadline = datetime.datetime.strptime(deadline, "%Y-%m-%d").date()
     except ValueError:
-        return JsonResponse({'ret': False, 'error_code': 7})
+        return JsonResponse({'ret': False, 'error_code': 3})
 
     # 新建发布校验
-    if Post.objects.filter(title=title, post_detail=post_detail, request_num=request_num, deadline=deadline).exists():
-        return JsonResponse({'ret': False, 'error_code': 8})
+    if Post.objects.filter(title=title, post_detail=post_detail, request_num=request_num, deadline=deadline,
+                           poster=user).exists():
+        return JsonResponse({'ret': False, 'error_code': 4})
 
     new_post = Post.objects.create()
     new_post.title = title
     new_post.post_detail = post_detail
     new_post.request_num = request_num
     new_post.deadline = deadline
-    # new_post.poster = 'test'
+    new_post.poster = user
     new_post.image = os.sep.join([MEDIA_ROOT, 'img/post/example/' + str(randint(1, 4)) + '.jpg'])  # 设置默认图片
     new_post.save()
 
     for i in labelList:
         new_post.label_set.create(label=i)
+
 
     return JsonResponse({'ret': True, 'postID': str(new_post.id)})
 
