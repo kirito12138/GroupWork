@@ -1,4 +1,5 @@
 const { $Message } = require('../../vant-weapp/dist/base/index');
+const { $Toast } = require('../../vant-weapp/dist/base/index');
 // pages/myResume/myResume.js
 Page({
 
@@ -6,32 +7,32 @@ Page({
    * 页面的初始数据
    */
   data: {
-    name:"未填写",
-    sex:"未填写",
-    age:"0",
-    degree:"未填写",
-    city:"未填写",
-    phone: "未填写",
-    email: "未填写",
+    name:"",
+    sex:"",
+    age:"",
+    degree:"",
+    city:"",
+    phone: "",
+    email: "",
     expEdu1:{
-      year:"未填写",
-      major:"未填写",
-      school:"未填写",
+      year:"",
+      major:"",
+      school:"",
     },
     expEdu2: {
-      year: "未填写",
-      major: "未填写",
-      school: "未填写",
+      year: "",
+      major: "",
+      school: "",
     },
     expEdu3: {
-      year: "未填写",
-      major: "未填写",
-      school: "未填写",
+      year: "",
+      major: "",
+      school: "",
     },
-    awards:"未填写",
-    english_skill:"未填写",
-    project_exp: "未填写",
-    self_review: "未填写",
+    awards:"",
+    english_skill:"",
+    project_exp: "",
+    self_review: "",
 
   },
 
@@ -165,6 +166,13 @@ Page({
         type: 'error'
       });
     }
+    else if (this.data.email != "" && !(/^\w+((.\w+)|(-\w+))@[A-Za-z0-9]+((.|-)[A-Za-z0-9]+).[A-Za-z0-9]+$/.test(this.data.email)))
+    {
+      $Message({
+        content: '邮箱格式不正确',
+        type: 'error'
+      });
+    }
 
     else {
       var age = this.data.age;
@@ -174,6 +182,13 @@ Page({
       edu_exp3 = this.data.expEdu3['year'] + "&" + this.data.expEdu3['major'] + "&" + this.data.expEdu3['school'];
       edu_exp = edu_exp1 + "|" + edu_exp2 + "|" + edu_exp3;
       if (age == "") age = "0";
+
+      $Toast({
+        content: '加载中',
+        type: 'loading',
+        duration: 0
+      });
+
       wx.request({
         url: 'https://group.tttaaabbbccc.club//my/resume/modify/',
         method: "POST",
@@ -196,7 +211,9 @@ Page({
           self_review: this.data.self_review,
           edu_exp:edu_exp,
         },
+
         success(res) {
+          $Toast.hide();
           console.log(res.data)
           if (res.data.ret) {
             $Message({
@@ -204,6 +221,15 @@ Page({
               type: 'success'
             });
           }
+        },
+        fail(res) {
+          $Toast.hide();
+          $Toast({
+            content: '服务器连接超时',
+            type: 'error',
+            duration: 2,
+            mask: true
+          });
         }
       })
     }

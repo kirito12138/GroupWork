@@ -68,6 +68,11 @@
 
 
   <i-message id="message" />
+
+  <i-spin custom  fix wx:if="{{ spinShow }}">
+  <i-icon type="refresh" size="20" i-class="icon-load"></i-icon>
+            <view class="loading">数据上传中</view>
+  </i-spin>
 </view>
 
  

@@ -8,6 +8,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    spinShow: false,
     userID:"currentUser",
     requestNum:1,
     ddl:'日期选择器',
@@ -80,6 +81,12 @@ Page({
     this.data.lastDate = year + seperator1 + month + seperator1 + strDate;
     //console.log(this.data.beginDate);
     //console.log(this.data.lastDate);
+  },
+  handleLoading() {
+    $Toast({
+      content: '加载中',
+      type: 'loading'
+    });
   },
 
   upload: function () {
@@ -261,6 +268,12 @@ Page({
         console.log(this.data.requestNum);
         console.log(this.data.ddl);
 
+        $Toast({
+          content: '加载中',
+          type: 'loading',
+          duration: 0
+        });
+
         wx.request({
           url: 'https://group.tttaaabbbccc.club/c/post/',
           data: {
@@ -269,8 +282,8 @@ Page({
             requestNum: this.data.requestNum, //所需人数 : >0
             ddl: this.data.ddl,
             labels: tags,
-            userimg: app.globalData.userInfo.avatarUrl,
-            username: app.globalData.userInfo.nickName,
+            //userimg: app.globalData.userInfo.avatarUrl,
+            //username: app.globalData.userInfo.nickName,
           },
           method: "POST",
           header: {
@@ -278,6 +291,8 @@ Page({
             "Authorization": tk
           },
           success(res) {
+            $Toast.hide();
+            console.log(res.data)
             if (res.data["ret"]==false)
             {
               if (res.data["error_code"] == 4)
@@ -303,9 +318,10 @@ Page({
             }
             else if (res.data["ret"] == true)
             {
-              for (var i = 0, h = this.data.tempFilePaths.length; i < h; i++) {
+              console.log(that.data.tempFilePaths[0])
+              for (var i = 0, h = that.data.tempFilePaths.length; i < h; i++) {
                 //上传文件
-                  wx.uploadFile({
+                  /*wx.uploadFile({
                     url: 'https://group.tttaaabbbccc.club/c/upLoadImg/' + res.data["postID"],
                     filePath: tempFilePaths[i],
                     name: res.data["postID"],
@@ -329,7 +345,7 @@ Page({
                         success: function (res) { }
                       })
                     }
-                  });
+                  });*/
               }
               $Toast({
                 content: '新建发布成功！',
@@ -349,8 +365,16 @@ Page({
                 type: 'error'
               })
             }
+          },
+          fail(res){
+            $Toast.hide();
+            $Toast({
+              content: '服务器连接超时',
+              type: 'error',
+              duration: 2,
+              mask: true
+            });
           }
-          
         })
 
       } 
