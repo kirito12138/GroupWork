@@ -1,5 +1,6 @@
 // pages/home/home.js
 const { $Message } = require('../../vant-weapp/dist/base/index');
+var app = getApp();
 Page({
 
   data: {
@@ -10,6 +11,17 @@ Page({
     newmark: 0,
     istoright: true,
     f_posts: [],
+    num1: 1,
+    num2: 2,
+    date: "19/05/01",
+    name: "111",
+    postImg: "../../image/no_load.png",
+    title: "示例标题",
+    ddl: "2019-05-20",
+    acceptedNum: "2",
+    tagsDict: ['衣着整洁', '准时送达', '餐品完善', '服务专业', '微笑服务', '穿着专业', '文字评价'],
+    tagsIndex: [2, 3, 4],
+    requestNum: '10',
   },
 
   clickCard: function (e) {
@@ -93,6 +105,14 @@ Page({
   * 生命周期函数--监听页面加载
   */
   onLoad: function (options) {
+    if (app.globalData.userInfo !== null) {
+      this.setData({
+        userimg: app.globalData.userInfo.avatarUrl,
+        username: app.globalData.userInfo.nickName,
+        login: true
+      })
+    }
+
     var id;
     var that = this;
     const _jwt = wx.getStorageSync('jwt');
