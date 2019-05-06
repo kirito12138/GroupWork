@@ -257,9 +257,10 @@ Page({
         var tags = "";
         for(var i = 0; i< detailValue.length; i++)
         {
-          tags+=detailValue[i];
-          tags+="&";
+          //tags+=detailValue[i];
+          //tags+="&";
         }
+        tags = detailValue.join("&");
         console.log('所有选中的值为：', tags);
 
         console.log("输出调试：");
@@ -319,12 +320,13 @@ Page({
             else if (res.data["ret"] == true)
             {
               console.log(that.data.tempFilePaths[0])
+              console.log(res.data["postID"])
               for (var i = 0, h = that.data.tempFilePaths.length; i < h; i++) {
                 //上传文件
-                  /*wx.uploadFile({
-                    url: 'https://group.tttaaabbbccc.club/c/upLoadImg/' + res.data["postID"],
-                    filePath: tempFilePaths[i],
-                    name: res.data["postID"],
+                  wx.uploadFile({
+                    url: 'https://group.tttaaabbbccc.club/p/' + res.data["postID"] + '/upload_image/',
+                    filePath: that.data.tempFilePaths[i],
+                    name: 'image',
                     header: {
                       "Content-Type": "multipart/form-data",
                       "Authorization": tk
@@ -345,7 +347,7 @@ Page({
                         success: function (res) { }
                       })
                     }
-                  });*/
+                  });
               }
               $Toast({
                 content: '新建发布成功！',

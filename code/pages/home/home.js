@@ -25,6 +25,7 @@ Page({
 
 
   },
+  
   // 点击左上角小图标事件
   tap_ch: function (e) {
     if (this.data.open) {

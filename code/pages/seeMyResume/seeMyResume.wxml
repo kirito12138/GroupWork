@@ -5,7 +5,7 @@
   <view class='card-view' style='margin-top:40rpx;'>
     <view class='item-title' >
       <i-icon type="mine_fill" size = "70" />
-      <i-input disabled = "true" disabled = "true" style='font:"微软雅黑";font-size:18px; margin-left: 20rpx' value= "{{name}}" bind:change = "input_name" maxlength="20"/>
+      <i-input placeholder="未填写" disabled = "true" disabled = "true" style='font:"微软雅黑";font-size:18px; margin-left: 20rpx' value= "{{name}}" bind:change = "input_name" maxlength="20"/>
     </view>
     
 
@@ -13,20 +13,20 @@
       <view class='user-info-item'>
         <i-row >
           <i-col  span = "12" i-class="col-class" >
-            <i-input disabled = "true"  title="性别:" value= "{{sex}}" bind:change = "input_sex" maxlength="3"/>
+            <i-input placeholder="未填写" disabled = "true"  title="性别:" value= "{{sex}}" bind:change = "input_sex" maxlength="3"/>
           </i-col>
           <i-col span="12" i-class="col-class">
-              <i-input disabled = "true"  title="年龄：" value= "{{age}}" bind:change = "input_age" maxlength="3"/>
+              <i-input placeholder="未填写" disabled = "true"  title="年龄：" value= "{{age}}" bind:change = "input_age" maxlength="3"/>
           </i-col>  
         </i-row>   
       </view>
       <view class='user-info-item'>
         <i-row >
           <i-col  span = "12" i-class="col-class" >
-            <i-input disabled = "true"  title="学历:" value= "{{degree}}" bind:change = "input_degree" maxlength="5"/>
+            <i-input placeholder="未填写" disabled = "true"  title="学历:" value= "{{degree}}" bind:change = "input_degree" maxlength="5"/>
           </i-col>
           <i-col span="12" i-class="col-class">
-              <i-input disabled = "true" title="城市：" value= "{{city}}" bind:change = "input_city" maxlength="12"/>
+              <i-input placeholder="未填写" disabled = "true" title="城市：" value= "{{city}}" bind:change = "input_city" maxlength="12"/>
           </i-col>
         </i-row>   
       </view>
@@ -41,13 +41,13 @@
       <i-divider lineColor="gray" height = "1"></i-divider>
     </view>
     
-    <i-input disabled = "true"  title="电话:" value= "{{phone}}" bind:change = "input_phone" maxlength="11"/>
+    <i-input placeholder="未填写" disabled = "true"  title="电话:" value= "{{phone}}" bind:change = "input_phone" maxlength="11"/>
     
     <view style='background:gray' >
       <i-divider lineColor="#CCCCCC" height = "1"></i-divider>
     </view>
 
-    <i-input disabled = "true"  title="邮箱:" value= "{{email}}" bind:change = "input_email" maxlength="20"/>
+    <i-input placeholder="未填写" disabled = "true"  title="邮箱:" value= "{{email}}" bind:change = "input_email" maxlength="20"/>
   </view>
 
    <view class='card-view' style='margin-top:40rpx;'>
@@ -61,51 +61,51 @@
 
     <text style = 'font-family:"Arial";font-size:18px;margin-top:20rpx;'>本科</text>
 
-    <i-input disabled = "true"  title="入学年份:" value= "{{expEdu1['year']}}" bind:change = "input_year_1" maxlength="5"/>
+    <i-input placeholder="未填写" disabled = "true"  title="入学年份:" value= "{{expEdu1['year']}}" bind:change = "input_year_1" maxlength="5"/>
     <view style='background:#e9eaec' >
       <i-divider lineColor="#e9eaec" height = "1"></i-divider>
     </view>
 
-    <i-input disabled = "true"  title="毕业院校:" value= "{{expEdu1['school']}}" bind:change = "input_school_1" maxlength="20"/>
+    <i-input placeholder="未填写" disabled = "true"  title="毕业院校:" value= "{{expEdu1['school']}}" bind:change = "input_school_1" maxlength="20"/>
     <view style='background:#e9eaec' >
       <i-divider lineColor="#e9eaec" height = "1"></i-divider>
     </view>
 
-    <i-input disabled = "true"  title="所学专业:" value= "{{expEdu1['major']}}" bind:change = "input_major_1" maxlength="20"/>
+    <i-input placeholder="未填写" disabled = "true"  title="所学专业:" value= "{{expEdu1['major']}}" bind:change = "input_major_1" maxlength="20"/>
     
     <view style='background:gray' >
       <i-divider lineColor="#CCCCCC" height = "1"></i-divider>
     </view>
 
     <text style = 'font-family:"Arial";font-size:18px;margin-top:20rpx;'>硕士</text>
-    <i-input disabled = "true"  title="入学年份:" value= "{{expEdu2['year']}}" bind:change = "input_year_2" maxlength="5"/>
+    <i-input placeholder="未填写" disabled = "true"  title="入学年份:" value= "{{expEdu2['year']}}" bind:change = "input_year_2" maxlength="5"/>
     <view style='background:#e9eaec' >
       <i-divider lineColor="#e9eaec" height = "1"></i-divider>
     </view>
 
-    <i-input disabled = "true"  title="毕业院校:" value= "{{expEdu2['school']}}" bind:change = "input_school_2" maxlength="20"/>
+    <i-input placeholder="未填写" disabled = "true"  title="毕业院校:" value= "{{expEdu2['school']}}" bind:change = "input_school_2" maxlength="20"/>
     <view style='background:#e9eaec' >
       <i-divider lineColor="#e9eaec" height = "1"></i-divider>
     </view>
 
-    <i-input disabled = "true"  title="所学专业:" value= "{{expEdu2['major']}}" bind:change = "input_major_2" maxlength="20"/>
+    <i-input placeholder="未填写" disabled = "true"  title="所学专业:" value= "{{expEdu2['major']}}" bind:change = "input_major_2" maxlength="20"/>
 
     <view style='background:gray' >
       <i-divider lineColor="#CCCCCC" height = "1"></i-divider>
     </view>
 
     <text style = 'font-family:"Arial";font-size:18px;margin-top:20rpx;'>博士</text>
-    <i-input disabled = "true"  title="入学年份:" value= "{{expEdu3['year']}}" bind:change = "input_year_3" maxlength="5" />
+    <i-input placeholder="未填写" disabled = "true"  title="入学年份:" value= "{{expEdu3['year']}}" bind:change = "input_year_3" maxlength="5" />
     <view style='background:#e9eaec' >
       <i-divider lineColor="#e9eaec" height = "1"></i-divider>
     </view>
 
-    <i-input disabled = "true"  title="毕业院校:" value= "{{expEdu3['school']}}" bind:change = "input_school_3" maxlength="20"/>
+    <i-input placeholder="未填写" disabled = "true"  title="毕业院校:" value= "{{expEdu3['school']}}" bind:change = "input_school_3" maxlength="20"/>
     <view style='background:#e9eaec' >
       <i-divider lineColor="#e9eaec" height = "1"></i-divider>
     </view>
 
-    <i-input disabled = "true"  title="所学专业:" value= "{{expEdu3['major']}}" bind:change = "input_major_3" maxlength="20"/>
+    <i-input placeholder="未填写" disabled = "true"  title="所学专业:" value= "{{expEdu3['major']}}" bind:change = "input_major_3" maxlength="20"/>
 
   </view>
 
@@ -118,7 +118,7 @@
       <i-divider lineColor="#CCCCCC" height = "1"></i-divider>
     </view>
 
-    <textarea disabled = "true" style='font-size:14px; margin-top: 20rpx' bindinput="input_rewards" >{{awards}}</textarea>
+    <textarea placeholder="未填写" disabled = "true" style='font-size:14px; margin-top: 20rpx' bindinput="input_rewards" >{{awards}}</textarea>
 
   </view>
 
@@ -132,7 +132,7 @@
       <i-divider lineColor="#CCCCCC" height = "1"></i-divider>
     </view>
     
-    <textarea disabled = "true" style='font-size:14px; margin-top: 20rpx' bindinput="input_english_skill">{{english_skill}}</textarea>
+    <textarea placeholder="未填写" disabled = "true" style='font-size:14px; margin-top: 20rpx' bindinput="input_english_skill">{{english_skill}}</textarea>
   </view>
 
   <view class='card-view' style='margin-top:40rpx;'>
@@ -144,7 +144,7 @@
       <i-divider lineColor="#CCCCCC" height = "1"></i-divider>
     </view>
     
-    <textarea disabled = "true" style='font-size:14px; margin-top: 20rpx' bindinput="input_project_exp">{{project_exp}}</textarea>
+    <textarea placeholder="未填写" disabled = "true" style='font-size:14px; margin-top: 20rpx' bindinput="input_project_exp">{{project_exp}}</textarea>
   </view>
 
   <view class='card-view' style='margin-top:40rpx; margin-bottom : 40rpx'>
@@ -156,7 +156,7 @@
       <i-divider lineColor="#CCCCCC" height = "1"></i-divider>
     </view>
     
-    <textarea disabled = "true" style='font-size:14px; margin-top: 20rpx' bindinput="input_self_review">{{self_review}}</textarea>
+    <textarea placeholder="未填写" disabled = "true" style='font-size:14px; margin-top: 20rpx' bindinput="input_self_review">{{self_review}}</textarea>
   </view>
 
 </view>
