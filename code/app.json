@@ -9,12 +9,11 @@
     "pages/test/test",
     "pages/register/register",
     "pages/changePwd/changePwd",
-
+    "pages/newPost/newPost",
     "pages/home/home",
     "pages/myApply/myApply",
     "pages/myApplyson/myApplyson",
     "pages/myPost/myPost",
-    "pages/newPost/newPost",
     "pages/modifyPostDetail/modifyPostDetail",
     "pages/modifyPostSon/modifyPostSon",
     "pages/myResume/myResume",
@@ -44,7 +43,8 @@
     "i-card": "../../vant-weapp/dist/card/index",
     "i-toast": "../../vant-weapp/dist/toast/index",
     "i-divider": "../../vant-weapp/dist/divider/index",
-    "i-tag": "../../vant-weapp/dist/tag/index"
+    "i-tag": "../../vant-weapp/dist/tag/index",
+    "i-spin": "../../vant-weapp/dist/spin/index"
   },
   "tabBar": {
     "list": [

@@ -24,6 +24,11 @@ Page({
   },
 
 
+  jnewPost: function (e) {
+    wx.navigateTo({
+      url: '../newPost/newPost',
+    })
+  },
 
 
   clickCard: function(e){
@@ -37,6 +42,7 @@ Page({
 
 
   },
+  
   // 点击左上角小图标事件
   tap_ch: function (e) {
     if (this.data.open) {

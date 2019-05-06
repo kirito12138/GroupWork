@@ -1,11 +1,14 @@
 // pages/newPost/newPost.js
 const { $Toast } = require('../../vant-weapp/dist/base/index');
+const { $Message } = require('../../vant-weapp/dist/base/index');
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
+    spinShow: false,
     userID:"currentUser",
     requestNum:1,
     ddl:'日期选择器',
@@ -13,8 +16,48 @@ Page({
     postDetail:"",
     stringNum:"1",
     lastDate: "2017-09-01",
-    beginDate: "2015-09-01"
+    beginDate: "2015-09-01",
+    tempFilePaths: [],
+    riderCommentList: [{
+      value: '衣着整洁',
+      selected: false,
+      title: '衣着整洁',
+      ind: 0,
+    }, {
+      value: '准时送达',
+      selected: false,
+      title: '准时送达',
+      ind: 1,
+    }, {
+      value: '餐品完善',
+      selected: false,
+      title: '餐品完善',
+      ind: 2,
+    }, {
+      value: '服务专业',
+      selected: false,
+      title: '服务专业',
+      ind: 3,
+    }, {
+      value: '微笑服务',
+      selected: false,
+      title: '微笑服务',
+      ind: 4,
+    }, {
+      value: '穿着专业',
+      selected: false,
+      title: '穿着专业',
+      ind: 5,
+    }, {
+      value: '文字评价',
+      selected: false,
+      title: '文字评价',
+      ind: 6,
+    }],
   },
+
+  
+
 
 
   /**
@@ -39,6 +82,89 @@ Page({
     //console.log(this.data.beginDate);
     //console.log(this.data.lastDate);
   },
+  handleLoading() {
+    $Toast({
+      content: '加载中',
+      type: 'loading'
+    });
+  },
+
+  upload: function () {
+    let that = this;
+    wx.chooseImage({
+      count: 9, // 默认9
+      sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+      sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+      success: res => {
+        wx.showToast({
+          title: '正在上传...',
+          icon: 'loading',
+          mask: true,
+          duration: 1000
+        })
+        // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
+        let tempFilePaths = res.tempFilePaths;
+
+        that.setData({
+          tempFilePaths: tempFilePaths
+        })
+        /**
+         * 上传完成后把文件上传到服务器
+         */
+        var count = 0;
+        if (this.data.tempFilePaths.length > 1)
+        {
+          $Message({
+            content: '只能选择一张图片，请重新选择',
+            type: 'error'
+          });
+        }
+        else
+        {
+          for (var i = 0, h = tempFilePaths.length; i < h; i++) {
+            //上传文件
+            /*  wx.uploadFile({
+                url: HOST + '地址路径',
+                filePath: tempFilePaths[i],
+                name: 'uploadfile_ant',
+                header: {
+                  "Content-Type": "multipart/form-data"
+                },
+                success: function (res) {
+                  count++;
+                  //如果是最后一张,则隐藏等待中  
+                  if (count == tempFilePaths.length) {
+                    wx.hideToast();
+                  }
+                },
+                fail: function (res) {
+                  wx.hideToast();
+                  wx.showModal({
+                    title: '错误提示',
+                    content: '上传图片失败',
+                    showCancel: false,
+                    success: function (res) { }
+                  })
+                }
+              });*/
+          }
+        }
+        
+
+      }
+    })
+  },
+
+  checkboxChange(e) {
+    console.log('checkboxChange e:', e);
+    let string = "riderCommentList[" + e.target.dataset.index + "].selected"
+    this.setData({
+      [string]: !this.data.riderCommentList[e.target.dataset.index].selected
+    })
+    let detailValue = this.data.riderCommentList.filter(it => it.selected).map(it => it.value)
+    console.log('所有选中的值为：', detailValue)
+  },
+
 
   getTitle: function(e){
     
@@ -127,18 +253,38 @@ Page({
           console.log("no token");
           return;
         }
-      console.log("输出调试：");
-      console.log(this.data.title);
-      console.log(this.data.postDetail);
-      console.log(this.data.requestNum);
-      console.log(this.data.ddl);
+        let detailValue = this.data.riderCommentList.filter(it => it.selected).map(it => it.ind);
+        var tags = "";
+        for(var i = 0; i< detailValue.length; i++)
+        {
+          //tags+=detailValue[i];
+          //tags+="&";
+        }
+        tags = detailValue.join("&");
+        console.log('所有选中的值为：', tags);
+
+        console.log("输出调试：");
+        console.log(this.data.title);
+        console.log(this.data.postDetail);
+        console.log(this.data.requestNum);
+        console.log(this.data.ddl);
+
+        $Toast({
+          content: '加载中',
+          type: 'loading',
+          duration: 0
+        });
+
         wx.request({
           url: 'https://group.tttaaabbbccc.club/c/post/',
           data: {
             title: this.data.title, //标题  : 20字符之内 （可以根据前端需求调整）
             postDetail: this.data.postDetail,//内容 : text类型，无字数限制
             requestNum: this.data.requestNum, //所需人数 : >0
-            ddl: this.data.ddl
+            ddl: this.data.ddl,
+            labels: tags,
+            //userimg: app.globalData.userInfo.avatarUrl,
+            //username: app.globalData.userInfo.nickName,
           },
           method: "POST",
           header: {
@@ -146,6 +292,8 @@ Page({
             "Authorization": tk
           },
           success(res) {
+            $Toast.hide();
+            console.log(res.data)
             if (res.data["ret"]==false)
             {
               if (res.data["error_code"] == 4)
@@ -171,6 +319,36 @@ Page({
             }
             else if (res.data["ret"] == true)
             {
+              console.log(that.data.tempFilePaths[0])
+              console.log(res.data["postID"])
+              for (var i = 0, h = that.data.tempFilePaths.length; i < h; i++) {
+                //上传文件
+                  wx.uploadFile({
+                    url: 'https://group.tttaaabbbccc.club/p/' + res.data["postID"] + '/upload_image/',
+                    filePath: that.data.tempFilePaths[i],
+                    name: 'image',
+                    header: {
+                      "Content-Type": "multipart/form-data",
+                      "Authorization": tk
+                    },
+                    success: function (res) {
+                      count++;
+                      //如果是最后一张,则隐藏等待中  
+                      if (count == tempFilePaths.length) {
+                        wx.hideToast();
+                      }
+                    },
+                    fail: function (res) {
+                      wx.hideToast();
+                      wx.showModal({
+                        title: '错误提示',
+                        content: '上传图片失败',
+                        showCancel: false,
+                        success: function (res) { }
+                      })
+                    }
+                  });
+              }
               $Toast({
                 content: '新建发布成功！',
                 type: 'success'
@@ -189,9 +367,18 @@ Page({
                 type: 'error'
               })
             }
+          },
+          fail(res){
+            $Toast.hide();
+            $Toast({
+              content: '服务器连接超时',
+              type: 'error',
+              duration: 2,
+              mask: true
+            });
           }
-          
         })
+
       } 
   },
   /**
