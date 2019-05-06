@@ -39,9 +39,9 @@
       height: 70rpx;
       font-size: 24rpx;
       padding: 0;
-      border: 1px solid #dcdcdc;
-      background: #fff;
-      border-radius: 4px;
+      border: 1px solid #FAC090;
+      background: #FBCBA3;
+      border-radius: 50px;
       margin: 15rpx 10rpx;
       text-align: center;
       margin-left: 5rpx;
@@ -50,5 +50,7 @@
       float: left;
   }
   .btn-selected{
-      border: 1px solid #06a380;
+      border: 2px solid #42A1FF;
   }
+
+

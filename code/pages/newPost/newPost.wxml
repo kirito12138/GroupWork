@@ -18,7 +18,7 @@
       <image src="{{item }}" bindtap="listenerButtonPreviewImage" data-index="{{index}}" style="width: 100%;"/>
     </block>
 
-    <i-button bind:click="upload" type="primary" size="default" ><i-icon type="add" size = "30"/></i-button>
+    <i-button bind:click="upload" type="info" size="default" ><i-icon type="add" size = "30"/></i-button>
 
   <view class="weui-cells__title">选择标签 </view>
 
@@ -42,8 +42,8 @@
   <view class="weui-cells weui-cells_after-title">
       <view class="weui-cell">
           <view class="weui-cell__bd">
-              <textarea class="weui-textarea-1" placeholder="请输入详细需求" style="height: 7em" bindblur='getDetail' value="{{postDetail}}" maxlength='2000'/>
-              <view class="weui-textarea-1-counter">0/2000</view>
+              <textarea class="weui-textarea-1" placeholder="请输入详细需求" style="height: 7em" bindinput='getDetail' value="{{postDetail}}" maxlength='2000'/>
+              <view class="weui-textarea-1-counter">{{postDetail.length}}/2000</view>
           </view>
       </view>
   </view>
@@ -62,7 +62,7 @@
     <button type="default">{{ddl}}</button>
   </picker>
 
-  <button class="weui-btn" type="primary" style='width:95%; border-radius:72rpx;margin-top:30rpx;margin-bottom:50rpx;' bindtap='genPost' >发布招募</button>
+  <button class="weui-btn" type="primary" style='width:95%; border-radius:72rpx;margin-top:30rpx;margin-bottom:50rpx;background-color:#42A1FF' bindtap='genPost' >发布招募</button>
   <i-toast id="toast" />
 
 
