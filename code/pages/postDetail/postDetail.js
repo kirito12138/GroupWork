@@ -6,20 +6,9 @@ Page({
    * 页面的初始数据
    */
   data: {
-      num1:1,
-      num2:2,
-      date:"19/05/01",
-      name:"111",
-      postImg:"../../image/no_load.png",
-      title:"示例标题",
-      ddl:"2019-05-20",
-      acceptedNum:"2",
+
       tagsDict: ['衣着整洁','准时送达','餐品完善','服务专业','微笑服务','穿着专业','文字评价'],
-      tagsIndex:[2,3,4],
-      requestNum:'10',
-      userimg: "",
-      username: "",
-    postDetail:"fdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdhhhhhhhhnvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhsdsds"
+
 
   },
   
@@ -56,6 +45,8 @@ Page({
       requestNum: this.data.info.requestNum,
       acceptedNum: this.data.info.acceptedNum,
       ddl: this.data.info.ddl,
+      sp:this.data.info.sp,
+      postImg:this.data.info.image_url,
       
       postID: this.data.info.postID,
       posterID: this.data.info.posterID

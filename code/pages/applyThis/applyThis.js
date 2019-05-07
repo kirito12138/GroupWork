@@ -172,6 +172,7 @@ Page({
       edu_exp3 = this.data.expEdu3['year'] + "&" + this.data.expEdu3['major'] + "&" + this.data.expEdu3['school'];
       edu_exp = edu_exp1 + "|" + edu_exp2 + "|" + edu_exp3;
       if (age == "") age = "0";
+      console.log(this.data     )
       wx.request({
         url: 'https://group.tttaaabbbccc.club/c/apply/',
         method: "POST",

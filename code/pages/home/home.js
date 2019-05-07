@@ -1,4 +1,5 @@
 // pages/home/home.js
+const { $Toast } = require('../../vant-weapp/dist/base/index');
 var app = getApp();
 Page({
 
@@ -21,6 +22,49 @@ Page({
     tagsDict: ['衣着整洁', '准时送达', '餐品完善', '服务专业', '微笑服务', '穿着专业', '文字评价'],
     tagsIndex: [2, 3, 4],
     requestNum: '10',
+    hosList1 : [
+      { id: 101, name: "aaa", show: true, serch: "10111" },
+      { id: 102, name: "bbb", show: true, serch: "10212" },
+    ],
+    hosList:[],
+    tei: 1
+  },
+
+  input1: function (e) {
+    this.setData
+    ({
+      tei:e.detail.value
+    })
+    this.serch(e.detail.value)
+  },
+  confirm1: function (e) {
+    this.serch(e.detail.value)
+  },
+
+  clicsho: function(e)
+  {
+    console.log(e);
+    this.setData
+    ({
+        tei: e.currentTarget.dataset.text,
+        hosList: []
+    })
+  },
+
+  serch: function (key) {
+    var that = this;
+    var arr = [];
+    for (let i in this.data.hosList1) {
+      this.data.hosList1[i].show = false;
+      if (this.data.hosList1[i].serch.indexOf(key) >= 0) {
+        this.data.hosList1[i].show = true;
+        arr.push(this.data.hosList1[i])
+      }
+    }
+    console.log(arr)
+    this.setData({
+      hosList: arr,
+    })
   },
 
 
@@ -133,7 +177,11 @@ Page({
       console.log("no token");
       return;
     }
-
+    $Toast({
+      content: '加载中',
+      type: 'loading',
+      duration: 0
+    });
     wx.request({
       url: 'https://group.tttaaabbbccc.club/f/processing/',
       method: "GET",
@@ -142,13 +190,34 @@ Page({
         'Authorization': tk
       },
       success(res) {
+        $Toast.hide()
         console.log(res)
+        
+        console.log(res.data[0])
+        for(var i = 0; i < res.data.length; i++)
+        {
+          var sp = res.data[i].labels.split("&");
+          var ssp = [];
+          for(var j=0; j<sp.length; j++)
+          {
+            
+            ssp[j] = parseInt(sp[j]);
+
+          }
+  
+          res.data[i]["sp"] = ssp;
+          console.log(that.data.tagsIndex)
+        }
         that.setData({
           f_posts: res.data
         });
-        console.log(res.data)
+      },
+      fail(res)
+      {
+        $Toast.hide();
       }
     })
+
   },
 
   goChangePwd: function(e)

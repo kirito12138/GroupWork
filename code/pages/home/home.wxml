@@ -4,115 +4,60 @@
       <view class="search">  
         <view class="df search_arr">  
           <icon class="searchcion" size='20' type='search'></icon>  
-          <input class="" disabled placeholder="请输入关键字" value="{{searchValue}}"/>  
+          <input class=""  placeholder="请输入关键字" value="{{searchValue}}"/>  
         </view>  
       </view>  
       <view class='sousuo'>搜索</view>  
     </view>  
 
   <scroll-view class='sv' scroll-y='true' style='z-index: -1;'>
-    <view class = 'half_1'>
-      <image class = 'img' src = "{{postImg}}"  style="width:100%;height:250rpx"/>
+    <view class = 'half_1' wx:for = "{{f_posts}}">
+     <view class = "card" bindtap='clickCard' data-index='{{index}}'>
+      <image class = 'img' src ="https://group.tttaaabbbccc.club/{{item.image_url}}"  style="width:100%;height:250rpx"/>
       <view class='title'>
         <view class = 'title_son'>
           <image class='title_img' style="width:40rpx;height:40rpx" src = "../../image/title.png"></image>
-          <text  class='title_text' > {{title}}</text>
+          <text  class='title_text' > {{item.title}}</text>
         </view>
         <view class='date'>
           <image class='date_img' style="width:30rpx;height:30rpx" src = "../../image/date.png"></image>
-          <text  class='date_text'> {{ddl}}</text>
+          <text  class='date_text'> {{item.ddl}}</text>
         </view>
       </view>
 
       <view class = 'second'>
         <view class='useinfo'>
-          <image class = 'userimg' src = "{{userimg}}" />
-          <text  class = 'username'> {{username}}</text>
+          <image class = 'userimg' src = "{{item.poster_avatar_url}}" />
+          <text  class = 'username'> {{item.poster_name}}</text>
         </view>
         <view class='num'>
           <image class='num_image' style="width:30rpx;height:30rpx" src = "../../image/Pnum.png"></image>
-          <text  class='num_text' > {{acceptedNum}}/{{requestNum}}</text>
+          <text  class='num_text' > {{item.acceptedNum}}/{{item.requestNum}}</text>
         </view>
       </view>
 
       <view class='tags'>
-        <i-tag class="i-tags" color="blue" wx:for = "{{tagsIndex}}" >
-          {{tagsDict[item]}}
+        <i-tag class="i-tags" color="blue" wx:for = "{{item.sp}}" wx:for-item="cell" >
+          {{tagsDict[cell]}}
         </i-tag>
       </view>
+      </view>
+        <view style="height:20rpx;background-color:#D9D9D9">
     </view>
 
-      <view style="height:20rpx;background-color:#D9D9D9">
-    </view>
-
-    <view class = 'half_1'>
-      <image class = 'img' src = "{{postImg}}"  style="width:100%;height:250rpx"/>
-      <view class='title'>
-        <view class = 'title_son'>
-          <image class='title_img' style="width:40rpx;height:40rpx" src = "../../image/title.png"></image>
-          <text  class='title_text' > {{title}}</text>
-        </view>
-        <view class='date'>
-          <image class='date_img' style="width:30rpx;height:30rpx" src = "../../image/date.png"></image>
-          <text  class='date_text'> {{ddl}}</text>
-        </view>
-      </view>
-
-      <view class = 'second'>
-        <view class='useinfo'>
-          <image class = 'userimg' src = "{{userimg}}" />
-          <text  class = 'username'> {{username}}</text>
-        </view>
-        <view class='num'>
-          <image class='num_image' style="width:30rpx;height:30rpx" src = "../../image/Pnum.png"></image>
-          <text  class='num_text' > {{acceptedNum}}/{{requestNum}}</text>
-        </view>
-      </view>
-
-      <view class='tags'>
-        <i-tag class="i-tags" color="blue" wx:for = "{{tagsIndex}}" >
-          {{tagsDict[item]}}
-        </i-tag>
-      </view>
-
-      <view style="height:20rpx;background-color:#D9D9D9">
-    </view>
-
-      <view class = 'half_1'>
-      <image class = 'img' src = "{{postImg}}"  style="width:100%;height:250rpx"/>
-      <view class='title'>
-        <view class = 'title_son'>
-          <image class='title_img' style="width:40rpx;height:40rpx" src = "../../image/title.png"></image>
-          <text  class='title_text' > {{title}}</text>
-        </view>
-        <view class='date'>
-          <image class='date_img' style="width:30rpx;height:30rpx" src = "../../image/date.png"></image>
-          <text  class='date_text'> {{ddl}}</text>
-        </view>
-      </view>
-
-      <view class = 'second'>
-        <view class='useinfo'>
-          <image class = 'userimg' src = "{{userimg}}" />
-          <text  class = 'username'> {{username}}</text>
-        </view>
-        <view class='num'>
-          <image class='num_image' style="width:30rpx;height:30rpx" src = "../../image/Pnum.png"></image>
-          <text  class='num_text' > {{acceptedNum}}/{{requestNum}}</text>
-        </view>
-      </view>
-
-      <view class='tags'>
-        <i-tag class="i-tags" color="blue" wx:for = "{{tagsIndex}}" >
-          {{tagsDict[item]}}
-        </i-tag>
-      </view>
-    </view>
 
 
     </view>
 
+
+    
+
+      
 
  </scroll-view>
 
 <button  class="circle" bindtap='jnewPost'><image src='../../image/bm_btn.png' mode='widthFix'></image></button>
+
+ <i-toast id="toast" />
+
+

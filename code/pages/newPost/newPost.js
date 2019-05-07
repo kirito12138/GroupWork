@@ -54,9 +54,62 @@ Page({
       title: '文字评价',
       ind: 6,
     }],
+    hosList1: [
+      { id: 101, name: "穿着专业", show: true, serch: "穿着专业chuanzhuozhuanye" },
+      { id: 102, name: "bbb", show: true, serch: "10212" },
+    ],
+    hosList: [],
+    tei: 1
   },
 
-  
+  input1: function (e) {
+    this.setData
+      ({
+        tei: e.detail.value
+      })
+    this.serch(e.detail.value)
+  },
+  confirm1: function (e) {
+    this.serch(e.detail.value)
+  },
+
+  clicsho: function (e) {
+    var that = this;
+    console.log(e);
+    var tti = e.currentTarget.dataset.text;
+    for(var i = 0; i< that.data.riderCommentList.length; i++)
+    {
+      if (that.data.riderCommentList[i].value == tti)
+      {
+        let string = "riderCommentList["+i+"].selected";
+        that.setData
+        ({
+            [string]: true,
+        })
+      }
+    }
+    this.setData
+      ({
+        tei: e.currentTarget.dataset.text,
+        hosList: []
+      })
+  },
+
+  serch: function (key) {
+    var that = this;
+    var arr = [];
+    for (let i in this.data.hosList1) {
+      this.data.hosList1[i].show = false;
+      if (this.data.hosList1[i].serch.indexOf(key) >= 0) {
+        this.data.hosList1[i].show = true;
+        arr.push(this.data.hosList1[i])
+      }
+    }
+    console.log(arr)
+    this.setData({
+      hosList: arr,
+    })
+  },
 
 
 
@@ -321,8 +374,14 @@ Page({
             {
               console.log(that.data.tempFilePaths[0])
               console.log(res.data["postID"])
+              var count = 0;
               for (var i = 0, h = that.data.tempFilePaths.length; i < h; i++) {
                 //上传文件
+                  $Toast({
+                    content: '上传中',
+                    type: 'loading',
+                    duration: 0
+                  });
                   wx.uploadFile({
                     url: 'https://group.tttaaabbbccc.club/p/' + res.data["postID"] + '/upload_image/',
                     filePath: that.data.tempFilePaths[i],
@@ -332,11 +391,15 @@ Page({
                       "Authorization": tk
                     },
                     success: function (res) {
-                      count++;
-                      //如果是最后一张,则隐藏等待中  
-                      if (count == tempFilePaths.length) {
-                        wx.hideToast();
-                      }
+                      $Toast.hide()
+                      console.log(res)
+                      $Toast({
+                        content: '新建发布成功！',
+                        type: 'success'
+                      })
+                      wx.reLaunch({
+                        url: '../home/home',
+                      })
                     },
                     fail: function (res) {
                       wx.hideToast();
@@ -349,10 +412,7 @@ Page({
                     }
                   });
               }
-              $Toast({
-                content: '新建发布成功！',
-                type: 'success'
-              })
+              
               setTimeout(function () {
                 wx.redirectTo({
                   url: '../home/home',

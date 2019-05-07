@@ -34,7 +34,7 @@
   flex-flow: row wrap;
 
 }
- .btn{
+ .btn {
       width: 23%;
       height: 70rpx;
       font-size: 24rpx;

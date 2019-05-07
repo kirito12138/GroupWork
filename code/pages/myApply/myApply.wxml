@@ -11,12 +11,12 @@
     </view>  
 
   <scroll-view class='sv' scroll-y='true' style='z-index: -1;'>
-    <view class = 'half_1'>
+    <view class = 'half_1' wx:for = "{{f_posts}}">
       
       <view class='title'>
         <view class = 'title_son'>
           <image class='title_img' style="width:40rpx;height:40rpx" src = "../../image/title.png"></image>
-          <text  class='title_text' > {{title}}</text>
+          <text  class='title_text' > {{item.post_title}}</text>
         </view>
         
       </view>
@@ -24,26 +24,40 @@
       <view class = 'second'>
         <view class = "left">
           <view class='useinfo'>
-          <image class = 'userimg' src = "{{userimg}}" />
-          <text  class = 'username'> {{username}}</text>
+          <image class = 'userimg' src = "https://group.tttaaabbbccc.club/{{item.poster_avator_url}}" />
+          <text  class = 'username'> {{item.poster_name}}</text>
           </view>
 
           <view class='date'>
             <image class='date_img' style="width:30rpx;height:30rpx" src = "../../image/date.png"></image>
-            <text  class='date_text'> {{ddl}}</text>
+            <text  class='date_text'> {{item.ddl}}</text>
           </view>
 
           <view class='num'>
             <image class='num_image' style="width:30rpx;height:30rpx" src = "../../image/Pnum.png"></image>
-            <text  class='num_text' > {{acceptedNum}}/{{requestNum}}</text>
+            <text  class='num_text' > {{item.acceptedNum}}/{{item.requestNum}}</text>
           </view>
         </view>
         
         <view class = "right" style='margin-right: 40rpx'>
-
+          <view wx:if="{{ item.applyStatus == 'accepted' }}">
             <icon   type="success" size = "50" />
             <text>\n</text>
-            <text decode="{{true}}" class = "ictext" class='ictext'> 以通过</text>
+            <text decode="{{true}}" class = "ictext" class='ictext'> 已通过</text>
+          </view>
+
+          <view wx:elif="{{ item.applyStatus == 'waiting' }}">
+            <icon   type="waiting" size = "50" />
+            <text>\n</text>
+            <text decode="{{true}}" class = "ictext" class='ictext'> 等待中</text>
+          </view>
+
+          <view wx:elif="{{ item.applyStatus == 'closed' }}">
+            <icon   type="info" size = "50" />
+            <text>\n</text>
+            <text decode="{{true}}" class = "ictext" class='ictext'> 已结束</text>
+          </view>
+            
         </view>      
       </view>
 
