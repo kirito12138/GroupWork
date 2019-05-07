@@ -15,6 +15,8 @@ from user.models import User, Resume
 from demand.models import Post
 from demand.models import Apply
 from demand.models import PostLabel
+from demand.models import ApplyLabel
+from demand.utils import decode_label, encode_label, check_postLabel, check_applyLabel
 
 post_title_pattern = re.compile(r"^.{1,20}$")
 deadline_pattern = re.compile(r"^\d\d\d\d-\d\d-\d\d$")
@@ -24,6 +26,7 @@ def create_post(request):
     if request.method != "POST":
         return JsonResponse({'ret': False, 'error_code': 1})
 
+    # 检查用户身份
     user = verify_token(request.META.get('HTTP_AUTHORIZATION'))
     if not user:
         return JsonResponse({'ret': False, 'error_code': 5})
@@ -41,12 +44,12 @@ def create_post(request):
     except KeyError:
         return JsonResponse({'ret': False, 'error_code': 2})
 
-    labelList = labels.split('&')
-    for i in range(0, len(labelList)):
-        labelList[i] = int(labelList[i])
-        if labelList[i] <= 0 or labelList[i] > 20:
-            return JsonResponse({'ret': False, 'error_code': 3})
+    # 处理获取的标签，进行标签正确性检查
+    labelList = decode_label(labels)
+    if not check_postLabel(labelList):
+        return JsonResponse({'ret': False, 'error_code': 3})
 
+    # 检查各字段合法性
     if type(request_num) != int or request_num < 1 or request_num > 100:
         return JsonResponse({'ret': False, 'error_code': 3})
     if not post_title_pattern.match(title):
@@ -58,11 +61,12 @@ def create_post(request):
     except ValueError:
         return JsonResponse({'ret': False, 'error_code': 3})
 
-    # 新建发布校验
+    # 检查是否能够加入新项目
     if Post.objects.filter(title=title, post_detail=post_detail, request_num=request_num, deadline=deadline,
                            poster=user).exists():
         return JsonResponse({'ret': False, 'error_code': 4})
 
+    # 新建Post项目
     new_post = Post.objects.create(
         title=title,
         post_detail=post_detail,
@@ -72,6 +76,7 @@ def create_post(request):
         image=os.sep.join([MEDIA_ROOT, 'img/post/example/' + str(randint(1, 4)) + '.jpg']),  # 设置默认图片
     )
 
+    # 添加项目标签至数据库
     for i in labelList:
         new_post.label_set.create(label=i)
 
@@ -121,11 +126,10 @@ def get_unclosed_posts(request):
     unclosed_posts = Post.objects.filter(if_end=False, deadline__gte=datetime.date.today()).order_by('-post_time')
     ret_data = []
     for post in unclosed_posts:
+
+        # 整理相应项目的标签
         labelList = PostLabel.objects.filter(post=post).all()
-        labels = []
-        for obj in labelList:
-            labels.append(str(obj.label))
-        labels = '&'.join(labels)
+        labels = encode_label(labelList)
 
         ret_data.append({
             "title": post.title,
@@ -156,11 +160,9 @@ def get_post_detail(request, post_id):
     except Post.DoesNotExist:
         return JsonResponse({'ret': False, 'error_code': 3})
 
+    # 整理标签
     labelList = PostLabel.objects.filter(post=post).all()
-    labels = []
-    for obj in labelList:
-        labels.append(str(obj.label))
-    labels = '&'.join(labels)
+    labels = encode_label(labelList)
 
     return JsonResponse({
         'ret': True,
@@ -196,11 +198,9 @@ def get_user_posts(request, user_id):
     ret_data = []
     for post in posts:
 
+        # 整理标签信息
         labelList = PostLabel.objects.filter(post=post).all()
-        labels = []
-        for obj in labelList:
-            labels.append(str(obj.label))
-        labels = '&'.join(labels)
+        labels = encode_label(labelList)
 
         ret_data.append({
             "title": post.title,
@@ -247,11 +247,10 @@ def modify_post_detail(request, post_id):
     except KeyError:
         return JsonResponse({'ret': False, 'error_code': 2})
 
-    labelList = labels.split('&')
-    for i in range(0, len(labelList)):
-        labelList[i] = int(labelList[i])
-        if labelList[i] <= 0 or labelList[i] > 20:
-            return JsonResponse({'ret': False, 'error_code': 3})
+    # 处理获取的标签，进行标签正确性检查
+    labelList = decode_label(labels)
+    if check_postLabel(labelList):
+        return JsonResponse({'ret': False, 'error_code': 3})
 
     if type(request_num) != int or request_num < 1 or request_num > 100:
         return JsonResponse({'ret': False, 'error_code': 3})
@@ -333,6 +332,11 @@ def get_post_applies(request, post_id):
     applies = post.apply_set.order_by('-c_time')
     ret_data = []
     for apply in applies:
+
+        # 整理申请的标签
+        labelList = ApplyLabel.objects.filter(apply=apply).all()
+        labels = encode_label(labelList)
+
         ret_data.append({
             "applyID": str(apply.id),
             "applyStatus": apply.status,
@@ -350,6 +354,7 @@ def get_post_applies(request, post_id):
             "english_skill": apply.resume.english_skill,
             "project_exp": apply.resume.project_exp,
             "self_review": apply.resume.self_review,
+            "labels": labels,
         })
     return JsonResponse(ret_data, safe=False)
 
@@ -370,6 +375,11 @@ def get_user_applies(request, user_id):
     applies = user.apply_set.order_by('-c_time')
     ret_data = []
     for apply in applies:
+
+        # 整理申请的标签
+        labelList = ApplyLabel.objects.filter(apply=apply).all()
+        labels = encode_label(labelList)
+
         ret_data.append({
             "applyID": str(apply.id),
             "applyStatus": apply.status,
@@ -384,6 +394,7 @@ def get_user_applies(request, user_id):
             "poster_name": apply.post.poster.name,
             "poster_avatar_url": apply.post.poster.avatar_url,
             "image_url": apply.post.image.url,
+            "labels": labels,
         })
     return JsonResponse(ret_data, safe=False)
 
@@ -392,6 +403,7 @@ def create_apply(request):
     if request.method != "POST":
         return JsonResponse({'ret': False, 'error_code': 1})
 
+    # 用户身份认证
     user = verify_token(request.META.get('HTTP_AUTHORIZATION'))
     if not user:
         return JsonResponse({'ret': False, 'error_code': 5})
@@ -406,12 +418,14 @@ def create_apply(request):
     except KeyError:
         return JsonResponse({'ret': False, 'error_code': 2})
 
+    # 检查申请项目的有效性
     try:
         post_id = int(post_id)
         post = Post.objects.get(pk=post_id)
     except (ValueError, Post.DoesNotExist):
         return JsonResponse({'ret': False, 'error_code': 4})
 
+    # 检查项目是否为可申请状态
     if post.if_end or post.accept_num >= post.request_num:
         return JsonResponse({'ret': False, 'error_code': 7})
 
@@ -421,6 +435,7 @@ def create_apply(request):
     if user.apply_set.filter(post=post).exists():
         return JsonResponse({'ret': False, 'error_code': 6})
 
+    # 获取用户简历
     if not user.resume:
         user.resume = Resume.objects.create()
         user.save()
@@ -438,6 +453,7 @@ def create_apply(request):
         resume.english_skill = data['english_skill']
         resume.project_exp = data['project_exp']
         resume.self_review = data['self_review']
+        labels = data['labels']
     except KeyError:
         return JsonResponse({'ret': False, 'error_code': 2})
 
@@ -451,6 +467,13 @@ def create_apply(request):
     resume.save()
 
     apply = Apply.objects.create(resume=resume, post=post, applicant=user)
+
+    # 将申请的标签添加至数据库
+    labelList = decode_label(labels)
+    check_applyLabel(labelList)
+    for label in labelList:
+        apply.applylabel_set.create(label=label)
+
     return JsonResponse({'ret': True, 'apply_id': str(apply.id)})
 
 
@@ -469,12 +492,17 @@ def get_apply_detail(request, apply_id):
     if apply.applicant != user and apply.post.poster != user:
         return JsonResponse({'ret': False, 'error_code': 3})
 
+    # 整理申请的标签
+    labelList = ApplyLabel.objects.filter(apply=apply).all()
+    labels = encode_label(labelList)
+
     return JsonResponse(
         {'ret': True, 'applyStatus': apply.status, 'name': apply.resume.name, 'sex': apply.resume.sex,
          'age': apply.resume.age, 'degree': apply.resume.degree, 'phone': apply.resume.phone,
          'email': apply.resume.email, 'city': apply.resume.city, 'edu_exp': apply.resume.edu_exp,
          'awards': apply.resume.awards, 'english_skill': apply.resume.english_skill,
-         'project_exp': apply.resume.project_exp, 'self_review': apply.resume.self_review})
+         'project_exp': apply.resume.project_exp, 'self_review': apply.resume.self_review,
+         'labels': labels})
 
 
 def accept_apply(request, apply_id):

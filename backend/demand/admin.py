@@ -3,4 +3,4 @@ from demand import models
 
 admin.site.register(models.Post)
 admin.site.register(models.Apply)
-admin.site.register(models.Label)
+admin.site.register(models.PostLabel)
