@@ -20,7 +20,7 @@
         "postDetail":"string",//内容 : text类型，无字数限制
         "requestNum":"int", //所需人数 : >0
         "ddl":"datetime", //结束时间 ：以 YYYY-MM-DD 的形式传递
-        "labels":"string", //项目标签代码，以‘&’为分隔符拼接，如：1&2&3&4&5
+        "labels":"string", //项目标签代码，以‘&’为分隔符拼接，如：0101&0201&0301，标签编码需满足项目[标签规范文件](../专业目录表.txt)的规定
     }
   ```
   
@@ -73,7 +73,7 @@
         "postDetail":"string",
         "requestNum":"int",
         "ddl":"datetime", //YYYY-MM-DD
-        "labels":"string", //项目标签代码，以‘&’为分隔符拼接，如：1&2&3&4&5
+        "labels":"string", //项目标签代码，以‘&’为分隔符拼接，如：0101&0201&0301，标签编码需满足项目[标签规范文件](../专业目录表.txt)的规定
     }
   ```
 
@@ -109,7 +109,7 @@
           "ddl":"datetime", //YYYY-MM-DD
           "postID":"string",
           "posterID":"string",
-          "labels":"string", //项目标签代码，以‘&’为分隔符拼接，如：1&2&3&4&5
+          "labels":"string", //项目标签代码，以‘&’为分隔符拼接，如：0101&0201&0301，标签编码需满足项目[标签规范文件](../专业目录表.txt)的规定
           "poster_name": "string", //发布者用户名
           "poster_avatar_url": "string", //发布者头像url
           "image_url": "string", //帖子的图片url，没有加上域名
@@ -148,7 +148,7 @@
         "ifEnd":"bool",
         "postID":"string",
         "posterID":"string",
-        "labels":"string", //项目标签代码，以‘&’为分隔符拼接，如：1&2&3&4&5
+        "labels":"string", //项目标签代码，以‘&’为分隔符拼接，如：0101&0201&0301，标签编码需满足项目[标签规范文件](../专业目录表.txt)的规定
         "poster_name": "string", //发布者用户名
         "poster_avatar_url": "string", //发布者头像url
         "image_url": "string", //帖子的图片url，没有加上域名
@@ -176,7 +176,7 @@
           "ifEnd":"bool",
           "postID":"string",
           "posterID":"string",
-          "labels":"string", //项目标签代码，以‘&’为分隔符拼接，如：1&2&3&4&5
+          "labels":"string", //项目标签代码，以‘&’为分隔符拼接，如：0101&0201&0301，标签编码需满足项目[标签规范文件](../专业目录表.txt)的规定
           "poster_name": "string", //发布者用户名
           "poster_avatar_url": "string", //发布者头像url
           "image_url": "string", //帖子的图片url，没有加上域名
