@@ -14,7 +14,7 @@ from user.jwt_token import verify_token
 from user.models import User, Resume
 from demand.models import Post
 from demand.models import Apply
-from demand.models import Label
+from demand.models import PostLabel
 
 post_title_pattern = re.compile(r"^.{1,20}$")
 deadline_pattern = re.compile(r"^\d\d\d\d-\d\d-\d\d$")
@@ -121,7 +121,7 @@ def get_unclosed_posts(request):
     unclosed_posts = Post.objects.filter(if_end=False, deadline__gte=datetime.date.today()).order_by('-post_time')
     ret_data = []
     for post in unclosed_posts:
-        labelList = Label.objects.filter(post=post).all()
+        labelList = PostLabel.objects.filter(post=post).all()
         labels = []
         for obj in labelList:
             labels.append(str(obj.label))
@@ -156,7 +156,7 @@ def get_post_detail(request, post_id):
     except Post.DoesNotExist:
         return JsonResponse({'ret': False, 'error_code': 3})
 
-    labelList = Label.objects.filter(post=post).all()
+    labelList = PostLabel.objects.filter(post=post).all()
     labels = []
     for obj in labelList:
         labels.append(str(obj.label))
@@ -196,7 +196,7 @@ def get_user_posts(request, user_id):
     ret_data = []
     for post in posts:
 
-        labelList = Label.objects.filter(post=post).all()
+        labelList = PostLabel.objects.filter(post=post).all()
         labels = []
         for obj in labelList:
             labels.append(str(obj.label))
@@ -276,7 +276,7 @@ def modify_post_detail(request, post_id):
     post.poster = user
     post.save()
 
-    labelListPast = Label.objects.filter(post=post).all()
+    labelListPast = PostLabel.objects.filter(post=post).all()
     for i in labelListPast:
         i.delete()
 

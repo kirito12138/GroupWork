@@ -45,9 +45,16 @@ class Apply(models.Model):
         ordering = ["c_time"]
 
 
-class Label(models.Model):
+class PostLabel(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     label = models.IntegerField(default=0)
 
     def __str__(self):
         return '(' + str(self.post_id) + ',' + str(self.label) + ')'
+
+class ApplyLabel(models.Model):
+    apply = models.ForeignKey(Apply, on_delete=models.CASCADE)
+    label = models.CharField(max_length=32, default='')
+
+    def __str__(self):
+        return '(' + str(self.apply_id) + ',' + str(self.label) + ')'
