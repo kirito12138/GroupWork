@@ -11,9 +11,14 @@ venv/
 *.log
 local_settings.py
 *.sqlite3
+media/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
+
 *.pid
+
+.vscode/
+
