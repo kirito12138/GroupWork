@@ -20,7 +20,8 @@
       "awards":"string", 
       "english_skill":"string",
       "project_exp":"string",
-      "self_review":"string"
+      "self_review":"string",
+      "labels":"string", # 建立标签代码，以‘&’为分隔符拼接，如：1&2&3，由于未对标签格式进行规定，暂时用0-20的数字代替
        }
   ```
 
@@ -96,7 +97,8 @@
         "awards":"string", 
         "english_skill":"string",
         "project_exp":"string",
-        "self_review":"string"
+        "self_review":"string",
+        "labels":"string", # 建立标签代码，以‘&’为分隔符拼接，如：1&2&3，由于未对标签格式进行规定，暂时用0-20的数字代替
   	},
        ...
    ]
@@ -137,6 +139,7 @@
         "poster_name": "string", //帖子发布者用户名
         "poster_avatar_url": "string", //帖子发布者头像url
         "image_url": "string", //帖子的图片url，没有加上域名
+        "labels":"string", # 建立标签代码，以‘&’为分隔符拼接，如：1&2&3，由于未对标签格式进行规定，暂时用0-20的数字代替
   	},
        ...
    ]
@@ -177,7 +180,8 @@
       "awards":"string", 
       "english_skill":"string",
       "project_exp":"string",
-      "self_review":"string"
+      "self_review":"string",
+      "labels":"string", # 建立标签代码，以‘&’为分隔符拼接，如：1&2&3，由于未对标签格式进行规定，暂时用0-20的数字代替
   }
   ```
 
