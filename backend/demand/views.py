@@ -78,7 +78,7 @@ def create_post(request):
 
     # 添加项目标签至数据库
     for i in labelList:
-        new_post.label_set.create(label=i)
+        new_post.postlabel_set.create(label=i)
 
     return JsonResponse({'ret': True, 'postID': str(new_post.id)})
 
@@ -280,7 +280,7 @@ def modify_post_detail(request, post_id):
         i.delete()
 
     for i in labelList:
-        post.label_set.create(label=i)
+        post.postlabel_set.create(label=i)
 
     if post.accept_num >= post.request_num:
         post.apply_set.filter(status='waiting').update(status='closed')
