@@ -195,9 +195,11 @@ Page({
           project_exp: this.data.project_exp,
           self_review: this.data.self_review,
           edu_exp:edu_exp,
+          labels: "1",
         },
         success(res) {
-          console.log(res.data)
+          console.log("HHHHHHHHHHHHH"+res.data)
+
           if (res.data.ret) {
             $Message({
               content: '申请成功',
