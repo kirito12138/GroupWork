@@ -77,7 +77,7 @@ page, .page {
   align-items: center;
   font-weight: 590;
   font-size:20px;
-  text-align: center;
+
   margin-left: 10rpx;
   width: 80%;
   overflow:hidden;
