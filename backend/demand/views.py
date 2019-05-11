@@ -46,8 +46,8 @@ def create_post(request):
 
     # 处理获取的标签，进行标签正确性检查
     labelList = decode_label(labels)
-    if not check_postLabel(labelList):
-        return JsonResponse({'ret': False, 'error_code': 3})
+    # if not check_postLabel(labelList):
+    #     return JsonResponse({'ret': False, 'error_code': 3})
 
     # 检查各字段合法性
     if type(request_num) != int or request_num < 1 or request_num > 100:
@@ -215,6 +215,7 @@ def get_user_posts(request, user_id):
             "poster_avatar_url": post.poster.avatar_url,
             "image_url": post.image.url,
             "labels": labels,
+            "ch_flag": True,
         })
     return JsonResponse(ret_data, safe=False)
 
