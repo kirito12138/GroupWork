@@ -67,6 +67,9 @@ page, .page {
 {
   align-items: center;
   margin-left: 20rpx;
+  width: 70%;
+  display: flex;
+  white-space:nowrap;
 }
 
 .title_text
@@ -76,6 +79,17 @@ page, .page {
   font-size:20px;
   text-align: center;
   margin-left: 10rpx;
+  width: 80%;
+  overflow:hidden;
+
+
+  text-overflow:ellipsis;
+
+  white-space:nowrap;
+
+
+
+
 }
 .date
 {
@@ -85,7 +99,7 @@ page, .page {
 
 .date_text
 {
-  align-items: center;
+  align-items: center             ;
   color:gray;
   text-align: center;
   font-size: 10px;
