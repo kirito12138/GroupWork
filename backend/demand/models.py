@@ -26,6 +26,7 @@ class Post(models.Model):
     poster = models.ForeignKey('user.User', on_delete=models.CASCADE, null=True, blank=True)
     image = models.ImageField(max_length=256, upload_to=post_image_path,
                               default='img/post/example/1.jpg')
+    is_imported = models.BooleanField(default=False)
 
     def __str__(self):
         return self.title
