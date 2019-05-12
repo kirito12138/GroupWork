@@ -74,6 +74,7 @@ def create_post(request):
         deadline=deadline,
         poster=user,
         image='img/post/example/' + str(randint(1, 4)) + '.jpg',  # 设置默认图片
+        is_imported=False,
     )
 
     # 添加项目标签至数据库
