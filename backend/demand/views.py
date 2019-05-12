@@ -143,6 +143,7 @@ def get_unclosed_posts(request):
             "poster_avatar_url": post.poster.avatar_url,
             "image_url": post.image.url,
             "labels": labels,
+            "is_imported": post.is_imported,
         })
     return JsonResponse(ret_data, safe=False)
 
@@ -174,10 +175,11 @@ def get_post_detail(request, post_id):
         'ifEnd': post.if_end,
         'postID': str(post.id),
         'posterID': str(post.poster.id),
-        "poster_name": post.poster.name,
-        "poster_avatar_url": post.poster.avatar_url,
+        'poster_name': post.poster.name,
+        'poster_avatar_url': post.poster.avatar_url,
         'image_url': post.image.url,
-        'labels': labels
+        'labels': labels,
+        'is_imported': post.is_imported,
     })
 
 
@@ -215,6 +217,7 @@ def get_user_posts(request, user_id):
             "poster_avatar_url": post.poster.avatar_url,
             "image_url": post.image.url,
             "labels": labels,
+            "is_imported": post.is_imported,
         })
     return JsonResponse(ret_data, safe=False)
 
@@ -395,6 +398,7 @@ def get_user_applies(request, user_id):
             "poster_avatar_url": apply.post.poster.avatar_url,
             "image_url": apply.post.image.url,
             "labels": labels,
+            "is_imported": apply.post.is_imported,
         })
     return JsonResponse(ret_data, safe=False)
 
@@ -426,6 +430,9 @@ def create_apply(request):
         return JsonResponse({'ret': False, 'error_code': 4})
 
     # 检查项目是否为可申请状态
+    if post.is_imported:
+        return JsonResponse({'ret': False, 'error_code': 9})
+
     if post.if_end or post.accept_num >= post.request_num:
         return JsonResponse({'ret': False, 'error_code': 7})
 
