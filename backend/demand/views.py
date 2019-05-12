@@ -126,7 +126,6 @@ def get_unclosed_posts(request):
     unclosed_posts = Post.objects.filter(if_end=False, deadline__gte=datetime.date.today()).order_by('-post_time')
     ret_data = []
     for post in unclosed_posts:
-
         # 整理相应项目的标签
         labelList = PostLabel.objects.filter(post=post).all()
         labels = encode_label(labelList)
@@ -199,7 +198,6 @@ def get_user_posts(request, user_id):
     posts = user.post_set.order_by('-post_time')
     ret_data = []
     for post in posts:
-
         # 整理标签信息
         labelList = PostLabel.objects.filter(post=post).all()
         labels = encode_label(labelList)
@@ -335,7 +333,6 @@ def get_post_applies(request, post_id):
     applies = post.apply_set.order_by('-c_time')
     ret_data = []
     for apply in applies:
-
         # 整理申请的标签
         labelList = ApplyLabel.objects.filter(apply=apply).all()
         labels = encode_label(labelList)
@@ -378,7 +375,6 @@ def get_user_applies(request, user_id):
     applies = user.apply_set.order_by('-c_time')
     ret_data = []
     for apply in applies:
-
         # 整理申请的标签
         labelList = ApplyLabel.objects.filter(apply=apply).all()
         labels = encode_label(labelList)
