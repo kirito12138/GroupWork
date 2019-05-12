@@ -49,9 +49,11 @@
 - return 
 
 ```
-"ret":"bool", //是否上传成功
-"error_code": "int" 
-"image_url": 文件上传的url，不含域名域名
+{
+    "ret":"bool", //是否上传成功
+    "error_code": "int" 
+    "image_url": 文件上传的url，不含域名域名
+}
 ```
 
 | error_code | 含义                                                 |
@@ -80,10 +82,12 @@
 - return 
 
   ```
-  "ret":"bool", //是否修改成功
-  "error_code": "int" 
+  {
+      "ret":"bool", //是否修改成功
+      "error_code": "int"
+}
   ```
-
+  
   | error_code | 含义                                                 |
   | ---------- | ---------------------------------------------------- |
   | 1          | 不是POST请求                                         |
@@ -113,19 +117,19 @@
           "poster_name": "string", //发布者用户名
           "poster_avatar_url": "string", //发布者头像url
           "image_url": "string", //帖子的图片url，没有加上域名
+          "is_imported": "bool", # 该贴子是否为外部导入，外部导入则无法创建申请
   	},
       ...
   ]
   ```
 
  请求失败时返回
-
-```
+  ```
     {
         "ret": false,
         "error_code":"int",//获取失败时返回
   	}
-```
+  ```
 
 | error_code | 含义                                                     |
 | ---------- | -------------------------------------------------------- |
@@ -152,6 +156,7 @@
         "poster_name": "string", //发布者用户名
         "poster_avatar_url": "string", //发布者头像url
         "image_url": "string", //帖子的图片url，没有加上域名
+        "is_imported": "bool", # 该贴子是否为外部导入，外部导入则无法创建申请
   	}
   ```
 
@@ -180,25 +185,24 @@
           "poster_name": "string", //发布者用户名
           "poster_avatar_url": "string", //发布者头像url
           "image_url": "string", //帖子的图片url，没有加上域名
+          "is_imported": "bool", # 该贴子是否为外部导入，外部导入则无法创建申请
   	},
     ...
   ]
+```
+  
+请求失败时返回
+  
   ```
-```
-  
-  请求失败时返回
-  
-```
-    {
-        "ret": false,
+  {
+      "ret": false,
       "error_code":"int",//获取失败时返回
-  	}
+  }
   ```
-  
-  | error_code | 含义                                                     |
-  | ---------- | -------------------------------------------------------- |
-  | 1          | 不是GET请求                                              |
-  | 3          | 该 ID 对应的用户不存在                                   |
-  | 5          | 当前用户未登录（未检测到token）或登录已过期（token过期） |
 
-  ```
+| error_code | 含义                                                     |
+| ---------- | -------------------------------------------------------- |
+| 1          | 不是GET请求                                              |
+| 3          | 该 ID 对应的用户不存在                                   |
+| 5          | 当前用户未登录（未检测到token）或登录已过期（token过期） |
+
