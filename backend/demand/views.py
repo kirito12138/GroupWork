@@ -73,7 +73,8 @@ def create_post(request):
         request_num=request_num,
         deadline=deadline,
         poster=user,
-        image=os.sep.join([MEDIA_ROOT, 'img/post/example/' + str(randint(1, 4)) + '.jpg']),  # 设置默认图片
+        image='img/post/example/' + str(randint(1, 4)) + '.jpg',  # 设置默认图片
+        is_imported=False,
     )
 
     # 添加项目标签至数据库
@@ -126,7 +127,6 @@ def get_unclosed_posts(request):
     unclosed_posts = Post.objects.filter(if_end=False, deadline__gte=datetime.date.today()).order_by('-post_time')
     ret_data = []
     for post in unclosed_posts:
-
         # 整理相应项目的标签
         labelList = PostLabel.objects.filter(post=post).all()
         labels = encode_label(labelList)
@@ -143,6 +143,7 @@ def get_unclosed_posts(request):
             "poster_avatar_url": post.poster.avatar_url,
             "image_url": post.image.url,
             "labels": labels,
+            "is_imported": post.is_imported,
         })
     return JsonResponse(ret_data, safe=False)
 
@@ -174,10 +175,11 @@ def get_post_detail(request, post_id):
         'ifEnd': post.if_end,
         'postID': str(post.id),
         'posterID': str(post.poster.id),
-        "poster_name": post.poster.name,
-        "poster_avatar_url": post.poster.avatar_url,
+        'poster_name': post.poster.name,
+        'poster_avatar_url': post.poster.avatar_url,
         'image_url': post.image.url,
-        'labels': labels
+        'labels': labels,
+        'is_imported': post.is_imported,
     })
 
 
@@ -197,7 +199,6 @@ def get_user_posts(request, user_id):
     posts = user.post_set.order_by('-post_time')
     ret_data = []
     for post in posts:
-
         # 整理标签信息
         labelList = PostLabel.objects.filter(post=post).all()
         labels = encode_label(labelList)
@@ -215,6 +216,7 @@ def get_user_posts(request, user_id):
             "poster_avatar_url": post.poster.avatar_url,
             "image_url": post.image.url,
             "labels": labels,
+            "is_imported": post.is_imported,
         })
     return JsonResponse(ret_data, safe=False)
 
@@ -332,7 +334,6 @@ def get_post_applies(request, post_id):
     applies = post.apply_set.order_by('-c_time')
     ret_data = []
     for apply in applies:
-
         # 整理申请的标签
         labelList = ApplyLabel.objects.filter(apply=apply).all()
         labels = encode_label(labelList)
@@ -375,7 +376,6 @@ def get_user_applies(request, user_id):
     applies = user.apply_set.order_by('-c_time')
     ret_data = []
     for apply in applies:
-
         # 整理申请的标签
         labelList = ApplyLabel.objects.filter(apply=apply).all()
         labels = encode_label(labelList)
@@ -395,6 +395,7 @@ def get_user_applies(request, user_id):
             "poster_avatar_url": apply.post.poster.avatar_url,
             "image_url": apply.post.image.url,
             "labels": labels,
+            "is_imported": apply.post.is_imported,
         })
     return JsonResponse(ret_data, safe=False)
 
@@ -426,6 +427,9 @@ def create_apply(request):
         return JsonResponse({'ret': False, 'error_code': 4})
 
     # 检查项目是否为可申请状态
+    if post.is_imported:
+        return JsonResponse({'ret': False, 'error_code': 9})
+
     if post.if_end or post.accept_num >= post.request_num:
         return JsonResponse({'ret': False, 'error_code': 7})
 
