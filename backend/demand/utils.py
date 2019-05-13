@@ -51,3 +51,15 @@ def encode_label(_QuerySet):
         labels.append(obj.label)
     labels = '&'.join(labels)
     return labels
+
+# TODO:项目排序
+def rank_post():
+    pass
+
+# TODO:申请打分
+def grade_apply():
+    pass
+
+# TODO:申请排序
+def rank_apply():
+    pass
