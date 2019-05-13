@@ -115,7 +115,7 @@ def upload_post_image(request, post_id):
 
     return JsonResponse({'ret': True, 'image_url': post.image.url})
 
-
+# TODO 增加排序功能或重写有排序功能的方法
 def get_unclosed_posts(request):
     if request.method != "GET":
         return JsonResponse({'ret': False, 'error_code': 1})
@@ -182,7 +182,7 @@ def get_post_detail(request, post_id):
         'is_imported': post.is_imported,
     })
 
-
+# TODO 增加排序功能或重写具有排序功能的方法
 def get_user_posts(request, user_id):
     if request.method != "GET":
         return JsonResponse({'ret': False, 'error_code': 1})
@@ -317,7 +317,7 @@ def modify_post_detail(request, post_id):
 #     print(request.FILES.get('file'))
 #     return JsonResponse({'ret': True})
 
-
+# TODO 增加排序功能或重写具有排序功能的方法
 def get_post_applies(request, post_id):
     if request.method != "GET":
         return JsonResponse({'ret': False, 'error_code': 1})
@@ -359,7 +359,7 @@ def get_post_applies(request, post_id):
         })
     return JsonResponse(ret_data, safe=False)
 
-
+# TODO 增加排序功能或重写具有排序功能的方法
 def get_user_applies(request, user_id):
     if request.method != "GET":
         return JsonResponse({'ret': False, 'error_code': 1})
