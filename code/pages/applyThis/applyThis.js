@@ -172,6 +172,7 @@ Page({
       edu_exp3 = this.data.expEdu3['year'] + "&" + this.data.expEdu3['major'] + "&" + this.data.expEdu3['school'];
       edu_exp = edu_exp1 + "|" + edu_exp2 + "|" + edu_exp3;
       if (age == "") age = "0";
+      console.log(this.data     )
       wx.request({
         url: 'https://group.tttaaabbbccc.club/c/apply/',
         method: "POST",
@@ -194,9 +195,11 @@ Page({
           project_exp: this.data.project_exp,
           self_review: this.data.self_review,
           edu_exp:edu_exp,
+          labels: "1",
         },
         success(res) {
-          console.log(res.data)
+          console.log("HHHHHHHHHHHHH"+res.data)
+
           if (res.data.ret) {
             $Message({
               content: '申请成功',

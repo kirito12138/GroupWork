@@ -9,8 +9,70 @@ Page({
     // newmark 是指移动的最新点的x轴坐标 
     newmark: 0,
     istoright: true,
-    f_posts: []
+    f_posts: [],
+    a:[
+      {ch_flag: true},
+      { ch_flag: true },
+      { ch_flag: true }
+    ],
+    ch_flag: [],
+    index: 0,
   },
+
+  clickPoint: function(e)
+  {
+    console.log("hhhhhhhhhhh", e.currentTarget.dataset.index);
+    for(var i=0; i< this.data.f_posts.length; i++)
+    {
+      let string = "f_posts[" + i + "].ch_flag";
+      this.setData({
+        [string]: true
+      });
+    }
+    let string = "f_posts[" + e.currentTarget.dataset.index + "].ch_flag";
+    this.setData({
+      [string]: false
+    });
+  },
+
+  clickOther:function(e)
+  {
+    for (var i = 0; i < this.data.f_posts.length; i++) {
+      let string = "f_posts[" + i + "].ch_flag";
+      this.setData({
+        [string]: true
+      });
+    }
+  },
+  chakan: function (e) {
+
+    var i = e.currentTarget.dataset.index;
+    var para = JSON.stringify(this.data.f_posts[i]);
+
+    wx.navigateTo({
+      url: '../applyers/applyers?info=' + para,
+    })
+  },
+  edit: function (e) {
+
+    var i = e.currentTarget.dataset.index;
+    var para = JSON.stringify(this.data.f_posts[i]);
+
+    wx.navigateTo({
+      url: '../modifyPostSon/modifyPostSon?info=' + para,
+    })
+  },
+
+  del:function(e)
+  {
+    var i = e.currentTarget.dataset.index;
+    var para = JSON.stringify(this.data.f_posts[i]);
+
+    wx.navigateTo({
+      url: '../modifyPostSon/modifyPostSon?info=' + para,
+    })
+  },
+
 
   clickCard: function (e) {
     console.log(e.currentTarget.dataset.index);
@@ -109,6 +171,7 @@ Page({
       if (_id) {
         console.log(_id)
         id = JSON.parse(_id);
+        console.log("KKKKKKKKKKKKKKKKK"+id)
       }
     }
     catch (e) {
@@ -122,7 +185,7 @@ Page({
         'Authorization': tk
       },
       success(res) {
-        console.log(res.data['ret'])
+        console.log('res', res)
         if(res.data['ret']!=null)
         {
           if(res.data['error_code'] == 5)
@@ -140,6 +203,7 @@ Page({
         that.setData({
           f_posts: res.data
         });
+        console.log(that.data.f_posts)
 
       }
     })

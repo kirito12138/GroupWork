@@ -22,9 +22,18 @@
 
   <view class="weui-cells__title">选择标签 </view>
 
+  <input type='text' class = "ipsel" confirm-type='search' bindinput='input1' bindconfirm='confirm1' bindblur='noblur'  value = "{{tei}}"></input>
+
+<view wx:for="{{hosList}}" wx:for-item="h">
+
+  <view data-text =  "{{h.name}}" wx:if="{{h.show}}" catchtap='clicsho'>{{h.name}}</view>
+
+</view>
+
    <view class="comment-btn">
       
         <button 
+    
             wx:for="{{riderCommentList}}" 
             wx:for-item="item" 
             wx:key="item.index"  
@@ -32,8 +41,9 @@
             data-value="{{item.value}}" 
             data-index="{{index}}"  
             checked="{{item.selected}}"
-            class="btn {{item.selected ? 'btn-selected' : ''}}" >
-            {{item.title}}
+            class="btn {{item.selected ? 'btn-selected' : ''}}" 
+            wx:if = "{{item.selected}}">
+            {{item.title}}❌
         </button>
         
     </view>

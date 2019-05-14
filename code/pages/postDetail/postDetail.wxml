@@ -2,14 +2,14 @@
 
   <scroll-view class='sv' scroll-y='true' style='z-index: -1;'>
     <view class = 'half_1'>
-      <image class = 'img' src = "{{postImg}}"  style="width:100%;height:400rpx"/>
+      <image class = 'img' src = "https://group.tttaaabbbccc.club/{{postImg}}"  style="width:100%;height:400rpx"/>
       <view class='title'>
         <image class='title_img' style="width:50rpx;height:50rpx" src = "../../image/title.png"></image>
         <text  class='title_text' > {{title}}</text>
       </view>
 
       <view class='tags'>
-        <i-tag class="i-tags" color="blue" wx:for = "{{tagsIndex}}" >
+        <i-tag class="i-tags" color="blue" wx:for = "{{sp}}" >
           {{tagsDict[item]}}
         </i-tag>
       </view>
@@ -34,7 +34,7 @@
  </scroll-view>
  <view class='button'>
     <button class="backhome" catchtap='goToHome'> 返回首页  </button>
-    <button class='apply'>  申请招募   </button>
+    <button class='apply' bindtap='applyFor'>  申请招募   </button>
  </view>
 
 

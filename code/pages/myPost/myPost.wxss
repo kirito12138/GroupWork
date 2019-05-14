@@ -1,46 +1,183 @@
-/* 全局样式 */
+/* pages/postDetail/postDetail.wxss */
 page, .page {
     height: 100%;
-    font-family: 'PingFang SC',
-                 'Helvetica Neue',
-                 Helvetica,
-                 'Droid Sans Fallback',
-                 'Microsoft Yachei',
-                 sans-serif;
 }
+.search{  
+  width: 80%;  
+}  
+.search_arr {  
+  border: 1px solid #d0d0d0;  
+  border-radius: 10rpx;  
+  margin-left: 20rpx;  
+}  
+.search_arr input{  
+  margin-left: 60rpx;  
+  height: 60rpx;  
+  border-radius: 5px;  
+}  
+.bc_text {  
+  line-height: 68rpx;  
+  height: 68rpx;  
+  margin-top: 34rpx;  
+}  
+  
+.sousuo {  
+  margin-left: 15rpx;  
+  width: 15%;  
+  line-height: 150%;  
+  text-align: center;  
+  border: 1px solid #d0d0d0;  
+  border-radius: 10rpx;  
+}  
+.page_row{  
+  display: flex;  
+  flex-direction: row  
+}  
+.searchcion {  
+  margin: 10rpx 10rpx 10rpx 10rpx;  
+  position: absolute;  
+  left:25rpx;  
+  z-index: 2;  
+  width: 20px;  
+  height: 20px;  
+  text-align: center;  
+}  
 
-/* 主页样式 */
-.page-top {
-height: 100%;
-position: fixed;
-width: 750rpx;
-background-color:ghostwhite;
-z-index: 0;
-transition: All 0.4s ease;
--webkit-transition: All 0.4s ease;
-}
-
-.tit
+.half_1
 {
-background-color: #99CCFF;
-height: 80rpx;
-width: 100%;
+  margin-top: 10rpx;
+  background-color: white;
+
 }
-.butt
+.img
 {
-margin-top: 0rpx;
+  height: 100rpx;
+  margin-top: 0rpx;
+  background-color: white;
+}
+.title{
+  margin-top:10rpx; 
+  background-color: white;
+  display: flex;
+  flex-direction:row ;
+  justify-content: space-between;
+
+}
+.title_son
+{
+  align-items: center;
+  margin-left: 20rpx;
 }
 
-.content{
-margin-top: 100rpx; 
+.title_text
+{
+  align-items: center;
+  font-weight: 590;
+  font-size:20px;
+  text-align: center;
+  margin-left: 10rpx;
 }
+.date
+{
+  align-items: center;
+  margin-left: 20rpx;
+}
+
+
+
+
+.second{
+  margin-top:10rpx; 
+  background-color: white;
+  display: flex;
+  flex-direction:row ;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ictext
+{
+
+  align-items: center;
+  margin-right: 40rpx;
+  text-align: center;
+  color: green;
+  font-size: 16px;
+}
+
+
+
+
+.num
+{
+  margin-left: 20rpx;
+}
+.num_text
+{
+  align-items: center;
+  color:gray;
+  text-align: center;
+  font-size: 15px;
+}
+
+
+
+
+
+.tags{
+  display: flex;
+  flex-flow: row wrap;
+  margin-bottom: 30rpx;
+}
+.i-tags
+{
+  flex-direction: column;
+  float: left;
+  margin-left: 30rpx; 
+}
+.date-num
+{
+  margin-top: 10rpx;
+  font-family:SimSun;
+  
+}
+
+
+
 .sv {
-  background-color: ghostwhite;
-  height: 100%;
+  margin-top:10rpx;
+  background-color:white;
+  height: 90%;
 }
+
 ::-webkit-scrollbar {
   width: 0;
   height: 0;
   color: transparent;
+}
+
+.circle{
+  color: #ffffff;
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  bottom: 20rpx;
+  right: 20rpx;
+  width: 110rpx;
+  height: 110rpx;
+
+
+  border-radius: 50%;
+  font-size: 28rpx;
+  padding: 0;
+  border: none;
+  plain: false;
+
+}
+.editMypost
+{
+  margin-left: 70%;
+
 }
 

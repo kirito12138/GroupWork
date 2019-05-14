@@ -1,12 +1,95 @@
-  <scroll-view class='sv' scroll-y='true' style='z-index: -1;'>
-    <view class = "cds" >
-    <view wx:for = "{{f_posts}}">
-        <view class = "card" bindtap='clickCard' data-index='{{index}}'>
-        <i-card title="{{item.title}}" extra="查看发布" full = "true" style="color:#555555 font-weight:bolder">
-        <view slot="content"><text style = "color: black; font-weight:bold;">详情：</text>{{item.postDetail}}</view>
-        <view slot="footer">所需人数：（ {{item.acceptedNum}} / {{item.requestNum}} ） 截止时间:{{item.ddl}}</view>
-        </i-card>
+<!--pages/postDetail/postDetail.wxml-->
+
+  <view class='page_row' bindtap="suo">  
+      <view class="search">  
+        <view class="df search_arr">  
+          <icon class="searchcion" size='20' type='search'></icon>  
+          <input class="" disabled placeholder="请输入关键字" value="{{searchValue}}"/>  
+        </view>  
+      </view>  
+      <view class='sousuo'>搜索</view>  
+    </view>  
+
+  <scroll-view class='sv' scroll-y='true' style='z-index: -1;' >
+    <view class = 'half_1' wx:for = "{{f_posts}}" >
+      
+      <view class='title'>
+
+        <view class = 'title_son' bindtap='clickOther' style='width: 85%'>
+          <image class='title_img' style="width:40rpx;height:40rpx" src = "../../image/title.png"></image>
+          <text  class='title_text' style='word-break: break-all;'>{{item.title}}</text>
         </view>
+        
+        <view class='editMypost'  style = "margin-right: 20rpx; broder: solid; z-index: 0;position: absolute;">
+          <view wx:if = "{{item.ch_flag}}">
+              <view class = 'ck_son' style = "width:200rpx; margin-left: 70%" bindtap='clickPoint' data-index='{{index}}'>
+                <image class='ck_img' style="width:35rpx;height:35rpx;margin-left:20rpx;" src = "../../image/more.png"></image>
+              </view>
+          </view>
+          <view wx:if = "{{!item.ch_flag}}" style='background-color: #F8F8FA'>
+              <view class = 'ck_son' style = "border: 1px solid #7F7F7F;width:200rpx; " bindtap='edit' data-index='{{index}}'>
+                <image class='ck_img' style="width:35rpx;height:35rpx;margin-left:20rpx;" src = "../../image/edit.png"></image>
+                <text  class='ck_text' style='font-size:20px;text-align: center;' > 编 辑</text>
+              </view>
+          </view>
+          <view wx:if = "{{!item.ch_flag}}" style='background-color: #F8F8FA'>
+              <view class = 'ck_son' style = "border: 1px solid #7F7F7F;width:200rpx; " bindtap='chakan' data-index='{{index}}'>
+                <image class='ck_img' style="width:35rpx;height:35rpx;margin-left:20rpx;" src = "../../image/chakan.png"></image>
+                <text  class='ck_text' style='font-size:20px;text-align: center;' > 查 看</text>
+              </view>
+          </view>
+           <view wx:if = "{{!item.ch_flag}}" style='background-color: #F8F8FA'>
+              <view class = 'ck_son' style = "border: 1px solid #7F7F7F;width:200rpx; " bindtap='del' data-index='{{index}}'>
+                <image class='ck_img' style="width:35rpx;height:35rpx;margin-left:20rpx;" src = "../../image/del.png"></image>
+                <text  class='ck_text' style='font-size:20px;text-align: center; color :red' > 删 除</text>
+              </view>
+          </view>
+
+        </view>
+
+      </view>
+
+      <view class = 'second' bindtap='clickOther'>
+        <view class = "left" style='margin-left: 20rpx'>
+            <image class = 'img' src ="../../image/no_load.png"  style="width:400rpx;height:240rpx"/>
+        </view>   
+
+        <view class = "right" style='margin-right:50rpx'>
+
+          <view class='date' style = "height:80rpx">
+            <image class='date_img' style="width:50rpx;height:50rpx" src = "../../image/date.png"></image>
+            <text  class='num_text'> {{item.ddl}}</text>
+          </view>
+
+          <view class='num' style = "height:80rpx">
+            <image class='num_image' style="width:50rpx;height:50rpx" src = "../../image/Pnum.png"></image>
+            <text  class='num_text' > {{item.acceptedNum}}/{{item.requestNum}}</text>
+          </view>
+
+          <view class='date' style = "height:80rpx">
+            <image class='date_image' style="width:50rpx;height:50rpx" src = "../../image/check.png"></image>
+            <text  class='num_text' >待审核简历: 12 </text>
+          </view>
+
+
+        </view>
+
+
+      </view>
+
+
+
+
+    <view style="height:20rpx;background-color:#D9D9D9" bindtap='clickOther'>
     </view>
     </view>
-    </scroll-view>
+
+      
+
+    
+
+   
+
+
+ </scroll-view>
+

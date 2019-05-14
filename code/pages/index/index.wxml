@@ -14,3 +14,4 @@
     <button class="user-mottoimg" catchtap='goToHome'>进入主页</button>
   </view>
 </view>
+<i-message id="message" />

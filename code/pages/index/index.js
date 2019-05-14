@@ -1,6 +1,8 @@
 //index.js
 //获取应用实例
 const app = getApp()
+const { $Message } = require('../../vant-weapp/dist/base/index');
+
 
 Page({
   data: {
@@ -45,9 +47,18 @@ Page({
   },
   goToHome: function () {
     if (this.data.hasUserInfo)
-      wx.reLaunch({
-        url: "../home/home",
-      })
+    {
+      
+            wx.reLaunch({
+              url: "../home/home",
+            })
+          
+
+
+
+      
+    }
+      
     else {
       wx.showToast({
         title: '请先获取头像昵称', icon: 'none'
