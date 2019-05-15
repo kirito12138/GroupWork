@@ -3,6 +3,7 @@ var app = getApp() // 获得全局变量
 Page({
 
   /**
+   * 
    * 页面的初始数据
    */
   data: {
@@ -28,6 +29,7 @@ Page({
         username: app.globalData.userInfo.nickName,
         login: true
       })
+      console.log(this.data.userimg)
     }
     else {
       this.setData({
