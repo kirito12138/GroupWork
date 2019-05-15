@@ -123,7 +123,7 @@ Page({
   },
 
   tap_end: function (e) {
-    // touchend事件
+    // touchend事件，
     this.data.mark = 0;
     this.data.newmark = 0;
     // 通过改变 opne 的值，让主页加上滑动的样式
