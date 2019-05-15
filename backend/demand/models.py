@@ -1,8 +1,4 @@
-import os
-
 from django.db import models
-
-from backend.settings import MEDIA_ROOT
 
 
 def resume_file_path(instance, filename):
