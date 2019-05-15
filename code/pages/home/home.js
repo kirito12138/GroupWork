@@ -107,7 +107,7 @@ Page({
   },
 
   tap_drag: function (e) {
-    // touchmove事件
+    // touchmove事件，
     this.data.newmark = e.touches[0].pageX;
 
     // 手指从左向右移动，
