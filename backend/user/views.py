@@ -3,8 +3,8 @@ import random
 import re
 import string
 import hashlib
-
 from json import JSONDecodeError
+
 from django.core.exceptions import ValidationError
 from django.db.utils import IntegrityError
 from django.http import JsonResponse

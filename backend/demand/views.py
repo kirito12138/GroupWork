@@ -1,15 +1,13 @@
 import json
-import os
 import re
 import datetime
-
 from random import randint
 from json import JSONDecodeError
+
 from django.core.exceptions import ValidationError
 from django.http import JsonResponse
 # from django.shortcuts import render
 
-from backend.settings import MEDIA_ROOT
 from user.jwt_token import verify_token
 from user.models import User, Resume
 from demand.models import Post
