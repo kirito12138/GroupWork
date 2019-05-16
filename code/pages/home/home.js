@@ -101,7 +101,7 @@ Page({
   },
 
   tap_start: function (e) {
-    // touchstart事件
+    // touchstart事件，
     // 把手指触摸屏幕的那一个点的 x 轴坐标赋值给 mark 和 newmark
     this.data.mark = this.data.newmark = e.touches[0].pageX;
   },
