@@ -115,7 +115,7 @@ Page({
       this.istoright = true;
     }
 
-    // 手指从右向左移动
+    // 手指从右向左移动，
     if (this.data.mark > this.data.newmark) {
       this.istoright = false;
     }
