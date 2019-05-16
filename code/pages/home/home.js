@@ -110,7 +110,7 @@ Page({
     // touchmove事件
     this.data.newmark = e.touches[0].pageX;
 
-    // 手指从左向右移动
+    // 手指从左向右移动，
     if (this.data.mark < this.data.newmark) {
       this.istoright = true;
     }
