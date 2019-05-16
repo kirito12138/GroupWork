@@ -37,7 +37,7 @@ def friend_msg(msg):
 @bot.register(chats=Group)
 def group_msg(msg):
     """接收群消息"""
-    print(1)
+    # print(1)
     # 群@转发功能
     if msg.is_at and msg.bot.is_forward_group_at_msg:
         msg.forward(msg.bot.master, prefix='「{0}」在群「{1}」中艾特了你：'.format(msg.member.name, msg.chat.name))
@@ -52,6 +52,9 @@ def group_msg(msg):
             else:
                 # 不用@直接回复
                 wx_reply.auto_reply(msg)
+        elif msg.bot.is_listen_sharing and msg.chat in msg.bot.listen_sharing_groups:
+            if '招' in msg.text or '有偿' in msg.text or '实习' in msg.text or '工作' in msg.text or '帮转' in msg.text or '岗位' in msg.text or '劳务' in msg.text:
+                msg.forward(msg.bot.master, prefix='招聘监控：「{0}」在「{1}」分享了：'.format(msg.member.name, msg.chat.name))
     elif msg.type == SHARING and msg.bot.is_listen_sharing and msg.chat in msg.bot.listen_sharing_groups:
         # 群分享转发监控，防止分享广告
         msg.forward(msg.bot.master, prefix='分享监控：「{0}」在「{1}」分享了：'.format(msg.member.name, msg.chat.name))

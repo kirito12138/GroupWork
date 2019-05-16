@@ -79,6 +79,7 @@ def load_listen_sharing_groups(bot):
         if len(bot.listen_sharing_groups) < 1:
             bot.listen_sharing_groups = []
             bot.is_listen_sharing = False
+            print('none4')
             return '未找到群名包含「{}」的分享监控群！'.format(config.listen_sharing_groups)
     return None
 
