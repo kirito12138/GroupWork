@@ -1,10 +1,12 @@
+import base64
+import hmac
 import json
 import random
 import re
 import string
 import hashlib
-
 from json import JSONDecodeError
+
 from django.core.exceptions import ValidationError
 from django.db.utils import IntegrityError
 from django.http import JsonResponse
@@ -12,7 +14,7 @@ from django.http import JsonResponse
 from user.models import User, Resume
 from user.api_wechat import get_openid
 from user.jwt_token import create_token, verify_token
-from backend.settings import SECRET_KEY
+from backend.settings import SECRET_KEY, UPYUN_OPERATOR_MD5_PASSWORD
 
 account_pattern = re.compile(r"^[a-zA-Z][a-zA-Z0-9]{0,13}$")
 password_pattern = re.compile(r"^[a-z_A-Z0-9-.!@#$%\\^&*)(+={}\[\]/\",'<>~·`?:;|]{8,14}$")
@@ -339,3 +341,21 @@ def get_my_resume(request):
         "project_exp": resume.project_exp,
         "self_review": resume.self_review,
     })
+
+
+def get_upyun_signature(request):
+    if request.method != "GET":
+        return JsonResponse({'ret': False, 'error_code': 1})
+
+    user = verify_token(request.META.get('HTTP_AUTHORIZATION'))
+    if not user:
+        return JsonResponse({'ret': False, 'error_code': 5})
+
+    data = request.GET.get('data')
+    if not data:
+        return JsonResponse({'ret': False, 'error_code': 2})
+
+    signature = base64.b64encode(
+        hmac.new(UPYUN_OPERATOR_MD5_PASSWORD.encode(), data.encode(), digestmod=hashlib.sha1).digest()).decode()
+
+    return JsonResponse({'ret': True, 'signature': signature})

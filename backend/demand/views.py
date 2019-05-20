@@ -1,15 +1,13 @@
 import json
-import os
 import re
 import datetime
-
 from random import randint
 from json import JSONDecodeError
+
 from django.core.exceptions import ValidationError
 from django.http import JsonResponse
 # from django.shortcuts import render
 
-from backend.settings import MEDIA_ROOT
 from user.jwt_token import verify_token
 from user.models import User, Resume
 from demand.models import Post
@@ -116,6 +114,7 @@ def upload_post_image(request, post_id):
     return JsonResponse({'ret': True, 'image_url': post.image.url})
 
 
+# TODO 增加排序功能或重写有排序功能的方法
 def get_unclosed_posts(request):
     if request.method != "GET":
         return JsonResponse({'ret': False, 'error_code': 1})
@@ -183,6 +182,7 @@ def get_post_detail(request, post_id):
     })
 
 
+# TODO 增加排序功能或重写具有排序功能的方法
 def get_user_posts(request, user_id):
     if request.method != "GET":
         return JsonResponse({'ret': False, 'error_code': 1})
@@ -317,7 +317,7 @@ def modify_post_detail(request, post_id):
 #     print(request.FILES.get('file'))
 #     return JsonResponse({'ret': True})
 
-
+# TODO 增加排序功能或重写具有排序功能的方法
 def get_post_applies(request, post_id):
     if request.method != "GET":
         return JsonResponse({'ret': False, 'error_code': 1})
@@ -360,6 +360,7 @@ def get_post_applies(request, post_id):
     return JsonResponse(ret_data, safe=False)
 
 
+# TODO 增加排序功能或重写具有排序功能的方法
 def get_user_applies(request, user_id):
     if request.method != "GET":
         return JsonResponse({'ret': False, 'error_code': 1})
@@ -542,3 +543,45 @@ def accept_apply(request, apply_id):
     apply.save()
 
     return JsonResponse({'ret': True})
+
+
+def delete_post(request, post_id):
+    if request.method != "POST":
+        return JsonResponse({'ret': False, 'error_code': 1})
+
+    user = verify_token(request.META.get('HTTP_AUTHORIZATION'))
+    if not user:
+        return JsonResponse({'ret': False, 'error_code': 5})
+
+    try:
+        post = Post.objects.get(id=post_id)
+    except Post.DoesNotExist:
+        return JsonResponse({'ret': False, 'error_code': 4})
+    if post.poster != user:
+        return JsonResponse({'ret': False, 'error_code': 6})
+
+    post.delete()
+
+    posts = user.post_set.order_by('-post_time')
+    ret_data = []
+    for post in posts:
+        # 整理标签信息
+        label_list = PostLabel.objects.filter(post=post).all()
+        labels = encode_label(label_list)
+
+        ret_data.append({
+            "title": post.title,
+            "postDetail": post.post_detail,
+            "requestNum": post.request_num,
+            "acceptedNum": post.accept_num,
+            "ddl": post.deadline,
+            "ifEnd": post.if_end,
+            "postID": str(post.id),
+            "posterID": str(post.poster.id),
+            "poster_name": post.poster.name,
+            "poster_avatar_url": post.poster.avatar_url,
+            "image_url": post.image.url,
+            "labels": labels,
+            "is_imported": post.is_imported,
+        })
+    return JsonResponse(ret_data, safe=False)

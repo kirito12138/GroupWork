@@ -1,8 +1,4 @@
-import os
-
 from django.db import models
-
-from backend.settings import MEDIA_ROOT
 
 
 def resume_file_path(instance, filename):
@@ -23,7 +19,7 @@ class Post(models.Model):
     deadline = models.DateField(null=True, blank=True)
     post_time = models.DateTimeField(auto_now_add=True)  # 发布时间，会自动添加
     if_end = models.BooleanField(default=False)
-    poster = models.ForeignKey('user.User', on_delete=models.CASCADE, null=True, blank=True)
+    poster = models.ForeignKey('user.User', on_delete=models.CASCADE)
     image = models.ImageField(max_length=256, upload_to=post_image_path,
                               default='img/post/example/1.jpg')
     is_imported = models.BooleanField(default=True)
@@ -38,8 +34,8 @@ class Post(models.Model):
 class Apply(models.Model):
     resume = models.OneToOneField('user.Resume', on_delete=models.SET_NULL, null=True, blank=True)
     status = models.CharField(max_length=32, default='waiting')  # waiting(待定) accepted(接受), closed(结束)
-    post = models.ForeignKey('Post', on_delete=models.CASCADE, null=True, blank=True)
-    applicant = models.ForeignKey('user.User', on_delete=models.CASCADE, null=True, blank=True)
+    post = models.ForeignKey('Post', on_delete=models.CASCADE)
+    applicant = models.ForeignKey('user.User', on_delete=models.CASCADE)
     c_time = models.DateTimeField(auto_now_add=True)  # 申请时间，会自动添加
 
     class Meta:

@@ -130,3 +130,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 APP_ID = 'wx19f9e473bf0a781f'
 APP_SECRET = '96f7d24c077626b944119b75bd587f4d'
 APP_ID_URL = "https://api.weixin.qq.com/sns/jscode2session"
+
+UPYUN_OPERATOR_MD5_PASSWORD = 'password'

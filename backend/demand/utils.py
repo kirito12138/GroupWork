@@ -35,7 +35,7 @@ def check_postLabel(_labelList):
 # 检查申请标签合法性 TODO 修改检测逻辑
 def check_applyLabel(_labelList):
     for label in _labelList:
-        if(0 > int(label) or 20 < int(label)):
+        if 0 > int(label) or 20 < int(label):
             return False
     return True
 
@@ -51,3 +51,15 @@ def encode_label(_QuerySet):
         labels.append(obj.label)
     labels = '&'.join(labels)
     return labels
+
+# TODO:项目排序
+def rank_post():
+    pass
+
+# TODO:申请打分
+def grade_apply():
+    pass
+
+# TODO:申请排序
+def rank_apply():
+    pass
