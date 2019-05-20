@@ -52,6 +52,7 @@ Page({
       return;
     }
     this.data.info=JSON.parse(options.info);
+    console.log('dasda',this.data.info)
     
     this.setData({
       title: this.data.info.title,
@@ -61,7 +62,8 @@ Page({
       ddl: this.data.info.ddl,
       sp:this.data.info.sp,
       postImg:this.data.info.image_url,
-      
+      userimg: this.data.info.poster_avatar_url,
+      username:this.data.info.poster_name,
       postID: this.data.info.postID,
       posterID: this.data.info.posterID
     })
