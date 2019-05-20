@@ -164,6 +164,57 @@ def get_unclosed_posts(request):
 
     return JsonResponse(ret_data, safe=False)
 
+# 获取具有某标签的所有项目 TODO debug
+def get_unclosed_posts_by_label(request):
+
+    if request.method != "POST":
+        return JsonResponse({'ret': False, 'error_code': 1})
+
+    user = verify_token(request.META.get('HTTP_AUTHORIZATION'))
+    if not user:
+        return JsonResponse({'ret': False, 'error_code': 5})
+
+    try:
+        data = json.loads(request.body)
+    except JSONDecodeError:
+        return JsonResponse({'ret': False, 'error_code': 3})
+    try:
+        label = data['label']
+        label = decode_label(label)
+    except KeyError:
+        return JsonResponse({'ret': False, 'error_code': 2})
+
+    if not check_postLabel(label):
+        return JsonResponse({'ret': False, 'error_code': 3})
+
+    post_list = PostLabel.objects.filter(label=label)
+    ret_data = []
+    for post in post_list:
+        try:
+            post = Post.objects.first(id=post.post_id, deadline__gte=datetime.date.today())
+        except Post.DoesNotExist:
+            continue
+
+        labelList = PostLabel.objects.filter(post=post).all()
+        labels = encode_label(labelList)
+        ret_data.append({
+            "title": post.title,
+            "postDetail": post.post_detail,
+            "requestNum": post.request_num,
+            "acceptedNum": post.accept_num,
+            "ddl": post.deadline,
+            "postID": str(post.id),
+            "posterID": str(post.poster.id),
+            "poster_name": post.poster.name,
+            "poster_avatar_url": post.poster.avatar_url,
+            "image_url": post.image.url,
+            "labels": labels,
+            "is_imported": post.is_imported,
+        })
+
+    return JsonResponse(ret_data, safe=False)
+
+
 
 def get_post_detail(request, post_id):
     if request.method != "GET":
