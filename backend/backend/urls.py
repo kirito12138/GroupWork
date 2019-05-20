@@ -44,7 +44,9 @@ urlpatterns = [
 
     path('p/<int:post_id>/', demand.views.get_post_detail),
     path('p/<int:post_id>/modify/', demand.views.modify_post_detail),
+    path('p/<int:post_id>/delete/', demand.views.delete_post),
     path('p/<int:post_id>/apply/', demand.views.get_post_applies),
+
 
     path('c/apply/', demand.views.create_apply),
     # TODO:增加附带需要排序属性的申请获取请求
