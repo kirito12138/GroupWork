@@ -1,7 +1,7 @@
 <!--pages/postDetail/postDetail.wxml-->
 
   <view class='page_row' bindtap="suo">  
-      <view class="search">  
+       <view class="search">  
         <view class="df search_arr">  
           <icon class="searchcion" size='20' type='search'></icon>  
           <input class="" disabled placeholder="请输入关键字" value="{{searchValue}}"/>  
@@ -11,9 +11,9 @@
     </view>  
 
   <scroll-view class='sv' scroll-y='true' style='z-index: -1;'>
-    <view class = 'half_1' wx:for = "{{f_posts}}">
-      
-      <view class='title'>
+    <view class = 'half_1' wx:for = "{{f_posts}}" >
+      <view bindtap='clickCard' data-index='{{index}}'>
+      <view class='title' >
         <view class = 'title_son'>
           <image class='title_img' style="width:40rpx;height:40rpx" src = "../../image/title.png"></image>
           <text  class='title_text' > {{item.post_title}}</text>
@@ -64,11 +64,11 @@
 
 
       <view class='tags'>
-        <i-tag class="i-tags" color="blue" wx:for = "{{tagsIndex}}" >
-          {{tagsDict[item]}}
+        <i-tag class="i-tags" color="blue" wx:for = "{{item.sp}}" wx:for-item="cell">
+          {{tagsDict[cell]}}
         </i-tag>
       </view>
-
+      </view>
       <view style="height:20rpx;background-color:#D9D9D9">
     </view>
     </view>

@@ -111,6 +111,14 @@ Page({
       { ind: 89, value: "戏剧与影视学类", selected: false, title: "戏剧与影视学类" },
       { ind: 90, value: "美术学类", selected: false, title: "美术学类" },
       { ind: 91, value: "设计学类", selected: false, title: "设计学类" },
+      { ind: 92, value: "实习招募", selected: false, title: "实习招募" },
+      { ind: 93, value: "实验室招募", selected: false, title: "实验室招募" },
+      { ind: 94, value: "学科竞赛", selected: false, title: "学科竞赛" },
+      { ind: 95, value: "学生项目", selected: false, title: "学生项目" },
+      { ind: 96, value: "个人招募", selected: false, title: "个人招募" },
+      { ind: 97, value: "志愿招募", selected: false, title: "志愿招募" },
+      { ind: 98, value: "娱乐活动", selected: false, title: "娱乐活动" },
+
     ],
     hosList1: [
       { id: 101, name: "哲学类", show: false, serch: "000哲学类" },
@@ -205,6 +213,13 @@ Page({
       { id: 1303, name: "戏剧与影视学类", show: false, serch: "000戏剧与影视学类" },
       { id: 1304, name: "美术学类", show: false, serch: "000美术学类" },
       { id: 1305, name: "设计学类", show: false, serch: "000设计学类" },
+      { id: 9001, value: "实习招募", selected: false, title: "000实习招募" },
+      { id: 9003, value: "实验室招募", selected: false, title: "000实验室招募" },
+      { id: 9004, value: "学科竞赛", selected: false, title: "000学科竞赛" },
+      { id: 9005, value: "学生项目", selected: false, title: "000学生项目" },
+      { id: 9006, value: "个人招募", selected: false, title: "000个人招募" },
+      { id: 9007, value: "志愿招募", selected: false, title: "000志愿招募" },
+      { id: 9008, value: "娱乐活动", selected: false, title: "000娱乐活动" },
     ],
     hosList: [],
     tei: ""

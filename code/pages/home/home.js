@@ -78,6 +78,14 @@ Page({
   clickCard: function(e){
     console.log(e.currentTarget.dataset.index);
     var i = e.currentTarget.dataset.index;
+
+    console.log(this.data.f_posts[i])
+
+    var _history = wx.getStorageSync('history');
+    _history = _history + this.data.f_posts[i].postID.toString();
+    wx.setStorageSync('history', _history);
+
+    
     var para = JSON.stringify(this.data.f_posts[i]);
     //console.log("111111111" + this.data.f_posts[i]);
     wx.navigateTo({
@@ -167,6 +175,7 @@ Page({
 
     var that = this;
     const _jwt = wx.getStorageSync('jwt');
+    var _history = wx.getStorageSync('history');
     var tk;
     console.log(_jwt)
     if (_jwt) {
@@ -184,6 +193,9 @@ Page({
     });
     wx.request({
       url: 'https://group.tttaaabbbccc.club/f/processing/',
+      data: {
+        history: _history,
+      },
       method: "GET",
       header: {
         "Content-Type": "application/json;charset=UTF-8",
@@ -219,6 +231,7 @@ Page({
     })
 
   },
+ 
 
   goChangePwd: function(e)
   {
@@ -281,6 +294,7 @@ Page({
     wx.showNavigationBarLoading() //在标题栏中显示加载
     var that = this;
     const _jwt = wx.getStorageSync('jwt');
+    var _history = wx.getStorageSync('history');
     var tk;
     console.log(_jwt)
     if (_jwt) {
@@ -294,6 +308,9 @@ Page({
 
     wx.request({
       url: 'https://group.tttaaabbbccc.club/f/processing/',
+      data: {
+        history: _history,
+      },
       method: "GET",
       header: {
         "Content-Type": "application/json;charset=UTF-8",

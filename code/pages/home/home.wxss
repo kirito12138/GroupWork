@@ -30,6 +30,7 @@ page, .page {
   border-radius: 10rpx;  
 }  
 .page_row{  
+  
   display: flex;  
   flex-direction: row  
 }  
