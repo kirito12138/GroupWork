@@ -1,102 +1,100 @@
-# 专业标签
-0101:哲学类
-0201:经济学类
-0202:财政学类
-0203:金融学类
-0204:经济与贸易类
-0301:法学类
-0302:政治学类
-0303:社会学类
-0304:民族学类
-0305:马克思主义理论类
-0306:公安学类
-0401:教育学类
-0402:体育学类
-0501:中国语言文学类
-0502:外国语言文学类
-0503:新闻传播学类
-0601:历史学类
-0701:数学类
-0702:物理学类
-0703:化学类
-0704:天文学类
-0705:地理科学类
-0706:大气科学类
-0707:海洋科学类
-0708:地球物理学类
-0709:地质学类
-0710:生物科学类
-0711:心理学类
-0712:统计学类
-0801:力学类
-0802:机械类
-0803:仪器类
-0804:材料类
-0805:能源动力类
-0806:电气类
-0807:电子信息类
-0808:自动化类
-0809:计算机类
-0810:土木类
-0811:水利类
-0812:测绘类
-0813:化工与制药类
-0814:地质类
-0815:矿业类
-0816:纺织类
-0817:轻工类
-0818:交通运输类
-0819:海洋工程类
-0820:航空航天类
-0821:兵器类
-0822:核工程类
-0823:农业工程类
-0824:林业工程类
-0825:环境科学与工程类
-0826:生物医学工程类
-0827:食品科学与工程类
-0828:建筑类
-0829:安全科学与工程类
-0830:生物工程类
-0831:公安技术类
-0901:植物生产类
-0902:自然保护与环境生态类
-0903:动物生产类
-0904:动物医学类
-0905:林学类
-0906:水产类
-0907:草学类
-1001:基础医学类
-1002:临床医学类
-1003:口腔医学类
-1004:公共卫生与预防医学类
-1005:中医学类
-1006:中西医结合类
-1007:药学类
-1008:中药学类
-1009:法医学类
-1010:医学技术类
-1011:护理学类
-1201:管理科学与工程类
-1202:工商管理类
-1203:农业经济管理类
-1204:公共管理类
-1205:图书情报与档案管理类
-1206:物流管理与工程类
-1207:工业工程类
-1208:电子商务类
-1209:旅游管理类
-1301:艺术学理论类
-1302:音乐与舞蹈学类
-1303:戏剧与影视学类
-1304:美术学类
-1305:设计学类
-
-# 项目类型标签
-9001:实习招募
-9002:实验室招募
-9003:学科竞赛
-9003:学生项目
-9004:个人招募
-9005:支援招募
-9006:轻松娱乐
+﻿所有的ind为传入后端的数字。
+      { ind: 0, value: "哲学类", selected: false, title: "哲学类" },
+      { ind: 1, value: "经济学类", selected: false, title: "经济学类" },
+      { ind: 2, value: "财政学类", selected: false, title: "财政学类" },
+      { ind: 3, value: "金融学类", selected: false, title: "金融学类" },
+      { ind: 4, value: "经济与贸易类", selected: false, title: "经济与贸易类" },
+      { ind: 5, value: "法学类", selected: false, title: "法学类" },
+      { ind: 6, value: "政治学类", selected: false, title: "政治学类" },
+      { ind: 7, value: "社会学类", selected: false, title: "社会学类" },
+      { ind: 8, value: "民族学类", selected: false, title: "民族学类" },
+      { ind: 9, value: "马克思主义理论类", selected: false, title: "马克思主义理论类" },
+      { ind: 10, value: "公安学类", selected: false, title: "公安学类" },
+      { ind: 11, value: "教育学类", selected: false, title: "教育学类" },
+      { ind: 12, value: "体育学类", selected: false, title: "体育学类" },
+      { ind: 13, value: "中国语言文学类", selected: false, title: "中国语言文学类" },
+      { ind: 14, value: "外国语言文学类", selected: false, title: "外国语言文学类" },
+      { ind: 15, value: "新闻传播学类", selected: false, title: "新闻传播学类" },
+      { ind: 16, value: "历史学类", selected: false, title: "历史学类" },
+      { ind: 17, value: "数学类", selected: false, title: "数学类" },
+      { ind: 18, value: "物理学类", selected: false, title: "物理学类" },
+      { ind: 19, value: "化学类", selected: false, title: "化学类" },
+      { ind: 20, value: "天文学类", selected: false, title: "天文学类" },
+      { ind: 21, value: "地理科学类", selected: false, title: "地理科学类" },
+      { ind: 22, value: "大气科学类", selected: false, title: "大气科学类" },
+      { ind: 23, value: "海洋科学类", selected: false, title: "海洋科学类" },
+      { ind: 24, value: "地球物理学类", selected: false, title: "地球物理学类" },
+      { ind: 25, value: "地质学类", selected: false, title: "地质学类" },
+      { ind: 26, value: "生物科学类", selected: false, title: "生物科学类" },
+      { ind: 27, value: "心理学类", selected: false, title: "心理学类" },
+      { ind: 28, value: "统计学类", selected: false, title: "统计学类" },
+      { ind: 29, value: "力学类", selected: false, title: "力学类" },
+      { ind: 30, value: "机械类", selected: false, title: "机械类" },
+      { ind: 31, value: "仪器类", selected: false, title: "仪器类" },
+      { ind: 32, value: "材料类", selected: false, title: "材料类" },
+      { ind: 33, value: "能源动力类", selected: false, title: "能源动力类" },
+      { ind: 34, value: "电气类", selected: false, title: "电气类" },
+      { ind: 35, value: "电子信息类", selected: false, title: "电子信息类" },
+      { ind: 36, value: "自动化类", selected: false, title: "自动化类" },
+      { ind: 37, value: "计算机类", selected: false, title: "计算机类" },
+      { ind: 38, value: "土木类", selected: false, title: "土木类" },
+      { ind: 39, value: "水利类", selected: false, title: "水利类" },
+      { ind: 40, value: "测绘类", selected: false, title: "测绘类" },
+      { ind: 41, value: "化工与制药类", selected: false, title: "化工与制药类" },
+      { ind: 42, value: "地质类", selected: false, title: "地质类" },
+      { ind: 43, value: "矿业类", selected: false, title: "矿业类" },
+      { ind: 44, value: "纺织类", selected: false, title: "纺织类" },
+      { ind: 45, value: "轻工类", selected: false, title: "轻工类" },
+      { ind: 46, value: "交通运输类", selected: false, title: "交通运输类" },
+      { ind: 47, value: "海洋工程类", selected: false, title: "海洋工程类" },
+      { ind: 48, value: "航空航天类", selected: false, title: "航空航天类" },
+      { ind: 49, value: "兵器类", selected: false, title: "兵器类" },
+      { ind: 50, value: "核工程类", selected: false, title: "核工程类" },
+      { ind: 51, value: "农业工程类", selected: false, title: "农业工程类" },
+      { ind: 52, value: "林业工程类", selected: false, title: "林业工程类" },
+      { ind: 53, value: "环境科学与工程类", selected: false, title: "环境科学与工程类" },
+      { ind: 54, value: "生物医学工程类", selected: false, title: "生物医学工程类" },
+      { ind: 55, value: "食品科学与工程类", selected: false, title: "食品科学与工程类" },
+      { ind: 56, value: "建筑类", selected: false, title: "建筑类" },
+      { ind: 57, value: "安全科学与工程类", selected: false, title: "安全科学与工程类" },
+      { ind: 58, value: "生物工程类", selected: false, title: "生物工程类" },
+      { ind: 59, value: "公安技术类", selected: false, title: "公安技术类" },
+      { ind: 60, value: "植物生产类", selected: false, title: "植物生产类" },
+      { ind: 61, value: "自然保护与环境生态类", selected: false, title: "自然保护与环境生态类" },
+      { ind: 62, value: "动物生产类", selected: false, title: "动物生产类" },
+      { ind: 63, value: "动物医学类", selected: false, title: "动物医学类" },
+      { ind: 64, value: "林学类", selected: false, title: "林学类" },
+      { ind: 65, value: "水产类", selected: false, title: "水产类" },
+      { ind: 66, value: "草学类", selected: false, title: "草学类" },
+      { ind: 67, value: "基础医学类", selected: false, title: "基础医学类" },
+      { ind: 68, value: "临床医学类", selected: false, title: "临床医学类" },
+      { ind: 69, value: "口腔医学类", selected: false, title: "口腔医学类" },
+      { ind: 70, value: "公共卫生与预防医学类", selected: false, title: "公共卫生与预防医学类" },
+      { ind: 71, value: "中医学类", selected: false, title: "中医学类" },
+      { ind: 72, value: "中西医结合类", selected: false, title: "中西医结合类" },
+      { ind: 73, value: "药学类", selected: false, title: "药学类" },
+      { ind: 74, value: "中药学类", selected: false, title: "中药学类" },
+      { ind: 75, value: "法医学类", selected: false, title: "法医学类" },
+      { ind: 76, value: "医学技术类", selected: false, title: "医学技术类" },
+      { ind: 77, value: "护理学类", selected: false, title: "护理学类" },
+      { ind: 78, value: "管理科学与工程类", selected: false, title: "管理科学与工程类" },
+      { ind: 79, value: "工商管理类", selected: false, title: "工商管理类" },
+      { ind: 80, value: "农业经济管理类", selected: false, title: "农业经济管理类" },
+      { ind: 81, value: "公共管理类", selected: false, title: "公共管理类" },
+      { ind: 82, value: "图书情报与档案管理类", selected: false, title: "图书情报与档案管理类" },
+      { ind: 83, value: "物流管理与工程类", selected: false, title: "物流管理与工程类" },
+      { ind: 84, value: "工业工程类", selected: false, title: "工业工程类" },
+      { ind: 85, value: "电子商务类", selected: false, title: "电子商务类" },
+      { ind: 86, value: "旅游管理类", selected: false, title: "旅游管理类" },
+      { ind: 87, value: "艺术学理论类", selected: false, title: "艺术学理论类" },
+      { ind: 88, value: "音乐与舞蹈学类", selected: false, title: "音乐与舞蹈学类" },
+      { ind: 89, value: "戏剧与影视学类", selected: false, title: "戏剧与影视学类" },
+      { ind: 90, value: "美术学类", selected: false, title: "美术学类" },
+      { ind: 91, value: "设计学类", selected: false, title: "设计学类" },
+      { ind: 92, value: "实习招募", selected: false, title: "实习招募" },
+      { ind: 93, value: "实验室招募", selected: false, title: "实验室招募" },
+      { ind: 94, value: "学科竞赛", selected: false, title: "学科竞赛" },
+      { ind: 95, value: "学生项目", selected: false, title: "学生项目" },
+      { ind: 96, value: "个人招募", selected: false, title: "个人招募" },
+      { ind: 97, value: "志愿招募", selected: false, title: "志愿招募" },
+      { ind: 98, value: "娱乐活动", selected: false, title: "娱乐活动" },
