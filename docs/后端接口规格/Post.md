@@ -98,6 +98,56 @@
   | 6          | post不属于当前用户                                   |
 
 
+### /p/\<post_id\>/delete/   删除一个帖子及其对应的申请，该帖子的发布者必须是当前登陆的用户，返回该用户发布的所有帖子 [已实现]
+
+- parameter
+
+  ```
+    {
+ 
+    }
+  ```
+
+- return 
+
+```
+  [
+      {
+          "title":"string",
+          "postDetail":"string",
+          "requestNum":"int",
+          "acceptedNum":"int",
+          "ddl":"datetime", //YYYY-MM-DD
+          "ifEnd":"bool",
+          "postID":"string",
+          "posterID":"string",
+          "labels":"string", //项目标签代码，以‘&’为分隔符拼接，如：0101&0201&0301，标签编码需满足项目[标签规范文件](../专业目录表.txt)的规定
+          "poster_name": "string", //发布者用户名
+          "poster_avatar_url": "string", //发布者头像url
+          "image_url": "string", //帖子的图片url，没有加上域名
+          "is_imported": "bool", # 该贴子是否为外部导入，外部导入则无法创建申请
+  	},
+    ...
+  ]
+```
+
+请求失败时返回
+
+  ```
+  {
+      "ret": false,
+      "error_code":"int",//获取失败时返回
+  }
+  ```
+  
+  | error_code | 含义                                                 |
+  | ---------- | ---------------------------------------------------- |
+  | 1          | 不是POST请求                                         |
+  | 4          | post_id不存在                                        |
+  | 5          | 用户未登录（未检测到token）或登录已过期（token过期） |
+  | 6          | post的发布者不是当前用户                                   |
+
+
 ### /f/processing/  获取所有未结束的帖子，按时间先后顺序，时间最近的在第一条，**根据历史信息将相关项目提前** [已实现]
 
 - parameter
