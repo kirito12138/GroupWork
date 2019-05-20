@@ -67,6 +67,9 @@ App({
                       const _id = JSON.stringify(id);
                       wx.setStorageSync('userid', _id);
 
+                      const _history = JSON.stringify();
+                      wx.setStorageSync('history', _history);
+
                     }
                     else {
                       wx.showToast({ title: "登录失败" })
