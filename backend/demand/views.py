@@ -116,12 +116,26 @@ def upload_post_image(request, post_id):
 
 # TODO 增加排序功能或重写有排序功能的方法
 def get_unclosed_posts(request):
-    if request.method != "GET":
+    # if request.method != "GET":
+    #     return JsonResponse({'ret': False, 'error_code': 1})
+
+    if request.method != "POST":
         return JsonResponse({'ret': False, 'error_code': 1})
 
     user = verify_token(request.META.get('HTTP_AUTHORIZATION'))
     if not user:
         return JsonResponse({'ret': False, 'error_code': 5})
+
+    # 获取用户的历史纪录
+    try:
+        data = json.loads(request.body)
+    except JSONDecodeError:
+        return JsonResponse({'ret': False, 'error_code': 3})
+    try:
+        history = data['history']
+        history = decode_label(history)
+    except KeyError:
+        return JsonResponse({'ret': False, 'error_code': 2})
 
     unclosed_posts = Post.objects.filter(if_end=False, deadline__gte=datetime.date.today()).order_by('-post_time')
     ret_data = []
@@ -144,6 +158,10 @@ def get_unclosed_posts(request):
             "labels": labels,
             "is_imported": post.is_imported,
         })
+
+    # 根据推荐算法对返回的Post进行排序
+    ret_data = rank_post(ret_data, history)
+
     return JsonResponse(ret_data, safe=False)
 
 
@@ -398,6 +416,10 @@ def get_user_applies(request, user_id):
             "labels": labels,
             "is_imported": apply.post.is_imported,
         })
+
+    # 根据申请信息进行打分并排序
+    ret_data = rank_apply(ret_data)
+
     return JsonResponse(ret_data, safe=False)
 
 

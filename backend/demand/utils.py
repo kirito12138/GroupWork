@@ -2,7 +2,7 @@
 工具文件：存放辅助的工具方法或类
 """
 
-# 项目标签编码 TODO 完善项目标签种类
+# 项目标签编码
 PostLabelList = [
     '0101',
     '0201','0202','0203','0204',
@@ -16,6 +16,7 @@ PostLabelList = [
     '1001','1002','1003','1004','1005','1006','1007','1008','1009','1010','1011',
     '1201','1202','1203','1204','1205','1206','1207','1208','1209',
     '1301','1302','1303','1304','1305',
+    '9001','9002','9003','9004','9005','9006','9007',
 ]
 
 # 申请标签编码 TODO 完善项目标签种类
@@ -53,13 +54,13 @@ def encode_label(_QuerySet):
     return labels
 
 # TODO:项目排序
-def rank_post():
-    pass
+def rank_post(_posts, _history):
+    return _posts
 
 # TODO:申请打分
-def grade_apply():
+def grade_apply(_apply):
     pass
 
 # TODO:申请排序
-def rank_apply():
-    pass
+def rank_apply(_applies):
+    return _applies
