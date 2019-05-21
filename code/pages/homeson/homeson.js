@@ -1,5 +1,5 @@
 // pages/home/home.js
-const { $Message } = require('../../vant-weapp/dist/base/index');
+const { $Toast } = require('../../vant-weapp/dist/base/index');
 var app = getApp();
 Page({
 
@@ -27,26 +27,89 @@ Page({
       { id: 102, name: "bbb", show: true, serch: "10212" },
     ],
     hosList: [],
-    tei: 1
+    tei: 1,
+    searchValue: ""
+  },
+
+  input1: function (e) {
+    this.setData
+      ({
+        tei: e.detail.value
+      })
+    this.serch(e.detail.value)
+  },
+  confirm1: function (e) {
+    this.serch(e.detail.value)
+  },
+
+  clicsho: function (e) {
+    console.log(e);
+    this.setData
+      ({
+        tei: e.currentTarget.dataset.text,
+        hosList: []
+      })
+  },
+
+  serch: function (key) {
+    var that = this;
+    var arr = [];
+    for (let i in this.data.hosList1) {
+      this.data.hosList1[i].show = false;
+      if (this.data.hosList1[i].serch.indexOf(key) >= 0) {
+        this.data.hosList1[i].show = true;
+        arr.push(this.data.hosList1[i])
+      }
+    }
+    console.log(arr)
+    this.setData({
+      hosList: arr,
+    })
+  },
+
+  inputser: function (e) {
+    this.setData({
+      searchValue: e.detail.detail.value,
+    });
+  },
+
+  searchkey: function (e) {
+    var para = JSON.stringify(this.data.searchValue);
+    //console.log("111111111" + this.data.f_posts[i]);
+    wx.navigateTo({
+      url: '../postDetail/postDetail?info=' + para,
+    })
+
+  },
+
+  jnewPost: function (e) {
+    wx.navigateTo({
+      url: '../newPost/newPost',
+    })
   },
 
 
- 
-
   clickCard: function (e) {
-    console.log("-----------" + this.data);
     console.log(e.currentTarget.dataset.index);
     var i = e.currentTarget.dataset.index;
+
+    console.log(this.data.f_posts[i])
+
+    var _history = wx.getStorageSync('history');
+    _history = _history + this.data.f_posts[i].postID.toString();
+    wx.setStorageSync('history', _history);
+
+
     var para = JSON.stringify(this.data.f_posts[i]);
     //console.log("111111111" + this.data.f_posts[i]);
     wx.navigateTo({
-      url: '../myApplyson/myApplyson?info=' + para,
+      url: '../postDetail/postDetail?info=' + para,
     })
 
 
   },
 
-  // 点击左上角小图标事件
+  // 点击左上角小图标事件。
   tap_ch: function (e) {
     if (this.data.open) {
       this.setData({
@@ -60,21 +123,21 @@ Page({
   },
 
   tap_start: function (e) {
-    // touchstart事件
+    // touchstart事件，
     // 把手指触摸屏幕的那一个点的 x 轴坐标赋值给 mark 和 newmark
     this.data.mark = this.data.newmark = e.touches[0].pageX;
   },
 
   tap_drag: function (e) {
-    // touchmove事件
+    // touchmove事件，
     this.data.newmark = e.touches[0].pageX;
 
-    // 手指从左向右移动
+    // 手指从左向右移动，
     if (this.data.mark < this.data.newmark) {
       this.istoright = true;
     }
 
-    // 手指从右向左移动
+    // 手指从右向左移动，
     if (this.data.mark > this.data.newmark) {
       this.istoright = false;
     }
@@ -82,7 +145,7 @@ Page({
   },
 
   tap_end: function (e) {
-    // touchend事件
+    // touchend事件，
     this.data.mark = 0;
     this.data.newmark = 0;
     // 通过改变 opne 的值，让主页加上滑动的样式
@@ -106,16 +169,20 @@ Page({
       url: '../home/home',
     })
   },
-  goMyApply: function(e)
-  {
+  goMyApply: function (e) {
     wx.navigateTo({
       url: '../myApply/myApply',
     })
   },
   /**
-  * 生命周期函数--监听页面加载
+  * 生命周期函数--监听页面加载，
   */
   onLoad: function (options) {
+    this.data.info = JSON.parse(options.info);
+    console.log(this.data.info);
+    this.setData({
+      key: this.data.info
+    })
     if (app.globalData.userInfo !== null) {
       this.setData({
         userimg: app.globalData.userInfo.avatarUrl,
@@ -124,9 +191,9 @@ Page({
       })
     }
 
-    var id;
     var that = this;
     const _jwt = wx.getStorageSync('jwt');
+    var _history = wx.getStorageSync('history');
     var tk;
     console.log(_jwt)
     if (_jwt) {
@@ -137,76 +204,50 @@ Page({
       console.log("no token");
       return;
     }
-    try {
-      const _id = wx.getStorageSync('userid');
-      console.log(_id)
-      if (_id) {
-        console.log(_id)
-        id = JSON.parse(_id);
-      }
-    }
-    catch (e) {
-      console.log("no id");
-    }
-
+    $Toast({
+      content: '加载中',
+      type: 'loading',
+      duration: 0
+    });
     wx.request({
-      url: 'https://group.tttaaabbbccc.club//my/'+id+'/apply/',
-      //url: 'https://group.tttaaabbbccc.club/f/processing/',
+      url: 'https://group.tttaaabbbccc.club/f/processing/',
+      data: {
+        key: this.data.info,
+      },
       method: "GET",
       header: {
         "Content-Type": "application/json;charset=UTF-8",
         'Authorization': tk
       },
       success(res) {
-        if(res.data['ret'] == false)
-        {
-          if (res.data['error_code'] == 1)
-          {
-            $Message({
-              content: '不是GET请求',
-              type: 'error'
-            });
+        $Toast.hide()
+        console.log(res)
+
+        console.log(res.data[0])
+        for (var i = 0; i < res.data.length; i++) {
+          var sp = res.data[i].labels.split("&");
+          var ssp = [];
+          for (var j = 0; j < sp.length; j++) {
+
+            ssp[j] = parseInt(sp[j]);
+
           }
-          else if (res.data['error_code'] == 3)
-          {
-            $Message({
-              content: '该 ID 对应的用户不存在',
-              type: 'error'
-            });
-          }
-          else if (res.data['error_code'] == 5)
-          {
-            $Message({
-              content: '请重新登录',
-              type: 'error'
-            });
-          }
+
+          res.data[i]["sp"] = ssp;
+
+          console.log(that.data.tagsIndex)
         }
-        else
-        {
-          console.log(res)
-          for (var i = 0; i < res.data.length; i++) {
-            var sp = res.data[i].labels.split("&");
-            var ssp = [];
-            for (var j = 0; j < sp.length; j++) {
-
-              ssp[j] = parseInt(sp[j]);
-
-            }
-
-            res.data[i]["sp"] = ssp;
-            console.log(that.data.tagsIndex)
-          }
-          that.setData({
-            f_posts: res.data
-          });
-          console.log("aaaaaaaa")
-          console.log(res.data[0].labels)
-        }
-        
+        that.setData({
+          f_posts: res.data
+        });
+      },
+      fail(res) {
+        $Toast.hide();
       }
     })
+
   },
+
 
   goChangePwd: function (e) {
     wx.navigateTo({
@@ -223,8 +264,15 @@ Page({
       url: '../myPost/myPost',
     })
   },
+
+  newPost: function (e) {
+    wx.navigateTo({
+      url: '../newPost/newPost',
+    })
+  },
+
   /**
-  * 生命周期函数--监听页面初次渲染完成
+  * 生命周期函数--监听页面初次渲染完成，
   */
   onReady: function () {
 
@@ -255,7 +303,46 @@ Page({
   * 页面相关事件处理函数--监听用户下拉动作
   */
   onPullDownRefresh: function () {
+    wx.showNavigationBarLoading() //在标题栏中显示加载
+    var that = this;
+    const _jwt = wx.getStorageSync('jwt');
+    var _history = wx.getStorageSync('history');
+    var tk;
+    console.log(_jwt)
+    if (_jwt) {
+      tk = JSON.parse(_jwt);
+      console.log(tk);
+    }
+    else {
+      console.log("no token");
+      return;
+    }
 
+    wx.request({
+      url: 'https://group.tttaaabbbccc.club/f/processing/',
+      data: {
+        history: _history,
+      },
+      method: "GET",
+      header: {
+        "Content-Type": "application/json;charset=UTF-8",
+        'Authorization': tk
+      },
+      success(res) {
+        console.log(res)
+        that.setData({
+          f_posts: res.data
+        });
+        console.log(res.data)
+      }
+    })
+    //模拟加载
+    setTimeout(function () {
+      // complete
+      wx.hideNavigationBarLoading() //完成停止加载
+      wx.stopPullDownRefresh() //停止下拉刷新
+
+    }, 150);
   },
 
   /**

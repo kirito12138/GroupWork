@@ -1,27 +1,40 @@
 <!--pages/postDetail/postDetail.wxml-->
-<view class="page">
-  <view class="weui-panel-1">
-    <view class="postUser">{{name}}</view>
-    <view class="weui-panel-1__bd">
-        <view class="weui-media-box-1 weui-media-box-1_text">
-            <view class="weui-media-box-1__title weui-media-box-1__title_in-text">{{title}}</view>
-            <view class="weui-media-box-1__desc">{{postDetail}}</view>
-            <view class="weui-media-box-1__info">
-                <view class="weui-media-box-1__info__meta">需要人数：{{requestNum}}</view>
-                <view class="weui-media-box-1__info__meta">已招人数：{{acceptedNum}}</view>
-                <text>\n</text>
-                <view class="weui-media-box-1__info__meta">截止日期：{{ddl}}</view>
-                
-            </view>
 
-        </view>
+  <scroll-view class='sv' scroll-y='true' style='z-index: -1;'>
+    <view class = 'half_1'>
+      <image class = 'img' src = "https://group.tttaaabbbccc.club/{{postImg}}"  style="width:100%;height:400rpx"/>
+      <view class='title'>
+        <image class='title_img' style="width:50rpx;height:50rpx" src = "../../image/title.png"></image>
+        <text  class='title_text' > {{title}}</text>
+      </view>
+
+      <view class='tags'>
+        <i-tag class="i-tags" color="blue" wx:for = "{{sp}}" >
+          {{tagsDict[item]}}
+        </i-tag>
+      </view>
+      <view class='date-num'>
+        <image class='date_img' style="width:50rpx;height:50rpx" src = "../../image/date.png"></image>
+        <text  class='date_text' style='color:gray;text-align: center;margin-left:10rpx; position: absolute;'> {{ddl}}</text>
+        <image class='num_image' style="width:50rpx;height:50rpx" src = "../../image/Pnum.png"></image>
+        <text  class='num_text' style='color:gray;text-align: center;margin-left:10rpx; position: absolute;'> {{acceptedNum}}/{{requestNum}}</text>
+      </view>
     </view>
-  </view>
-<view class="weui-panel-2 apply" style="z-index:1;">
-                <view class="weui-media-box weui-media-box_text">
-                    <view>
-                      <button class="weui-btn" type="primary" style='width:390rpx; border-radius:72rpx;' bindtap='applyFor'>查看我的简历</button>
-                    </view>
-                </view>
+      <view style="height:20rpx;background-color:#D9D9D9">
     </view>
-</view>
+    <view class='half_2' >
+      <view class='useinfo'>
+        <image class = 'userimg' src = "{{userimg}}" />
+        <text  style='color:gray;text-align: center;margin-left:20rpx; position: absolute;'> {{username}}</text>
+      </view>
+      <view class = 'postDetail'>
+        <text class = "detail">{{postDetail}}</text>
+      </view>
+    </view>
+ </scroll-view>
+ <view class='button'>
+    <button class="backhome" bindtap='goToHome'> 返回  </button>
+    <button class='apply' bindtap='applyFor'>  我的简历   </button>
+ </view>
+
+

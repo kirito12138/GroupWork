@@ -1,16 +1,11 @@
 <!--pages/postDetail/postDetail.wxml-->
 
-  <view class='page_row' >  
+  <view class='page_row' bindtap="suo">  
       <view class="search">  
-        <view class="df search_arr">  
-          <icon class="searchcion" size='20' type='search'></icon>  
-          <input class=""  bindinput='inputser' placeholder="请输入关键字" value="{{searchValue}}"/>  
-        </view>  
-
+        搜索内容：{{key}}
       </view>  
-      <view class='sousuo' bindtap='searchkey'>搜索</view>  
-
-    </view>  
+       
+  </view>  
 
   <scroll-view class='sv' scroll-y='true' style='z-index: -1;'>
     <view class = 'half_1' wx:for = "{{f_posts}}">
@@ -58,7 +53,6 @@
 
  </scroll-view>
 
-<button  class="circle" bindtap='jnewPost'><image src='../../image/bm_btn.png' mode='widthFix'></image></button>
 
  <i-toast id="toast" />
 

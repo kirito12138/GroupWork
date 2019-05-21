@@ -29,7 +29,8 @@ page, .page {
   border: 1px solid #d0d0d0;  
   border-radius: 10rpx;  
 }  
-.page_row{  
+.page_row{ 
+
   display: flex;  
   flex-direction: row  
 }  
@@ -174,7 +175,7 @@ page, .page {
 .sv {
   margin-top:10rpx;
   background-color:white;
-  height: 90%;
+  height: 100%;
 }
 
 ::-webkit-scrollbar {

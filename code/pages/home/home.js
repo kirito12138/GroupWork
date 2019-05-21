@@ -27,7 +27,8 @@ Page({
       { id: 102, name: "bbb", show: true, serch: "10212" },
     ],
     hosList:[],
-    tei: 1
+    tei: 1,
+    searchValue :""
   },
 
   input1: function (e) {
@@ -67,6 +68,24 @@ Page({
     })
   },
 
+  inputser: function(e)
+  {
+    console.log(e)
+    this.setData({
+      searchValue: e.detail.value,
+    });
+  },
+
+  searchkey: function(e)
+  {
+    console.log(this.data.searchValue);
+    var para = JSON.stringify(this.data.searchValue);
+    //console.log("111111111" + this.data.f_posts[i]);
+    wx.navigateTo({
+      url: '../homeson/homeson?info=' + para,
+    }) 
+    
+  },
 
   jnewPost: function (e) {
     wx.navigateTo({
@@ -78,8 +97,16 @@ Page({
   clickCard: function(e){
     console.log(e.currentTarget.dataset.index);
     var i = e.currentTarget.dataset.index;
+
+    console.log(this.data.f_posts[i])
+
+    var _history = wx.getStorageSync('history');
+    _history = _history + this.data.f_posts[i].postID.toString();
+    wx.setStorageSync('history', _history);
+
+    
     var para = JSON.stringify(this.data.f_posts[i]);
-    //console.log("111111111" + this.data.f_posts[i]);
+    //console.log("111111111" + para);
     wx.navigateTo({
       url: '../postDetail/postDetail?info=' + para,
     }) 
@@ -167,6 +194,7 @@ Page({
 
     var that = this;
     const _jwt = wx.getStorageSync('jwt');
+    var _history = wx.getStorageSync('history');
     var tk;
     console.log(_jwt)
     if (_jwt) {
@@ -185,6 +213,9 @@ Page({
     wx.request({
       url: 'https://group.tttaaabbbccc.club/f/processing/',
       method: "POST",
+      data: {
+        history: _history,
+      },
       header: {
         "Content-Type": "application/json;charset=UTF-8",
         'Authorization': tk
@@ -209,6 +240,7 @@ Page({
           }
   
           res.data[i]["sp"] = ssp;
+          
           console.log(that.data.tagsIndex)
         }
         that.setData({
@@ -222,6 +254,7 @@ Page({
     })
 
   },
+ 
 
   goChangePwd: function(e)
   {
@@ -284,6 +317,7 @@ Page({
     wx.showNavigationBarLoading() //在标题栏中显示加载
     var that = this;
     const _jwt = wx.getStorageSync('jwt');
+    var _history = wx.getStorageSync('history');
     var tk;
     console.log(_jwt)
     if (_jwt) {
@@ -297,6 +331,9 @@ Page({
 
     wx.request({
       url: 'https://group.tttaaabbbccc.club/f/processing/',
+      data: {
+        history: _history,
+      },
       method: "GET",
       header: {
         "Content-Type": "application/json;charset=UTF-8",

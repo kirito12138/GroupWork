@@ -21,7 +21,8 @@
     "pages/seeMyResume/seeMyResume",
     "pages/agree/agree",
     "pages/applyers/applyers",
-    "pages/personCenter/personCenter"
+    "pages/personCenter/personCenter",
+    "pages/homeson/homeson"
   ],
   "window": {
     "backgroundTextStyle": "light",
