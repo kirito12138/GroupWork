@@ -14,7 +14,7 @@ from demand.models import Post
 from demand.models import Apply
 from demand.models import PostLabel
 from demand.models import ApplyLabel
-from demand.utils import decode_label, encode_label, check_postLabel, check_applyLabel
+from demand.utils import decode_label, encode_label, check_postLabel, check_applyLabel, rank_post
 
 post_title_pattern = re.compile(r"^.{1,20}$")
 deadline_pattern = re.compile(r"^\d\d\d\d-\d\d-\d\d$")
@@ -143,9 +143,9 @@ def get_unclosed_posts(request):
         post_label = PostLabel.objects.filter(post_id = post_id).all()
         for label in post_label:
             if label.label in label_weight:
-                label_weight[label.label] = 0
-            else:
                 label_weight[label.label] += 1
+            else:
+                label_weight[label.label] = 1
 
 
     unclosed_posts = Post.objects.filter(if_end=False, deadline__gte=datetime.date.today()).order_by('-post_time')
@@ -157,7 +157,7 @@ def get_unclosed_posts(request):
         for label in label_list:
             if label.label in label_weight:
                 post_weight += label_weight[label.label]
-        labels = encode_label(labelList)
+        labels = encode_label(label_list)
 
         ret_data.append({
             "title": post.title,
