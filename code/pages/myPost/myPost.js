@@ -66,12 +66,54 @@ Page({
 
   del:function(e)
   {
+    const _jwt = wx.getStorageSync('jwt');
+    var that = this;
+    var tk;
+    console.log(_jwt)
+    if (_jwt) {
+      tk = JSON.parse(_jwt);
+      console.log(tk);
+    }
+    else {
+      console.log("no token");
+      return;
+    }
     var i = e.currentTarget.dataset.index;
-    var para = JSON.stringify(this.data.f_posts[i]);
+    var para = this.data.f_posts[i].postID;
+    
+    wx.request({
+      url: 'https://group.tttaaabbbccc.club/p/' + para + '/delete/',
+      method: "POST",
+      header: {
+        "Content-Type": "application/json;charset=UTF-8",
+        'Authorization': tk
+      },
+      success(res) {
+        console.log('res', res)
+        if (res.data['ret'] != null) {
+          if (res.data['error_code'] == 5) {
+            $Message({
+              content: '登陆状态已失效',
+              type: 'error'
+            });
+            wx.reLaunch({
+              url: '../index/index',
+            })
+          }
+          return;
+        }
+        $Message({
+          content: '删除成功',
+          type: 'success'
+        });
+        that.setData({
+          f_posts: res.data
+        });
+        console.log(that.data.f_posts)
 
-    wx.navigateTo({
-      url: '../modifyPostSon/modifyPostSon?info=' + para,
+      }
     })
+    console.log(para)
   },
 
 

@@ -83,7 +83,7 @@
     <view style="height:20rpx;background-color:#D9D9D9" bindtap='clickOther'>
     </view>
     </view>
-
+<i-message id="message" />
       
 
     
