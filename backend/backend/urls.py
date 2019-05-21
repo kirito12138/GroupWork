@@ -38,6 +38,7 @@ urlpatterns = [
 
     path('my/<int:user_id>/apply/', demand.views.get_user_applies),
     path('f/processing/', demand.views.get_unclosed_posts),
+    path('f/processing/<str:label>/', demand.views.get_unclosed_posts_by_label),
     # TODO:增加附带需要排序属性的项目获取请求
     path('c/post/', demand.views.create_post),
     path('p/<int:post_id>/upload_image/', demand.views.upload_post_image),
