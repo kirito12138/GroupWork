@@ -6,6 +6,9 @@ Page({
    */
   data: {
     f_posts: [],
+    deg: "",
+    major: "",
+    school: ""
   },
 
   /**
@@ -43,7 +46,7 @@ Page({
       ddl: this.data.info.ddl,
 
       postID: this.data.info.postID,
-      posterID: this.data.info.posterID
+      posterID: this.data.info.posterID,
     })
     
     console.log("postid" + that.data.postID);
@@ -69,9 +72,46 @@ Page({
       },
       success(res) {
         console.log(res)
+        for (var i = 0; i < res.data.length; i++) {
+
+          console.log(res.data[i].edu_exp == "")
+          if (res.data[i].edu_exp != "") {
+            var arr_deg;
+            console.log(res.data[i].edu_exp)
+
+            arr_deg = res.data[i].edu_exp.split("|");
+            if (arr_deg[2] != "&&" && arr_deg[2].split("&")[0] != "" && arr_deg[2].split("&")[1] != "" && arr_deg[2].split("&")[2] != "") {
+
+              res.data[i]['deg'] = "博士";
+
+              res.data[i]['major'] = arr_deg[2].split("&")[1];
+              res.data[i]['school'] = arr_deg[2].split("&")[2];
+            }
+            else if (arr_deg[1] != "&&" && arr_deg[1].split("&")[0] != "" && arr_deg[1].split("&")[1] != "" && arr_deg[1].split("&")[2] != "") {
+
+              res.data[i]['deg'] = "硕士";
+
+              res.data[i]['major'] = arr_deg[1].split("&")[1];
+              res.data[i]['school'] = arr_deg[1].split("&")[2];
+            }
+            else if (arr_deg[0] != "&&" && arr_deg[0].split("&")[0] != "" && arr_deg[0].split("&")[1] != "" && arr_deg[0].split("&")[2] != "" ) {
+              console.log(arr_deg[0])
+
+              res.data[i]['deg'] = "本科";
+
+              res.data[i]['major'] = arr_deg[0].split("&")[1];
+              res.data[i]['school'] = arr_deg[0].split("&")[2];
+            }
+
+          }
+
+        }
         that.setData({
+          
           f_posts: res.data
         });
+        console.log(res.data)
+        
         console.log(res.data)
       }
     })

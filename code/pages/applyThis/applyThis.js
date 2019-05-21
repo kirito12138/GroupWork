@@ -1,4 +1,5 @@
 const { $Message } = require('../../vant-weapp/dist/base/index');
+var app = getApp() // 获得全局变量
 // pages/myResume/myResume.js
 Page({
 
@@ -163,6 +164,20 @@ Page({
         type: 'error'
       });
     }
+    else if (this.data.name == "") {
+      $Message({
+        content: '请填写姓名',
+        type: 'error'
+      });
+    }
+    else if (this.data.city == "") {
+      $Message({
+        content: '请填写城市',
+        type: 'error'
+      });
+    }
+ 
+    
 
     else {
       var age = this.data.age;
@@ -170,54 +185,66 @@ Page({
       edu_exp1 = this.data.expEdu1['year'] + "&" + this.data.expEdu1['major'] + "&" + this.data.expEdu1['school'];
       edu_exp2 = this.data.expEdu2['year'] + "&" + this.data.expEdu2['major'] + "&" + this.data.expEdu2['school'];
       edu_exp3 = this.data.expEdu3['year'] + "&" + this.data.expEdu3['major'] + "&" + this.data.expEdu3['school'];
-      edu_exp = edu_exp1 + "|" + edu_exp2 + "|" + edu_exp3;
-      if (age == "") age = "0";
-      console.log(this.data     )
-      wx.request({
-        url: 'https://group.tttaaabbbccc.club/c/apply/',
-        method: "POST",
-        header: {
-          "Content-Type": "application/json;charset=UTF-8",
-          'Authorization': tk
-        },
-        data:
-        {
-          post_id:this.data.postID,
-          name: this.data.name,
-          sex: this.data.sex,
-          age: parseInt(age),
-          degree: this.data.degree,
-          phone: this.data.phone,
-          email: this.data.email,
-          city: this.data.city,
-          awards: this.data.awards,
-          english_skill: this.data.english_skill,
-          project_exp: this.data.project_exp,
-          self_review: this.data.self_review,
-          edu_exp:edu_exp,
-          labels: "1",
-        },
-        success(res) {
-          console.log("HHHHHHHHHHHHH"+res.data)
-
-          if (res.data.ret) {
-            $Message({
-              content: '申请成功',
-              type: 'success'
-            });
-          }
-          else
+      if ( (this.data.expEdu1['year'] != "" && this.data.expEdu1['major'] != "" && this.data.expEdu1['school']!="")
+        || (this.data.expEdu2['year'] != "" && this.data.expEdu2['major'] != "" && this.data.expEdu2['school'] != "")
+        || (this.data.expEdu3['year'] != "" && this.data.expEdu3['major'] != "" && this.data.expEdu3['school'] != "")
+      )
+      {
+        edu_exp = edu_exp1 + "|" + edu_exp2 + "|" + edu_exp3;
+        if (age == "") age = "0";
+        console.log(this.data)
+        wx.request({
+          url: 'https://group.tttaaabbbccc.club/c/apply/',
+          method: "POST",
+          header: {
+            "Content-Type": "application/json;charset=UTF-8",
+            'Authorization': tk
+          },
+          data:
           {
-            if(res.data.error_code == 6)
-            {
+            post_id: this.data.postID,
+            name: this.data.name,
+            sex: this.data.sex,
+            age: parseInt(age),
+            degree: this.data.degree,
+            phone: this.data.phone,
+            email: this.data.email,
+            city: this.data.city,
+            awards: this.data.awards,
+            english_skill: this.data.english_skill,
+            project_exp: this.data.project_exp,
+            self_review: this.data.self_review,
+            edu_exp: edu_exp,
+            labels: "1",
+          },
+          success(res) {
+            console.log("HHHHHHHHHHHHH" + res.data)
+
+            if (res.data.ret) {
               $Message({
-                content: '已经提交过申请',
-                type: 'error'
+                content: '申请成功',
+                type: 'success'
               });
             }
+            else {
+              if (res.data.error_code == 6) {
+                $Message({
+                  content: '已经提交过申请',
+                  type: 'error'
+                });
+              }
+            }
           }
-        }
-      })
+        })
+      }
+      else
+      {
+        $Message({
+          content: '请完善学历信息',
+          type: 'error'
+        });
+      }
+      
     }
   },
 
@@ -242,6 +269,23 @@ Page({
     else {
       console.log("no token");
       return;
+    }
+
+
+    if (app.globalData.userInfo !== null) {
+      this.setData({
+        userimg: app.globalData.userInfo.avatarUrl,
+        username: app.globalData.userInfo.nickName,
+        login: true
+      })
+      console.log(this.data.userimg)
+    }
+    else {
+      this.setData({
+        userimg: '',
+        username: "未登录",
+        login: false
+      })
     }
 
     wx.request({

@@ -17,6 +17,13 @@
   width: 105rpx;
   height: 148rpx;
 }
+.userimage{
+margin-top: 40rpx;
+align-content: center;
+width: 100rpx;
+height: 100rpx;
+border-radius: 100rpx;
+}
 
 .name{
   color: white;

@@ -1,5 +1,6 @@
-const { $Message } = require('../../vant-weapp/dist/base/index');
 const { $Toast } = require('../../vant-weapp/dist/base/index');
+const { $Message } = require('../../vant-weapp/dist/base/index');
+var app = getApp() // 获得全局变量
 // pages/myResume/myResume.js
 Page({
 
@@ -252,6 +253,22 @@ Page({
     else {
       console.log("no token");
       return;
+    }
+
+    if (app.globalData.userInfo !== null) {
+      this.setData({
+        userimg: app.globalData.userInfo.avatarUrl,
+        username: app.globalData.userInfo.nickName,
+        login: true
+      })
+      console.log(this.data.userimg)
+    }
+    else {
+      this.setData({
+        userimg: '',
+        username: "未登录",
+        login: false
+      })
     }
 
     wx.request({

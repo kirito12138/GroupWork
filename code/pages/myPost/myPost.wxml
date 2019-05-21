@@ -78,6 +78,7 @@
     </view>
     </view>
 <i-message id="message" />
+ <i-toast id="toast" />
       
 
     

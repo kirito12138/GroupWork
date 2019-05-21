@@ -4,7 +4,7 @@
   <!-- 个人信息-->
   <view class='card-view' style='margin-top:40rpx;'>
     <view class='item-title' >
-      <i-icon type="mine_fill" size = "70" />
+      <image src="{{userimg }}" class="userimage" />
       <i-input placeholder="未填写" style='font:"微软雅黑";font-size:18px; margin-left: 20rpx' value= "{{name}}" bind:change = "input_name" maxlength="20"/>
     </view>
     
