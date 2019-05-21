@@ -179,7 +179,7 @@ Page({
   */
   onLoad: function (options) {
     this.data.info = JSON.parse(options.info);
-    console.log(this.data.info);
+    console.log('key',this.data.info);
     this.setData({
       key: this.data.info
     })
@@ -210,11 +210,11 @@ Page({
       duration: 0
     });
     wx.request({
-      url: 'https://group.tttaaabbbccc.club/f/processing/',
+      url: 'https://group.tttaaabbbccc.club/f/processing/search/',
       data: {
         key: this.data.info,
       },
-      method: "GET",
+      method: "POST",
       header: {
         "Content-Type": "application/json;charset=UTF-8",
         'Authorization': tk
@@ -305,6 +305,15 @@ Page({
   onPullDownRefresh: function () {
     wx.showNavigationBarLoading() //在标题栏中显示加载
     var that = this;
+    if (app.globalData.userInfo !== null) {
+      this.setData({
+        userimg: app.globalData.userInfo.avatarUrl,
+        username: app.globalData.userInfo.nickName,
+        login: true
+      })
+    }
+
+    var that = this;
     const _jwt = wx.getStorageSync('jwt');
     var _history = wx.getStorageSync('history');
     var tk;
@@ -317,25 +326,48 @@ Page({
       console.log("no token");
       return;
     }
-
+    $Toast({
+      content: '加载中',
+      type: 'loading',
+      duration: 0
+    });
     wx.request({
-      url: 'https://group.tttaaabbbccc.club/f/processing/',
+      url: 'https://group.tttaaabbbccc.club/f/processing/search/',
       data: {
-        history: _history,
+        key: this.data.info,
       },
-      method: "GET",
+      method: "POST",
       header: {
         "Content-Type": "application/json;charset=UTF-8",
         'Authorization': tk
       },
       success(res) {
+        $Toast.hide()
         console.log(res)
+
+        console.log(res.data[0])
+        for (var i = 0; i < res.data.length; i++) {
+          var sp = res.data[i].labels.split("&");
+          var ssp = [];
+          for (var j = 0; j < sp.length; j++) {
+
+            ssp[j] = parseInt(sp[j]);
+
+          }
+
+          res.data[i]["sp"] = ssp;
+
+          console.log(that.data.tagsIndex)
+        }
         that.setData({
           f_posts: res.data
         });
-        console.log(res.data)
+      },
+      fail(res) {
+        $Toast.hide();
       }
     })
+
     //模拟加载
     setTimeout(function () {
       // complete
