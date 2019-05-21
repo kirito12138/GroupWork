@@ -259,11 +259,7 @@ def get_unclosed_posts_by_key(request):
             "image_url": post.image.url,
             "labels": labels,
             "is_imported": post.is_imported,
-            "weight": post_weight,
         })
-
-    # 根据推荐算法对返回的Post进行排序
-    ret_data = rank_post(ret_data)
 
     return JsonResponse(ret_data, safe=False)
 
