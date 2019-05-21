@@ -184,14 +184,17 @@ Page({
     });
     wx.request({
       url: 'https://group.tttaaabbbccc.club/f/processing/',
-      method: "GET",
+      method: "POST",
       header: {
         "Content-Type": "application/json;charset=UTF-8",
         'Authorization': tk
       },
+      data:{
+        history:'0'
+      },
       success(res) {
         $Toast.hide()
-        console.log(res)
+        console.log('sASs',res)
         
         console.log(res.data[0])
         for(var i = 0; i < res.data.length; i++)
