@@ -520,9 +520,6 @@ def get_user_applies(request, user_id):
             "is_imported": apply.post.is_imported,
         })
 
-    # 根据申请信息进行打分并排序
-    ret_data = rank_apply(ret_data)
-
     return JsonResponse(ret_data, safe=False)
 
 
