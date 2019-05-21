@@ -18,7 +18,7 @@
       <view class = 'second'>
         <view class = "left">
           <view class='useinfo'>
-          <image class = 'userimg' src = "https://group.tttaaabbbccc.club/{{item.poster_avator_url}}" />
+          <image class = 'userimg' src = "{{item.poster_avatar_url}}" />
           <text  class = 'username'> {{item.poster_name}}</text>
           </view>
 

@@ -200,6 +200,7 @@ Page({
           that.setData({
             f_posts: res.data
           });
+          console.log(that.data.f_posts)
         }
         
       }
