@@ -10,7 +10,6 @@ Page({
       num2:2,
       date:"19/05/01",
       name:"111",
-      postImg:"../../image/no_load.png",
       title:"示例标题",
       ddl:"2019-05-20",
       acceptedNum:"2",
