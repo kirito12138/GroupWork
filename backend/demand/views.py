@@ -14,7 +14,8 @@ from demand.models import Post
 from demand.models import Apply
 from demand.models import PostLabel
 from demand.models import ApplyLabel
-from demand.utils import decode_label, encode_label, check_postLabel, check_applyLabel, rank_post, grade_apply, rank_apply
+from demand.utils import decode_label, encode_label, check_postLabel, check_applyLabel, rank_post, grade_apply, \
+    rank_apply
 
 post_title_pattern = re.compile(r"^.{1,20}$")
 deadline_pattern = re.compile(r"^\d\d\d\d-\d\d-\d\d$")
@@ -140,13 +141,12 @@ def get_unclosed_posts(request):
     label_weight = {}
     # 分析历史纪录
     for post_id in history:
-        post_label = PostLabel.objects.filter(post_id = post_id).all()
+        post_label = PostLabel.objects.filter(post_id=post_id).all()
         for label in post_label:
             if label.label in label_weight:
                 label_weight[label.label] += 1
             else:
                 label_weight[label.label] = 1
-
 
     unclosed_posts = Post.objects.filter(if_end=False, deadline__gte=datetime.date.today()).order_by('-post_time')
     ret_data = []
@@ -180,9 +180,9 @@ def get_unclosed_posts(request):
 
     return JsonResponse(ret_data, safe=False)
 
+
 # 获取具有某标签的所有项目
 def get_unclosed_posts_by_label(request, label):
-
     if request.method != "GET":
         return JsonResponse({'ret': False, 'error_code': 1})
 
@@ -219,8 +219,8 @@ def get_unclosed_posts_by_label(request, label):
 
     return JsonResponse(ret_data, safe=False)
 
-def get_unclosed_posts_by_key(request):
 
+def get_unclosed_posts_by_key(request):
     if request.method != "POST":
         return JsonResponse({'ret': False, 'error_code': 1})
 
@@ -238,7 +238,8 @@ def get_unclosed_posts_by_key(request):
     except KeyError:
         return JsonResponse({'ret': False, 'error_code': 2})
 
-    unclosed_posts = Post.objects.filter(if_end=False, deadline__gte=datetime.date.today(), title__contains=key).order_by('-post_time')
+    unclosed_posts = Post.objects.filter(if_end=False, deadline__gte=datetime.date.today(),
+                                         title__contains=key).order_by('-post_time')
 
     ret_data = []
     for post in unclosed_posts:
@@ -262,6 +263,7 @@ def get_unclosed_posts_by_key(request):
         })
 
     return JsonResponse(ret_data, safe=False)
+
 
 def get_post_detail(request, post_id):
     if request.method != "GET":
