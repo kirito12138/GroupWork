@@ -35,9 +35,10 @@ urlpatterns = [
     path('my/resume/modify/', user.views.modify_my_resume),
     path('my/<int:user_id>/detail/', user.views.get_user_profile),
     path('my/<int:user_id>/post/', demand.views.get_user_posts),
-
     path('my/<int:user_id>/apply/', demand.views.get_user_applies),
+
     path('f/processing/', demand.views.get_unclosed_posts),
+    path('f/processing/search/', demand.views.get_unclosed_posts_by_key),
     path('f/processing/<str:label>/', demand.views.get_unclosed_posts_by_label),
     path('c/post/', demand.views.create_post),
     path('p/<int:post_id>/upload_image/', demand.views.upload_post_image),

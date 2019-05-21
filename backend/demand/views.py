@@ -219,7 +219,53 @@ def get_unclosed_posts_by_label(request, label):
 
     return JsonResponse(ret_data, safe=False)
 
+def get_unclosed_posts_by_key(request):
 
+    if request.method != "POST":
+        return JsonResponse({'ret': False, 'error_code': 1})
+
+    user = verify_token(request.META.get('HTTP_AUTHORIZATION'))
+    if not user:
+        return JsonResponse({'ret': False, 'error_code': 5})
+
+    # 获取搜索关键词
+    try:
+        data = json.loads(request.body)
+    except JSONDecodeError:
+        return JsonResponse({'ret': False, 'error_code': 3})
+    try:
+        key = data['key']
+    except KeyError:
+        return JsonResponse({'ret': False, 'error_code': 2})
+
+    unclosed_posts = Post.objects.filter(if_end=False, deadline__gte=datetime.date.today(), title__contains=key).order_by('-post_time')
+
+    ret_data = []
+    for post in unclosed_posts:
+        # 整理相应项目的标签
+        label_list = PostLabel.objects.filter(post=post).all()
+        labels = encode_label(label_list)
+
+        ret_data.append({
+            "title": post.title,
+            "postDetail": post.post_detail,
+            "requestNum": post.request_num,
+            "acceptedNum": post.accept_num,
+            "ddl": post.deadline,
+            "postID": str(post.id),
+            "posterID": str(post.poster.id),
+            "poster_name": post.poster.name,
+            "poster_avatar_url": post.poster.avatar_url,
+            "image_url": post.image.url,
+            "labels": labels,
+            "is_imported": post.is_imported,
+            "weight": post_weight,
+        })
+
+    # 根据推荐算法对返回的Post进行排序
+    ret_data = rank_post(ret_data)
+
+    return JsonResponse(ret_data, safe=False)
 
 def get_post_detail(request, post_id):
     if request.method != "GET":
