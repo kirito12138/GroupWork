@@ -637,3 +637,45 @@ def accept_apply(request, apply_id):
     apply.save()
 
     return JsonResponse({'ret': True})
+
+
+def delete_post(request, post_id):
+    if request.method != "POST":
+        return JsonResponse({'ret': False, 'error_code': 1})
+
+    user = verify_token(request.META.get('HTTP_AUTHORIZATION'))
+    if not user:
+        return JsonResponse({'ret': False, 'error_code': 5})
+
+    try:
+        post = Post.objects.get(id=post_id)
+    except Post.DoesNotExist:
+        return JsonResponse({'ret': False, 'error_code': 4})
+    if post.poster != user:
+        return JsonResponse({'ret': False, 'error_code': 6})
+
+    post.delete()
+
+    posts = user.post_set.order_by('-post_time')
+    ret_data = []
+    for post in posts:
+        # 整理标签信息
+        label_list = PostLabel.objects.filter(post=post).all()
+        labels = encode_label(label_list)
+
+        ret_data.append({
+            "title": post.title,
+            "postDetail": post.post_detail,
+            "requestNum": post.request_num,
+            "acceptedNum": post.accept_num,
+            "ddl": post.deadline,
+            "ifEnd": post.if_end,
+            "postID": str(post.id),
+            "posterID": str(post.poster.id),
+            "poster_name": post.poster.name,
+            "poster_avatar_url": post.poster.avatar_url,
+            "image_url": post.image.url,
+            "labels": labels,
+            "is_imported": post.is_imported,
+        })
+    return JsonResponse(ret_data, safe=False)
