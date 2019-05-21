@@ -14,7 +14,7 @@ from demand.models import Post
 from demand.models import Apply
 from demand.models import PostLabel
 from demand.models import ApplyLabel
-from demand.utils import decode_label, encode_label, check_postLabel, check_applyLabel, rank_post
+from demand.utils import decode_label, encode_label, check_postLabel, check_applyLabel, rank_post, grade_apply, rank_apply
 
 post_title_pattern = re.compile(r"^.{1,20}$")
 deadline_pattern = re.compile(r"^\d\d\d\d-\d\d-\d\d$")
@@ -422,6 +422,7 @@ def get_post_applies(request, post_id):
         # 整理申请的标签
         labelList = ApplyLabel.objects.filter(apply=apply).all()
         labels = encode_label(labelList)
+        weight = grade_apply(apply)
 
         ret_data.append({
             "applyID": str(apply.id),
@@ -441,7 +442,11 @@ def get_post_applies(request, post_id):
             "project_exp": apply.resume.project_exp,
             "self_review": apply.resume.self_review,
             "labels": labels,
+            "weight": weight,
         })
+
+    ret_data = rank_apply(ret_data)
+
     return JsonResponse(ret_data, safe=False)
 
 

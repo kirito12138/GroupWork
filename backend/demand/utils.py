@@ -19,6 +19,13 @@ PostLabelList = [
     '9001','9002','9003','9004','9005','9006','9007',
 ]
 
+# 简历加分项
+ApplyPrize = {
+    "特等奖":  10,
+    "一等奖":  8,
+    "二等奖":  6,
+}
+
 # 申请标签编码 TODO 完善项目标签种类
 
 ApplyLabelList = range(21)
@@ -60,8 +67,16 @@ def rank_post(_posts):
 
 # TODO:申请打分
 def grade_apply(_apply):
-    pass
+    weight = 0
+    awards = _apply.awards.split('\n')
+    for award in awards:
+        if 10 <= len(award):
+            weight += 1
+    for key in ApplyPrize:
+        weight += _apply.awards.count(key) * ApplyPrize[key]
+    return weight
 
 # TODO:申请排序
 def rank_apply(_applies):
-    return _applies
+    ret = sorted(_applies, key=lambda post:post["weight"], reverse=True)
+    return ret
