@@ -67,8 +67,21 @@ App({
                       const _id = JSON.stringify(id);
                       wx.setStorageSync('userid', _id);
 
-                      const _history = JSON.stringify();
-                      wx.setStorageSync('history', _history);
+                      var _history = wx.getStorageSync('history');
+                      wx.getStorage({
+                        key: 'history',
+                        success(res) {
+                          
+                        },
+                        fail(res)
+                        {
+                          const _history = JSON.stringify();
+                          wx.setStorageSync('history', _history);
+                        }
+                      })
+                      
+
+                      
 
                     }
                     else {

@@ -3,7 +3,14 @@ page, .page {
     height: 100%;
 }
 .search{  
-  width: 80%;  
+  width: 100%;  
+
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
 }  
 .search_arr {  
   border: 1px solid #d0d0d0;  
@@ -30,6 +37,7 @@ page, .page {
   border-radius: 10rpx;  
 }  
 .page_row{  
+  
   display: flex;  
   flex-direction: row  
 }  
@@ -174,7 +182,7 @@ page, .page {
 .sv {
   margin-top:10rpx;
   background-color:white;
-  height: 100%;
+  height: 90%;
 }
 
 ::-webkit-scrollbar {
