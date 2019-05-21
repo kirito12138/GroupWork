@@ -101,8 +101,9 @@ Page({
     console.log(this.data.f_posts[i])
 
     var _history = wx.getStorageSync('history');
-    _history = _history + this.data.f_posts[i].postID.toString();
+    _history ="" //_history + this.data.f_posts[i].postID.toString();
     wx.setStorageSync('history', _history);
+    console.log('history',_history)
 
     
     var para = JSON.stringify(this.data.f_posts[i]);
@@ -293,7 +294,7 @@ Page({
   * 生命周期函数--监听页面显示
   */
   onShow: function () {
-
+    this.onLoad()
   },
 
   /**
@@ -334,7 +335,7 @@ Page({
       data: {
         history: _history,
       },
-      method: "GET",
+      method: "POST",
       header: {
         "Content-Type": "application/json;charset=UTF-8",
         'Authorization': tk

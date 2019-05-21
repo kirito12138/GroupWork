@@ -46,7 +46,12 @@ Page({
     }
   },
   chakan: function (e) {
-
+    for (var i = 0; i < this.data.f_posts.length; i++) {
+      let string = "f_posts[" + i + "].ch_flag";
+      this.setData({
+        [string]: true
+      });
+    }
     var i = e.currentTarget.dataset.index;
     var para = JSON.stringify(this.data.f_posts[i]);
 
@@ -55,7 +60,12 @@ Page({
     })
   },
   edit: function (e) {
-
+    for (var i = 0; i < this.data.f_posts.length; i++) {
+      let string = "f_posts[" + i + "].ch_flag";
+      this.setData({
+        [string]: true
+      });
+    }
     var i = e.currentTarget.dataset.index;
     var para = JSON.stringify(this.data.f_posts[i]);
 
@@ -246,6 +256,12 @@ Page({
         that.setData({
           f_posts: res.data
         });
+        for (var i = 0; i < that.data.f_posts.length; i++) {
+          let string = "f_posts[" + i + "].ch_flag";
+          that.setData({
+            [string]: true
+          });
+        }
         console.log(that.data.f_posts)
 
       }
@@ -279,7 +295,7 @@ Page({
   * 生命周期函数--监听页面显示
   */
   onShow: function () {
-
+    this.onLoad()
   },
 
   /**

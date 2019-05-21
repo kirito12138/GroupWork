@@ -151,7 +151,6 @@ Page({
 
     wx.request({
       url: 'https://group.tttaaabbbccc.club//my/'+id+'/apply/',
-      //url: 'https://group.tttaaabbbccc.club/f/processing/',
       method: "GET",
       header: {
         "Content-Type": "application/json;charset=UTF-8",
@@ -184,8 +183,9 @@ Page({
         }
         else
         {
-          console.log(res)
+          console.log(res.data)
           for (var i = 0; i < res.data.length; i++) {
+
             var sp = res.data[i].labels.split("&");
             var ssp = [];
             for (var j = 0; j < sp.length; j++) {
@@ -200,8 +200,6 @@ Page({
           that.setData({
             f_posts: res.data
           });
-          console.log("aaaaaaaa")
-          console.log(res.data[0].labels)
         }
         
       }
@@ -234,7 +232,7 @@ Page({
   * 生命周期函数--监听页面显示
   */
   onShow: function () {
-
+    this.onLoad()
   },
 
   /**
