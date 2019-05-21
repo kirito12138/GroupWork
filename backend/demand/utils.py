@@ -7,9 +7,9 @@ PostLabelList = range(99)
 
 # 简历加分项
 ApplyPrize = {
-    "特等奖":  10,
-    "一等奖":  8,
-    "二等奖":  6,
+    "特等奖": 10,
+    "一等奖": 8,
+    "二等奖": 6,
 }
 
 # 申请标签编码 TODO 完善项目标签种类
@@ -24,6 +24,7 @@ def check_postLabel(_labelList):
             return False
     return True
 
+
 # 检查申请标签合法性 TODO 修改检测逻辑
 def check_applyLabel(_labelList):
     for label in _labelList:
@@ -31,10 +32,14 @@ def check_applyLabel(_labelList):
             return False
     return True
 
+
 # 标签解析
 def decode_label(_str):
+    if not _str:
+        return []
     labelList = _str.split('&')
     return labelList
+
 
 # 标签压缩
 def encode_label(_QuerySet):
@@ -44,10 +49,12 @@ def encode_label(_QuerySet):
     labels = '&'.join(labels)
     return labels
 
+
 # TODO:项目排序
 def rank_post(_posts):
-    ret = sorted(_posts, key=lambda post:post["weight"], reverse=True)
+    ret = sorted(_posts, key=lambda post: post["weight"], reverse=True)
     return ret
+
 
 # TODO:申请打分
 def grade_apply(_apply):
@@ -60,7 +67,8 @@ def grade_apply(_apply):
         weight += _apply.awards.count(key) * ApplyPrize[key]
     return weight
 
+
 # TODO:申请排序
 def rank_apply(_applies):
-    ret = sorted(_applies, key=lambda post:post["weight"], reverse=True)
+    ret = sorted(_applies, key=lambda post: post["weight"], reverse=True)
     return ret
