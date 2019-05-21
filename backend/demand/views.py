@@ -462,6 +462,8 @@ def get_post_applies(request, post_id):
             "applyStatus": apply.status,
             "applicantID": str(apply.applicant.id),
             "applicant_account": apply.applicant.account,
+            "applicant_name": apply.applicant.name,
+            "applicant_avatar_url": apply.applicant.avatar_url,
             "name": apply.resume.name,
             "sex": apply.resume.sex,
             "age": apply.resume.age,
