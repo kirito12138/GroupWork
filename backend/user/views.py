@@ -226,6 +226,15 @@ def modify_my_profile(request):
     except IntegrityError:  # 用户名已存在
         return JsonResponse({'ret': False, 'error_code': 4})
 
+    if not user.resume:
+        user.resume = Resume.objects.create()
+        user.save()
+    resume = user.resume
+    resume.name = user.name
+    resume.age = user.age
+    resume.sex = user.sex
+    resume.save()
+
     return JsonResponse({'ret': True})
 
 
@@ -310,6 +319,11 @@ def modify_my_resume(request):
         resume.save()
     except ValidationError:
         return JsonResponse({'ret': False, 'error_code': 3})
+
+    user.name = resume.name
+    user.age = resume.age
+    user.sex = resume.sex
+    user.save()
 
     return JsonResponse({'ret': True})
 
