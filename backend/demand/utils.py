@@ -54,8 +54,9 @@ def encode_label(_QuerySet):
     return labels
 
 # TODO:项目排序
-def rank_post(_posts, _history):
-    return _posts
+def rank_post(_posts):
+    ret = sorted(_posts, key=lambda post:post["weight"], reverse=True)
+    return ret
 
 # TODO:申请打分
 def grade_apply(_apply):

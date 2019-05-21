@@ -137,11 +137,26 @@ def get_unclosed_posts(request):
     except KeyError:
         return JsonResponse({'ret': False, 'error_code': 2})
 
+    label_weight = {}
+    # 分析历史纪录
+    for post_id in history:
+        post_label = PostLabel.objects.filter(post_id = post_id).all()
+        for label in post_label:
+            if label.label in label_weight:
+                label_weight[label.label] = 0
+            else:
+                label_weight[label.label] += 1
+
+
     unclosed_posts = Post.objects.filter(if_end=False, deadline__gte=datetime.date.today()).order_by('-post_time')
     ret_data = []
     for post in unclosed_posts:
         # 整理相应项目的标签
-        labelList = PostLabel.objects.filter(post=post).all()
+        post_weight = 0
+        label_list = PostLabel.objects.filter(post=post).all()
+        for label in label_list:
+            if label.label in label_weight:
+                post_weight += label_weight[label.label]
         labels = encode_label(labelList)
 
         ret_data.append({
@@ -157,10 +172,11 @@ def get_unclosed_posts(request):
             "image_url": post.image.url,
             "labels": labels,
             "is_imported": post.is_imported,
+            "weight": post_weight,
         })
 
     # 根据推荐算法对返回的Post进行排序
-    ret_data = rank_post(ret_data, history)
+    ret_data = rank_post(ret_data)
 
     return JsonResponse(ret_data, safe=False)
 
