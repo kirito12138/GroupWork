@@ -592,6 +592,11 @@ def create_apply(request):
     except ValidationError:
         return JsonResponse({'ret': False, 'error_code': 3})
 
+    user.name = resume.name
+    user.age = resume.age
+    user.sex = resume.sex
+    user.save()
+
     resume.pk = None  # 复制一个新的resume
     resume.save()
 
