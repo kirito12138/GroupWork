@@ -422,7 +422,7 @@ def get_post_applies(request, post_id):
         # 整理申请的标签
         labelList = ApplyLabel.objects.filter(apply=apply).all()
         labels = encode_label(labelList)
-        weight = grade_apply(apply)
+        weight = grade_apply(apply.resume)
 
         ret_data.append({
             "applyID": str(apply.id),
