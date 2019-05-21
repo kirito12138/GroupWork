@@ -180,7 +180,7 @@ def get_unclosed_posts(request):
 
     return JsonResponse(ret_data, safe=False)
 
-# 获取具有某标签的所有项目 TODO debug
+# 获取具有某标签的所有项目
 def get_unclosed_posts_by_label(request, label):
 
     if request.method != "GET":
