@@ -14,7 +14,7 @@ from demand.models import Post
 from demand.models import Apply
 from demand.models import PostLabel
 from demand.models import ApplyLabel
-from demand.utils import decode_label, encode_label, check_postLabel, check_applyLabel
+from demand.utils import decode_label, encode_label, check_postLabel, check_applyLabel, rank_post, grade_apply, rank_apply
 
 post_title_pattern = re.compile(r"^.{1,20}$")
 deadline_pattern = re.compile(r"^\d\d\d\d-\d\d-\d\d$")
@@ -116,6 +116,73 @@ def upload_post_image(request, post_id):
 
 # TODO 增加排序功能或重写有排序功能的方法
 def get_unclosed_posts(request):
+    # if request.method != "GET":
+    #     return JsonResponse({'ret': False, 'error_code': 1})
+
+    if request.method != "POST":
+        return JsonResponse({'ret': False, 'error_code': 1})
+
+    user = verify_token(request.META.get('HTTP_AUTHORIZATION'))
+    if not user:
+        return JsonResponse({'ret': False, 'error_code': 5})
+
+    # 获取用户的历史纪录
+    try:
+        data = json.loads(request.body)
+    except JSONDecodeError:
+        return JsonResponse({'ret': False, 'error_code': 3})
+    try:
+        history = data['history']
+        history = decode_label(history)
+    except KeyError:
+        return JsonResponse({'ret': False, 'error_code': 2})
+
+    label_weight = {}
+    # 分析历史纪录
+    for post_id in history:
+        post_label = PostLabel.objects.filter(post_id = post_id).all()
+        for label in post_label:
+            if label.label in label_weight:
+                label_weight[label.label] += 1
+            else:
+                label_weight[label.label] = 1
+
+
+    unclosed_posts = Post.objects.filter(if_end=False, deadline__gte=datetime.date.today()).order_by('-post_time')
+    ret_data = []
+    for post in unclosed_posts:
+        # 整理相应项目的标签
+        post_weight = 0
+        label_list = PostLabel.objects.filter(post=post).all()
+        for label in label_list:
+            if label.label in label_weight:
+                post_weight += label_weight[label.label]
+        labels = encode_label(label_list)
+
+        ret_data.append({
+            "title": post.title,
+            "postDetail": post.post_detail,
+            "requestNum": post.request_num,
+            "acceptedNum": post.accept_num,
+            "ddl": post.deadline,
+            "postID": str(post.id),
+            "posterID": str(post.poster.id),
+            "poster_name": post.poster.name,
+            "poster_avatar_url": post.poster.avatar_url,
+            "image_url": post.image.url,
+            "labels": labels,
+            "is_imported": post.is_imported,
+            "weight": post_weight,
+        })
+
+    # 根据推荐算法对返回的Post进行排序
+    ret_data = rank_post(ret_data)
+
+    return JsonResponse(ret_data, safe=False)
+
+# 获取具有某标签的所有项目
+def get_unclosed_posts_by_label(request, label):
+
     if request.method != "GET":
         return JsonResponse({'ret': False, 'error_code': 1})
 
@@ -123,12 +190,17 @@ def get_unclosed_posts(request):
     # if not user:
     #     return JsonResponse({'ret': False, 'error_code': 5})
 
+    if not check_postLabel(label):
+        return JsonResponse({'ret': False, 'error_code': 3})
+
     unclosed_posts = Post.objects.filter(if_end=False, deadline__gte=datetime.date.today()).order_by('-post_time')
     ret_data = []
     for post in unclosed_posts:
         # 整理相应项目的标签
-        labelList = PostLabel.objects.filter(post=post).all()
-        labels = encode_label(labelList)
+        label_list = PostLabel.objects.filter(post=post).all()
+        if not label_list.filter(label=label).exists():
+            continue
+        labels = encode_label(label_list)
 
         ret_data.append({
             "title": post.title,
@@ -144,8 +216,52 @@ def get_unclosed_posts(request):
             "labels": labels,
             "is_imported": post.is_imported,
         })
+
     return JsonResponse(ret_data, safe=False)
 
+def get_unclosed_posts_by_key(request):
+
+    if request.method != "POST":
+        return JsonResponse({'ret': False, 'error_code': 1})
+
+    user = verify_token(request.META.get('HTTP_AUTHORIZATION'))
+    if not user:
+        return JsonResponse({'ret': False, 'error_code': 5})
+
+    # 获取搜索关键词
+    try:
+        data = json.loads(request.body)
+    except JSONDecodeError:
+        return JsonResponse({'ret': False, 'error_code': 3})
+    try:
+        key = data['key']
+    except KeyError:
+        return JsonResponse({'ret': False, 'error_code': 2})
+
+    unclosed_posts = Post.objects.filter(if_end=False, deadline__gte=datetime.date.today(), title__contains=key).order_by('-post_time')
+
+    ret_data = []
+    for post in unclosed_posts:
+        # 整理相应项目的标签
+        label_list = PostLabel.objects.filter(post=post).all()
+        labels = encode_label(label_list)
+
+        ret_data.append({
+            "title": post.title,
+            "postDetail": post.post_detail,
+            "requestNum": post.request_num,
+            "acceptedNum": post.accept_num,
+            "ddl": post.deadline,
+            "postID": str(post.id),
+            "posterID": str(post.poster.id),
+            "poster_name": post.poster.name,
+            "poster_avatar_url": post.poster.avatar_url,
+            "image_url": post.image.url,
+            "labels": labels,
+            "is_imported": post.is_imported,
+        })
+
+    return JsonResponse(ret_data, safe=False)
 
 def get_post_detail(request, post_id):
     if request.method != "GET":
@@ -337,6 +453,7 @@ def get_post_applies(request, post_id):
         # 整理申请的标签
         labelList = ApplyLabel.objects.filter(apply=apply).all()
         labels = encode_label(labelList)
+        weight = grade_apply(apply.resume)
 
         ret_data.append({
             "applyID": str(apply.id),
@@ -356,7 +473,11 @@ def get_post_applies(request, post_id):
             "project_exp": apply.resume.project_exp,
             "self_review": apply.resume.self_review,
             "labels": labels,
+            "weight": weight,
         })
+
+    ret_data = rank_apply(ret_data)
+
     return JsonResponse(ret_data, safe=False)
 
 
@@ -398,6 +519,10 @@ def get_user_applies(request, user_id):
             "labels": labels,
             "is_imported": apply.post.is_imported,
         })
+
+    # 根据申请信息进行打分并排序
+    ret_data = rank_apply(ret_data)
+
     return JsonResponse(ret_data, safe=False)
 
 

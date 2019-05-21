@@ -35,10 +35,11 @@ urlpatterns = [
     path('my/resume/modify/', user.views.modify_my_resume),
     path('my/<int:user_id>/detail/', user.views.get_user_profile),
     path('my/<int:user_id>/post/', demand.views.get_user_posts),
-
     path('my/<int:user_id>/apply/', demand.views.get_user_applies),
+
     path('f/processing/', demand.views.get_unclosed_posts),
-    # TODO:增加附带需要排序属性的项目获取请求
+    path('f/processing/search/', demand.views.get_unclosed_posts_by_key),
+    path('f/processing/<str:label>/', demand.views.get_unclosed_posts_by_label),
     path('c/post/', demand.views.create_post),
     path('p/<int:post_id>/upload_image/', demand.views.upload_post_image),
 
@@ -49,7 +50,6 @@ urlpatterns = [
 
 
     path('c/apply/', demand.views.create_apply),
-    # TODO:增加附带需要排序属性的申请获取请求
     path('apply/<int:apply_id>/', demand.views.get_apply_detail),
     path('apply/<int:apply_id>/accept/', demand.views.accept_apply),
 
