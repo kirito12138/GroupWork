@@ -52,11 +52,6 @@ Page({
             wx.reLaunch({
               url: "../home/home",
             })
-          
-
-
-
-      
     }
       
     else {
