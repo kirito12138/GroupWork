@@ -45,7 +45,7 @@
 
       <view class = 'second' bindtap='clickOther'>
         <view class = "left" style='margin-left: 20rpx'>
-            <image class = 'img' src ="../../image/no_load.png"  style="width:400rpx;height:240rpx"/>
+            <image class = 'img' src ="https://group.tttaaabbbccc.club/{{item.image_url}}"  style="width:400rpx;height:240rpx"/>
         </view>   
 
         <view class = "right" style='margin-right:50rpx'>
