@@ -336,6 +336,7 @@ def get_user_posts(request, user_id):
             "labels": labels,
             "ch_flag": True,
             "is_imported": post.is_imported,
+            "num_not_review": post.apply_set.filter(status='waiting').count()
         })
     return JsonResponse(ret_data, safe=False)
 
@@ -403,11 +404,9 @@ def modify_post_detail(request, post_id):
         post.postlabel_set.create(label=i)
 
     if post.accept_num >= post.request_num:
-        post.apply_set.filter(status='waiting').update(status='closed')
         post.if_end = True
         post.save()
     else:
-        post.apply_set.filter(status='closed').update(status='waiting')
         post.if_end = False
         post.save()
 
@@ -658,19 +657,41 @@ def accept_apply(request, apply_id):
     if post.poster != user:
         return JsonResponse({'ret': False, 'error_code': 3})
 
-    if apply.status == 'accepted':
+    if apply.status != 'waiting':
         return JsonResponse({'ret': False, 'error_code': 4})
-
-    if post.if_end or post.accept_num >= post.request_num or apply.status == 'closed':
-        return JsonResponse({'ret': False, 'error_code': 6})
 
     post.accept_num += 1
     post.save()
     if post.accept_num >= post.request_num:
-        post.apply_set.filter(status='waiting').update(status='closed')
         post.if_end = True
         post.save()
     apply.status = 'accepted'
+    apply.save()
+
+    return JsonResponse({'ret': True})
+
+
+def reject_apply(request, apply_id):
+    if request.method != "POST":
+        return JsonResponse({'ret': False, 'error_code': 1})
+
+    user = verify_token(request.META.get('HTTP_AUTHORIZATION'))
+    if not user:
+        return JsonResponse({'ret': False, 'error_code': 5})
+
+    try:
+        apply = Apply.objects.get(id=apply_id)
+    except Apply.DoesNotExist:
+        return JsonResponse({'ret': False, 'error_code': 2})
+
+    post = apply.post
+    if post.poster != user:
+        return JsonResponse({'ret': False, 'error_code': 3})
+
+    if apply.status != 'waiting':
+        return JsonResponse({'ret': False, 'error_code': 4})
+
+    apply.status = 'rejected'
     apply.save()
 
     return JsonResponse({'ret': True})

@@ -48,10 +48,10 @@ urlpatterns = [
     path('p/<int:post_id>/delete/', demand.views.delete_post),
     path('p/<int:post_id>/apply/', demand.views.get_post_applies),
 
-
     path('c/apply/', demand.views.create_apply),
     path('apply/<int:apply_id>/', demand.views.get_apply_detail),
     path('apply/<int:apply_id>/accept/', demand.views.accept_apply),
+    path('apply/<int:apply_id>/reject/', demand.views.reject_apply),
 
     path('signature/upyun/', user.views.get_upyun_signature),
     # path('resume/upload/', demand.views.upload_resume),

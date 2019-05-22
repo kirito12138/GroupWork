@@ -29,9 +29,9 @@ def gen_md5(s, salt='9527'):  # 加盐
     return md5.hexdigest()
 
 
-def gen_password(length):
-    chars = string.ascii_letters + string.digits
-    return ''.join([random.choice(chars) for _ in range(length)])  # 得出的结果中字符会有重复的
+# def gen_password(length):
+#     chars = string.ascii_letters + string.digits
+#     return ''.join([random.choice(chars) for _ in range(length)])  # 得出的结果中字符会有重复的
 
 
 def login(request):
