@@ -195,7 +195,7 @@ Page({
     this.setData({
       'expEdu1.major': e.detail.detail.value,
     });
-    this.serch(e.detail.detail.value)
+    this.serch1(e.detail.detail.value)
   },
   noblur1: function (e) {
     this.setData
@@ -203,7 +203,7 @@ Page({
         hosList: []
       })
   },
-  clicsho: function (e) {
+  clicsho1: function (e) {
     var that = this;
     console.log(e);
     var tti = e.currentTarget.dataset.text;
@@ -214,7 +214,7 @@ Page({
       })
   },
 
-  serch: function (key) {
+  serch1: function (key) {
     var that = this;
     var arr = [];
     console.log("assss" + key)
@@ -361,6 +361,7 @@ Page({
 
   click_save_resume:function(e)
   {
+    
     var that = this;
     const _jwt = wx.getStorageSync('jwt');
     var tk;
@@ -378,22 +379,28 @@ Page({
         content: "年龄均为数字",
         type: 'error'
       });
+      console.log("1")
+      return;
     }
-    else if (this.data.phone != "" && !(/^[0-9]+$/.test(this.data.phone))) {
+    if (this.data.phone != "" && !(/^[0-9]+$/.test(this.data.phone))) {
       $Message({
         content: '电话号码全由数字组成',
         type: 'error'
       });
+      console.log("2")
+      return;
     }
-    else if (this.data.email != "" && !(/^\w+((.\w+)|(-\w+))@[A-Za-z0-9]+((.|-)[A-Za-z0-9]+).[A-Za-z0-9]+$/.test(this.data.email)))
+    if (this.data.email != "" && !(/^\w+((.\w+)|(-\w+))@[A-Za-z0-9]+((.|-)[A-Za-z0-9]+).[A-Za-z0-9]+$/.test(this.data.email)))
     {
       $Message({
         content: '邮箱格式不正确',
         type: 'error'
       });
+      return;
     }
-    else if (this.data.expEdu1['major'] != "")
+    if (this.data.expEdu1['major'] != "")
     {
+
       var that = this;
       var arr = [];
       var tag = 0;
@@ -412,10 +419,11 @@ Page({
           content: '本科专业不在库中',
           type: 'error'
         });
+        return;
       }
 
     }
-    else if (this.data.expEdu2['major'] != "") {
+    if (this.data.expEdu2['major'] != "") {
       var that = this;
       var arr = [];
       var tag = 0;
@@ -432,10 +440,11 @@ Page({
           content: '硕士专业不在库中',
           type: 'error'
         });
+        return;
       }
 
     }
-    else if (this.data.expEdu3['major'] != "") {
+    if (this.data.expEdu3['major'] != "") {
       var that = this;
       var arr = [];
       var tag = 0;
@@ -452,11 +461,13 @@ Page({
           content: '博士专业不在库中',
           type: 'error'
         });
+        return;
       }
 
     }
 
-    else {
+    
+
       var age = this.data.age;
       var edu_exp, edu_exp1, edu_exp2, edu_exp3;
       edu_exp1 = this.data.expEdu1['year'] + "&" + this.data.expEdu1['major'] + "&" + this.data.expEdu1['school'];
@@ -514,7 +525,7 @@ Page({
           });
         }
       })
-    }
+    
   },
 
 
