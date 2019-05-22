@@ -73,7 +73,7 @@
     
 
    
-
+ <i-toast id="toast" />
 
  </scroll-view>
 
