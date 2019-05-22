@@ -189,8 +189,7 @@ def get_unclosed_posts_by_label(request, label):
     user = verify_token(request.META.get('HTTP_AUTHORIZATION'))
     if not user:
         return JsonResponse({'ret': False, 'error_code': 5})
-
-    if not check_postLabel(label):
+    if not check_postLabel(label.split('&')):
         return JsonResponse({'ret': False, 'error_code': 3})
 
     unclosed_posts = Post.objects.filter(if_end=False, deadline__gte=datetime.date.today()).order_by('-post_time')
