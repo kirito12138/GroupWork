@@ -33,7 +33,7 @@ class Post(models.Model):
 
 class Apply(models.Model):
     resume = models.OneToOneField('user.Resume', on_delete=models.SET_NULL, null=True, blank=True)
-    status = models.CharField(max_length=32, default='waiting')  # waiting(待定) accepted(接受), closed(结束)
+    status = models.CharField(max_length=32, default='waiting')  # waiting(待定) accepted(接受), rejected(拒绝)
     post = models.ForeignKey('Post', on_delete=models.CASCADE)
     applicant = models.ForeignKey('user.User', on_delete=models.CASCADE)
     c_time = models.DateTimeField(auto_now_add=True)  # 申请时间，会自动添加
