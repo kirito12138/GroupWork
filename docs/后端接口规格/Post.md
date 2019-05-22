@@ -328,6 +328,7 @@
           "poster_avatar_url": "string", //发布者头像url
           "image_url": "string", //帖子的图片url，没有加上域名
           "is_imported": "bool", # 该贴子是否为外部导入，外部导入则无法创建申请
+          "num_not_review": "int", # 待审核简历数
   	},
     ...
   ]
