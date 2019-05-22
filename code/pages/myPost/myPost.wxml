@@ -62,7 +62,7 @@
 
           <view class='date' style = "height:80rpx">
             <image class='date_image' style="width:50rpx;height:50rpx" src = "../../image/check.png"></image>
-            <text  class='num_text' >待审核简历: 12 </text>
+            <text  class='num_text' >待审核简历: {{item.num_not_review}} </text>
           </view>
 
 

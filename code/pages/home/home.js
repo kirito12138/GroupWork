@@ -101,9 +101,9 @@ Page({
     var ar = _history.split("&")
     var tag = 0;
     console.log(ar)
-    for (var i = 0; i< ar.length; i++)
+    for (var j = 0; j< ar.length; j++)
     {
-      if (ar[i] == this.data.f_posts[i].postID.toString())
+      if (ar[j] == this.data.f_posts[j].postID.toString())
       {
         tag = 1;
       }

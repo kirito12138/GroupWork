@@ -43,6 +43,7 @@
         </view>
         
         <view class = "right" style='margin-right: 40rpx'>
+          
           <view wx:if="{{ item.applyStatus == 'accepted' }}">
             <icon   type="success" size = "50" />
             <text>\n</text>
@@ -55,10 +56,10 @@
             <text decode="{{true}}" class = "ictext" class='ictext'> 等待中</text>
           </view>
 
-          <view wx:elif="{{ item.applyStatus == 'closed' }}">
+          <view wx:elif="{{ item.applyStatus == 'rejected' }}">
             <icon   type="info" size = "50" />
             <text>\n</text>
-            <text decode="{{true}}" class = "ictext" class='ictext'> 已结束</text>
+            <text decode="{{true}}" class = "ictext" class='ictext'> 已拒绝</text>
           </view>
             
         </view>      

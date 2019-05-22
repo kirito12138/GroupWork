@@ -179,6 +179,7 @@ Page({
             content: '已同意',
             type: 'success'
           });
+          wx.navigateBack(1)
         }
       }
     })
@@ -207,7 +208,7 @@ Page({
 
 
     wx.request({
-      url: 'https://group.tttaaabbbccc.club//apply/' + this.data.applyID + '/refuse/',
+      url: 'https://group.tttaaabbbccc.club//apply/' + this.data.applyID + '/reject/',
       method: "POST",
       header: {
         "Content-Type": "application/json;charset=UTF-8",
@@ -220,9 +221,10 @@ Page({
         console.log(res.data)
         if (res.data.ret) {
           $Message({
-            content: '已同意',
-            type: 'success'
+            content: '已拒绝',
+            type: 'error'
           });
+          wx.navigateBack(1)
         }
       }
     })
