@@ -1,5 +1,6 @@
 // pages/home/home.js
 const { $Message } = require('../../vant-weapp/dist/base/index');
+const { $Toast } = require('../../vant-weapp/dist/base/index');
 var app = getApp();
 Page({
 
