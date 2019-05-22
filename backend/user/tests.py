@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from jwt_token import create_token
+from user.jwt_token import create_token
 from user.models import User
 from user.views import gen_md5
 from backend.settings import SECRET_KEY

@@ -62,6 +62,7 @@ class ModifyPostITest(TestCase):
             "title": "test2",
             "postDetail": "test_test2",
             "requestNum": 5,
+            "labels": "1&2&3&4",
         }
         response = self.client.post(self.url, HTTP_AUTHORIZATION=self.token, data=data, content_type='application/json')
         ret_data = response.json()
@@ -73,6 +74,7 @@ class ModifyPostITest(TestCase):
             "title": "a",
             "postDetail": "test_test2",
             "requestNum": 1,
+            "labels": "1&2&3&4",
         }
         response = self.client.post(self.url, HTTP_AUTHORIZATION=self.token, data=data, content_type='application/json')
         ret_data = response.json()
@@ -84,6 +86,7 @@ class ModifyPostITest(TestCase):
             "title": "test2",
             "postDetail": "test_test2",
             "requestNum": 5,
+            "labels": "1&2&3&4&5",
         }
         response = self.client.get(self.url, HTTP_AUTHORIZATION=self.token, data=data, content_type='application/json')
         ret_data = response.json()
@@ -96,6 +99,7 @@ class ModifyPostITest(TestCase):
             "title": "test2",
             "postDetail": "test_test2",
             "requestNum": 5,
+            "labels": "1&2&3&4&5",
         }
         response = self.client.post(self.url, HTTP_AUTHORIZATION="self.token", data=data,
                                     content_type='application/json')
@@ -109,6 +113,7 @@ class ModifyPostITest(TestCase):
             "title": "test2",
             "postDetail": "test_test2",
             "requestNum": 5,
+            "labels": "1&2&3&4&5",
         }
         url_wrong = '/p/' + str(123) + '/modify/'
         response = self.client.post(url_wrong, HTTP_AUTHORIZATION=self.token, data=data,
@@ -123,6 +128,7 @@ class ModifyPostITest(TestCase):
             "title": "test2",
             "postDetail": "test_test2",
             "requestNum": 5,
+            "labels": "1&2&3&4&5",
         }
         response = self.client.post(self.url, HTTP_AUTHORIZATION=self.token2, data=data,
                                     content_type='application/json')
@@ -136,6 +142,7 @@ class ModifyPostITest(TestCase):
             "title": "test2",
             "postDetail": "test_test2",
             "requestNum": 5,
+            "labels": "1&2&3&4&5",
         }
         response = self.client.post(self.url, HTTP_AUTHORIZATION=self.token, data=data)
         ret_data = response.json()
@@ -147,6 +154,7 @@ class ModifyPostITest(TestCase):
             "ddl": "2019-05-01",
             "title": "test2",
             "postDetail": "test_test2",
+            "labels": "1&2&3&4&5",
         }
         response = self.client.post(self.url, HTTP_AUTHORIZATION=self.token, data=data, content_type='application/json')
         ret_data = response.json()
@@ -159,6 +167,7 @@ class ModifyPostITest(TestCase):
             "title": "test2",
             "postDetail": "test_test2",
             "requestNum": 101,
+            "labels": "1&2&3&4&9999",
         }
         response = self.client.post(self.url, HTTP_AUTHORIZATION=self.token, data=data, content_type='application/json')
         ret_data = response.json()
@@ -171,6 +180,7 @@ class ModifyPostITest(TestCase):
             "title": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
             "postDetail": "test_test2",
             "requestNum": 10,
+            "labels": "1&2&3&4&5",
         }
         response = self.client.post(self.url, HTTP_AUTHORIZATION=self.token, data=data, content_type='application/json')
         ret_data = response.json()
@@ -227,7 +237,7 @@ class GetUserAppliesTest(TestCase):
                                    resume=resume)  # 数据库中插入用户
         user2 = User.objects.create(account='admin2', password=gen_md5('admin_admin2', SECRET_KEY))  # 数据库中插入用户
         post = Post.objects.create(title="test", post_detail="test_test", request_num=2,
-                                   deadline=datetime.datetime.strptime("2019-05-20", "%Y-%m-%d").date(), poster=user2)
+                                   deadline=datetime.datetime.strptime("2019-12-31", "%Y-%m-%d").date(), poster=user2)
         apply = Apply.objects.create(resume=user.resume, post=post, applicant=user)
         self.token = create_token(user.id).decode()
         self.url = '/my/' + str(user.id) + '/apply/'
@@ -259,27 +269,41 @@ class GetUserAppliesTest(TestCase):
 
 class GetUnclosedPostsTest(TestCase):
     url = 'a'
+    post_id = ''
 
     def setUp(self):  # 测试所用数据库为空，需手动插入数据
         user = User.objects.create(account='admin', password=gen_md5('admin_admin', SECRET_KEY))  # 数据库中插入用户
         post = Post.objects.create(title="test", post_detail="test_test", request_num=2,
-                                   deadline=datetime.datetime.strptime("2019-05-20", "%Y-%m-%d").date(), poster=user)
+                                   deadline=datetime.datetime.strptime("2019-12-31", "%Y-%m-%d").date(), poster=user)
+        post_id = post.id
+        post = Post.objects.create(title="test_nd", post_detail="test_test", request_num=2,
+                                   deadline=datetime.datetime.strptime("2019-12-31", "%Y-%m-%d").date(), poster=user)
+        post = Post.objects.create(title="test_nd", post_detail="test_test", request_num=2,
+                                   deadline=datetime.datetime.strptime("2019-4-20", "%Y-%m-%d").date(), poster=user)
         self.token = create_token(user.id).decode()
         self.url = '/f/processing/'
 
     def test_get_unclosed_posts_successful(self):
-        response = self.client.get(self.url, HTTP_AUTHORIZATION=self.token)
+        data = {
+            "history": self.post_id,
+        }
+        response = self.client.post(self.url, HTTP_AUTHORIZATION=self.token, data=data, content_type='application/json')
         ret_data = response.json()
+        self.assertEqual(len(ret_data), 2)
         self.assertEqual(ret_data[0]['title'], "test")
+        self.assertEqual(ret_data[1]['title'], "test_nd")
 
     def test_get_unclosed_posts_filed_1(self):
-        response = self.client.post(self.url, HTTP_AUTHORIZATION=self.token)
+        response = self.client.get(self.url, HTTP_AUTHORIZATION=self.token)
         ret_data = response.json()
         self.assertFalse(ret_data['ret'])
         self.assertEqual(ret_data['error_code'], 1)
 
     def test_get_unclosed_posts_filed_2(self):
-        response = self.client.get(self.url, HTTP_AUTHORIZATION="self.token")
+        data = {
+            "history": self.post_id,
+        }
+        response = self.client.post(self.url, HTTP_AUTHORIZATION="self.token", data=data, content_type='application/json')
         ret_data = response.json()
         self.assertFalse(ret_data['ret'])
         self.assertEqual(ret_data['error_code'], 5)
@@ -301,6 +325,7 @@ class CreatPostTest(TestCase):
             "postDetail": "test_test2",
             "requestNum": 5,
             "ddl": "2019-05-20",
+            "labels": "1&2&3&4&5",
         }
         response = self.client.post(self.url, HTTP_AUTHORIZATION=self.token, data=data, content_type='application/json')
         ret_data = response.json()
@@ -312,6 +337,7 @@ class CreatPostTest(TestCase):
             "postDetail": "test_test2",
             "requestNum": 5,
             "ddl": "2019-05-20",
+            "labels": "1&2&3&4&5",
         }
         response = self.client.get(self.url, HTTP_AUTHORIZATION=self.token, data=data, content_type='application/json')
         ret_data = response.json()
@@ -323,6 +349,7 @@ class CreatPostTest(TestCase):
             "title": "test2",
             "postDetail": "test_test2",
             "requestNum": 5,
+            "labels": "1&2&3&4&5",
         }
         response = self.client.post(self.url, HTTP_AUTHORIZATION=self.token, data=data, content_type='application/json')
         ret_data = response.json()
@@ -335,6 +362,7 @@ class CreatPostTest(TestCase):
             "postDetail": "test_test2",
             "requestNum": 0,
             "ddl": "2019-05-20",
+            "labels": "1&2&3&4&5",
         }
         response = self.client.post(self.url, HTTP_AUTHORIZATION=self.token, data=data, content_type='application/json')
         ret_data = response.json()
@@ -347,6 +375,7 @@ class CreatPostTest(TestCase):
             "postDetail": "test_test2",
             "requestNum": 101,
             "ddl": "2019-05-20",
+            "labels": "1&2&3&4&5",
         }
         response = self.client.post(self.url, HTTP_AUTHORIZATION=self.token, data=data, content_type='application/json')
         ret_data = response.json()
@@ -359,6 +388,7 @@ class CreatPostTest(TestCase):
             "postDetail": "test_test2",
             "requestNum": 1.2,
             "ddl": "2019-05-20",
+            "labels": "1&2&3&4&5",
         }
         response = self.client.post(self.url, HTTP_AUTHORIZATION=self.token, data=data, content_type='application/json')
         ret_data = response.json()
@@ -371,6 +401,7 @@ class CreatPostTest(TestCase):
             "postDetail": "test_test2",
             "requestNum": 5,
             "ddl": "2019-05-20",
+            "labels": "1&2&3&4&5",
         }
         response = self.client.post(self.url, HTTP_AUTHORIZATION=self.token, data=data, content_type='application/json')
         ret_data = response.json()
@@ -383,6 +414,7 @@ class CreatPostTest(TestCase):
             "postDetail": "test_test2",
             "requestNum": 5,
             "ddl": "2019",
+            "labels": "1&2&3&4&5",
         }
         response = self.client.post(self.url, HTTP_AUTHORIZATION=self.token, data=data, content_type='application/json')
         ret_data = response.json()
@@ -395,6 +427,7 @@ class CreatPostTest(TestCase):
             "postDetail": "test_test2",
             "requestNum": 5,
             "ddl": "2019-05-32",
+            "labels": "1&2&3&4&5",
         }
         response = self.client.post(self.url, HTTP_AUTHORIZATION=self.token, data=data, content_type='application/json')
         ret_data = response.json()
@@ -407,6 +440,7 @@ class CreatPostTest(TestCase):
             "postDetail": "test_test2",
             "requestNum": 5,
             "ddl": "2019-05-20",
+            "labels": "1&2&3&4&5",
         }
         response = self.client.post(self.url, HTTP_AUTHORIZATION=self.token, data=data, content_type='application/json')
         response = self.client.post(self.url, HTTP_AUTHORIZATION=self.token, data=data, content_type='application/json')
@@ -420,6 +454,7 @@ class CreatPostTest(TestCase):
             "postDetail": "test_test2",
             "requestNum": 5,
             "ddl": "2019-05-20",
+            "labels": "1&2&3&4&5",
         }
         response = self.client.post(self.url, HTTP_AUTHORIZATION="self.token", data=data,
                                     content_type='application/json')
@@ -434,14 +469,14 @@ class CreatApplyTest(TestCase):
     def setUp(self):  # 测试所用数据库为空，需手动插入数据
         user = User.objects.create(account='bsh_test', password=gen_md5('admin_admin', SECRET_KEY))  # 数据库中插入用户
         self.post2 = Post.objects.create(title="test_a", post_detail="test_test2", request_num=4, accept_num=1,
-                                         deadline="2019-5-20", if_end=False, poster=user)
+                                         deadline="2019-12-31", if_end=False, poster=user, is_imported=False)
         self.post3 = Post.objects.create(title="test_b", post_detail="test_test2", request_num=4, accept_num=1,
-                                         deadline="2019-04-20", if_end=False, poster=user)
+                                         deadline="2019-04-20", if_end=False, poster=user, is_imported=False)
         self.post3.deadline = "2019-04-20"
         self.post3.save()
 
         self.post4 = Post.objects.create(title="test_c", post_detail="test_test2", request_num=1, accept_num=1,
-                                         deadline="2019-5-20", if_end=False, poster=user)
+                                         deadline="2019-5-20", if_end=False, poster=user, is_imported=False)
         self.token = create_token(user.id).decode()
         self.url = '/c/apply/'
         self.post_ID = self.post2.id
@@ -463,7 +498,8 @@ class CreatApplyTest(TestCase):
             "awards": "nan",
             "english_skill": "nan",
             "project_exp": "nan",
-            "self_review": "nan"
+            "self_review": "nan",
+            "labels": "1&2&3&4",
         }
         response = self.client.post(self.url, data=data, HTTP_AUTHORIZATION=self.token, content_type='application/json')
         ret_data = response.json()
@@ -487,9 +523,9 @@ class CreatApplyTest(TestCase):
             "awards": "nan",
             "english_skill": "nan",
             "project_exp": "nan",
-            "self_review": "nan"
+            "self_review": "nan",
         }
-        response = self.client.get(self.url, data=data, HTTP_AUTHORIZATION=self.token)
+        response = self.client.get(self.url, HTTP_AUTHORIZATION=self.token)
         ret_data = response.json()
         self.assertFalse(ret_data['ret'])
         self.assertEqual(ret_data['error_code'], 1)
@@ -511,7 +547,8 @@ class CreatApplyTest(TestCase):
             "awards": "nan",
             "english_skill": "nan",
             "project_exp": "nan",
-            "self_review": "nan"
+            "self_review": "nan",
+            "labels": "1&2&3&4",
         }
         response = self.client.post(self.url, data=data, HTTP_AUTHORIZATION='')
         ret_data = response.json()
@@ -535,7 +572,8 @@ class CreatApplyTest(TestCase):
             "awards": "nan",
             "english_skill": "nan",
             "project_exp": "nan",
-            "self_review": "nan"
+            "self_review": "nan",
+            "labels": "1&2&3&4",
         }
         response = self.client.post(self.url, data='', HTTP_AUTHORIZATION=self.token, content_type='application/json')
         ret_data = response.json()
@@ -582,7 +620,8 @@ class CreatApplyTest(TestCase):
             "awards": "nan",
             "english_skill": "nan",
             "project_exp": "nan",
-            "self_review": "nan"
+            "self_review": "nan",
+            "labels": "1&2&3&4",
         }
         response = self.client.post(self.url, data=data, HTTP_AUTHORIZATION=self.token, content_type='application/json')
         ret_data = response.json()
@@ -606,7 +645,8 @@ class CreatApplyTest(TestCase):
             "awards": "nan",
             "english_skill": "nan",
             "project_exp": "nan",
-            "self_review": "nan"
+            "self_review": "nan",
+            "labels": "1&2&3&4",
         }
         response = self.client.post(self.url, data=data, HTTP_AUTHORIZATION=self.token, content_type='application/json')
         ret_data = response.json()
@@ -630,7 +670,8 @@ class CreatApplyTest(TestCase):
             "awards": "nan",
             "english_skill": "nan",
             "project_exp": "nan",
-            "self_review": "nan"
+            "self_review": "nan",
+            "labels": "1&2&3&4",
         }
         response = self.client.post(self.url, data=data, HTTP_AUTHORIZATION=self.token, content_type='application/json')
         ret_data = response.json()
@@ -655,7 +696,8 @@ class CreatApplyTest(TestCase):
             "awards": "nan",
             "english_skill": "nan",
             "project_exp": "nan",
-            "self_review": "nan"
+            "self_review": "nan",
+            "labels": "1&2&3&4",
         }
         response = self.client.post(self.url, data=data, HTTP_AUTHORIZATION=self.token, content_type='application/json')
         ret_data = response.json()
@@ -702,7 +744,8 @@ class CreatApplyTest(TestCase):
             "awards": "nan",
             "english_skill": "nan",
             "project_exp": "nan",
-            "self_review": "nan"
+            "self_review": "nan",
+            "labels": "1&2&3&4",
         }
         response = self.client.post(self.url, data=data, HTTP_AUTHORIZATION=self.token, content_type='application/json')
         ret_data = response.json()

@@ -369,7 +369,7 @@ def modify_post_detail(request, post_id):
 
     # 处理获取的标签，进行标签正确性检查
     labelList = decode_label(labels)
-    if check_postLabel(labelList):
+    if not check_postLabel(labelList):
         return JsonResponse({'ret': False, 'error_code': 3})
 
     if type(request_num) != int or request_num < 1 or request_num > 100:
