@@ -115,10 +115,7 @@ def upload_post_image(request, post_id):
     return JsonResponse({'ret': True, 'image_url': post.image.url})
 
 
-# TODO 增加排序功能或重写有排序功能的方法
 def get_unclosed_posts(request):
-    # if request.method != "GET":
-    #     return JsonResponse({'ret': False, 'error_code': 1})
 
     if request.method != "POST":
         return JsonResponse({'ret': False, 'error_code': 1})
@@ -189,8 +186,7 @@ def get_unclosed_posts_by_label(request, label):
     user = verify_token(request.META.get('HTTP_AUTHORIZATION'))
     if not user:
         return JsonResponse({'ret': False, 'error_code': 5})
-
-    if not check_postLabel(label):
+    if not check_postLabel(label.split('&')):
         return JsonResponse({'ret': False, 'error_code': 3})
 
     unclosed_posts = Post.objects.filter(if_end=False, deadline__gte=datetime.date.today()).order_by('-post_time')
@@ -370,7 +366,7 @@ def modify_post_detail(request, post_id):
 
     # 处理获取的标签，进行标签正确性检查
     labelList = decode_label(labels)
-    if check_postLabel(labelList):
+    if not check_postLabel(labelList):
         return JsonResponse({'ret': False, 'error_code': 3})
 
     if type(request_num) != int or request_num < 1 or request_num > 100:
