@@ -165,3 +165,4 @@
     <button class="backhome" style = "width:50%" catchtap='refuse'> 拒绝  </button>
     <button class='apply' bindtap='click_save_resume'>  同意   </button>
  </view>
+<i-toast id="toast" />

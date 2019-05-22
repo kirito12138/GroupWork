@@ -1,4 +1,5 @@
 const { $Message } = require('../../vant-weapp/dist/base/index');
+const { $Toast } = require('../../vant-weapp/dist/base/index');
 var app = getApp() // 获得全局变量
 // pages/myResume/myResume.js
 Page({
@@ -474,9 +475,15 @@ Page({
         || (this.data.expEdu3['year'] != "" && this.data.expEdu3['major'] != "" && this.data.expEdu3['school'] != "")
       )
       {
+
         edu_exp = edu_exp1 + "|" + edu_exp2 + "|" + edu_exp3;
         if (age == "") age = "0";
         console.log(this.data)
+        $Toast({
+          content: '加载中',
+          type: 'loading',
+          duration: 0
+        });
         wx.request({
           url: 'https://group.tttaaabbbccc.club/c/apply/',
           method: "POST",
@@ -502,6 +509,7 @@ Page({
             labels: lb,
           },
           success(res) {
+            $Toast.hide()  
             console.log("HHHHHHHHHHHHH" + res.data)
 
             if (res.data.ret) {
@@ -509,6 +517,12 @@ Page({
                 content: '申请成功',
                 type: 'success'
               });
+              setTimeout(function () {
+                wx.reLaunch({
+                  url: '../home/home',
+                })
+              }, 1000) //延迟时间 这里是1秒
+
             }
             else {
               if (res.data.error_code == 6) {
@@ -518,6 +532,10 @@ Page({
                 });
               }
             }
+          },
+          fail(res)
+          {
+            $Toast.hide()
           }
         })
       }
@@ -571,7 +589,11 @@ Page({
         login: false
       })
     }
-
+    $Toast({
+      content: '加载中',
+      type: 'loading',
+      duration: 0
+    });
     wx.request({
       url: 'https://group.tttaaabbbccc.club/my/resume/',
       method: "GET",
@@ -580,7 +602,7 @@ Page({
         'Authorization': tk
       },
       success(res) {
-
+        $Toast.hide()
         console.log("1111" + res.data.sex)
         if (res.data.name != "") {
 
@@ -668,6 +690,10 @@ Page({
             });
           }
         }
+      },
+      fail(res)
+      {
+        $Toast.hide()
       }
     })
   },

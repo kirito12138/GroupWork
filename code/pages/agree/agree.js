@@ -1,4 +1,5 @@
 const { $Message } = require('../../vant-weapp/dist/base/index');
+const { $Toast } = require('../../vant-weapp/dist/base/index');
 // pages/myResume/myResume.js
 Page({
 
@@ -149,6 +150,7 @@ Page({
     
     
     */ 
+    console.log("太容易")
     var that = this;
     const _jwt = wx.getStorageSync('jwt');
     var tk;
@@ -162,6 +164,11 @@ Page({
     }
 
     console.log(this.data)
+    $Toast({
+      content: '加载中',
+      type: 'loading',
+      duration: 0
+    });
     wx.request({
       url: 'https://group.tttaaabbbccc.club//apply/' + this.data.applyID + '/accept/',
       method: "POST",
@@ -173,6 +180,7 @@ Page({
       {
       },
       success(res) {
+        $Toast.hide()  
         console.log(res.data)
         if (res.data.ret) {
           $Message({
@@ -183,6 +191,10 @@ Page({
             url: '../applyers/applyers',
           })
         }
+      },
+      fail(res)
+      {
+        $Toast.hide()
       }
     })
     
@@ -208,7 +220,11 @@ Page({
       return;
     }
 
-
+    $Toast({
+      content: '加载中',
+      type: 'loading',
+      duration: 0
+    });
     wx.request({
       url: 'https://group.tttaaabbbccc.club//apply/' + this.data.applyID + '/reject/',
       method: "POST",
@@ -220,6 +236,7 @@ Page({
       {
       },
       success(res) {
+        $Toast.hide()
         console.log(res.data)
         if (res.data.ret) {
           $Message({
@@ -230,6 +247,10 @@ Page({
             url: '../applyers/applyers',
           })
         }
+      },
+      fail(res)
+      {
+        $Toast.hide()
       }
     })
 
