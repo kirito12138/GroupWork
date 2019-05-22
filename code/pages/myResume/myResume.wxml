@@ -75,7 +75,7 @@
 
 <view wx:for="{{hosList}}" wx:for-item="h">
 
-  <view data-text =  "{{h.name}}" wx:if="{{h.show}}" catchtap='clicsho'>{{h.name}}</view>
+  <view data-text =  "{{h.name}}" wx:if="{{h.show}}" catchtap='clicsho1'>{{h.name}}</view>
 
 </view>
 

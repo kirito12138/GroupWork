@@ -161,7 +161,7 @@ Page({
       return;
     }
 
-    
+    console.log(this.data)
     wx.request({
       url: 'https://group.tttaaabbbccc.club//apply/' + this.data.applyID + '/accept/',
       method: "POST",
@@ -179,7 +179,9 @@ Page({
             content: '已同意',
             type: 'success'
           });
-          wx.navigateBack(1)
+          wx.navigateTo({
+            url: '../applyers/applyers',
+          })
         }
       }
     })
@@ -224,7 +226,9 @@ Page({
             content: '已拒绝',
             type: 'error'
           });
-          wx.navigateBack(1)
+          wx.navigateTo({
+            url: '../applyers/applyers',
+          })
         }
       }
     })
@@ -248,26 +252,7 @@ Page({
       console.log("no token");
       return;
     }
-    wx.request({
-      url: 'https://group.tttaaabbbccc.club//apply/' + this.data.applyID + '/accept/',
-      method: "POST",
-      header: {
-        "Content-Type": "application/json;charset=UTF-8",
-        'Authorization': tk
-      },
-      data:
-      {
-      },
-      success(res) {
-        console.log(res.data)
-        if (res.data.ret) {
-          $Message({
-            content: '已同意',
-            type: 'success'
-          });
-        }
-      }
-    })
+
     console.log("2222" + options.info)
     this.data.info = JSON.parse(options.info);
     
