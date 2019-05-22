@@ -45,7 +45,8 @@
     "i-toast": "../../vant-weapp/dist/toast/index",
     "i-divider": "../../vant-weapp/dist/divider/index",
     "i-tag": "../../vant-weapp/dist/tag/index",
-    "i-spin": "../../vant-weapp/dist/spin/index"
+    "i-spin": "../../vant-weapp/dist/spin/index",
+    "i-modal": "../../vant-weapp/dist/modal/index"
   },
   "tabBar": {
     "list": [
