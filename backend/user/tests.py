@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from jwt_token import create_token
+from user.jwt_token import create_token
 from user.models import User
 from user.views import gen_md5
 from backend.settings import SECRET_KEY
@@ -74,6 +74,10 @@ class RegisterViewTests(TestCase):
         self.assertTrue(ret_data['ret'])
         self.assertEqual(ret_data['ID'], '2')
         self.assertTrue('Token' in ret_data)
+        response = self.client.post('/register/', data=data, content_type='application/json')
+        ret_data = response.json()
+        self.assertFalse(ret_data['ret'])
+        self.assertEqual(ret_data['error_code'], 4)
 
     def test_register_failed_1(self):
         data = {'account': 'admin', 'password': 'admin_admin', "name": "", "age": 0,
@@ -272,6 +276,16 @@ class ModifyResumeTests(TestCase):
         ret_data = response.json()
         self.assertFalse(ret_data['ret'])
         self.assertEqual(ret_data['error_code'], 5)
+
+    def test_modify_resume_failed_6(self):
+        data = {'name': 'User1', 'sex': 'male', 'age': 10, 'degree': 'high school', 'phone': '13579',
+                'email': '4521@126.com', 'city': 'beijing', 'edu_exp': 'abc', 'awards': 'null', 'english_skill': 'A',
+                'project_exp': 'B',
+                'self_review': 'not bad'}
+        response = self.client.post('/my/resume/modify/', data=data, HTTP_AUTHORIZATION=self.token)
+        ret_data = response.json()
+        self.assertFalse(ret_data['ret'])
+        self.assertEqual(ret_data['error_code'], 3)
 
 
 class GetMyProfileTests(TestCase):
