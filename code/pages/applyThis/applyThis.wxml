@@ -118,7 +118,10 @@
       <i-divider lineColor="#CCCCCC" height = "1"></i-divider>
     </view>
 
-    <textarea placeholder="未填写" style='font-size:14px; margin-top: 20rpx' bindinput="input_rewards" >{{awards}}</textarea>
+    <view style = "height: 160px">
+    
+    <i-input type='textarea' placeholder="未填写" style='font-size:14px; margin-top: 20rpx height: 60px' bindinput="input_rewards" value = "{{awards}}" maxlength='180'/>
+    </view>
 
   </view>
 
@@ -132,7 +135,10 @@
       <i-divider lineColor="#CCCCCC" height = "1"></i-divider>
     </view>
     
-    <textarea placeholder="未填写" style='font-size:14px; margin-top: 20rpx' bindinput="input_english_skill">{{english_skill}}</textarea>
+    <view style = "height: 160px">
+    
+    <i-input type='textarea' placeholder="未填写" style='font-size:14px; margin-top: 20rpx height: 60px' bindinput="input_english_skill" value = "{{english_skill}}" maxlength='180'/>
+    </view>
   </view>
 
   <view class='card-view' style='margin-top:40rpx;'>
@@ -144,7 +150,10 @@
       <i-divider lineColor="#CCCCCC" height = "1"></i-divider>
     </view>
     
-    <textarea placeholder="未填写" style='font-size:14px; margin-top: 20rpx' bindinput="input_project_exp">{{project_exp}}</textarea>
+    <view style = "height: 160px">
+    
+    <i-input type='textarea' placeholder="未填写" style='font-size:14px; margin-top: 20rpx height: 60px' bindinput="input_project_exp" value = "{{project_exp}}" maxlength='180'/>
+    </view>
   </view>
 
   <view class='card-view' style='margin-top:40rpx;'>
@@ -155,8 +164,12 @@
     <view style='background:gray;margin-top:20rpx' >
       <i-divider lineColor="#CCCCCC" height = "1"></i-divider>
     </view>
+
+    <view style = "height: 160px">
     
-    <textarea placeholder="未填写" style='font-size:14px; margin-top: 20rpx' bindinput="input_self_review">{{self_review}}</textarea>
+    <i-input type='textarea' placeholder="未填写" style='font-size:14px; margin-top: 20rpx height: 60px' bindinput="input_self_review" value = "{{self_review}}" maxlength='180'/>
+    </view>
+    
   </view>
 
   <view class = "button">

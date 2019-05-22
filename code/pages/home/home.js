@@ -235,6 +235,15 @@ Page({
           }
 
           res.data[i]["sp"] = ssp;
+          console.log(ssp[0])
+          if (res.data[i].labels == "")
+          {
+            res.data[i]["vie"] = false;
+          }
+          else
+          {
+            res.data[i]["vie"] = true;
+          }
 
         }
         that.setData({

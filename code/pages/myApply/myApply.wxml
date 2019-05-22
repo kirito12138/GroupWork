@@ -58,7 +58,7 @@
 
 
       <view class='tags'>
-        <i-tag class="i-tags" color="blue" wx:for = "{{item.sp}}" wx:for-item="cell">
+        <i-tag class="i-tags" color="blue" wx:if = "{{item.vie}}" wx:for = "{{item.sp}}" wx:for-item="cell">
           {{tagsDict[cell]}}
         </i-tag>
       </view>

@@ -195,6 +195,12 @@ Page({
             }
 
             res.data[i]["sp"] = ssp;
+            if (res.data[i].labels == "") {
+              res.data[i]["vie"] = false;
+            }
+            else {
+              res.data[i]["vie"] = true;
+            }
             console.log(that.data.tagsIndex)
           }
           that.setData({
