@@ -148,6 +148,11 @@ Page({
     catch (e) {
       console.log("no id");
     }
+    $Toast({
+      content: '加载中',
+      type: 'loading',
+      duration: 0
+    });
 
     wx.request({
       url: 'https://group.tttaaabbbccc.club//my/'+id+'/apply/',
@@ -157,6 +162,7 @@ Page({
         'Authorization': tk
       },
       success(res) {
+        $Toast.hide()  
         if(res.data['ret'] == false)
         {
           if (res.data['error_code'] == 1)
@@ -209,6 +215,10 @@ Page({
           console.log(that.data.f_posts)
         }
         
+      },
+      fail(res)
+      {
+        $Toast.hide()
       }
     })
   },
