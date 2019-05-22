@@ -161,7 +161,7 @@ Page({
       return;
     }
 
-    console.log(this.data)
+    console.log("aksjdlasdj"+this.data)
     wx.request({
       url: 'https://group.tttaaabbbccc.club//apply/' + this.data.applyID + '/accept/',
       method: "POST",
@@ -173,14 +173,16 @@ Page({
       {
       },
       success(res) {
-        console.log(res.data)
+        console.log("KLKLKJL"+res.data)
         if (res.data.ret) {
           $Message({
             content: '已同意',
             type: 'success'
           });
+          var para = JSON.stringify(that.data);
+          wx.navigateBack(1)
           wx.navigateTo({
-            url: '../applyers/applyers',
+            url: '../applyers/applyers?info=' + para,
           })
         }
       }
@@ -226,8 +228,10 @@ Page({
             content: '已拒绝',
             type: 'error'
           });
-          wx.navigateTo({
-            url: '../applyers/applyers',
+          var para = JSON.stringify(that.data);
+          wx.navigateBack(1)
+          wx.redirectTo({
+            url: '../applyers/applyers?info=' + para,
           })
         }
       }
@@ -280,7 +284,7 @@ Page({
       ddl: this.data.info.ddl,*/
 
       applyID: this.data.info.applyID,
-      //posterID: this.data.info.posterID,
+      postID: this.data.info.postID,
     })
 
     if (this.data.edu_exp != "") {
@@ -328,7 +332,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+   
   },
 
   /**

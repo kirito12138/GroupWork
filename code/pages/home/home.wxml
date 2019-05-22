@@ -15,7 +15,11 @@
   <scroll-view class='sv' scroll-y='true' style='z-index: -1;'>
     <view class = 'half_1' wx:for = "{{f_posts}}">
      <view class = "card" bindtap='clickCard' data-index='{{index}}'>
-      <image class = 'img' src ="https://group.tttaaabbbccc.club/{{item.image_url}}"  style="width:100%;height:250rpx"/>
+     
+      <view style="width:100%;height:250rpx">
+      <image class = 'img' mode = "aspectFill" src ="https://group.tttaaabbbccc.club/{{item.image_url}}"  style="width:100%;height:250rpx"/>
+      </view>
+
       <view class='title'>
         <view class = 'title_son'>
           <image class='title_img' style="width:40rpx;height:40rpx" src = "../../image/title.png"></image>

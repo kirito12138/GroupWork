@@ -9,9 +9,10 @@ page, .page {
 }
 .img
 {
-  height: 100rpx;
+  width: 100%;
   margin-top: 0rpx;
   background-color: white;
+  
 }
 .title{
   margin-top:10rpx; 

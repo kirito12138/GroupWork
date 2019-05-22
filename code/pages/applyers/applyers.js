@@ -24,6 +24,7 @@ Page({
     
     fp.edu_exp = fp.edu_exp.replace(/&/g, "!");
     fp.labels = fp.labels.replace(/&/g, "!");
+    fp['postID'] = this.data.postID
     console.log(fp.edu_exp)
     var para = JSON.stringify(fp);
 

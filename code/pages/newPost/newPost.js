@@ -554,9 +554,23 @@ Page({
             }
             else if (res.data["ret"] == true)
             {
+              $Toast.hide()
+              console.log(res)
+           
+
               console.log(that.data.tempFilePaths[0])
               console.log(res.data["postID"])
               var count = 0;
+              if (that.data.tempFilePaths.length==0)
+              {
+                $Toast({
+                  content: '新建发布成功！',
+                  type: 'success'
+                })
+                wx.reLaunch({
+                  url: '../home/home',
+                })
+              }
               for (var i = 0, h = that.data.tempFilePaths.length; i < h; i++) {
                 //上传文件
                   $Toast({
