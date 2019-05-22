@@ -3,8 +3,12 @@
   <view class='page_row' bindtap="suo">  
       
     </view>  
+  <i-modal title="删除确认" visible="{{ visible }}" actions="{{ actions5 }}" bind:click="cancel_del">
+      <view>删除后无法恢复哦</view>
+  </i-modal>
 
   <scroll-view class='sv' scroll-y='true' style='z-index: -1;' >
+
     <view class = 'half_1' wx:for = "{{f_posts}}" >
       
       <view class='title'>
@@ -33,7 +37,7 @@
               </view>
           </view>
            <view wx:if = "{{!item.ch_flag}}" style='background-color: #F8F8FA'>
-              <view class = 'ck_son' style = "border: 1px solid #7F7F7F;width:200rpx; " bindtap='del' data-index='{{index}}'>
+              <view class = 'ck_son' style = "border: 1px solid #7F7F7F;width:200rpx; " bindtap='is_del' data-index='{{index}}'>
                 <image class='ck_img' style="width:35rpx;height:35rpx;margin-left:20rpx;" src = "../../image/del.png"></image>
                 <text  class='ck_text' style='font-size:20px;text-align: center; color :red' > 删 除</text>
               </view>
