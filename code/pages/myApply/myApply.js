@@ -41,6 +41,7 @@ Page({
     this.data.f_posts[i].labels = this.data.f_posts[i].labels.replace(/&/g, "!");
     var para = JSON.stringify(this.data.f_posts[i]);
     console.log("111111111" + this.data.f_posts[i]);
+    para = encodeURIComponent(para)
     wx.navigateTo({
       url: '../myApplyson/myApplyson?info=' + para,
     })

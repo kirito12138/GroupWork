@@ -48,7 +48,9 @@ Page({
       console.log("no token");
       return;
     }
-    this.data.info = JSON.parse(options.info);
+    var kk = decodeURIComponent(options.info)
+    this.data.info = JSON.parse(kk);
+
     console.log("++++++++++++"+this.data.info);
 
     if (this.data.info.sp[0] == null) {
