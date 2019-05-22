@@ -4,7 +4,7 @@
   <!-- 个人信息-->
   <view class='card-view' style='margin-top:40rpx;'>
     <view class='item-title' >
-      <i-icon type="mine_fill" size = "70" />
+      <image src="{{userimg }}" class="userimage" />
       <i-input placeholder="未填写" style='font:"微软雅黑";font-size:18px; margin-left: 20rpx' value= "{{name}}" bind:change = "input_name" maxlength="20"/>
     </view>
     
@@ -71,7 +71,14 @@
       <i-divider lineColor="#e9eaec" height = "1"></i-divider>
     </view>
 
-    <i-input placeholder="未填写"  title="所学专业:" value= "{{expEdu1['major']}}" bind:change = "input_major_1" maxlength="20"/>
+    <i-input placeholder="未填写"  title="所学专业:" class = "ipsel" confirm-type='search' bind:change = "input_major_1" maxlength="20" bindconfirm='confirm1' bindblur='noblur1'  value= "{{expEdu1['major']}}"/>
+
+<view wx:for="{{hosList}}" wx:for-item="h">
+
+  <view data-text =  "{{h.name}}" wx:if="{{h.show}}" catchtap='clicsho'>{{h.name}}</view>
+
+</view>
+
     
     <view style='background:gray' >
       <i-divider lineColor="#CCCCCC" height = "1"></i-divider>
@@ -88,7 +95,15 @@
       <i-divider lineColor="#e9eaec" height = "1"></i-divider>
     </view>
 
-    <i-input placeholder="未填写"  title="所学专业:" value= "{{expEdu2['major']}}" bind:change = "input_major_2" maxlength="20"/>
+    <i-input placeholder="未填写"  title="所学专业:" class = "ipsel" confirm-type='search' bind:change = "input_major_2" maxlength="20" bindconfirm='confirm2' bindblur='noblur2'  value= "{{expEdu2['major']}}"/>
+
+<view wx:for="{{hosList2}}" wx:for-item="h">
+
+  <view data-text =  "{{h.name}}" wx:if="{{h.show}}" catchtap='clicsho2'>{{h.name}}</view>
+
+</view>
+
+
 
     <view style='background:gray' >
       <i-divider lineColor="#CCCCCC" height = "1"></i-divider>
@@ -105,7 +120,15 @@
       <i-divider lineColor="#e9eaec" height = "1"></i-divider>
     </view>
 
-    <i-input placeholder="未填写"  title="所学专业:" value= "{{expEdu3['major']}}" bind:change = "input_major_3" maxlength="20"/>
+    <i-input placeholder="未填写"  title="所学专业:" class = "ipsel" confirm-type='search' bind:change = "input_major_3" maxlength="20" bindconfirm='confirm3' bindblur='noblur3'  value= "{{expEdu3['major']}}"/>
+
+<view wx:for="{{hosList3}}" wx:for-item="h">
+
+  <view data-text =  "{{h.name}}" wx:if="{{h.show}}" catchtap='clicsho3'>{{h.name}}</view>
+
+</view>
+
+
 
   </view>
 
@@ -118,7 +141,10 @@
       <i-divider lineColor="#CCCCCC" height = "1"></i-divider>
     </view>
 
-    <textarea placeholder="未填写" style='font-size:14px; margin-top: 20rpx' bindinput="input_rewards" >{{awards}}</textarea>
+    <view style = "height: 160px">
+    
+    <i-input type='textarea' placeholder="未填写" style='font-size:14px; margin-top: 20rpx height: 60px' bindinput="input_rewards" value = "{{awards}}" maxlength='180'/>
+    </view>
 
   </view>
 
@@ -131,8 +157,10 @@
     <view style='background:gray;margin-top:20rpx' >
       <i-divider lineColor="#CCCCCC" height = "1"></i-divider>
     </view>
+    <view style = "height: 160px">
     
-    <textarea placeholder="未填写" style='font-size:14px; margin-top: 20rpx' bindinput="input_english_skill">{{english_skill}}</textarea>
+    <i-input type='textarea' placeholder="未填写" style='font-size:14px; margin-top: 20rpx height: 60px' bindinput="input_english_skill" value = "{{english_skill}}" maxlength='180'/>
+    </view>
   </view>
 
   <view class='card-view' style='margin-top:40rpx;'>
@@ -143,8 +171,12 @@
     <view style='background:gray;margin-top:20rpx' >
       <i-divider lineColor="#CCCCCC" height = "1"></i-divider>
     </view>
+
+    <view style = "height: 160px">
     
-    <textarea placeholder="未填写" style='font-size:14px; margin-top: 20rpx' bindinput="input_project_exp">{{project_exp}}</textarea>
+    <i-input type='textarea' placeholder="未填写" style='font-size:14px; margin-top: 20rpx height: 60px' bindinput="input_project_exp" value = "{{project_exp}}" maxlength='180'/>
+    </view>
+    
   </view>
 
   <view class='card-view' style='margin-top:40rpx;'>
@@ -156,7 +188,10 @@
       <i-divider lineColor="#CCCCCC" height = "1"></i-divider>
     </view>
     
-    <textarea placeholder="未填写" style='font-size:14px; margin-top: 20rpx' bindinput="input_self_review">{{self_review}}</textarea>
+    <view style = "height: 160px">
+    
+    <i-input type='textarea' placeholder="未填写" style='font-size:14px; margin-top: 20rpx height: 60px' bindinput="input_self_review" value = "{{self_review}}" maxlength='180'/>
+    </view>
   </view>
 
   <view class = "button">

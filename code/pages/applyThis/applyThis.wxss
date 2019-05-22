@@ -24,7 +24,13 @@
   margin-top: 10rpx;
   font-size: 30rpx;
 }
-
+.userimage{
+margin-top: 40rpx;
+align-content: center;
+width: 100rpx;
+height: 100rpx;
+border-radius: 100rpx;
+}
 .job{
   color: #fae001;
   margin-top: 20rpx;

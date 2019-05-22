@@ -38,7 +38,7 @@ Page({
     console.log(e.currentTarget.dataset.index);
     var i = e.currentTarget.dataset.index;
     var para = JSON.stringify(this.data.f_posts[i]);
-    //console.log("111111111" + this.data.f_posts[i]);
+    console.log("111111111" + this.data.f_posts[i]);
     wx.navigateTo({
       url: '../myApplyson/myApplyson?info=' + para,
     })
@@ -195,6 +195,12 @@ Page({
             }
 
             res.data[i]["sp"] = ssp;
+            if (res.data[i].labels == "") {
+              res.data[i]["vie"] = false;
+            }
+            else {
+              res.data[i]["vie"] = true;
+            }
             console.log(that.data.tagsIndex)
           }
           that.setData({

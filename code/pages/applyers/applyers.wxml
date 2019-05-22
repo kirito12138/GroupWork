@@ -1,12 +1,82 @@
-<!--pages/applyers/applyers.wxml-->
+<!--pages/postDetail/postDetail.wxml-->
 
-<view class = "cds" >
-<view wx:for = "{{f_posts}}">
-    <view class = "card" bindtap='clickCard' data-index='{{index}}'>
-    <i-card title="{{item.name}}" extra="查看简历" full = "true" style="color:#555555 font-weight:bolder">
-    <view slot="content"><text style = "color: black; font-weight:bold;">详情：</text>{{item.self_review}}</view>
-    <view slot="footer"><text style = "color: black;" >\n性别：</text>{{item.sex}}    <text style = "color: black;" >\n年龄：</text>{{item.age}}     <text style = "color: black;" >\n城市：</text> {{item.city}}  <text style = "color: black;" >\n申请状态：</text>{{item.applyStatus}}</view>
-    </i-card>
+  <view class='page_row' bindtap="suo">  
+       
+    </view>  
+
+  <scroll-view class='sv' scroll-y='true' style='z-index: -1;'>
+    <view class = 'half_1' wx:for = "{{f_posts}}" >
+      <view bindtap='clickCard' data-index='{{index}}'>
+      
+
+      <view class = 'second'>
+        <view class = "left">
+          <view class='useinfo'>
+          <image class = 'userimg' src = "{{item.poster_avatar_url}}" />
+          <text  class = 'username'> {{item.name}}</text>
+          </view>
+
+          <view class='date'>
+
+            <text  class='date_text'> 城市：</text>
+            <text  class='num_text'> {{item.city}}</text>
+
+
+            <text  class='date_text'> 年龄：</text>
+            <text  class='num_text'> {{item.age}}</text>
+          </view>
+
+          <view class='num'>
+            <text  class='date_text'> 学历：</text>
+            <text  class='num_text' > {{item.deg}}</text>
+
+            <text  class='date_text'> 专业：</text>
+            <text  class='num_text'> {{item.major}}</text>
+          </view>
+
+          <view class='num'>
+            <text  class='date_text'> 学校：</text>
+            <text  class='num_text' > {{item.school}}</text>
+
+            
+          </view>
+        </view>
+        
+        <view class = "right" style='margin-right: 40rpx'>
+          <view wx:if="{{ item.applyStatus == 'accepted' }}">
+            <icon   type="success" size = "50" />
+            <text>\n</text>
+            <text decode="{{true}}" class = "ictext" class='ictext'> 已通过</text>
+          </view>
+
+          <view wx:elif="{{ item.applyStatus == 'waiting' }}">
+            <icon   type="waiting" size = "50" />
+            <text>\n</text>
+            <text decode="{{true}}" class = "ictext" class='ictext'> 等待中</text>
+          </view>
+
+          <view wx:elif="{{ item.applyStatus == 'closed' }}">
+            <icon   type="info" size = "50" />
+            <text>\n</text>
+            <text decode="{{true}}" class = "ictext" class='ictext'> 已结束</text>
+          </view>
+            
+        </view>      
+      </view>
+
+
+
+      </view>
+      <view style="height:20rpx;background-color:#D9D9D9">
     </view>
-</view>
-</view>
+    </view>
+
+      
+
+    
+
+   
+
+
+ </scroll-view>
+

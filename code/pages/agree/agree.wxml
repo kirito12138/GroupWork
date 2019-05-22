@@ -1,4 +1,3 @@
-    
 <view class="page-container">
 
   <!-- 个人信息-->
@@ -159,8 +158,10 @@
     <textarea disabled = "true" style='font-size:14px; margin-top: 20rpx' bindinput="input_self_review">{{self_review}}</textarea>
   </view>
 
-  <view class = "button">
-    <i-button bind:click="click_save_resume" type="primary" shape="circle" size="large">同意</i-button>
-  </view>
+ 
   <i-message id="message" />
 </view>
+<view class='button'style = "  position:fixed; bottom:0; width :100%">
+    <button class="backhome" style = "width:50%" catchtap='refuse'> 拒绝  </button>
+    <button class='apply' bindtap='click_save_resume'>  同意   </button>
+ </view>

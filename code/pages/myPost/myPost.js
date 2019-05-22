@@ -1,5 +1,6 @@
 // pages/home/home.js
 const { $Message } = require('../../vant-weapp/dist/base/index');
+const { $Toast } = require('../../vant-weapp/dist/base/index');
 Page({
 
   data: {
@@ -269,6 +270,11 @@ Page({
     catch (e) {
       console.log("no id");
     }
+    $Toast({
+      content: '加载中',
+      type: 'loading',
+      duration: 0
+    });
     wx.request({
       url: 'https://group.tttaaabbbccc.club/my/'+id+'/post/',
       method: "GET",
@@ -277,6 +283,7 @@ Page({
         'Authorization': tk
       },
       success(res) {
+        $Toast.hide()
         console.log('res', res)
         if(res.data['ret']!=null)
         {

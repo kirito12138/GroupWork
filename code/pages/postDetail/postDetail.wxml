@@ -9,7 +9,7 @@
       </view>
 
       <view class='tags'>
-        <i-tag class="i-tags" color="blue" wx:for = "{{sp}}" >
+        <i-tag class="i-tags" color="blue" wx:if = "{{vie}}" wx:for = "{{sp}}" >
           {{tagsDict[item]}}
         </i-tag>
       </view>

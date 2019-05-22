@@ -1,4 +1,5 @@
 const { $Message } = require('../../vant-weapp/dist/base/index');
+var app = getApp() // 获得全局变量
 // pages/myResume/myResume.js
 Page({
 

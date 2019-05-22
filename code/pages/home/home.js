@@ -10,7 +10,7 @@ Page({
     // newmark 是指移动的最新点的x轴坐标 
     newmark: 0,
     istoright: true,
-    f_posts:[],
+    f_posts: [],
     num1: 1,
     num2: 2,
     date: "19/05/01",
@@ -22,34 +22,33 @@ Page({
     tagsDict: ["哲学类", "经济学类", "财政学类", "金融学类", "经济与贸易类", "法学类", "政治学类", "社会学类", "民族学类", "马克思主义理论类", "公安学类", "教育学类", "体育学类", "中国语言文学类", "外国语言文学类", "新闻传播学类", "历史学类", "数学类", "物理学类", "化学类", "天文学类", "地理科学类", "大气科学类", "海洋科学类", "地球物理学类", "地质学类", "生物科学类", "心理学类", "统计学类", "力学类", "机械类", "仪器类", "材料类", "能源动力类", "电气类", "电子信息类", "自动化类", "计算机类", "土木类", "水利类", "测绘类", "化工与制药类", "地质类", "矿业类", "纺织类", "轻工类", "交通运输类", "海洋工程类", "航空航天类", "兵器类", "核工程类", "农业工程类", "林业工程类", "环境科学与工程类", "生物医学工程类", "食品科学与工程类", "建筑类", "安全科学与工程类", "生物工程类", "公安技术类", "植物生产类", "自然保护与环境生态类", "动物生产类", "动物医学类", "林学类", "水产类", "草学类", "基础医学类", "临床医学类", "口腔医学类", "公共卫生与预防医学类", "中医学类", "中西医结合类", "药学类", "中药学类", "法医学类", "医学技术类", "护理学类", "管理科学与工程类", "工商管理类", "农业经济管理类", "公共管理类", "图书情报与档案管理类", "物流管理与工程类", "工业工程类", "电子商务类", "旅游管理类", "艺术学理论类", "音乐与舞蹈学类", "戏剧与影视学类", "美术学类", "设计学类","实习招募","实验室招募","学科竞赛","学生项目","个人招募","志愿招募","娱乐活动"],
     tagsIndex: [2, 3, 4],
     requestNum: '10',
-    hosList1 : [
+    hosList1: [
       { id: 101, name: "aaa", show: true, serch: "10111" },
       { id: 102, name: "bbb", show: true, serch: "10212" },
     ],
-    hosList:[],
+    hosList: [],
     tei: 1,
-    searchValue :""
+    searchValue: ""
   },
 
   input1: function (e) {
     this.setData
-    ({
-      tei:e.detail.value
-    })
+      ({
+        tei: e.detail.value
+      })
     this.serch(e.detail.value)
   },
   confirm1: function (e) {
     this.serch(e.detail.value)
   },
 
-  clicsho: function(e)
-  {
+  clicsho: function (e) {
     console.log(e);
     this.setData
-    ({
+      ({
         tei: e.currentTarget.dataset.text,
         hosList: []
-    })
+      })
   },
 
   serch: function (key) {
@@ -68,23 +67,21 @@ Page({
     })
   },
 
-  inputser: function(e)
-  {
+  inputser: function (e) {
     console.log(e)
     this.setData({
       searchValue: e.detail.value,
     });
   },
 
-  searchkey: function(e)
-  {
+  searchkey: function (e) {
     console.log(this.data.searchValue);
     var para = JSON.stringify(this.data.searchValue);
     //console.log("111111111" + this.data.f_posts[i]);
     wx.navigateTo({
       url: '../homeson/homeson?info=' + para,
-    }) 
-    
+    })
+
   },
 
   jnewPost: function (e) {
@@ -94,27 +91,47 @@ Page({
   },
 
 
-  clickCard: function(e){
+  clickCard: function (e) {
     console.log(e.currentTarget.dataset.index);
     var i = e.currentTarget.dataset.index;
 
     console.log(this.data.f_posts[i])
 
     var _history = wx.getStorageSync('history');
-    _history ="" //_history + this.data.f_posts[i].postID.toString();
-    wx.setStorageSync('history', _history);
-    console.log('history',_history)
+    var ar = _history.split("&")
+    var tag = 0;
+    console.log(ar)
+    for (var i = 0; i< ar.length; i++)
+    {
+      if (ar[i] == this.data.f_posts[i].postID.toString())
+      {
+        tag = 1;
+      }
+    }
+    if(tag == 0)
+    {
+      _history = _history + "&" + this.data.f_posts[i].postID.toString();
 
+    }
+    wx.setStorageSync('history', _history);
+    console.log('history', _history)
+
+    var str, ss;
+    str = this.data.f_posts[i].labels.replace(/&/g, "!")
+    ss = "f_posts[" + i +"].labels";
+    this.data.f_posts[i].labels = str;
+
+    console.log(this.data.f_posts[i].labels)
     
     var para = JSON.stringify(this.data.f_posts[i]);
-    //console.log("111111111" + para);
+    console.log("111111111" + para);
     wx.navigateTo({
       url: '../postDetail/postDetail?info=' + para,
-    }) 
+    })
 
 
   },
-  
+
   // 点击左上角小图标事件。
   tap_ch: function (e) {
     if (this.data.open) {
@@ -170,8 +187,7 @@ Page({
       url: '../personInfo/personInfo',
     })
   },
-  goHome:function(e)
-  {
+  goHome: function (e) {
     wx.redirectTo({
       url: '../home/home',
     })
@@ -221,62 +237,65 @@ Page({
         "Content-Type": "application/json;charset=UTF-8",
         'Authorization': tk
       },
-      data:{
-        history:'0'
+      data: {
+        history: '0'
       },
       success(res) {
         $Toast.hide()
-        console.log('sASs',res)
-        
+        console.log('sASs', res)
+
         console.log(res.data[0])
-        for(var i = 0; i < res.data.length; i++)
-        {
+        for (var i = 0; i < res.data.length; i++) {
           var sp = res.data[i].labels.split("&");
           var ssp = [];
-          for(var j=0; j<sp.length; j++)
-          {
-            
+          for (var j = 0; j < sp.length; j++) {
+
             ssp[j] = parseInt(sp[j]);
 
           }
-  
+
           res.data[i]["sp"] = ssp;
+          console.log(ssp[0])
+          if (res.data[i].labels == "")
+          {
+            res.data[i]["vie"] = false;
+          }
+          else
+          {
+            res.data[i]["vie"] = true;
+          }
+
         }
         that.setData({
           f_posts: res.data
         });
         console.log(that.data.f_posts)
       },
-      fail(res)
-      {
+      fail(res) {
         $Toast.hide();
       }
     })
 
   },
- 
 
-  goChangePwd: function(e)
-  {
+
+  goChangePwd: function (e) {
     wx.navigateTo({
       url: '../changePwd/changePwd',
     })
   },
-  goMyResume: function(e)
-  {
+  goMyResume: function (e) {
     wx.navigateTo({
       url: '../myResume/myResume',
     })
   },
-  goMyPost:function(e)
-  {
+  goMyPost: function (e) {
     wx.navigateTo({
       url: '../myPost/myPost',
     })
   },
 
-  newPost: function(e)
-  {
+  newPost: function (e) {
     wx.navigateTo({
       url: '../newPost/newPost',
     })

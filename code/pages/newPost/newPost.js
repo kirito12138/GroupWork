@@ -270,7 +270,7 @@ Page({
   serch: function (key) {
     var that = this;
     var arr = [];
-    console.log(key)
+    console.log("assss"+key)
     for (let i in that.data.hosList1) {
       that.data.hosList1[i].show = false;
       if (that.data.hosList1[i].serch.indexOf(key) > 0) {

@@ -1,6 +1,6 @@
 {
   "pages": [
-    
+    "pages/home/home",
     "pages/index/index",
     "pages/postDetail/postDetail",
     "pages/login/login",
@@ -10,7 +10,7 @@
     "pages/register/register",
     "pages/changePwd/changePwd",
     "pages/newPost/newPost",
-    "pages/home/home",
+    
     "pages/myApply/myApply",
     "pages/myApplyson/myApplyson",
     "pages/myPost/myPost",
