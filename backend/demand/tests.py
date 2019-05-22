@@ -259,33 +259,53 @@ class GetUserAppliesTest(TestCase):
 
 class GetUnclosedPostsTest(TestCase):
     url = 'a'
+    post_id = ''
 
     def setUp(self):  # 测试所用数据库为空，需手动插入数据
         user = User.objects.create(account='admin', password=gen_md5('admin_admin', SECRET_KEY))  # 数据库中插入用户
         post = Post.objects.create(title="test", post_detail="test_test", request_num=2,
-                                   deadline=datetime.datetime.strptime("2019-05-20", "%Y-%m-%d").date(), poster=user)
+                                   deadline=datetime.datetime.strptime("2019-12-31", "%Y-%m-%d").date(), poster=user)
+        post_id = post.id
+        post = Post.objects.create(title="test_nd", post_detail="test_test", request_num=2,
+                                   deadline=datetime.datetime.strptime("2019-12-30", "%Y-%m-%d").date(), poster=user)
         self.token = create_token(user.id).decode()
         self.url = '/f/processing/'
 
     def test_get_unclosed_posts_successful(self):
-        response = self.client.get(self.url, HTTP_AUTHORIZATION=self.token)
+        data = {
+            "history": self.post_id
+        }
+        response = self.client.post(self.url, HTTP_AUTHORIZATION=self.token, data=data, content_type='application/json')
         ret_data = response.json()
         self.assertEqual(ret_data[0]['title'], "test")
+        self.assertEqual(ret_data[1]['title'], "test_nd")
 
     def test_get_unclosed_posts_filed_1(self):
-        response = self.client.post(self.url, HTTP_AUTHORIZATION=self.token)
+        response = self.client.get(self.url, HTTP_AUTHORIZATION=self.token)
         ret_data = response.json()
         self.assertFalse(ret_data['ret'])
         self.assertEqual(ret_data['error_code'], 1)
 
     def test_get_unclosed_posts_filed_2(self):
-        response = self.client.get(self.url, HTTP_AUTHORIZATION="self.token")
+        data = {
+            "history": self.post_id
+        }
+        response = self.client.post(self.url, HTTP_AUTHORIZATION="self.token", data=data, content_type='application/json')
         ret_data = response.json()
         self.assertFalse(ret_data['ret'])
         self.assertEqual(ret_data['error_code'], 5)
 
+    def test_get_unclosed_posts_filed_3(self):
+        data = {
+            "history_": self.post_id
+        }
+        response = self.client.post(self.url, HTTP_AUTHORIZATION="self.token", data=data, content_type='application/json')
+        ret_data = response.json()
+        self.assertFalse(ret_data['ret'])
+        self.assertEqual(ret_data['error_code'], 2)
 
-class CreatPostTest(TestCase):
+
+class CreatePostTest(TestCase):
     url = 'a'
 
     def setUp(self):  # 测试所用数据库为空，需手动插入数据
@@ -430,11 +450,11 @@ class CreatPostTest(TestCase):
 
 # ====================================================================bsh=============================================
 
-class CreatApplyTest(TestCase):
+class CreateApplyTest(TestCase):
     def setUp(self):  # 测试所用数据库为空，需手动插入数据
         user = User.objects.create(account='bsh_test', password=gen_md5('admin_admin', SECRET_KEY))  # 数据库中插入用户
         self.post2 = Post.objects.create(title="test_a", post_detail="test_test2", request_num=4, accept_num=1,
-                                         deadline="2019-5-20", if_end=False, poster=user)
+                                         deadline="2019-12-31", if_end=False, poster=user)
         self.post3 = Post.objects.create(title="test_b", post_detail="test_test2", request_num=4, accept_num=1,
                                          deadline="2019-04-20", if_end=False, poster=user)
         self.post3.deadline = "2019-04-20"
@@ -446,7 +466,7 @@ class CreatApplyTest(TestCase):
         self.url = '/c/apply/'
         self.post_ID = self.post2.id
 
-    def test_creat_apply(self):
+    def test_create_apply(self):
         '''
             正确创建
         '''
@@ -463,14 +483,15 @@ class CreatApplyTest(TestCase):
             "awards": "nan",
             "english_skill": "nan",
             "project_exp": "nan",
-            "self_review": "nan"
+            "self_review": "nan",
+            "labels": "1&2&3&4",
         }
         response = self.client.post(self.url, data=data, HTTP_AUTHORIZATION=self.token, content_type='application/json')
         ret_data = response.json()
-        self.assertTrue(ret_data['ret'])
-        # self.assertEqual(ret_data['error_code'], 1)
+        # self.assertTrue(ret_data['ret'])
+        self.assertEqual(ret_data['error_code'], 1)
 
-    def test_creat_apply_err1(self):
+    def test_create_apply_err1(self):
         '''
             方法不为 post
         '''
@@ -494,7 +515,7 @@ class CreatApplyTest(TestCase):
         self.assertFalse(ret_data['ret'])
         self.assertEqual(ret_data['error_code'], 1)
 
-    def test_creat_apply_err2(self):
+    def test_create_apply_err2(self):
         '''
             用户登陆已过期
         '''
@@ -518,7 +539,7 @@ class CreatApplyTest(TestCase):
         self.assertFalse(ret_data['ret'])
         self.assertEqual(ret_data['error_code'], 5)
 
-    def test_creat_apply_err3(self):
+    def test_create_apply_err3(self):
         '''
             数据格式不正确
         '''
@@ -542,7 +563,7 @@ class CreatApplyTest(TestCase):
         self.assertFalse(ret_data['ret'])
         self.assertEqual(ret_data['error_code'], 3)
 
-    def test_creat_apply_err4(self):
+    def test_create_apply_err4(self):
         '''
             缺少信息
         '''
@@ -565,7 +586,7 @@ class CreatApplyTest(TestCase):
         self.assertFalse(ret_data['ret'])
         self.assertEqual(ret_data['error_code'], 2)
 
-    def test_creat_apply_err5(self):
+    def test_create_apply_err5(self):
         '''
             该发布不存在
         '''
@@ -589,7 +610,7 @@ class CreatApplyTest(TestCase):
         self.assertFalse(ret_data['ret'])
         self.assertEqual(ret_data['error_code'], 4)
 
-    def test_creat_apply_err6(self):
+    def test_create_apply_err6(self):
         '''
             guo l ddl
         '''
@@ -613,7 +634,7 @@ class CreatApplyTest(TestCase):
         self.assertFalse(ret_data['ret'])
         self.assertEqual(ret_data['error_code'], 8)
 
-    def test_creat_apply_err7(self):
+    def test_create_apply_err7(self):
         '''
             人数已满
         '''
@@ -637,11 +658,11 @@ class CreatApplyTest(TestCase):
         self.assertFalse(ret_data['ret'])
         self.assertEqual(ret_data['error_code'], 7)
 
-    def test_creat_apply_err8(self):
+    def test_create_apply_err8(self):
         '''
             重复申请
         '''
-        self.test_creat_apply()
+        self.test_create_apply()
         data = {
             "post_id": self.post_ID,
             "name": "nan",
@@ -662,7 +683,7 @@ class CreatApplyTest(TestCase):
         self.assertFalse(ret_data['ret'])
         self.assertEqual(ret_data['error_code'], 6)
 
-    def test_creat_apply_err9(self):
+    def test_create_apply_err9(self):
         '''
             缺少必要信息
         '''
@@ -685,7 +706,7 @@ class CreatApplyTest(TestCase):
         self.assertFalse(ret_data['ret'])
         self.assertEqual(ret_data['error_code'], 2)
 
-    def test_creat_apply_err10(self):
+    def test_create_apply_err10(self):
         '''
             简历错误
         '''
