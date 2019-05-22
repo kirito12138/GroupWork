@@ -54,12 +54,12 @@
 
     
 
-      
+       <i-toast id="toast" />
 
  </scroll-view>
 
 <button  class="circle" bindtap='jnewPost'><image src='../../image/bm_btn.png' mode='widthFix'></image></button>
 
- <i-toast id="toast" />
+
 
 
