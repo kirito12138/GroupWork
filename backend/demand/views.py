@@ -115,10 +115,7 @@ def upload_post_image(request, post_id):
     return JsonResponse({'ret': True, 'image_url': post.image.url})
 
 
-# TODO 增加排序功能或重写有排序功能的方法
 def get_unclosed_posts(request):
-    # if request.method != "GET":
-    #     return JsonResponse({'ret': False, 'error_code': 1})
 
     if request.method != "POST":
         return JsonResponse({'ret': False, 'error_code': 1})
