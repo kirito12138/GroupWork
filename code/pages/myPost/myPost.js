@@ -161,6 +161,12 @@ Page({
         that.setData({
           f_posts: res.data
         });
+        for (var i = 0; i < that.data.f_posts.length; i++) {
+          let string = "f_posts[" + i + "].ch_flag";
+          that.setData({
+            [string]: true
+          });
+        }
         console.log(that.data.f_posts)
 
       }
