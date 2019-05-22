@@ -36,5 +36,5 @@
     <button class="backhome" bindtap='goToHome'> 返回  </button>
     <button class='apply' bindtap='applyFor'>  我的简历   </button>
  </view>
-
+ <i-toast id="toast" />
 
