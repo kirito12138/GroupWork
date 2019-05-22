@@ -72,7 +72,7 @@ def create_post(request):
         request_num=request_num,
         deadline=deadline,
         poster=user,
-        image='img/post/example/' + str(randint(1, 4)) + '.jpg',  # 设置默认图片
+        image='img/post/example/' + str(randint(1, 7)) + '.jpg',  # 设置默认图片
         is_imported=False,
     )
 
