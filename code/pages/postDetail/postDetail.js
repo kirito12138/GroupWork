@@ -1,4 +1,5 @@
 // pages/postDetail/postDetail.js
+const { $Toast } = require('../../vant-weapp/dist/base/index');
 var app = getApp();
 Page({
 
@@ -80,6 +81,11 @@ Page({
       postID: this.data.info.postID,
       posterID: this.data.info.posterID
     })
+    $Toast({
+      content: '加载中',
+      type: 'loading',
+      duration: 0
+    });
     wx.request({
       url: 'https://group.tttaaabbbccc.club/my/'+that.data.posterID+'/detail/',
       method: "GET",
@@ -88,12 +94,17 @@ Page({
         'Authorization': tk
       },
       success(res) {
+        $Toast.hide()
         console.log(res)
         if (res.data['ret']) {
           that.setData({
             name: res.data['name']
           })
         }
+      },
+      fail(res)
+      {
+        $Toast.hide()
       }
     })
   },

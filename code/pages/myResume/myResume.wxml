@@ -199,4 +199,6 @@
   </view>
   <i-message id="message" />
   <i-toast id="toast" />
+  
+ <i-toast id="toast" />
 </view>

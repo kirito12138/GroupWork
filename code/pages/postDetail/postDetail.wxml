@@ -37,4 +37,5 @@
     <button class='apply' bindtap='applyFor'>  申请招募   </button>
  </view>
 
+ <i-toast id="toast" />
 

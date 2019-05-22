@@ -562,6 +562,11 @@ Page({
         login: false
       })
     }
+    $Toast({
+      content: '加载中',
+      type: 'loading',
+      duration: 0
+    });
 
     wx.request({
       url: 'https://group.tttaaabbbccc.club/my/resume/',
@@ -571,6 +576,7 @@ Page({
         'Authorization': tk
       },
       success(res) {
+        $Toast.hide()
         
         console.log("1111" + res.data.sex)
         if (res.data.name != "") {
@@ -663,6 +669,10 @@ Page({
             });
           }
         }
+
+      },
+      fail(res) {
+        $Toast.hide()
       }
     })
   },
