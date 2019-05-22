@@ -185,6 +185,50 @@ Page({
     
   },
 
+  refuse: function (e) {
+    /*‘
+    
+    
+      TODO   tong yi
+    
+    
+    */
+    var that = this;
+    const _jwt = wx.getStorageSync('jwt');
+    var tk;
+
+    if (_jwt) {
+      tk = JSON.parse(_jwt);
+    }
+    else {
+      console.log("no token");
+      return;
+    }
+
+
+    wx.request({
+      url: 'https://group.tttaaabbbccc.club//apply/' + this.data.applyID + '/refuse/',
+      method: "POST",
+      header: {
+        "Content-Type": "application/json;charset=UTF-8",
+        'Authorization': tk
+      },
+      data:
+      {
+      },
+      success(res) {
+        console.log(res.data)
+        if (res.data.ret) {
+          $Message({
+            content: '已同意',
+            type: 'success'
+          });
+        }
+      }
+    })
+
+  },
+
 
 
   /**

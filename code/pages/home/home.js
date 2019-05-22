@@ -98,13 +98,33 @@ Page({
     console.log(this.data.f_posts[i])
 
     var _history = wx.getStorageSync('history');
-    _history = "" //_history + this.data.f_posts[i].postID.toString();
+    var ar = _history.split("&")
+    var tag = 0;
+    console.log(ar)
+    for (var i = 0; i< ar.length; i++)
+    {
+      if (ar[i] == this.data.f_posts[i].postID.toString())
+      {
+        tag = 1;
+      }
+    }
+    if(tag == 0)
+    {
+      _history = _history + "&" + this.data.f_posts[i].postID.toString();
+
+    }
     wx.setStorageSync('history', _history);
     console.log('history', _history)
 
+    var str, ss;
+    str = this.data.f_posts[i].labels.replace(/&/g, "!")
+    ss = "f_posts[" + i +"].labels";
+    this.data.f_posts[i].labels = str;
 
+    console.log(this.data.f_posts[i].labels)
+    
     var para = JSON.stringify(this.data.f_posts[i]);
-    //console.log("111111111" + para);
+    console.log("111111111" + para);
     wx.navigateTo({
       url: '../postDetail/postDetail?info=' + para,
     })

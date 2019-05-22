@@ -51,6 +51,17 @@ Page({
     this.data.info = JSON.parse(options.info);
     console.log("++++++++++++"+this.data.info);
 
+    if (this.data.info.sp[0] == null) {
+      this.setData({
+        vie: false
+      })
+    }
+    else {
+      this.setData({
+        vie: true
+      })
+    }
+
     this.setData({
       title: this.data.info.post_title,
       postDetail: this.data.info.postDetail,

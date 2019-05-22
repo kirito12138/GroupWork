@@ -71,7 +71,14 @@
       <i-divider lineColor="#e9eaec" height = "1"></i-divider>
     </view>
 
-    <i-input placeholder="未填写"  title="所学专业:" value= "{{expEdu1['major']}}" bind:change = "input_major_1" maxlength="20"/>
+    <i-input placeholder="未填写"  title="所学专业:" class = "ipsel" confirm-type='search' bind:change = "input_major_1" maxlength="20" bindconfirm='confirm1' bindblur='noblur1'  value= "{{expEdu1['major']}}"/>
+
+<view wx:for="{{hosList}}" wx:for-item="h">
+
+  <view data-text =  "{{h.name}}" wx:if="{{h.show}}" catchtap='clicsho'>{{h.name}}</view>
+
+</view>
+
     
     <view style='background:gray' >
       <i-divider lineColor="#CCCCCC" height = "1"></i-divider>
@@ -88,7 +95,15 @@
       <i-divider lineColor="#e9eaec" height = "1"></i-divider>
     </view>
 
-    <i-input placeholder="未填写"  title="所学专业:" value= "{{expEdu2['major']}}" bind:change = "input_major_2" maxlength="20"/>
+    <i-input placeholder="未填写"  title="所学专业:" class = "ipsel" confirm-type='search' bind:change = "input_major_2" maxlength="20" bindconfirm='confirm2' bindblur='noblur2'  value= "{{expEdu2['major']}}"/>
+
+<view wx:for="{{hosList2}}" wx:for-item="h">
+
+  <view data-text =  "{{h.name}}" wx:if="{{h.show}}" catchtap='clicsho2'>{{h.name}}</view>
+
+</view>
+
+
 
     <view style='background:gray' >
       <i-divider lineColor="#CCCCCC" height = "1"></i-divider>
@@ -105,7 +120,15 @@
       <i-divider lineColor="#e9eaec" height = "1"></i-divider>
     </view>
 
-    <i-input placeholder="未填写"  title="所学专业:" value= "{{expEdu3['major']}}" bind:change = "input_major_3" maxlength="20"/>
+    <i-input placeholder="未填写"  title="所学专业:" class = "ipsel" confirm-type='search' bind:change = "input_major_3" maxlength="20" bindconfirm='confirm3' bindblur='noblur3'  value= "{{expEdu3['major']}}"/>
+
+<view wx:for="{{hosList3}}" wx:for-item="h">
+
+  <view data-text =  "{{h.name}}" wx:if="{{h.show}}" catchtap='clicsho3'>{{h.name}}</view>
+
+</view>
+
+
 
   </view>
 

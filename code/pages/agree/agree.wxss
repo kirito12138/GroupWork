@@ -93,9 +93,36 @@
 .cell-30p{
   flex: 0 0 33.33%;
 }
-
 .button
 {
-    margin-top: 30rpx;
-    margin-bottom: 10rpx;
+
+  margin-top: 0rpx;
+  height: 7%;
+  display: flex;
+  flex-flow: row wrap;
+  
+}
+.backhome
+{
+  flex-direction: column;
+  float: left;
+  width: 50%;
+  background-color: #DBDBDB;
+  color: 	gray;
+  border-radius: 0;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+
+}
+.apply
+{
+  flex-direction: column;
+  float: right;
+  width: 50%;
+  background-color: #1E90FF;
+  color: 	white;
+  border-radius: 0;
+
 }
