@@ -101,17 +101,31 @@ Page({
     var ar = _history.split("&")
     var tag = 0;
     console.log(ar)
+    var that = this;
     for (var j = 0; j< ar.length; j++)
     {
-      if (ar[j] == this.data.f_posts[j].postID.toString())
+      console.log(ar[j] == that.data.f_posts[i].postID.toString())
+      if (ar[j] == that.data.f_posts[i].postID.toString())
       {
         tag = 1;
+        ar.splice(j, 1);
       }
     }
     if(tag == 0)
     {
       _history = _history + "&" + this.data.f_posts[i].postID.toString();
 
+    }
+    if(tag == 1)
+    {
+      _history = ar.join("&")
+      _history = _history + "&" + this.data.f_posts[i].postID.toString();
+    }
+    if(ar.length > 50)
+    {
+      ar.splice(0, 1);
+      _history = ar.join("&")
+      _history = _history + "&" + this.data.f_posts[i].postID.toString();
     }
     wx.setStorageSync('history', _history);
     console.log('history', _history)
@@ -227,6 +241,7 @@ Page({
       type: 'loading',
       duration: 0
     });
+    console.log("hahahaha"+_history)
     wx.request({
       url: 'https://group.tttaaabbbccc.club/f/processing/',
       method: "POST",
@@ -333,7 +348,14 @@ Page({
   * 页面相关事件处理函数--监听用户下拉动作
   */
   onPullDownRefresh: function () {
-    wx.showNavigationBarLoading() //在标题栏中显示加载
+    if (app.globalData.userInfo !== null) {
+      this.setData({
+        userimg: app.globalData.userInfo.avatarUrl,
+        username: app.globalData.userInfo.nickName,
+        login: true
+      })
+    }
+
     var that = this;
     const _jwt = wx.getStorageSync('jwt');
     var _history = wx.getStorageSync('history');
@@ -347,23 +369,55 @@ Page({
       console.log("no token");
       return;
     }
-
+    $Toast({
+      content: '加载中',
+      type: 'loading',
+      duration: 0
+    });
     wx.request({
       url: 'https://group.tttaaabbbccc.club/f/processing/',
+      method: "POST",
       data: {
         history: _history,
       },
-      method: "POST",
       header: {
         "Content-Type": "application/json;charset=UTF-8",
         'Authorization': tk
       },
+      data: {
+        history: '0'
+      },
       success(res) {
-        console.log(res)
+        $Toast.hide()
+        console.log('sASs', res)
+
+        console.log(res.data[0])
+        for (var i = 0; i < res.data.length; i++) {
+          var sp = res.data[i].labels.split("&");
+          var ssp = [];
+          for (var j = 0; j < sp.length; j++) {
+
+            ssp[j] = parseInt(sp[j]);
+
+          }
+
+          res.data[i]["sp"] = ssp;
+          console.log(ssp[0])
+          if (res.data[i].labels == "") {
+            res.data[i]["vie"] = false;
+          }
+          else {
+            res.data[i]["vie"] = true;
+          }
+
+        }
         that.setData({
           f_posts: res.data
         });
-        console.log(res.data)
+        console.log(that.data.f_posts)
+      },
+      fail(res) {
+        $Toast.hide();
       }
     })
     //模拟加载
