@@ -7,8 +7,8 @@ Page({
     open: false,
     // mark 是指原点x轴坐标
     mark: 0,
+    visible:false,
     // newmark 是指移动的最新点的x轴坐标 
-    
     newmark: 0,
     istoright: true,
     f_posts: [],
@@ -19,8 +19,33 @@ Page({
     ],
     ch_flag: [],
     index: 0,
+    actions5: [
+      {
+        name: '取消'
+      },
+      {
+        name: '删除',
+        color: '#ed3f14',
+        loading: false
+      }
+    ]
   },
-
+  cancel_del:function(e)
+  {
+    if(e.detail.index==0)
+    {
+      this.setData({
+        visible:false
+      })
+    }
+    else
+    {
+      this.setData({
+        visible: false
+      })
+      this.del(e)
+    }
+  },
   clickPoint: function(e)
   {
     console.log("hhhhhhhhhhh", e.currentTarget.dataset.index);
@@ -74,7 +99,20 @@ Page({
       url: '../modifyPostSon/modifyPostSon?info=' + para,
     })
   },
+  is_del:function(e)
+  {
+    var i = e.currentTarget.dataset.index
+    this.setData
+    (
+      {
+        del_index:i
+      }
+    )
+    this.setData({
+      visible: true
+    });
 
+  },
   del:function(e)
   {
     const _jwt = wx.getStorageSync('jwt');
@@ -89,7 +127,8 @@ Page({
       console.log("no token");
       return;
     }
-    var i = e.currentTarget.dataset.index;
+    var i = this.data.del_index
+    console.log(i)
     var para = this.data.f_posts[i].postID;
     
     wx.request({
