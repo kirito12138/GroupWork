@@ -76,7 +76,11 @@ Page({
 
   searchkey: function (e) {
     console.log(this.data.searchValue);
-    var para = JSON.stringify(this.data.searchValue);
+    var can;
+    can['searchValue'] = this.data.searchValue;
+    can['tg'] = 1;
+    var para = JSON.stringify(can);
+
     //console.log("111111111" + this.data.f_posts[i]);
     wx.navigateTo({
       url: '../homeson/homeson?info=' + para,
@@ -136,7 +140,7 @@ Page({
     this.data.f_posts[i].labels = str;
 
     console.log(this.data.f_posts[i].labels)
-    
+    this.data.f_posts[i].labels = this.data.f_posts[i].labels.replace(/&/g, "!");
     var para = JSON.stringify(this.data.f_posts[i]);
     console.log("111111111" + para);
     wx.navigateTo({

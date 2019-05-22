@@ -1,6 +1,7 @@
 /* pages/postDetail/postDetail.wxss */
 page, .page {
     height: 100%;
+    
 }
 .search{  
   width: 80%;  
@@ -94,7 +95,7 @@ page, .page {
 
 
 .second{
-  margin-top:10rpx; 
+  /*margin-top:10rpx; */
   background-color: white;
   display: flex;
   flex-direction:row ;

@@ -7,7 +7,7 @@
       <view>删除后无法恢复哦</view>
   </i-modal>
 
-  <scroll-view class='sv' scroll-y='true' style='z-index: -1;' >
+  <scroll-view class='sv' scroll-y='true' style='z-index: -1; background-color: #F5F5F5' >
 
     <view class = 'half_1' wx:for = "{{f_posts}}" >
       
@@ -47,7 +47,7 @@
 
       </view>
 
-      <view class = 'second' bindtap='clickOther'>
+      <view class = 'second' bindtap='chakan' data-index='{{index}}'>
         <view class = "left" style='margin-left: 20rpx'>
             <image class = 'img' src ="https://group.tttaaabbbccc.club/{{item.image_url}}"  style="width:400rpx;height:240rpx"/>
         </view>   

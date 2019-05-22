@@ -28,6 +28,24 @@ Page({
     wx.navigateBack(1)
   },
 
+  clicktag: function (e) {
+    //console.log(aaa)
+
+    console.log(e.detail);
+    var can = { 'searchValue':"",'tg':0};
+    can['searchValue'] = e.detail.currentTarget.dataset.index;
+    can['tg'] = 2;
+    var para = JSON.stringify(can);
+    console.log("kkk"+para)
+    //console.log("111111111" + this.data.f_posts[i]);
+    wx.navigateTo({
+      url: '../homeson/homeson?info=' + para,
+    })
+  },
+
+
+
+
   /**
    * 生命周期函数--监听页面加载
    */

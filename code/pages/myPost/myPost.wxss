@@ -1,6 +1,7 @@
 /* pages/postDetail/postDetail.wxss */
 page, .page {
     height: 100%;
+    
 }
 .search{  
   width: 80%;  

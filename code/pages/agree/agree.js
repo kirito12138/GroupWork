@@ -192,9 +192,7 @@ Page({
           });
           var para = JSON.stringify(that.data);
           wx.navigateBack(1)
-          wx.navigateTo({
-            url: '../applyers/applyers?info=' + para,
-          })
+          
         }
       },
       fail(res)
@@ -250,9 +248,7 @@ Page({
           });
           var para = JSON.stringify(that.data);
           wx.navigateBack(1)
-          wx.redirectTo({
-            url: '../applyers/applyers?info=' + para,
-          })
+
         }
       },
       fail(res)

@@ -4,7 +4,7 @@
        
     </view>  
 
-  <scroll-view class='sv' scroll-y='true' style='z-index: -1;'>
+  <scroll-view class='sv' scroll-y='true' style='z-index: -1;background-color: #F5F5F5'>
     <view class = 'half_1' wx:for = "{{f_posts}}" >
       <view bindtap='clickCard' data-index='{{index}}'>
       

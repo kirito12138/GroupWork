@@ -4,19 +4,19 @@
     <view class = 'half_1'>
       <image class = 'img' mode = "widthFix" src = "https://group.tttaaabbbccc.club/{{postImg}}"  />
       <view class='title'>
-        <image class='title_img' style="width:50rpx;height:50rpx" src = "../../image/title.png"></image>
+        <image class='title_img' style="width:40rpx;height:40rpx" src = "../../image/title.png"></image>
         <text  class='title_text' > {{title}}</text>
       </view>
 
       <view class='tags'>
-        <i-tag class="i-tags" color="blue" wx:if = "{{vie}}" wx:for = "{{sp}}" >
+        <i-tag class="i-tags" color="blue" wx:if = "{{vie}}" wx:for = "{{sp}}" bindtap = "clicktag" data-index='{{tagsDict[item]}}' >
           {{tagsDict[item]}}
         </i-tag>
       </view>
       <view class='date-num'>
-        <image class='date_img' style="width:50rpx;height:50rpx" src = "../../image/date.png"></image>
+        <image class='date_img' style="width:30rpx;height:30rpx" src = "../../image/date.png"></image>
         <text  class='date_text' style='color:gray;text-align: center;margin-left:10rpx; position: absolute;'> {{ddl}}</text>
-        <image class='num_image' style="width:50rpx;height:50rpx" src = "../../image/Pnum.png"></image>
+        <image class='num_image' style="width:30rpx;height:30rpx" src = "../../image/Pnum.png"></image>
         <text  class='num_text' style='color:gray;text-align: center;margin-left:10rpx; position: absolute;'> {{acceptedNum}}/{{requestNum}}</text>
       </view>
     </view>
