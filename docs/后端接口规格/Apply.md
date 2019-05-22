@@ -75,7 +75,7 @@
 
 
 
-### /apply/\<apply_id\>/accept/ 拒绝申请，当前登录用户必须是该申请对应帖子的发布者 [已实现]
+### /apply/\<apply_id\>/reject/ 拒绝申请，当前登录用户必须是该申请对应帖子的发布者 [已实现]
 
 - parameter
 
