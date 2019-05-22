@@ -486,6 +486,15 @@ Page({
           //tags+=detailValue[i];
           //tags+="&";
         }
+
+        if (!(detailValue.length > 0 && detailValue.length<=5))
+        {
+          $Toast({
+            content: '标签数目需大于1且小于5',
+            type: 'error'
+          });
+          return;
+        }
         tags = detailValue.join("&");
         console.log('所有选中的值为：', tags);
 

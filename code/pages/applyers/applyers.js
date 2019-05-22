@@ -23,7 +23,7 @@ Page({
     var fp = this.data.f_posts[i];
     
     fp.edu_exp = fp.edu_exp.replace(/&/g, "!");
-
+    fp.labels = fp.labels.replace(/&/g, "!");
     console.log(fp.edu_exp)
     var para = JSON.stringify(fp);
 

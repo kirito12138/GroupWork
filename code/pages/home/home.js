@@ -101,17 +101,31 @@ Page({
     var ar = _history.split("&")
     var tag = 0;
     console.log(ar)
+    var that = this;
     for (var j = 0; j< ar.length; j++)
     {
-      if (ar[j] == this.data.f_posts[j].postID.toString())
+      console.log(ar[j] == that.data.f_posts[i].postID.toString())
+      if (ar[j] == that.data.f_posts[i].postID.toString())
       {
         tag = 1;
+        ar.splice(j, 1);
       }
     }
     if(tag == 0)
     {
       _history = _history + "&" + this.data.f_posts[i].postID.toString();
 
+    }
+    if(tag == 1)
+    {
+      _history = ar.join("&")
+      _history = _history + "&" + this.data.f_posts[i].postID.toString();
+    }
+    if(ar.length > 50)
+    {
+      ar.splice(0, 1);
+      _history = ar.join("&")
+      _history = _history + "&" + this.data.f_posts[i].postID.toString();
     }
     wx.setStorageSync('history', _history);
     console.log('history', _history)
@@ -227,6 +241,7 @@ Page({
       type: 'loading',
       duration: 0
     });
+    console.log("hahahaha"+_history)
     wx.request({
       url: 'https://group.tttaaabbbccc.club/f/processing/',
       method: "POST",
