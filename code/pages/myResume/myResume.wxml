@@ -198,5 +198,5 @@
     <i-button bind:click="click_save_resume" type="primary" shape="circle" size="large">保存修改</i-button>
   </view>
   <i-message id="message" />
-    <i-toast id="toast" />
+  <i-toast id="toast" />
 </view>

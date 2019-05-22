@@ -73,6 +73,6 @@
 
    
  <i-toast id="toast" />
-
+<i-message id="message" />
  </scroll-view>
 
