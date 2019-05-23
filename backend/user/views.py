@@ -85,10 +85,10 @@ def wechat_login(request):
 
     try:
         user = User.objects.get(open_id=open_id)
-        if user.name == '':
-            user.name = name
     except User.DoesNotExist:
-        user = User.objects.create(account=open_id, open_id=open_id, name=name)
+        user = User.objects.create(account=open_id, open_id=open_id)
+    if user.name == '':
+        user.name = name
     user.avatar_url = avatar_url
     user.save()
     token = create_token(user.id).decode()
