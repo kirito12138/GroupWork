@@ -12,7 +12,7 @@ def post_image_path(instance, filename):
 
 
 class Post(models.Model):
-    title = models.CharField(max_length=32)
+    title = models.CharField(max_length=50)
     post_detail = models.TextField(blank=True)
     request_num = models.IntegerField(default=0)
     accept_num = models.IntegerField(default=0)

@@ -17,7 +17,7 @@ from demand.models import ApplyLabel
 from demand.utils import decode_label, encode_label, check_postLabel, check_applyLabel, rank_post, grade_apply, \
     rank_apply
 
-post_title_pattern = re.compile(r"^.{1,20}$")
+post_title_pattern = re.compile(r"^.{1,50}$")
 deadline_pattern = re.compile(r"^\d\d\d\d-\d\d-\d\d$")
 
 
