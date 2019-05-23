@@ -336,22 +336,22 @@ Page({
   },
   input_rewards: function (e) {
     this.setData({
-      awards: e.detail.value,
+      awards: e.detail.detail.value,
     });
   },
   input_english_skill: function (e) {
     this.setData({
-      english_skill: e.detail.value,
+      english_skill: e.detail.detail.value,
     });
   },
   input_project_exp: function (e) {
     this.setData({
-      project_exp: e.detail.value,
+      project_exp: e.detail.detail.value,
     });
   },
   input_self_review: function (e) {
     this.setData({
-      self_review: e.detail.value,
+      self_review: e.detail.detail.value,
     });
   },
   click_save_resume:function(e)
