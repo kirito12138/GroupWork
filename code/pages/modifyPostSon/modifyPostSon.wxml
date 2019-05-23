@@ -1,5 +1,5 @@
 <!--pages/newPost/newPost.wxml-->
-<view class="page">
+<view class="page"bindtap='noblur'>
   <view class="weui-cells__title">发布标题</view>
   <view class="weui-cells weui-cells_after-title">
       <view class="weui-cell weui-cell_input">
@@ -22,9 +22,9 @@
 
   <view class="weui-cells__title">选择标签 </view>
 
-  <input type='text' class = "ipsel" confirm-type='search' bindinput='input1' bindconfirm='confirm1' bindblur='noblur'  value = "{{tei}}"></input>
+  <input type='text' class = "ipsel" confirm-type='search' bindinput='input1' bindconfirm='confirm1'   value = "{{tei}}"></input>
 
-<view wx:for="{{hosList}}" wx:for-item="h">
+<view wx:for="{{hosList}}" wx:for-item="h" wx:key="{{ii}}">
 
   <view data-text =  "{{h.name}}" wx:if="{{h.show}}" catchtap='clicsho'>{{h.name}}</view>
 

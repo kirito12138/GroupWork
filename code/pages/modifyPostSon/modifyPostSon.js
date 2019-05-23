@@ -212,13 +212,13 @@ Page({
       { id: 1303, name: "戏剧与影视学类", show: false, serch: "000戏剧与影视学类" },
       { id: 1304, name: "美术学类", show: false, serch: "000美术学类" },
       { id: 1305, name: "设计学类", show: false, serch: "000设计学类" },
-      { id: 9001, value: "实习招募", selected: false, title: "000实习招募" },
-      { id: 9003, value: "实验室招募", selected: false, title: "000实验室招募" },
-      { id: 9004, value: "学科竞赛", selected: false, title: "000学科竞赛" },
-      { id: 9005, value: "学生项目", selected: false, title: "000学生项目" },
-      { id: 9006, value: "个人招募", selected: false, title: "000个人招募" },
-      { id: 9007, value: "志愿招募", selected: false, title: "000志愿招募" },
-      { id: 9008, value: "娱乐活动", selected: false, title: "000娱乐活动" },
+      { id: 9001, value: "实习招募", show: false, serch: "000实习招募" },
+      { id: 9003, value: "实验室招募", show: false, serch: "000实验室招募" },
+      { id: 9004, value: "学科竞赛", show: false, serch: "000学科竞赛" },
+      { id: 9005, value: "学生项目", show: false, serch: "000学生项目" },
+      { id: 9006, value: "个人招募", show: false, serch: "000个人招募" },
+      { id: 9007, value: "志愿招募", show: false, serch: "000志愿招募" },
+      { id: 9008, value: "娱乐活动", show: false, serch: "000娱乐活动" },
     ],
     hosList: [],
     tei: ""
@@ -266,7 +266,6 @@ Page({
   serch: function (key) {
     var that = this;
     var arr = [];
-    console.log(key)
     for (let i in that.data.hosList1) {
       that.data.hosList1[i].show = false;
       if (that.data.hosList1[i].serch.indexOf(key) > 0) {
@@ -274,7 +273,6 @@ Page({
         arr.push(that.data.hosList1[i])
       }
     }
-    console.log(arr)
     this.setData({
       hosList: arr,
     })
@@ -504,6 +502,13 @@ Page({
         //tags+=detailValue[i];
         //tags+="&";
       }
+      if (!(detailValue.length > 0 && detailValue.length <= 5)) {
+        $Toast({
+          content: '标签数目需大于1且小于5',
+          type: 'error'
+        });
+        return;
+      }
       tags = detailValue.join("&");
       console.log('所有选中的值为：', tags);
 
@@ -562,6 +567,15 @@ Page({
             console.log(that.data.tempFilePaths[0])
             console.log(res.data["postID"])
             var count = 0;
+            if (that.data.tempFilePaths.length == 0) {
+              $Toast({
+                content: '新建发布成功！',
+                type: 'success'
+              })
+              wx.reLaunch({
+                url: '../home/home',
+              })
+            }
             for (var i = 0, h = that.data.tempFilePaths.length; i < h; i++) {
               //上传文件
               $Toast({

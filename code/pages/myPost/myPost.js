@@ -48,7 +48,7 @@ Page({
   },
   clickPoint: function(e)
   {
-    console.log("hhhhhhhhhhh", e.currentTarget.dataset.index);
+
     for(var i=0; i< this.data.f_posts.length; i++)
     {
       let string = "f_posts[" + i + "].ch_flag";
