@@ -31,9 +31,9 @@ Page({
   clicktag: function (e) {
     //console.log(aaa)
 
-    console.log(e.detail);
+    console.log(e);
     var can = { 'searchValue':"",'tg':0};
-    can['searchValue'] = e.detail.currentTarget.dataset.index;
+    can['searchValue'] = e.currentTarget.dataset.index;
     can['tg'] = 2;
     var para = JSON.stringify(can);
     console.log("kkk"+para)
@@ -71,7 +71,8 @@ Page({
       return;
     }
     console.log(options.info)
-    this.data.info=JSON.parse(options.info);
+    var kk = decodeURIComponent(options.info)
+    this.data.info=JSON.parse(kk);
     console.log('dasda',this.data.info)
     if (this.data.info.sp[0] == null)
     {
@@ -97,7 +98,8 @@ Page({
       userimg: this.data.info.poster_avatar_url,
       username:this.data.info.poster_name,
       postID: this.data.info.postID,
-      posterID: this.data.info.posterID
+      posterID: this.data.info.posterID,
+      is_imported: this.data.info.is_imported
     })
     $Toast({
       content: '加载中',
@@ -178,9 +180,23 @@ Page({
   
   applyFor: function(e){
     //TODO:完成申请按钮功能
-    var para = JSON.stringify(this.data.postID);
-    wx.navigateTo({
-      url: '../applyThis/applyThis?info=' + para,
-    })
+
+
+    if(this.data.is_imported == true)
+    {
+      $Toast({
+        content: '此发布为外部录入，请直接联系邮箱或电话',
+        type: 'error',
+      });
+    }
+    else
+    {
+      var para = JSON.stringify(this.data.postID);
+      wx.navigateTo({
+        url: '../applyThis/applyThis?info=' + para,
+      })
+    }
+
+    
   }
 })

@@ -9,7 +9,7 @@
       </view>
 
       <view class='tags'>
-        <i-tag class="i-tags" color="blue" wx:if = "{{vie}}" wx:for = "{{sp}}" bindtap = "clicktag" data-index='{{tagsDict[item]}}' >
+        <i-tag class="i-tags" color="blue" wx:if = "{{vie}}" wx:for = "{{sp}}" bindtap = "clicktag" data-index='{{item}}' >
           {{tagsDict[item]}}
         </i-tag>
       </view>

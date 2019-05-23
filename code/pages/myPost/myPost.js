@@ -96,7 +96,7 @@ Page({
     var i = e.currentTarget.dataset.index;
     this.data.f_posts[i].labels = this.data.f_posts[i].labels.replace(/&/g, "!");
     var para = JSON.stringify(this.data.f_posts[i]);
-
+    
     wx.navigateTo({
       url: '../modifyPostSon/modifyPostSon?info=' + para,
     })

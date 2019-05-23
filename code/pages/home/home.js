@@ -76,12 +76,13 @@ Page({
 
   searchkey: function (e) {
     console.log(this.data.searchValue);
-    var can;
+    var can = { 'searchValue': "", 'tg': 0 };
     can['searchValue'] = this.data.searchValue;
     can['tg'] = 1;
     var para = JSON.stringify(can);
 
     //console.log("111111111" + this.data.f_posts[i]);
+    para = encodeURIComponent(para)
     wx.navigateTo({
       url: '../homeson/homeson?info=' + para,
     })
@@ -139,9 +140,11 @@ Page({
     ss = "f_posts[" + i +"].labels";
     this.data.f_posts[i].labels = str;
 
-    console.log(this.data.f_posts[i].labels)
+    console.log(this.data.f_posts[i].postDetail)
     this.data.f_posts[i].labels = this.data.f_posts[i].labels.replace(/&/g, "!");
+    //this.data.f_posts[i].postDetail = this.data.f_posts[i].postDetail.replace(/\?/g, "!");
     var para = JSON.stringify(this.data.f_posts[i]);
+    para = encodeURIComponent(para)
     console.log("111111111" + para);
     wx.navigateTo({
       url: '../postDetail/postDetail?info=' + para,
