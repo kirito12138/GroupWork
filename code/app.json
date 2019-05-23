@@ -2,7 +2,6 @@
   "pages": [
     "pages/index/index",
     "pages/home/home",
-
     "pages/postDetail/postDetail",
     "pages/login/login",
     "pages/personInfo/personInfo",
@@ -11,7 +10,6 @@
     "pages/register/register",
     "pages/changePwd/changePwd",
     "pages/newPost/newPost",
-    
     "pages/myApply/myApply",
     "pages/myApplyson/myApplyson",
     "pages/myPost/myPost",
@@ -23,7 +21,8 @@
     "pages/agree/agree",
     "pages/applyers/applyers",
     "pages/personCenter/personCenter",
-    "pages/homeson/homeson"
+    "pages/homeson/homeson",
+    "pages/Aboutus/Aboutus"
   ],
   "window": {
     "backgroundTextStyle": "light",

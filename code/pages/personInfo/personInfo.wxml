@@ -30,9 +30,6 @@
     <view wx:if="{{!update}}" class = "button" >
       <i-button  bind:click="saveChanges" type="success">确定修改</i-button>
     </view>
-    <view class = "button_1">
-      <i-button  bind:click="loginout" type="error">退出当前账号</i-button>
-    </view>
   </view>
   <i-message id="message" />
 </view>

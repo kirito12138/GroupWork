@@ -1,0 +1,18 @@
+<!--pages/Aboutus/Aboutus.wxml-->
+<view class = 'card'>
+
+  <view style='text-align: center;'>
+    <text style='font-size:20px;text-align: center; color :black'>本项目由北航2019软件工程</text>
+  </view>
+  <view style='text-align: center;'>
+    <text style='font-size:20px;text-align: center; color :red'> Water_T团队</text>
+  </view>
+  <view style='text-align: center;'>
+    <text style='font-size:20px;text-align: center; color :black'>开发</text>
+  </view>
+   
+  <view class = 'label_1' style='margin-top:100rpx'>
+    联系方式：wbkingice@buaa.edu.cn
+  </view>
+    
+</view>

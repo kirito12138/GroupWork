@@ -1,49 +1,18 @@
-// pages/personCenter/personCenter.js
-var app = getApp() // 获得全局变量
+// pages/Aboutus/Aboutus.js
 Page({
 
   /**
-   * 
    * 页面的初始数据
    */
   data: {
 
   },
-  goPersonInfo: function () {
-    wx.navigateTo({
-      url: '../personInfo/personInfo',
-    })
-  },
-  goMyResume: function (e) {
-    wx.navigateTo({
-      url: '../myResume/myResume',
-    })
-  },
-  aboutUS:function(e)
-  {
-    wx.navigateTo({
-      url: '../Aboutus/Aboutus',
-    })
-  },
+
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    if (app.globalData.userInfo !== null) {
-      this.setData({
-        userimg: app.globalData.userInfo.avatarUrl,
-        username: app.globalData.userInfo.nickName,
-        login: true
-      })
-      console.log(this.data.userimg)
-    }
-    else {
-      this.setData({
-        userimg: '',
-        username: "未登录",
-        login: false
-      })
-    }
+
   },
 
   /**
