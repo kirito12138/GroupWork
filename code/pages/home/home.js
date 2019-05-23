@@ -43,7 +43,7 @@ Page({
   },
 
   clicsho: function (e) {
-    console.log(e);
+
     this.setData
       ({
         tei: e.currentTarget.dataset.text,
@@ -61,21 +61,21 @@ Page({
         arr.push(this.data.hosList1[i])
       }
     }
-    console.log(arr)
+
     this.setData({
       hosList: arr,
     })
   },
 
   inputser: function (e) {
-    console.log(e)
+
     this.setData({
       searchValue: e.detail.value,
     });
   },
 
   searchkey: function (e) {
-    console.log(this.data.searchValue);
+
     var can = { 'searchValue': "", 'tg': 0 };
     can['searchValue'] = this.data.searchValue;
     can['tg'] = 1;
@@ -97,19 +97,19 @@ Page({
 
 
   clickCard: function (e) {
-    console.log(e.currentTarget.dataset.index);
+ 
     var i = e.currentTarget.dataset.index;
 
-    console.log(this.data.f_posts[i])
+
 
     var _history = wx.getStorageSync('history');
     var ar = _history.split("&")
     var tag = 0;
-    console.log(ar)
+
     var that = this;
     for (var j = 0; j< ar.length; j++)
     {
-      console.log(ar[j] == that.data.f_posts[i].postID.toString())
+     
       if (ar[j] == that.data.f_posts[i].postID.toString())
       {
         tag = 1;
@@ -133,19 +133,18 @@ Page({
       _history = _history + "&" + this.data.f_posts[i].postID.toString();
     }
     wx.setStorageSync('history', _history);
-    console.log('history', _history)
-
+  
     var str, ss;
     str = this.data.f_posts[i].labels.replace(/&/g, "!")
     ss = "f_posts[" + i +"].labels";
     this.data.f_posts[i].labels = str;
 
-    console.log(this.data.f_posts[i].postDetail)
+   
     this.data.f_posts[i].labels = this.data.f_posts[i].labels.replace(/&/g, "!");
     //this.data.f_posts[i].postDetail = this.data.f_posts[i].postDetail.replace(/\?/g, "!");
     var para = JSON.stringify(this.data.f_posts[i]);
     para = encodeURIComponent(para)
-    console.log("111111111" + para);
+
     wx.navigateTo({
       url: '../postDetail/postDetail?info=' + para,
     })
@@ -234,13 +233,13 @@ Page({
     const _jwt = wx.getStorageSync('jwt');
     var _history = wx.getStorageSync('history');
     var tk;
-    console.log(_jwt)
+
     if (_jwt) {
       tk = JSON.parse(_jwt);
-      console.log(tk);
+   
     }
     else {
-      console.log("no token");
+
       return;
     }
     $Toast({
@@ -248,7 +247,7 @@ Page({
       type: 'loading',
       duration: 0
     });
-    console.log("hahahaha"+_history)
+
     wx.request({
       url: 'https://group.tttaaabbbccc.club/f/processing/',
       method: "POST",
@@ -264,9 +263,9 @@ Page({
       },
       success(res) {
         $Toast.hide()
-        console.log('sASs', res)
 
-        console.log(res.data[0])
+
+
         for (var i = 0; i < res.data.length; i++) {
           var sp = res.data[i].labels.split("&");
           var ssp = [];
@@ -277,7 +276,7 @@ Page({
           }
 
           res.data[i]["sp"] = ssp;
-          console.log(ssp[0])
+
           if (res.data[i].labels == "")
           {
             res.data[i]["vie"] = false;
@@ -291,7 +290,7 @@ Page({
         that.setData({
           f_posts: res.data
         });
-        console.log(that.data.f_posts)
+     
       },
       fail(res) {
         $Toast.hide();
@@ -367,7 +366,7 @@ Page({
     const _jwt = wx.getStorageSync('jwt');
     var _history = wx.getStorageSync('history');
     var tk;
-    console.log(_jwt)
+   
     if (_jwt) {
       tk = JSON.parse(_jwt);
       console.log(tk);
@@ -396,9 +395,8 @@ Page({
       },
       success(res) {
         $Toast.hide()
-        console.log('sASs', res)
 
-        console.log(res.data[0])
+
         for (var i = 0; i < res.data.length; i++) {
           var sp = res.data[i].labels.split("&");
           var ssp = [];
@@ -409,7 +407,7 @@ Page({
           }
 
           res.data[i]["sp"] = ssp;
-          console.log(ssp[0])
+
           if (res.data[i].labels == "") {
             res.data[i]["vie"] = false;
           }
@@ -421,7 +419,7 @@ Page({
         that.setData({
           f_posts: res.data
         });
-        console.log(that.data.f_posts)
+
       },
       fail(res) {
         $Toast.hide();
