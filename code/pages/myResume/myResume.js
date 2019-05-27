@@ -200,7 +200,9 @@ Page({
   noblur1: function (e) {
     this.setData
       ({
-        hosList: []
+        hosList: [],
+        hosList2: [],
+        hosList3: [],
       })
   },
   clicsho1: function (e) {

@@ -2,7 +2,7 @@
   <view class="register">
     <i-panel>  
     <view class = "label_1">
-      <i-input  value = "{{account}}" mode= "normal" title="用户名" bind:change = "input_usrname" maxlength="20"  placeholder="未填写" disabled="{{update}}"/>
+      <i-input  value = "{{account}}" mode= "normal" title="用户名" bind:change = "input_usrname" maxlength="60"  placeholder="未填写" disabled="{{update}}"/>
     </view>
     <view class = "label_1">
       <i-input  value = "{{name}}" mode= "normal" title="真实姓名"  bind:change = "input_name"   maxlength="16"  placeholder="未填写" disabled="{{update}}"/>

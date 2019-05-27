@@ -20,7 +20,7 @@ App({
         
         if (res.code) {
           //请求获取用户详细信息
-
+          that.globalData.code = res.code
         }
         else
         {
@@ -132,6 +132,7 @@ App({
   },
   globalData: {
     userInfo: null,
-    openId: ""
+    openId: "",
+    code:""
   }
 })

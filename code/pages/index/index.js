@@ -70,5 +70,69 @@ Page({
     wx.switchTab({
       url: '/pages/home/home',
     })
+  },
+  bindGetUserInfo: function (e) {
+    console.log(e.detail.userInfo)
+    if (e.detail.userInfo) {
+      app.globalData.userInfo = e.detail.userInfo
+      this.setData({
+        userInfo: e.detail.userInfo,
+        hasUserInfo: true
+      })
+      var nickname = e.detail.userInfo.nickName
+      var acatorUrl = e.detail.userInfo.avatarUrl
+      var code = app.globalData.code
+      wx.request({
+        url: 'https://group.tttaaabbbccc.club/login/wechat/',
+        header: {
+          'Content-type': 'application/json'
+        },
+        method: "POST",
+        data: {
+          code: code,
+          name: nickname,
+          avatar_url: acatorUrl,
+        },
+
+
+        success: function (res) {
+          console.log(res)
+          //保存openid 
+          if (res.data.ret) {
+            app.globalData.openId = res.data.ID;
+            var token = res.data['Token'];
+            const _token = JSON.stringify(token);
+            wx.setStorageSync('jwt', _token);
+
+            var id = res.data['ID'];
+            const _id = JSON.stringify(id);
+            wx.setStorageSync('userid', _id);
+
+            var _history = wx.getStorageSync('history');
+            wx.getStorage({
+              key: 'history',
+              success(res) {
+
+              },
+              fail(res) {
+                const _history = JSON.stringify();
+                wx.setStorageSync('history', _history);
+              }
+            })
+
+
+
+
+          }
+          else {
+            wx.showToast({ title: "登录失败" })
+          }
+
+        }
+      });
+    } else {
+      //用户按了拒绝按钮
+    }
   }
+
 })

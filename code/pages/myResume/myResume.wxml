@@ -1,5 +1,5 @@
     
-<view class="page-container">
+<view class="page-container"  bindtap='noblur1'>
 
   <!-- 个人信息-->
   <view class='card-view' style='margin-top:40rpx;'>
@@ -9,7 +9,7 @@
     </view>
     
 
-    <view class='margin-top' >
+    <view class='margin-top'  >
       <view class='user-info-item'>
         <i-row >
           <i-col  span = "12" i-class="col-class" >
@@ -71,7 +71,7 @@
       <i-divider lineColor="#e9eaec" height = "1"></i-divider>
     </view>
 
-    <i-input placeholder="未填写"  title="所学专业:" class = "ipsel" confirm-type='search' bind:change = "input_major_1" maxlength="20" bindconfirm='confirm1' bindblur='noblur1'  value= "{{expEdu1['major']}}"/>
+    <i-input placeholder="未填写"  title="所学专业:" class = "ipsel" confirm-type='search' bind:change = "input_major_1" maxlength="20" bindconfirm='confirm1'  value= "{{expEdu1['major']}}"/>
 
 <view wx:for="{{hosList}}" wx:for-item="h">
 
@@ -95,7 +95,7 @@
       <i-divider lineColor="#e9eaec" height = "1"></i-divider>
     </view>
 
-    <i-input placeholder="未填写"  title="所学专业:" class = "ipsel" confirm-type='search' bind:change = "input_major_2" maxlength="20" bindconfirm='confirm2' bindblur='noblur2'  value= "{{expEdu2['major']}}"/>
+    <i-input placeholder="未填写"  title="所学专业:" class = "ipsel" confirm-type='search' bind:change = "input_major_2" maxlength="20" bindconfirm='confirm2'  value= "{{expEdu2['major']}}"/>
 
 <view wx:for="{{hosList2}}" wx:for-item="h">
 
@@ -120,7 +120,7 @@
       <i-divider lineColor="#e9eaec" height = "1"></i-divider>
     </view>
 
-    <i-input placeholder="未填写"  title="所学专业:" class = "ipsel" confirm-type='search' bind:change = "input_major_3" maxlength="20" bindconfirm='confirm3' bindblur='noblur3'  value= "{{expEdu3['major']}}"/>
+    <i-input placeholder="未填写"  title="所学专业:" class = "ipsel" confirm-type='search' bind:change = "input_major_3" maxlength="20" bindconfirm='confirm3'   value= "{{expEdu3['major']}}"/>
 
 <view wx:for="{{hosList3}}" wx:for-item="h">
 
