@@ -90,6 +90,9 @@ DATABASES = {
         'PASSWORD': '',  # 密码
         'HOST': '127.0.0.1',  # 本机地址
         'PORT': '3306',  # 端口
+        'OPTIONS': {
+            'charset': 'utf8mb4',
+        }
     }
 }
 
