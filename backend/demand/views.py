@@ -136,14 +136,16 @@ def get_unclosed_posts(request):
         return JsonResponse({'ret': False, 'error_code': 2})
 
     label_weight = {}
+    weight_base = 1
     # 分析历史纪录
     for post_id in history:
         post_label = PostLabel.objects.filter(post_id=post_id).all()
         for label in post_label:
             if label.label in label_weight:
-                label_weight[label.label] += 1
+                label_weight[label.label] += weight_base
             else:
-                label_weight[label.label] = 1
+                label_weight[label.label] = weight_base
+        weight_base += 1
 
     unclosed_posts = Post.objects.filter(if_end=False, deadline__gte=datetime.date.today()).order_by('-post_time')
     ret_data = []
