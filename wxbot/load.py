@@ -55,7 +55,7 @@ def load_listen_friend(bot):
         if len(bot.listen_friend_groups) < 1:
             bot.listen_friend_groups = []
             bot.is_listen_friend = False
-            print('none2')
+            print('gnone2')
             return '未找到群名包含「{}」的监听群！'.format(config.listen_friend_groups)
     return None
 
