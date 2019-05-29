@@ -5,7 +5,7 @@ const { $Message } = require('../../vant-weapp/dist/base/index');
 
 Page({
 
-  /**
+  /** 
    * 页面的初始数据。。。。。
    */
   data: {
