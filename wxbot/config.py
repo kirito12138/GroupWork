@@ -26,6 +26,6 @@ forward_groups = '真情'  # 需要将消息转发的群，匹配模式同上
 # 群分享监控
 # 新增招聘监控
 is_listen_sharing = True
-listen_sharing_groups = '聘'  # 监控群分享，匹配模式同上
+listen_sharing_groups = '真情'  # 监控群分享，匹配模式同上
 
 
