@@ -166,10 +166,17 @@ def get_user_profile(request, user_id):
     except User.DoesNotExist:
         return JsonResponse({'ret': False, 'error_code': 3})
 
-    return JsonResponse(
-        {'ret': True, 'account': user.account, 'name': user.name, 'age': user.age,
-         'studentID': user.student_id, "sex": user.sex, "major": user.major, "grade": user.grade,
-         "avatar_url": user.avatar_url})
+    return JsonResponse({
+        'ret': True,
+        'account': user.account,
+        'name': user.name,
+        'age': user.age,
+        'studentID': user.student_id,
+        "sex": user.sex,
+        "major": user.major,
+        "grade": user.grade,
+        "avatar_url": user.avatar_url,
+    })
 
 
 def modify_my_profile(request):
