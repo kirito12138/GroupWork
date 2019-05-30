@@ -59,7 +59,7 @@ def login(request):
 
     if user.password != gen_md5(password, SECRET_KEY):
         return JsonResponse({'ret': False, 'error_code': 5})
-    token = create_token(user.id).decode()
+    token = create_token(user.id)
     return JsonResponse({'ret': True, 'ID': str(user.id), 'Token': token})
 
 
@@ -92,7 +92,7 @@ def wechat_login(request):
         user.name = name
     user.avatar_url = avatar_url
     user.save()
-    token = create_token(user.id).decode()
+    token = create_token(user.id)
     return JsonResponse({'ret': True, 'ID': str(user.id), 'Token': token})
 
 
@@ -135,7 +135,7 @@ def register(request):
     except IntegrityError:  # 用户名已存在
         return JsonResponse({'ret': False, 'error_code': 4})
 
-    token = create_token(new_user.id).decode()
+    token = create_token(new_user.id)
     return JsonResponse({'ret': True, 'ID': str(new_user.id), 'Token': token})
 
 

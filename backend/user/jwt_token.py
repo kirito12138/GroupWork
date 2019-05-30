@@ -11,7 +11,7 @@ def create_token(user_id):
         'exp': datetime.utcnow() + timedelta(days=30),
     }
     # secret自己设定，加密字符串，放在服务器
-    token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
+    token = jwt.encode(payload, SECRET_KEY, algorithm='HS256').decode()
     return token
 
 
