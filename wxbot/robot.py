@@ -9,7 +9,7 @@ import load
 # 如果你不需要部署到服务器中，可以去掉console_qr=True这个参数
 bot = Bot(cache_path=True, console_qr=False)
 # 加载配置信息到机器人
-# xx1
+# xx2
 load.load_config_to_bot(bot)
 
 

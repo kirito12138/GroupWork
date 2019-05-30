@@ -48,7 +48,7 @@ def load_listen_friend(bot):
         if not bot.listen_friends:
             bot.listen_friends = []
             bot.is_listen_friend = False
-            print('none1')
+            print('fnone1')
             return '未在好友中找到备注为「{}」的监听对象！'.format(str(config.listen_friend_names))
 
         bot.listen_friend_groups = bot.groups().search(config.listen_friend_groups)
