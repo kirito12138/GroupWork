@@ -525,7 +525,7 @@ Page({
       });
 
       wx.request({
-        url: 'https://group.tttaaabbbccc.club/p/'+that.data.info.postID+'/modify',
+        url: 'https://group.tttaaabbbccc.club/p/'+that.data.info.postID+'/modify/',
         data: {
           title: this.data.title, //标题  : 20字符之内 （可以根据前端需求调整）
           postDetail: this.data.postDetail,//内容 : text类型，无字数限制
@@ -575,6 +575,17 @@ Page({
               wx.reLaunch({
                 url: '../home/home',
               })
+              return;
+            }
+            if (that.data.tempFilePaths.length != 0 && that.data.tempFilePaths[0].slice(0, 5) == 'https') {
+              $Toast({
+                content: '新建发布成功！',
+                type: 'success'
+              })
+              wx.reLaunch({
+                url: '../home/home',
+              })
+              return;
             }
             for (var i = 0, h = that.data.tempFilePaths.length; i < h; i++) {
               //上传文件
@@ -583,6 +594,8 @@ Page({
                 type: 'loading',
                 duration: 0
               });
+              console.log(that.data.tempFilePaths[i].slice(0,5))
+
               wx.uploadFile({
                 url: 'https://group.tttaaabbbccc.club/p/' + res.data["postID"] + '/upload_image/',
                 filePath: that.data.tempFilePaths[i],
@@ -603,6 +616,7 @@ Page({
                   })
                 },
                 fail: function (res) {
+                  $Toast.hide()
                   wx.hideToast();
                   wx.showModal({
                     title: '错误提示',

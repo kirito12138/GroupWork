@@ -1,4 +1,5 @@
 const { $Message } = require('../../vant-weapp/dist/base/index');
+const { $Toast } = require('../../vant-weapp/dist/base/index');
 var app = getApp() // 获得全局变量
 // pages/myResume/myResume.js
 Page({
@@ -214,13 +215,16 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    var info = JSON.parse(options.info);
+    var kk = decodeURIComponent(options.info)
+    this.data.info = JSON.parse(kk);
     this.setData(
       {
-        applyID:info
+        applyID:this.data.info
       }
 
     )
+    console.log('KKKKKKKK' + kk)
+
     var that = this;
     const _jwt = wx.getStorageSync('jwt');
     var tk;
@@ -233,16 +237,20 @@ Page({
       console.log("no token");
       return;
     }
-
+    $Toast({
+      content: '加载中',
+      type: 'loading',
+      duration:0
+    });
     wx.request({
-      url: 'https://group.tttaaabbbccc.club/apply/'+this.data.applyID,
+      url: 'https://group.tttaaabbbccc.club/apply/'+that.data.applyID,
       method: "GET",
       header: {
         "Content-Type": "application/json;charset=UTF-8",
         'Authorization': tk
       },
       success(res) {
-
+        $Toast.hide()
         console.log("1111" + res.data.sex)
         if (res.data.name != "") {
 
@@ -330,6 +338,10 @@ Page({
             });
           }
         }
+      },
+      fail(res)
+      {
+        $Toast.hide()
       }
     })
   },

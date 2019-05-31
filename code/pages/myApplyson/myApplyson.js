@@ -73,7 +73,7 @@ Page({
       ddl: this.data.info.ddl,
       sp: this.data.info.sp,
       postImg: this.data.info.image_url,
-
+      applyID: this.data.info.applyID,
       postID: this.data.info.postID,
       posterID: this.data.info.posterID
     })
@@ -162,6 +162,8 @@ Page({
   applyFor: function (e) {
     //TODO:完成申请按钮功能
     var para = JSON.stringify(this.data.applyID);
+    para = encodeURIComponent(para)
+    console.log(para)
     wx.navigateTo({
       url: '../seeMyResume/seeMyResume?info=' + para,
     })

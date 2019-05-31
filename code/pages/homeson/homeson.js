@@ -102,8 +102,7 @@ Page({
 
 
     var para = JSON.stringify(this.data.f_posts[i]);
-    var kk = decodeURIComponent(options.info)
-    this.data.info = JSON.parse(kk);
+    para = encodeURIComponent(para)
     //console.log("111111111" + this.data.f_posts[i]);
     wx.navigateTo({
       url: '../postDetail/postDetail?info=' + para,

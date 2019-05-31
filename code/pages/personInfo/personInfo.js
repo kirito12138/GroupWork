@@ -97,14 +97,7 @@ Page({
       console.log("no token");
       return;
     }
-    if (!(this.data.account.length > 0 && this.data.account.length<=20) )
-    {
-      $Message({
-        content: '用户名长度在1~20之间',
-        type: 'error'
-      });
-    }
-    else if(!(this.data.name.length<=16))
+  if(!(this.data.name.length<=16))
     {
       $Message({
         content: '真实姓名不能超过16个字符',

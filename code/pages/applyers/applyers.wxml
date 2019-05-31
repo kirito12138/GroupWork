@@ -1,8 +1,6 @@
 <!--pages/postDetail/postDetail.wxml-->
 
-  <view class='page_row' bindtap="suo">  
-       
-    </view>  
+
 
   <scroll-view class='sv' scroll-y='true' style='z-index: -1;background-color: #F5F5F5'>
     <view class = 'half_1' wx:for = "{{f_posts}}" >
