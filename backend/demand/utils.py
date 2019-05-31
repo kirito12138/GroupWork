@@ -16,7 +16,6 @@ ApplyPrize = {
 
 ApplyLabelList = range(21)
 
-
 # 检查项目标签合法性
 def check_postLabel(_labelList):
     for label in _labelList:
@@ -24,14 +23,12 @@ def check_postLabel(_labelList):
             return False
     return True
 
-
-# 检查申请标签合法性 TODO 修改检测逻辑
+# 检查申请标签合法性
 def check_applyLabel(_labelList):
     for label in _labelList:
         if 0 > int(label) or 90 < int(label):
             return False
     return True
-
 
 # 标签解析
 def decode_label(_str):
@@ -39,7 +36,6 @@ def decode_label(_str):
         return []
     labelList = _str.split('&')
     return labelList
-
 
 # 标签压缩
 def encode_label(_QuerySet):
@@ -49,14 +45,10 @@ def encode_label(_QuerySet):
     labels = '&'.join(labels)
     return labels
 
-
-# TODO:项目排序
 def rank_post(_posts):
     ret = sorted(_posts, key=lambda post: post["weight"], reverse=True)
     return ret
 
-
-# TODO:申请打分
 def grade_apply(_apply):
     weight = 0
     awards = _apply.awards.split('\n')
@@ -67,8 +59,6 @@ def grade_apply(_apply):
         weight += _apply.awards.count(key) * ApplyPrize[key]
     return weight
 
-
-# TODO:申请排序
 def rank_apply(_applies):
     ret = sorted(_applies, key=lambda post: post["weight"], reverse=True)
     return ret
