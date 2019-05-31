@@ -5,7 +5,7 @@ var app = getApp() // 获得全局变量
 Page({
 
   /**
-   * 页面的初始数据
+   * 页面的初始数据 
    */
   data: {
     name: "",
