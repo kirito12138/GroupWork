@@ -59,7 +59,7 @@ def login(request):
 
     if user.password != gen_md5(password, SECRET_KEY):
         return JsonResponse({'ret': False, 'error_code': 5})
-    token = create_token(user.id).decode()
+    token = create_token(user.id)
     return JsonResponse({'ret': True, 'ID': str(user.id), 'Token': token})
 
 
@@ -85,14 +85,14 @@ def wechat_login(request):
 
     try:
         user = User.objects.get(open_id=open_id)
-
     except User.DoesNotExist:
         user = User.objects.create(account=open_id, open_id=open_id)
+
     if user.name == '':
         user.name = name
     user.avatar_url = avatar_url
     user.save()
-    token = create_token(user.id).decode()
+    token = create_token(user.id)
     return JsonResponse({'ret': True, 'ID': str(user.id), 'Token': token})
 
 
@@ -135,7 +135,7 @@ def register(request):
     except IntegrityError:  # 用户名已存在
         return JsonResponse({'ret': False, 'error_code': 4})
 
-    token = create_token(new_user.id).decode()
+    token = create_token(new_user.id)
     return JsonResponse({'ret': True, 'ID': str(new_user.id), 'Token': token})
 
 
@@ -166,10 +166,17 @@ def get_user_profile(request, user_id):
     except User.DoesNotExist:
         return JsonResponse({'ret': False, 'error_code': 3})
 
-    return JsonResponse(
-        {'ret': True, 'account': user.account, 'name': user.name, 'age': user.age,
-         'studentID': user.student_id, "sex": user.sex, "major": user.major, "grade": user.grade,
-         "avatar_url": user.avatar_url})
+    return JsonResponse({
+        'ret': True,
+        'account': user.account,
+        'name': user.name,
+        'age': user.age,
+        'studentID': user.student_id,
+        "sex": user.sex,
+        "major": user.major,
+        "grade": user.grade,
+        "avatar_url": user.avatar_url,
+    })
 
 
 def modify_my_profile(request):
@@ -196,8 +203,8 @@ def modify_my_profile(request):
     except KeyError:
         return JsonResponse({'ret': False, 'error_code': 2})
 
-    if not account_pattern.match(account):
-        return JsonResponse({'ret': False, 'error_code': 3})
+    # if not account_pattern.match(account):
+        # return JsonResponse({'ret': False, 'error_code': 3})
     if not student_id_pattern.match(student_id) or not name_pattern.match(name):
         return JsonResponse({'ret': False, 'error_code': 3})
     if type(age) != int or age < 0 or age > 200:
