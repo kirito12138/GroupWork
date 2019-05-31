@@ -374,3 +374,7 @@ def get_upyun_signature(request):
         hmac.new(UPYUN_OPERATOR_MD5_PASSWORD.encode(), data.encode(), digestmod=hashlib.sha1).digest()).decode()
 
     return JsonResponse({'ret': True, 'signature': signature})
+
+
+def create_group(request):
+    pass
