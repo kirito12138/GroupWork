@@ -378,3 +378,7 @@ def get_upyun_signature(request):
 
 def create_group(request):
     pass
+
+
+def join_group(request):
+    pass
