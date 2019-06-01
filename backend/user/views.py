@@ -382,3 +382,7 @@ def create_group(request):
 
 def join_group(request):
     pass
+
+
+def accept_join_group(request):
+    pass

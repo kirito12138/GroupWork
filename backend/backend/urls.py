@@ -55,6 +55,7 @@ urlpatterns = [
 
     path('c/group/', user.views.create_group),
     path('group/join/', user.views.join_group),
+    path('group/accept/', user.views.accept_join_group),
 
     path('signature/upyun/', user.views.get_upyun_signature),
     # path('resume/upload/', demand.views.upload_resume),
