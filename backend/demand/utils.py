@@ -49,6 +49,7 @@ def rank_post(_posts):
     ret = sorted(_posts, key=lambda post: post["weight"], reverse=True)
     return ret
 
+
 def grade_apply(_apply):
     weight = 0
     awards = _apply.awards.split('\n')
