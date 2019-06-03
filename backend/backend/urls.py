@@ -15,6 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static
 
 import user.views
 import demand.views
@@ -56,4 +58,5 @@ urlpatterns = [
     path('signature/upyun/', user.views.get_upyun_signature),
     # path('resume/upload/', demand.views.upload_resume),
     # path('resume/choose/', demand.views.choose_resume),
-]
+] + static(settings.STATIC_URL, document_root = settings.STATIC_ROOT)
+
