@@ -1,0 +1,42 @@
+<!--pages/postDetail/postDetail.wxml-->
+
+<i-toast id="toast" />
+
+<view class='page_row' >  
+    <view class="search">  
+      <view class="df search_arr">  
+        <icon class="searchcion" size='20' type='search'></icon>  
+        <input class=""  bindinput='inputser' placeholder="搜索用户" value="{{searchValue}}"/>  
+      </view>  
+    </view>  
+    <view class='sousuo' bindtap='searchkey'>搜索</view>  
+</view>  
+
+
+<scroll-view class='sv' scroll-y='true' style='z-index: -1;'>
+  <view class = "team" style = "">
+
+    <canvas canvas-id="myCanvas" class="myCanvas"  style = "width:{{windowWidth}}px;height:70rpx" ></canvas>
+  
+    <view >
+      <view class = 'title_son'>
+        <image class='title_img' style="width:40rpx;height:40rpx" src = "https://group.tttaaabbbccc.club/{{item.image_url}}"></image>
+        <text  class='title_text' > 111{{item.name}}</text>  
+      </view>
+      <view style="height:5rpx;background-color:#D9D9D9"/>
+    </view>
+    
+    <canvas canvas-id="bottcan" class="bottcan"  style = "width:{{windowWidth}}px;height:70rpx" bindtap='choose'></canvas>
+
+  </view>
+
+  
+
+</scroll-view>
+
+
+
+
+
+
+

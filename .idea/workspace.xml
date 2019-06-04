@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="2424b00a-5a16-4f47-93e2-0e9caee347af" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/code/image/1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/image/2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/image/3.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/image/4.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/image/5.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/image/6.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/image/65_3035.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/image/7.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/image/no_load.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/image/user.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/vant-weapp/dist/action-sheet/index.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/vant-weapp/dist/action-sheet/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/vant-weapp/dist/action-sheet/index.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/vant-weapp/dist/action-sheet/index.wxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/vant-weapp/dist/action-sheet/index.wxss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/vant-weapp/dist/badge/index.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/vant-weapp/dist/badge/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/vant-weapp/dist/badge/index.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/vant-weapp/dist/badge/index.wxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/vant-weapp/dist/badge/index.wxss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/vant-weapp/dist/nav-bar/index.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/vant-weapp/dist/nav-bar/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/vant-weapp/dist/nav-bar/index.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/vant-weapp/dist/nav-bar/index.wxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/vant-weapp/dist/nav-bar/index.wxss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/vant-weapp/dist/notice-bar/index.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/vant-weapp/dist/notice-bar/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/vant-weapp/dist/notice-bar/index.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/vant-weapp/dist/notice-bar/index.wxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/vant-weapp/dist/notice-bar/index.wxss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/vant-weapp/dist/picker/index.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/vant-weapp/dist/picker/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/vant-weapp/dist/picker/index.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/vant-weapp/dist/picker/index.wxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/vant-weapp/dist/picker/index.wxss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/vant-weapp/dist/popup/index.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/vant-weapp/dist/popup/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/vant-weapp/dist/popup/index.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/vant-weapp/dist/popup/index.wxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/vant-weapp/dist/popup/index.wxss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/vant-weapp/dist/radio/index.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/vant-weapp/dist/radio/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/vant-weapp/dist/radio/index.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/vant-weapp/dist/radio/index.wxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/vant-weapp/dist/radio/index.wxss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/vant-weapp/dist/slide/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/vant-weapp/dist/slide/index.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/vant-weapp/dist/slide/index.wxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/vant-weapp/dist/slide/index.wxss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/vant-weapp/dist/steps/index.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/vant-weapp/dist/steps/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/vant-weapp/dist/steps/index.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/vant-weapp/dist/steps/index.wxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/vant-weapp/dist/steps/index.wxss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/vant-weapp/dist/swipe-cell/index.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/vant-weapp/dist/swipe-cell/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/vant-weapp/dist/swipe-cell/index.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/vant-weapp/dist/swipe-cell/index.wxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/vant-weapp/dist/swipe-cell/index.wxss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/vant-weapp/dist/tabbar/index.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/vant-weapp/dist/tabbar/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/vant-weapp/dist/tabbar/index.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/vant-weapp/dist/tabbar/index.wxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/vant-weapp/dist/tabbar/index.wxss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/vant-weapp/dist/transition/index.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/vant-weapp/dist/transition/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/vant-weapp/dist/transition/index.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/vant-weapp/dist/transition/index.wxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/vant-weapp/dist/transition/index.wxss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/vant-weapp/dist/tree-select/index.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/vant-weapp/dist/tree-select/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/vant-weapp/dist/tree-select/index.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/vant-weapp/dist/tree-select/index.wxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/vant-weapp/dist/tree-select/index.wxss" beforeDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="953" />
+    <option name="width" value="974" />
+    <option name="height" value="1047" />
+  </component>
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scope" />
+      <pane id="ProjectPane" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="2424b00a-5a16-4f47-93e2-0e9caee347af" name="Default Changelist" comment="" />
+      <created>1558636572001</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1558636572001</updated>
+      <workItem from="1558636578959" duration="106000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="106000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <layout>
+      <window_info id="Favorites" side_tool="true" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Database Changes" />
+      <window_info anchor="bottom" id="Version Control" />
+      <window_info anchor="bottom" id="Python Console" />
+      <window_info anchor="bottom" id="Terminal" />
+      <window_info anchor="bottom" id="Event Log" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="right" id="SciView" />
+      <window_info anchor="right" id="Database" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+</project>
