@@ -40,11 +40,15 @@ def invitee_get_invitation(request):
 
     invitations = Invitation.objects.filter(invitee=user, state=0)
     ret_data = []
+
+    # TODO 查找用户组队情况，添加至返回信息中
+
     for invitation in invitations:
         ret_data.append({
+            'id': invitation.id,
             'name': invitation.inviter.name,
             'avatar': invitation.inviter.avatar_url,
-        #     TODO 增加被邀请信息页面需要显示的邀请者信息
+        #     TODO 完善被邀请信息页面需要显示的邀请者信息
         })
 
     return JsonResponse(ret_data, safe=False)
@@ -61,10 +65,46 @@ def inviter_get_invitation(request):
     ret_data = []
     for invitation in invitations:
         ret_data.append({
+            'id': invitation.id,
             'name': invitation.inviter.name,
             'avatar': invitation.inviter.avatar_url,
-            #     TODO 增加邀请信息页面需要显示的被邀请者信息
+            #     TODO 完善邀请信息页面需要显示的被邀请者信息
             'state': invitation.state,
         })
 
     return JsonResponse(ret_data, safe=False)
+
+def accept_invitation(request, invitation_id):
+    if request.method != 'GET':
+        return JsonResponse({'ret': False, 'error_code': 1})
+
+    user = verify_token(request.META.get('HTTP_AUTHORIZATION'))
+    if not user:
+        return JsonResponse({'ret': False, 'error_code': 5})
+
+    try:
+        invitation = Invitation.objects.get(id=invitation_id)
+    except Invitation.DoesNotExist:
+        return JsonResponse({'ret': False, 'error_code': 3})
+
+    # TODO 退出已有队伍（如果有）
+    # TODO 查找邀请者队伍，检查人数
+
+    return  JsonResponse({'ret': True}) # TODO 返回加入情况
+
+def refuse_invitation(request, invitation_id):
+    if request.method != 'GET':
+        return JsonResponse({'ret': False, 'error_code': 1})
+
+    user = verify_token(request.META.get('HTTP_AUTHORIZATION'))
+    if not user:
+        return JsonResponse({'ret': False, 'error_code': 5})
+
+    try:
+        invitation = Invitation.objects.get(id=invitation_id)
+    except Invitation.DoesNotExist:
+        return JsonResponse({'ret': False, 'error_code': 3})
+
+    invitation.state = 2
+
+    return JsonResponse({'ret': True})
