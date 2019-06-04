@@ -44,7 +44,7 @@
 * 参数：无
 * 返回：邀请列表，本用户是否已组队
 
-### mcm/reject/<invitation_id>/（已实现）
+### mcm/refuse/<invitation_id>/（已实现）
 * 说明：拒绝某邀请
 * 参数：无
 * 返回：无
