@@ -6,7 +6,7 @@ from django.core.exceptions import ValidationError
 from django.http import JsonResponse
 from user.jwt_token import verify_token
 from user.models import User, Resume
-from Team.models import Invitation, McmInfo
+from Team.models import Invitation, McmInfo, Team
 
 
 def invite_user(request, user_id):
@@ -246,6 +246,25 @@ def get_team_users(request):
             'is_captain': mcm_info.is_captain,
         })
     return JsonResponse(ret_data, safe=False)
+
+
+def quit_team(request):
+    if request.method != 'POST':
+        return JsonResponse({'ret': False, 'error_code': 1})
+
+    user = verify_token(request.META.get('HTTP_AUTHORIZATION'))
+    if not user:
+        return JsonResponse({'ret': False, 'error_code': 5})
+
+    if not user.mcm_info.is_integrated:  # 美赛信息不完整
+        return JsonResponse({'ret': False, 'error_code': 2})
+
+    if user.mcm_info.is_captain:  # 队长不能退队
+        return JsonResponse({'ret': False, 'error_code': 3})
+
+    user.mcm_info.team = Team.objects.create()
+    user.mcm_info.save()
+    return JsonResponse({'ret': True})
 
 
 def submit_score(request):
