@@ -11,6 +11,7 @@ from django.core.exceptions import ValidationError
 from django.db.utils import IntegrityError
 from django.http import JsonResponse
 
+from Team.models import McmInfo
 from user.models import User, Resume
 from user.api_wechat import get_openid
 from user.jwt_token import create_token, verify_token
@@ -86,12 +87,15 @@ def wechat_login(request):
     try:
         user = User.objects.get(open_id=open_id)
     except User.DoesNotExist:
-        user = User.objects.create(account=open_id, open_id=open_id)
+        user = User.objects.create(account=open_id, name=name, open_id=open_id)
 
-    if user.name == '':
-        user.name = name
     user.avatar_url = avatar_url
+    if not user.resume:
+        user.resume = Resume.objects.create(name=user.name)
+    if not user.mcm_info:
+        user.mcm_info = McmInfo.objects.create(name=user.name)
     user.save()
+
     token = create_token(user.id)
     return JsonResponse({'ret': True, 'ID': str(user.id), 'Token': token})
 
@@ -134,6 +138,12 @@ def register(request):
                                        age=age, student_id=student_id, sex=sex, major=major, grade=grade)
     except IntegrityError:  # 用户名已存在
         return JsonResponse({'ret': False, 'error_code': 4})
+
+    if not new_user.resume:
+        new_user.resume = Resume.objects.create(name=new_user.name)
+    if not new_user.mcm_info:
+        new_user.mcm_info = McmInfo.objects.create(name=new_user.name)
+    new_user.save()
 
     token = create_token(new_user.id)
     return JsonResponse({'ret': True, 'ID': str(new_user.id), 'Token': token})
@@ -204,7 +214,7 @@ def modify_my_profile(request):
         return JsonResponse({'ret': False, 'error_code': 2})
 
     # if not account_pattern.match(account):
-        # return JsonResponse({'ret': False, 'error_code': 3})
+    # return JsonResponse({'ret': False, 'error_code': 3})
     if not student_id_pattern.match(student_id) or not name_pattern.match(name):
         return JsonResponse({'ret': False, 'error_code': 3})
     if type(age) != int or age < 0 or age > 200:
@@ -227,9 +237,6 @@ def modify_my_profile(request):
     except IntegrityError:  # 用户名已存在
         return JsonResponse({'ret': False, 'error_code': 4})
 
-    if not user.resume:
-        user.resume = Resume.objects.create()
-        user.save()
     resume = user.resume
     resume.name = user.name
     resume.age = user.age
@@ -289,11 +296,7 @@ def modify_my_resume(request):
     if not user:
         return JsonResponse({'ret': False, 'error_code': 5})
 
-    if not user.resume:
-        user.resume = Resume.objects.create()
-        user.save()
     resume = user.resume
-
     try:
         data = json.loads(request.body)
     except JSONDecodeError:
@@ -337,9 +340,6 @@ def get_my_resume(request):
     if not user:
         return JsonResponse({'ret': False, 'error_code': 5})
 
-    if not user.resume:
-        user.resume = Resume.objects.create()
-        user.save()
     resume = user.resume
     return JsonResponse({
         "ret": True,
@@ -374,15 +374,3 @@ def get_upyun_signature(request):
         hmac.new(UPYUN_OPERATOR_MD5_PASSWORD.encode(), data.encode(), digestmod=hashlib.sha1).digest()).decode()
 
     return JsonResponse({'ret': True, 'signature': signature})
-
-
-def create_group(request):
-    pass
-
-
-def join_group(request):
-    pass
-
-
-def accept_join_group(request):
-    pass
