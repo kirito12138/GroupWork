@@ -11,7 +11,7 @@ from django.core.exceptions import ValidationError
 from django.db.utils import IntegrityError
 from django.http import JsonResponse
 
-from Team.models import McmInfo
+from Team.models import McmInfo, Team
 from user.models import User, Resume
 from user.api_wechat import get_openid
 from user.jwt_token import create_token, verify_token
@@ -89,11 +89,12 @@ def wechat_login(request):
     except User.DoesNotExist:
         user = User.objects.create(account=open_id, name=name, open_id=open_id)
 
-    user.avatar_url = avatar_url
     if not user.resume:
         user.resume = Resume.objects.create(name=user.name)
     if not user.mcm_info:
-        user.mcm_info = McmInfo.objects.create(name=user.name)
+        team = Team.objects.create()
+        user.mcm_info = McmInfo.objects.create(name=user.name, team=team)
+    user.avatar_url = avatar_url
     user.save()
 
     token = create_token(user.id)
@@ -142,7 +143,8 @@ def register(request):
     if not new_user.resume:
         new_user.resume = Resume.objects.create(name=new_user.name)
     if not new_user.mcm_info:
-        new_user.mcm_info = McmInfo.objects.create(name=new_user.name)
+        team = Team.objects.create()
+        new_user.mcm_info = McmInfo.objects.create(name=new_user.name, team=team)
     new_user.save()
 
     token = create_token(new_user.id)
