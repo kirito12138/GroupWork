@@ -1,6 +1,6 @@
 ## Gamma阶段接口设计
 
-### mcm/moddify/info/
+### mcm/modify/info/
 * 参数： 类型：内容  
 * 返回：无
 
