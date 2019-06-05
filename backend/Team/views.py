@@ -5,8 +5,8 @@ from json import JSONDecodeError
 from django.core.exceptions import ValidationError
 from django.http import JsonResponse
 from user.jwt_token import verify_token
-from user.models import User
-from Team.models import Invitation
+from user.models import User, Resume
+from Team.models import Invitation, McmInfo
 
 
 def invite_user(request, user_id):
@@ -30,6 +30,7 @@ def invite_user(request, user_id):
     old.state = 0
     return JsonResponse({'ret': True})
 
+
 def invitee_get_invitation(request):
     if request.method != 'GET':
         return JsonResponse({'ret': False, 'error_code': 1})
@@ -48,10 +49,11 @@ def invitee_get_invitation(request):
             'id': invitation.id,
             'name': invitation.inviter.name,
             'avatar': invitation.inviter.avatar_url,
-        #     TODO 完善被邀请信息页面需要显示的邀请者信息
+            #     TODO 完善被邀请信息页面需要显示的邀请者信息
         })
 
     return JsonResponse(ret_data, safe=False)
+
 
 def inviter_get_invitation(request):
     if request.method != 'GET':
@@ -74,6 +76,7 @@ def inviter_get_invitation(request):
 
     return JsonResponse(ret_data, safe=False)
 
+
 def accept_invitation(request, invitation_id):
     if request.method != 'GET':
         return JsonResponse({'ret': False, 'error_code': 1})
@@ -90,7 +93,8 @@ def accept_invitation(request, invitation_id):
     # TODO 退出已有队伍（如果有）
     # TODO 查找邀请者队伍，检查人数
 
-    return  JsonResponse({'ret': True}) # TODO 返回加入情况
+    return JsonResponse({'ret': True})  # TODO 返回加入情况
+
 
 def refuse_invitation(request, invitation_id):
     if request.method != 'GET':
@@ -106,5 +110,56 @@ def refuse_invitation(request, invitation_id):
         return JsonResponse({'ret': False, 'error_code': 3})
 
     invitation.state = 2
+
+    return JsonResponse({'ret': True})
+
+
+def modify_mcm_info(request):
+    if request.method != 'POST':
+        return JsonResponse({'ret': False, 'error_code': 1})
+
+    user = verify_token(request.META.get('HTTP_AUTHORIZATION'))
+    if not user:
+        return JsonResponse({'ret': False, 'error_code': 5})
+
+    try:
+        data = json.loads(request.body)
+    except JSONDecodeError:
+        return JsonResponse({'ret': False, 'error_code': 3})
+
+    if not user.mcm_info:
+        user.mcm_info = McmInfo.objects.create()
+        user.save()
+    mcm_info = user.mcm_info
+
+    try:
+        mcm_info.name = data['name']
+        mcm_info.major = data['major']
+        mcm_info.undergraduate_major = data['undergraduate_major']
+        mcm_info.phone = data['phone']
+        mcm_info.email = data['email']
+        mcm_info.experience = data['experience']
+        mcm_info.skill = data['skill']
+        mcm_info.if_attend_training = data['if_attend_training']
+        mcm_info.goal = data['goal']
+    except KeyError:
+        return JsonResponse({'ret': False, 'error_code': 2})
+
+    try:
+        mcm_info.full_clean()  # 检查格式
+        mcm_info.save()
+    except ValidationError:
+        return JsonResponse({'ret': False, 'error_code': 3})
+
+    # 同步修改个人信息
+    user.name = mcm_info.name
+    if not user.resume:
+        user.resume = Resume.objects.create()
+    user.save()
+    resume = user.resume
+    resume.name = user.name
+    resume.phone = mcm_info.phone
+    resume.email = mcm_info.phone
+    resume.save()
 
     return JsonResponse({'ret': True})

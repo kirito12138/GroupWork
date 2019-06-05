@@ -18,6 +18,7 @@ from django.urls import path
 
 import user.views
 import demand.views
+import Team.views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -53,11 +54,7 @@ urlpatterns = [
     path('apply/<int:apply_id>/accept/', demand.views.accept_apply),
     path('apply/<int:apply_id>/reject/', demand.views.reject_apply),
 
-    path('c/group/', user.views.create_group),
-    path('group/join/', user.views.join_group),
-    path('group/accept/', user.views.accept_join_group),
+    path('mcm/modify/info/', Team.views.modify_mcm_info),
 
     path('signature/upyun/', user.views.get_upyun_signature),
-    # path('resume/upload/', demand.views.upload_resume),
-    # path('resume/choose/', demand.views.choose_resume),
 ]
