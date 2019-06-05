@@ -2,6 +2,10 @@
 
 <i-toast id="toast" />
 
+<i-modal title="填写信息" visible="{{ visible }}" actions="{{ actions5 }}" bind:click="cancel_fil">
+  <view>未填写美赛信息，请填写后使用</view>
+</i-modal>
+
 <view class='page_row' >  
     <view class="search">  
       <view class="df search_arr">  
@@ -16,7 +20,7 @@
 <scroll-view class='sv' scroll-y='true' style='z-index: -1;'>
   <view class = "team" style = "">
 
-    <canvas canvas-id="myCanvas" class="myCanvas"  style = "width:{{windowWidth}}px;height:70rpx" ></canvas>
+    <canvas canvas-id="myCanvas" class="myCanvas"  style = "width:{{windowWidth}}px;height:35px" ></canvas>
   
     <view >
       <view class = 'title_son'>
@@ -26,11 +30,79 @@
       <view style="height:5rpx;background-color:#D9D9D9"/>
     </view>
     
-    <canvas canvas-id="bottcan" class="bottcan"  style = "width:{{windowWidth}}px;height:70rpx" bindtap='choose'></canvas>
+    <canvas canvas-id="bottcan1" class="bottcan1"  style = "width:{{windowWidth}}px;height:35px" bindtap='choose'></canvas>
 
   </view>
 
-  
+  <view class = "intro">
+    <canvas canvas-id="intr" class="intr"  style = "width:{{windowWidth}}px;height:35px" ></canvas>
+
+    <view class = "fillQ" wx:if = "{{is_fill==false}}">
+      <view class = "filltext">请填写问卷后开启此功能</view>
+      <view class = "gotoque" bindtap = "fillSurvey">填写问卷</view>
+    </view>
+
+    <view class = "partener" wx:if = "{{is_fill==true}}">
+
+      <view class = "wx:for">
+
+        <view class = "one" >
+          <view>
+            <image class='title_img' style="width:40rpx;height:40rpx" src = "https://group.tttaaabbbccc.club/{{item.image_url}}"></image>
+            <text  class='title_text' > 王冰</text>  
+            <text  class='title_text' > 职位：编程</text>
+          </view>
+          <view>
+            <button  class='invit' bindtap = "invite">邀请</button>
+          </view>      
+        </view>
+        <view style="height:5rpx;background-color:#D9D9D9"/>
+
+        <view class = "wx: if">
+          <view class="one1">
+            <view class = "left">
+              <text>本科专业：</text>
+            </view>
+            <view class = "right">
+              <text>现读专业：</text>
+            </view> 
+          </view>
+          <view class="one1">
+            <view class = "left">
+              <text>全程培训：</text>
+            </view>
+            <view class = "right">
+              <text>参赛目标：</text>
+            </view> 
+          </view>
+      
+          <view class='card-view' style='margin-top:0;'>
+            <view class='item-title'>
+              <text class="item-info-title" >参赛经历</text>
+            </view>
+
+            <view style='background:gray;margin-top:20rpx' >
+              <i-divider lineColor="#CCCCCC" height = "1"></i-divider>
+            </view>
+
+            <view style = "height: 160px">
+              <i-input type='textarea' placeholder="未填写" style='font-size:14px; margin-top: 20rpx height: 60px' bind:change="input_rewards" value = "{{awards}}" maxlength='180'/>
+            </view>
+
+          </view>
+
+        </view>
+
+        
+
+      </view>
+      
+
+    </view>
+
+    <canvas canvas-id="bottcan" class="bottcan"  style = "width:{{windowWidth}}px;height:35px" bindtap='choose'></canvas>
+  </view>
+
 
 </scroll-view>
 

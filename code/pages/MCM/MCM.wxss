@@ -196,6 +196,96 @@ page, .page {
   margin-top: 20rpx;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
+  box-shadow: -2rpx 10rpx 8rpx #B0B0B0;
 }
 
+.intro
+{
+  border-radius: 10px;
+  background: white;
+  width: 94%;
+  margin-left: 3%;
+  margin-top: 20rpx;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  box-shadow: -2rpx 10rpx 8rpx #B0B0B0;
+}
+
+.fillQ
+{
+  height: 90px;
+
+}
+
+.filltext
+{
+  height: 60px;
+}
+
+.gotoque
+{
+  border-radius: 10px;
+  background: greenyellow;
+  width: 50%;
+  margin-left: 25%;
+}
+
+.invit
+{
+  margin-left: 0;
+  border-radius: 5px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%
+}
+.one
+{
+  display: flex;
+  
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  
+}
+
+.one1
+{
+  display: flex;
+  
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: 5%;
+}
+
+.left
+{
+  width:50%
+}
+
+.right
+{
+  width:50%
+}
+
+.card-view{
+  display: flex;
+  padding: 20rpx;
+  flex-flow: column nowrap;
+  border: 3rpx solid #d8dcde;
+  
+  justify-content: flex-start;
+  background: white;
+}
+.item-title{
+  display: flex;
+  align-items:center;
+}
+.item-info-title{
+  color: #d8dcde;
+  font-size: 30rpx;
+  margin-left: 20rpx;
+}
 
