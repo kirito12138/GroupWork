@@ -203,7 +203,7 @@ def modify_my_profile(request):
         return JsonResponse({'ret': False, 'error_code': 3})
 
     try:
-        account = data['account']
+        # account = data['account']
         name = data['name']
         age = data['age']
         student_id = data['studentID']
@@ -214,17 +214,17 @@ def modify_my_profile(request):
         return JsonResponse({'ret': False, 'error_code': 2})
 
     # if not account_pattern.match(account):
-    # return JsonResponse({'ret': False, 'error_code': 3})
+    #     return JsonResponse({'ret': False, 'error_code': 3})
     if not student_id_pattern.match(student_id) or not name_pattern.match(name):
         return JsonResponse({'ret': False, 'error_code': 3})
     if type(age) != int or age < 0 or age > 200:
         return JsonResponse({'ret': False, 'error_code': 3})
 
-    # 注册用户名校验
+    # 用户名校验
     # if account != user.account and models.User.objects.filter(account=account).exists():
     #     return JsonResponse({'ret': False, 'error_code': 4})
 
-    user.account = account
+    # user.account = account
     user.name = name
     user.age = age
     user.student_id = student_id
@@ -233,15 +233,20 @@ def modify_my_profile(request):
     user.grade = grade
 
     try:
+        user.full_clean()
         user.save()
-    except IntegrityError:  # 用户名已存在
-        return JsonResponse({'ret': False, 'error_code': 4})
+    except ValidationError:  # 检查格式
+        return JsonResponse({'ret': False, 'error_code': 3})
 
+    # 同步修改个人信息
     resume = user.resume
     resume.name = user.name
     resume.age = user.age
     resume.sex = user.sex
     resume.save()
+    mcm_info = user.mcm_info
+    mcm_info.name = user.name
+    mcm_info.save()
 
     return JsonResponse({'ret': True})
 
@@ -324,10 +329,16 @@ def modify_my_resume(request):
     except ValidationError:
         return JsonResponse({'ret': False, 'error_code': 3})
 
+    # 同步修改个人信息
     user.name = resume.name
     user.age = resume.age
     user.sex = resume.sex
     user.save()
+    user.mcm_info.name = resume.name
+    if resume.phone != '':
+        user.mcm_info.phone = resume.phone
+    if resume.email != '':
+        user.mcm_info.email = resume.email
 
     return JsonResponse({'ret': True})
 

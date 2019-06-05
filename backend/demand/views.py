@@ -543,9 +543,6 @@ def create_apply(request):
         return JsonResponse({'ret': False, 'error_code': 6})
 
     # 获取用户简历
-    if not user.resume:
-        user.resume = Resume.objects.create()
-        user.save()
     resume = user.resume
     try:
         resume.name = data['name']
@@ -570,10 +567,16 @@ def create_apply(request):
     except ValidationError:
         return JsonResponse({'ret': False, 'error_code': 3})
 
+    # 同步修改个人信息
     user.name = resume.name
     user.age = resume.age
     user.sex = resume.sex
     user.save()
+    user.mcm_info.name = resume.name
+    if resume.phone != '':
+        user.mcm_info.phone = resume.phone
+    if resume.email != '':
+        user.mcm_info.email = resume.email
 
     resume.pk = None  # 复制一个新的resume
     resume.save()
