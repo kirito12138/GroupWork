@@ -147,6 +147,9 @@ def modify_mcm_info(request):
     except ValidationError:
         return JsonResponse({'ret': False, 'error_code': 3})
 
+    mcm_info.is_integrated = True
+    mcm_info.save()
+
     # 同步修改个人信息
     user.name = mcm_info.name
     user.save()
@@ -202,9 +205,9 @@ def search_user(request):
     except KeyError:
         return JsonResponse({'ret': False, 'error_code': 2})
 
-    mcm_infos = McmInfo.objects.filter(name__contains=name)
+    mcm_info_set = McmInfo.objects.filter(name__contains=name, is_integrated=True)
     ret_data = []
-    for mcm_info in mcm_infos:
+    for mcm_info in mcm_info_set:
         ret_data.append({
             'user_id': mcm_info.user.id,
             'avatar_url': mcm_info.user.avatar_url,
@@ -229,9 +232,12 @@ def get_user_team(request):
     if not user:
         return JsonResponse({'ret': False, 'error_code': 5})
 
-    mcm_infos = user.mcm_info.team.mcminfo_set.all()
+    if not user.mcm_info.is_integrated:  # 美赛信息不完整
+        return JsonResponse({'ret': False, 'error_code': 2})
+
+    mcm_info_set = user.mcm_info.team.mcminfo_set.all()
     ret_data = []
-    for mcm_info in mcm_infos:
+    for mcm_info in mcm_info_set:
         ret_data.append({
             'user_id': mcm_info.user.id,
             'name': mcm_info.name,
