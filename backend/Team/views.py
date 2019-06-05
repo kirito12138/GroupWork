@@ -224,7 +224,7 @@ def search_user(request):
     return JsonResponse(ret_data, safe=False)
 
 
-def get_user_team(request):
+def get_team_users(request):
     if request.method != 'GET':
         return JsonResponse({'ret': False, 'error_code': 1})
 
@@ -245,4 +245,40 @@ def get_user_team(request):
             'skill': mcm_info.skill,
             'is_captain': mcm_info.is_captain,
         })
+    return JsonResponse(ret_data, safe=False)
+
+
+def get_matched_users(request):
+    if request.method != 'GET':
+        return JsonResponse({'ret': False, 'error_code': 1})
+
+    user = verify_token(request.META.get('HTTP_AUTHORIZATION'))
+    if not user:
+        return JsonResponse({'ret': False, 'error_code': 5})
+
+    if not user.mcm_info.is_integrated:  # 美赛信息不完整
+        return JsonResponse({'ret': False, 'error_code': 2})
+
+    if user.mcm_info.score == -1:  # 没填问卷，没有分数
+        return JsonResponse({'ret': False, 'error_code': 3})
+
+    mcm_info_set = McmInfo.objects.filter(is_integrated=True, score__gt=-1)
+    ret_data = []
+    for mcm_info in mcm_info_set:
+        ret_data.append({
+            'user_id': mcm_info.user.id,
+            'avatar_url': mcm_info.user.avatar_url,
+            'name': mcm_info.name,
+            'major': mcm_info.major,
+            'undergraduate_major': mcm_info.undergraduate_major,
+            'phone': mcm_info.phone,
+            'email': mcm_info.email,
+            'experience': mcm_info.experience,
+            'skill': mcm_info.skill,
+            'if_attend_training': mcm_info.if_attend_training,
+            'goal': mcm_info.goal,
+            'weight': abs(mcm_info.score - user.mcm_info.score),
+            'ifShow': False,
+        })
+    ret_data = sorted(ret_data, key=lambda info: info['weight'])[:15]
     return JsonResponse(ret_data, safe=False)
