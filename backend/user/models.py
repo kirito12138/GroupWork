@@ -6,7 +6,7 @@ from django.db import models
 class User(models.Model):
     account = models.CharField(max_length=40, unique=True)
     password = models.CharField(max_length=64, blank=True)
-    name = models.CharField(max_length=32, blank=True)
+    name = models.CharField(max_length=20)
     age = models.IntegerField(default=0)
     student_id = models.CharField(max_length=32, blank=True)
     sex = models.CharField(max_length=32, blank=True)
@@ -16,16 +16,17 @@ class User(models.Model):
     c_time = models.DateTimeField(auto_now_add=True)  # 保存用户创建时间
     open_id = models.CharField(max_length=256, default='', blank=True)
     avatar_url = models.CharField(max_length=256, default='img/avatar/default.jpg', blank=True)
+    mcm_info = models.OneToOneField('Team.McmInfo', on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
-        return self.account
+        return self.name
 
     class Meta:
         ordering = ["c_time"]
 
 
 class Resume(models.Model):
-    name = models.CharField(max_length=20, blank=True)
+    name = models.CharField(max_length=20)
     sex = models.CharField(max_length=20, blank=True)
     age = models.IntegerField(default=0)  # 0-200
     degree = models.CharField(max_length=20, blank=True)

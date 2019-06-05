@@ -20,6 +20,7 @@ from django.conf.urls.static import static
 
 import user.views
 import demand.views
+import Team.views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -55,8 +56,14 @@ urlpatterns = [
     path('apply/<int:apply_id>/accept/', demand.views.accept_apply),
     path('apply/<int:apply_id>/reject/', demand.views.reject_apply),
 
+    path('mcm/modify/info/', Team.views.modify_mcm_info),
+    path('mcm/get/info/', Team.views.get_mcm_info),
+    path('mcm/search/user/', Team.views.search_user),
+    path('mcm/team/', Team.views.get_team_users),
+    path('mcm/quit/', Team.views.quit_team),
+    path('mcm/match/', Team.views.get_matched_users),
+    path('mcm/score/', Team.views.submit_score),
+
     path('signature/upyun/', user.views.get_upyun_signature),
-    # path('resume/upload/', demand.views.upload_resume),
-    # path('resume/choose/', demand.views.choose_resume),
 ] + static(settings.STATIC_URL, document_root = settings.STATIC_ROOT)
 
