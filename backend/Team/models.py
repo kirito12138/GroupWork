@@ -15,7 +15,7 @@ class Invitation(models.Model):
 
 
 class Team(models.Model):
-    name = models.CharField(max_length=40, blank=True)  # 队名
+    name = models.CharField(max_length=40, blank=True)  # 队名，暂时没用
 
 
 class McmInfo(models.Model):
@@ -32,3 +32,6 @@ class McmInfo(models.Model):
     score = models.IntegerField(default=-1)  # -1代表没填问卷，没有分数
     team = models.ForeignKey('Team', on_delete=models.SET_NULL, null=True, blank=True)  # 初始状态每个人都指定一个队，这人也是该队队长
     is_captain = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.name

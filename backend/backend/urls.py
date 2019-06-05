@@ -55,6 +55,7 @@ urlpatterns = [
     path('apply/<int:apply_id>/reject/', demand.views.reject_apply),
 
     path('mcm/modify/info/', Team.views.modify_mcm_info),
+    path('mcm/get/info/', Team.views.get_mcm_info),
 
     path('signature/upyun/', user.views.get_upyun_signature),
 ]

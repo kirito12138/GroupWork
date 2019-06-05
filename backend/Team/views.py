@@ -127,11 +127,7 @@ def modify_mcm_info(request):
     except JSONDecodeError:
         return JsonResponse({'ret': False, 'error_code': 3})
 
-    if not user.mcm_info:
-        user.mcm_info = McmInfo.objects.create()
-        user.save()
     mcm_info = user.mcm_info
-
     try:
         mcm_info.name = data['name']
         mcm_info.major = data['major']
@@ -153,8 +149,6 @@ def modify_mcm_info(request):
 
     # 同步修改个人信息
     user.name = mcm_info.name
-    if not user.resume:
-        user.resume = Resume.objects.create()
     user.save()
     resume = user.resume
     resume.name = user.name
@@ -163,3 +157,27 @@ def modify_mcm_info(request):
     resume.save()
 
     return JsonResponse({'ret': True})
+
+
+def get_mcm_info(request):
+    if request.method != 'GET':
+        return JsonResponse({'ret': False, 'error_code': 1})
+
+    user = verify_token(request.META.get('HTTP_AUTHORIZATION'))
+    if not user:
+        return JsonResponse({'ret': False, 'error_code': 5})
+
+    mcm_info = user.mcm_info
+    return JsonResponse({
+        'ret': True,
+        'name': mcm_info.name,
+        'major': mcm_info.major,
+        'undergraduate_major': mcm_info.undergraduate_major,
+        'phone': mcm_info.phone,
+        'email': mcm_info.email,
+        'experience': mcm_info.experience,
+        'skill': mcm_info.skill,
+        'if_attend_training': mcm_info.if_attend_training,
+        'goal': mcm_info.goal,
+    })
+
