@@ -248,6 +248,32 @@ def get_team_users(request):
     return JsonResponse(ret_data, safe=False)
 
 
+def submit_score(request):
+    if request.method != 'POST':
+        return JsonResponse({'ret': False, 'error_code': 1})
+
+    user = verify_token(request.META.get('HTTP_AUTHORIZATION'))
+    if not user:
+        return JsonResponse({'ret': False, 'error_code': 5})
+
+    try:
+        data = json.loads(request.body)
+    except JSONDecodeError:
+        return JsonResponse({'ret': False, 'error_code': 3})
+
+    try:
+        score = data['score']
+    except KeyError:
+        return JsonResponse({'ret': False, 'error_code': 2})
+
+    if type(score) != int or score < 0:
+        return JsonResponse({'ret': False, 'error_code': 4})
+
+    user.mcm_info.score = score
+    user.mcm_info.save()
+    return JsonResponse({'ret': True})
+
+
 def get_matched_users(request):
     if request.method != 'GET':
         return JsonResponse({'ret': False, 'error_code': 1})
