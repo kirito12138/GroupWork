@@ -181,3 +181,62 @@ def get_mcm_info(request):
         'goal': mcm_info.goal,
     })
 
+
+def search_user(request):
+    if request.method != 'GET':
+        return JsonResponse({'ret': False, 'error_code': 1})
+
+    user = verify_token(request.META.get('HTTP_AUTHORIZATION'))
+    if not user:
+        return JsonResponse({'ret': False, 'error_code': 5})
+
+    # name = request.GET.get('name')
+
+    try:
+        data = json.loads(request.body)
+    except JSONDecodeError:
+        return JsonResponse({'ret': False, 'error_code': 3})
+
+    try:
+        name = data['name']
+    except KeyError:
+        return JsonResponse({'ret': False, 'error_code': 2})
+
+    mcm_infos = McmInfo.objects.filter(name__contains=name)
+    ret_data = []
+    for mcm_info in mcm_infos:
+        ret_data.append({
+            'user_id': mcm_info.user.id,
+            'avatar_url': mcm_info.user.avatar_url,
+            'name': mcm_info.name,
+            'major': mcm_info.major,
+            'undergraduate_major': mcm_info.undergraduate_major,
+            'phone': mcm_info.phone,
+            'email': mcm_info.email,
+            'experience': mcm_info.experience,
+            'skill': mcm_info.skill,
+            'if_attend_training': mcm_info.if_attend_training,
+            'goal': mcm_info.goal,
+        })
+    return JsonResponse(ret_data, safe=False)
+
+
+def get_user_team(request):
+    if request.method != 'GET':
+        return JsonResponse({'ret': False, 'error_code': 1})
+
+    user = verify_token(request.META.get('HTTP_AUTHORIZATION'))
+    if not user:
+        return JsonResponse({'ret': False, 'error_code': 5})
+
+    mcm_infos = user.mcm_info.team.mcminfo_set.all()
+    ret_data = []
+    for mcm_info in mcm_infos:
+        ret_data.append({
+            'user_id': mcm_info.user.id,
+            'name': mcm_info.name,
+            'avatar_url': mcm_info.user.avatar_url,
+            'skill': mcm_info.skill,
+            'is_captain': mcm_info.is_captain,
+        })
+    return JsonResponse(ret_data, safe=False)
