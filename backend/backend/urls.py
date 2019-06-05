@@ -56,6 +56,11 @@ urlpatterns = [
 
     path('mcm/modify/info/', Team.views.modify_mcm_info),
     path('mcm/get/info/', Team.views.get_mcm_info),
+    path('mcm/search/user/', Team.views.search_user),
+    path('mcm/team/', Team.views.get_team_users),
+    path('mcm/quit/', Team.views.quit_team),
+    path('mcm/match/', Team.views.get_matched_users),
+    path('mcm/score/', Team.views.submit_score),
 
     path('signature/upyun/', user.views.get_upyun_signature),
 ]
