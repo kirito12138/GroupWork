@@ -194,6 +194,8 @@ def search_user(request):
         return JsonResponse({'ret': False, 'error_code': 5})
 
     # name = request.GET.get('name')
+    # if not name:
+    #     return JsonResponse({'ret': False, 'error_code': 2})
 
     try:
         data = json.loads(request.body)
@@ -209,7 +211,7 @@ def search_user(request):
     ret_data = []
     for mcm_info in mcm_info_set:
         ret_data.append({
-            'user_id': mcm_info.user.id,
+            'user_id': str(mcm_info.user.id),
             'avatar_url': mcm_info.user.avatar_url,
             'name': mcm_info.name,
             'major': mcm_info.major,
@@ -239,7 +241,7 @@ def get_team_users(request):
     ret_data = []
     for mcm_info in mcm_info_set:
         ret_data.append({
-            'user_id': mcm_info.user.id,
+            'user_id': str(mcm_info.user.id),
             'name': mcm_info.name,
             'avatar_url': mcm_info.user.avatar_url,
             'skill': mcm_info.skill,
@@ -311,7 +313,7 @@ def get_matched_users(request):
     ret_data = []
     for mcm_info in mcm_info_set:
         ret_data.append({
-            'user_id': mcm_info.user.id,
+            'user_id': str(mcm_info.user.id),
             'avatar_url': mcm_info.user.avatar_url,
             'name': mcm_info.name,
             'major': mcm_info.major,
