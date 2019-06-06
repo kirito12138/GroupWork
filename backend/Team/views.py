@@ -337,7 +337,7 @@ def get_matched_users(request):
     if user.mcm_info.score == -1:  # 没填问卷，没有分数
         return JsonResponse({'ret': False, 'error_code': 3})
 
-    mcm_info_set = McmInfo.objects.filter(is_integrated=True, score__gt=-1)
+    mcm_info_set = McmInfo.objects.filter(is_integrated=True, score__gt=-1).exclude(user=user)
     ret_data = []
     for mcm_info in mcm_info_set:
         ret_data.append({
