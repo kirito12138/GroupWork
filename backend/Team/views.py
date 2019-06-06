@@ -40,16 +40,27 @@ def invitee_get_invitation(request):
         return JsonResponse({'ret': False, 'error_code': 5})
 
     invitations = Invitation.objects.filter(invitee=user, state=0)
-    ret_data = []
 
-    # TODO 查找用户组队情况，添加至返回信息中
+    # 检查本用户是否有美赛信息
+    mcm_info = user.mcm_info
+    if not mcm_info:
+        return JsonResponse({'ret': False, 'error_code': 3})
 
+    ret_data = [{'team_id': user.mcm_info.team_id}]
     for invitation in invitations:
         ret_data.append({
             'id': invitation.id,
-            'name': invitation.inviter.name,
+            'name': invitation.inviter.mcm_info.name,
             'avatar': invitation.inviter.avatar_url,
-            #     TODO 完善被邀请信息页面需要显示的邀请者信息
+            'major': invitation.inviter.mcm_info.major,
+            'undergraduate_major': invitation.inviter.mcm_info.undergraduate_major,
+            'phone': invitation.inviter.mcm_info.phone,
+            'email': invitation.inviter.mcm_info.email,
+            'experience': invitation.inviter.mcm_info.experience,
+            'skill': invitation.inviter.mcm_info.skill,
+            # 'if_attend_training': invitation.inviter.mcm_info.if_attend_training,
+            'goal': invitation.inviter.mcm_info.goal,
+            'team_id': invitation.inviter.mcm_info.team_id,
         })
 
     return JsonResponse(ret_data, safe=False)
@@ -68,9 +79,16 @@ def inviter_get_invitation(request):
     for invitation in invitations:
         ret_data.append({
             'id': invitation.id,
-            'name': invitation.inviter.name,
+            'name': invitation.inviter.mcm_info.name,
             'avatar': invitation.inviter.avatar_url,
-            #     TODO 完善邀请信息页面需要显示的被邀请者信息
+            'major': invitation.inviter.mcm_info.major,
+            'undergraduate_major': invitation.inviter.mcm_info.undergraduate_major,
+            'phone': invitation.inviter.mcm_info.phone,
+            'email': invitation.inviter.mcm_info.email,
+            'experience': invitation.inviter.mcm_info.experience,
+            'skill': invitation.inviter.mcm_info.skill,
+            # 'if_attend_training': invitation.inviter.mcm_info.if_attend_training,
+            'goal': invitation.inviter.mcm_info.goal,
             'state': invitation.state,
         })
 
@@ -90,10 +108,20 @@ def accept_invitation(request, invitation_id):
     except Invitation.DoesNotExist:
         return JsonResponse({'ret': False, 'error_code': 3})
 
-    # TODO 退出已有队伍（如果有）
-    # TODO 查找邀请者队伍，检查人数
+    # 查找邀请者队伍，检查人数
+    if McmInfo.objects.filter(team=invitation.inviter.mcm_info.team).count() >= 3:
+        return JsonResponse({'ret': False, 'error_code': 2})
 
-    return JsonResponse({'ret': True})  # TODO 返回加入情况
+    # 检查本用户是否为队伍
+    if McmInfo.objects.filter(team=user.mcm_info.team).count() > 1:
+        # 检查本用户是否为队长
+        if user.mcm_info.is_captain:
+            return JsonResponse({'ret': False, 'error_code': 4})
+
+    user.mcm_info.team = invitation.inviter.mcm_info.team
+    user.mcm_info.is_captain = False
+
+    return JsonResponse({'ret': True})
 
 
 def refuse_invitation(request, invitation_id):
