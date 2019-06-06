@@ -23,3 +23,35 @@
 page{
   background-color: #F8F8F8;
 }
+
+
+.menu-item{  
+  width: 32%;  
+  float: left;  
+  text-align: center;  
+  padding-top: 8px;  
+}  
+.menu-item1{  
+  width: 24%;  
+  float: left;  
+  text-align: center;  
+  padding-top: 8px;  
+}  
+.img{ 
+  width: 23px;  
+  height: 23px;  
+  display: block;  
+  margin:auto;  
+}  
+.clear{  
+  clear: both;  
+}  
+.tab-bar{  
+  position: fixed;  
+  width: 100%;  
+  padding: 0px 2%;  
+}  
+ 
+.button{
+  margin: 130px;
+}

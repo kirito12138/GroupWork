@@ -1,7 +1,9 @@
 {
   "pages": [
     "pages/MCM/MCM",
+    "pages/MCMResume/MCMResume",
     "pages/index/index",
+    
     "pages/home/home",
     "pages/postDetail/postDetail",
     "pages/login/login",
@@ -48,7 +50,10 @@
     "i-divider": "../../vant-weapp/dist/divider/index",
     "i-tag": "../../vant-weapp/dist/tag/index",
     "i-spin": "../../vant-weapp/dist/spin/index",
-    "i-modal": "../../vant-weapp/dist/modal/index"
+    "i-modal": "../../vant-weapp/dist/modal/index",
+    "i-radio-group": "../../vant-weapp/dist/radio-group/index",
+    "i-radio": "../../vant-weapp/dist/radio/index"
+     
   },
   "tabBar": {
     "list": [

@@ -1,5 +1,7 @@
 // pages/MCM/MCM.js
 const { $Toast } = require('../../vant-weapp/dist/base/index');
+const { $Message } = require('../../vant-weapp/dist/base/index');
+var app = getApp() // 获得全局变量
 Page({
 
   /**
@@ -21,6 +23,7 @@ Page({
     visible: false,
     partens: [],
     team: [],
+    p_pos: []
   },
 
   cancel_fil: function (e) {
@@ -57,14 +60,48 @@ Page({
   },
 
   searchkey: function (e) {
+    var that = this;
+  
+    
+    $Toast({
+      content: '加载中',
+      type: 'loading',
+      duration: 0
+    });
 
-    var can = { 'searchValue': "", 'tg': 0 };
-    can['searchValue'] = this.data.searchValue;
-    can['tg'] = 1;
-    var para = JSON.stringify(can);
+    wx.request({
+      url: 'https://group.tttaaabbbccc.club/mcm/search/user/',
+      method: "GET",
+      header: {
+        "Content-Type": "application/json;charset=UTF-8",
+        'Authorization': tk
+      },
+      data:{
+        name: that.data.searchValue
+      },
+      success(res) {
+        $Toast.hide()
+        console.log()
+        console.log(res.data)
+        if (res.ret == true) {
+          
+          that.setData({
+            partens: res.data,
+            p_pos: res.data,
+          })
+        }
+        else {
 
-    para = encodeURIComponent(para)
-    //TODO  像后端传参
+          that.setData({
+            is_fill: false
+          })
+
+        }
+      },
+      fail(res) {
+        $Toast.hide();
+      }
+    })
 
   },
 
@@ -74,34 +111,175 @@ Page({
     var wid = this.data.windowWidth;
     if(e.detail.x < (wid/2))
     {
-      upQue();
+      this.upQue(e);
     }
     else if (e.detail.x >= (wid / 2))
     {
-      newone();
+      this.newone(e);
     }
   },
 
-  newone: function()
+  newone: function(e)
   {
-
+    var rans = []
+    var i = 0; 
+    if(this.data.p_pos.length == 5)
+    {
+      while (true) {
+        var x = Math.floor(Math.random() * (15 + 1));
+        if (!rans.includes(x)) {
+          //rans[i] = x;
+          rans[i] = this.data.partens[x];
+          i = i + 1;
+        }
+        if (i == 5)
+          break;
+      }
+    
+      this.setData({
+        p_pos: rans,
+      })
+    
+    }
+     
+    
+    console.log(rans)
   },
 
-  upQue: function()
+  upQue: function(e)
   {
-
+    //TODO修改页面
+    wx.navigateTo({
+      url: '../home/home',
+    })
   },
 
   fillSurvey: function(e)
   {
-    //填写问卷
+    this.upQue(e)
   },
 
   invite: function(e)
   {
+    //TODO invite
+    var i = e.currentTarget.dataset.index;
 
+    var user_id = this.data.p_pos[i];
+
+    const _jwt = wx.getStorageSync('jwt');
+    var _history = wx.getStorageSync('history');
+    var tk;
+
+    if (_jwt) {
+      tk = JSON.parse(_jwt);
+      console.log(tk);
+    }
+    else {
+      console.log("no token");
+      return;
+    }
+
+    $Toast({
+      content: '加载中',
+      type: 'loading',
+      duration: 0
+    });
+    wx.request({
+      url: 'https://group.tttaaabbbccc.club/mcm/invite/'+ user_id + '/',
+      method: "POST",
+      header: {
+        "Content-Type": "application/json;charset=UTF-8",
+        'Authorization': tk
+      },
+      success(res) {
+        $Toast.hide()
+        console.log()
+        console.log(res.data)
+        if (res.ret == true) {
+          var rans = []
+          var i = 0;
+
+          while (true) {
+            var x = Math.floor(Math.random() * (15 + 1));
+            if (!rans.includes(x)) {
+              rans[i] = res.data[x];
+              i = i + 1;
+            }
+            if (i == 5)
+              break;
+          }
+          that.setData({
+            partens: res.data,
+            p_pos: rans,
+          })
+        }
+        else {
+
+          that.setData({
+            is_fill: false
+          })
+
+        }
+      },
+      fail(res) {
+        $Toast.hide();
+      }
+    })
   },
 
+  qu: function(e)
+  {
+    var wid = this.data.windowWidth;
+    if (e.detail.x >= (wid / 2))
+    {
+      this.quit(e)
+    }
+  },
+
+  quit: function(e)
+  {
+    const _jwt = wx.getStorageSync('jwt');
+    var _history = wx.getStorageSync('history');
+    var tk;
+    var that = this;
+    if (_jwt) {
+      tk = JSON.parse(_jwt);
+      console.log(tk);
+    }
+    else {
+      console.log("no token");
+      return;
+    }
+    $Toast({
+      content: '加载中',
+      type: 'loading',
+      duration: 0
+    });
+    wx.request({
+      url: 'https://group.tttaaabbbccc.club/mcm/quit/',
+      method: "POST",
+      header: {
+        "Content-Type": "application/json;charset=UTF-8",
+        'Authorization': tk
+      },
+      success(res) {
+        $Toast.hide()
+        $Toast.hide()
+
+        that.setData({
+          team: res.data
+        })
+
+        $Message({
+          content: '退出成功',
+          type: 'success'
+        });
+      },
+      fail(res) {
+        $Toast.hide();
+      }
+    })
+  },
 
 
   /**
@@ -226,20 +404,86 @@ Page({
     });
 
     wx.request({
-      url: 'https://group.tttaaabbbccc.club/f/processing/',
-      method: "POST",
-      data: {
-        history: _history,
-      },
+      url: 'https://group.tttaaabbbccc.club/mcm/team/',
+      method: "GET",
       header: {
         "Content-Type": "application/json;charset=UTF-8",
         'Authorization': tk
       },
-      data: {
-        history: '0'
+      success(res) {
+        $Toast.hide()
+        if (res.ret == false) {
+          if (res.error_code == 2) {
+            that.setData({
+              visible: true
+            })
+          }
+        }
+        else
+        {
+          console.log("xxxxxxxx")
+          console.log(res.data)
+          console.log(res)
+
+          that.setData({
+            team: res.data
+          })
+          console.log("kkkkkk")
+          console.log(that.data.team)
+        }
+        
+        
+        
+      },
+      fail(res) {
+        $Toast.hide();
+      }
+    })
+
+    $Toast({
+      content: '加载中',
+      type: 'loading',
+      duration: 0
+    });
+
+    wx.request({
+      url: 'https://group.tttaaabbbccc.club/mcm/match/',
+      method: "GET",
+      header: {
+        "Content-Type": "application/json;charset=UTF-8",
+        'Authorization': tk
       },
       success(res) {
         $Toast.hide()
+        console.log()
+        console.log(res.data)
+        if (res.ret == true) {
+          var rans = []
+          var i = 0;
+
+          while(true)
+          {
+            var x = Math.floor(Math.random() * (15 + 1));
+            if(!rans.includes(x))
+            {
+              rans[i] = res.data[x];
+              i = i+1;
+            }
+            if (i == 5)
+              break;
+          }
+          that.setData({
+            partens:res.data,
+            p_pos: rans,
+          })
+        }
+        else {
+          
+          that.setData({
+            is_fill: false
+          })
+
+        }
       },
       fail(res) {
         $Toast.hide();
@@ -260,8 +504,9 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    app.editTabBar(); 
   },
+
 
   /**
    * 生命周期函数--监听页面隐藏

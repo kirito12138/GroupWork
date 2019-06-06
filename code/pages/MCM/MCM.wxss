@@ -137,6 +137,29 @@ page, .page {
   position: absolute;
 
 }
+.username1
+{
+  margin-left: 15%;
+  align-items: center;
+  text-align: center;
+  font-size: 15px;
+
+}
+
+.card-view{
+  margin-top: 2%;
+  margin-bottom: 1%;
+  width: 90%;
+  margin-left: 2%;
+  padding: 20rpx;
+  flex-flow: column nowrap;
+  border: 3rpx solid #d8dcde;
+  border-radius: 10rpx;
+  justify-content: flex-start;
+  box-shadow: -2rpx 10rpx 8rpx #B0B0B0;
+  background: gray;
+}
+
 .num
 {
   margin-right: 20rpx;
@@ -211,15 +234,13 @@ page, .page {
   box-shadow: -2rpx 10rpx 8rpx #B0B0B0;
 }
 
-.fillQ
-{
-  height: 90px;
 
-}
 
 .filltext
 {
   height: 60px;
+  align-items: center;
+  text-align: center;
 }
 
 .gotoque
@@ -228,6 +249,8 @@ page, .page {
   background: greenyellow;
   width: 50%;
   margin-left: 25%;
+  align-items: center;
+  text-align: center;
 }
 
 .invit

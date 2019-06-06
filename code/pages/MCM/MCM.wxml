@@ -1,6 +1,11 @@
 <!--pages/postDetail/postDetail.wxml-->
 
 <i-toast id="toast" />
+ <i-message id="message" />
+
+<import src="../../template/tabbar.wxml"/> 
+<template is="tabBar" data="{{tabBar}}"/>
+
 
 <i-modal title="填写信息" visible="{{ visible }}" actions="{{ actions5 }}" bind:click="cancel_fil">
   <view>未填写美赛信息，请填写后使用</view>
@@ -22,15 +27,18 @@
 
     <canvas canvas-id="myCanvas" class="myCanvas"  style = "width:{{windowWidth}}px;height:35px" ></canvas>
   
-    <view >
-      <view class = 'title_son'>
-        <image class='title_img' style="width:40rpx;height:40rpx" src = "https://group.tttaaabbbccc.club/{{item.image_url}}"></image>
-        <text  class='title_text' > 111{{item.name}}</text>  
+    <view wx:for = "{{team}}">
+      <view style = "margin-left:15px">
+        <image class='userimg' style="width:40rpx;height:40rpx" src = "{{item.avatar_url}}"></image>
+        <text  class='username1' > {{item.name}}</text>  
+        <text  class='username1' > {{item.skill}}</text>
+        <text  class='username1' wx:if = "{{item.is_captain == true}}"> 队长</text>
+        <text  class='username1' wx:if = "{{item.is_captain == false}}"> 队员</text>
       </view>
       <view style="height:5rpx;background-color:#D9D9D9"/>
     </view>
     
-    <canvas canvas-id="bottcan1" class="bottcan1"  style = "width:{{windowWidth}}px;height:35px" bindtap='choose'></canvas>
+    <canvas canvas-id="bottcan1" class="bottcan1"  style = "width:{{windowWidth}}px;height:35px" bindtap='qu'></canvas>
 
   </view>
 
@@ -38,19 +46,21 @@
     <canvas canvas-id="intr" class="intr"  style = "width:{{windowWidth}}px;height:35px" ></canvas>
 
     <view class = "fillQ" wx:if = "{{is_fill==false}}">
-      <view class = "filltext">请填写问卷后开启此功能</view>
-      <view class = "gotoque" bindtap = "fillSurvey">填写问卷</view>
+      <view class='card-view' >
+        <view class = "filltext">请填写问卷后开启此功能</view>
+        <view class = "gotoque" bindtap = "fillSurvey">填写问卷</view>
+      </view>
     </view>
 
     <view class = "partener" wx:if = "{{is_fill==true}}">
 
-      <view class = "wx:for">
+      <view class = "wx:for" wx:for = "{{p_pos}}">
 
         <view class = "one" >
           <view>
-            <image class='title_img' style="width:40rpx;height:40rpx" src = "https://group.tttaaabbbccc.club/{{item.image_url}}"></image>
-            <text  class='title_text' > 王冰</text>  
-            <text  class='title_text' > 职位：编程</text>
+            <image class='title_img' style="width:40rpx;height:40rpx" src = "https://group.tttaaabbbccc.club/{{item.avatar_url}}"></image>
+            <text  class='title_text' > {{item.name}}</text>  
+            <text  class='title_text' > 职位：{{item.skill}}</text>
           </view>
           <view>
             <button  class='invit' bindtap = "invite">邀请</button>
@@ -58,27 +68,51 @@
         </view>
         <view style="height:5rpx;background-color:#D9D9D9"/>
 
-        <view class = "wx: if">
+        <view class = "wxif" wx:if = "{{item.ifShow == false}}">
           <view class="one1">
             <view class = "left">
               <text>本科专业：</text>
+              <text>{{item.undergraduate_major}}</text>
             </view>
             <view class = "right">
               <text>现读专业：</text>
+              <text>{{item.major}}</text>
             </view> 
           </view>
           <view class="one1">
             <view class = "left">
               <text>全程培训：</text>
+              <text wx:if = "{{item.if_attend == true}}">能参加</text>
+              <text wx:if = "{{item.if_attend == false}}">不能参加</text>
             </view>
             <view class = "right">
               <text>参赛目标：</text>
+              <text>{{item.goal}}</text>
             </view> 
+          </view>
+
+           <view class='card-view' style='margin-top:0rpx;'>
+            <view class='item-title'>
+              <text class="item-info-title">联系方式</text>
+            </view>
+
+            <view style='background:gray;margin-top:20rpx' >
+              <i-divider lineColor="gray" height = "1"></i-divider>
+            </view>
+            
+            <i-input placeholder="未填写"  title="电话:" value= "{{item.phone}}" disabled='true' maxlength="11"/>
+            
+            <view style='background:gray' >
+              <i-divider lineColor="#CCCCCC" height = "1"></i-divider>
+            </view>
+
+            <i-input placeholder="未填写"  title="邮箱:" value= "{{item.email}}"  disabled='true'  maxlength="20"/>
           </view>
       
           <view class='card-view' style='margin-top:0;'>
             <view class='item-title'>
               <text class="item-info-title" >参赛经历</text>
+              <text>{{item.experience}}</text>
             </view>
 
             <view style='background:gray;margin-top:20rpx' >
@@ -86,7 +120,7 @@
             </view>
 
             <view style = "height: 160px">
-              <i-input type='textarea' placeholder="未填写" style='font-size:14px; margin-top: 20rpx height: 60px' bind:change="input_rewards" value = "{{awards}}" maxlength='180'/>
+              <i-input type='textarea' placeholder="未填写" style='font-size:14px; margin-top: 20rpx height: 60px' bind:change="input_rewards" value = "{{item.awards}}"  disabled='true' maxlength='180'/>
             </view>
 
           </view>
@@ -99,7 +133,7 @@
       
 
     </view>
-
+    <view style="height:5rpx;background-color:#D9D9D9"/>
     <canvas canvas-id="bottcan" class="bottcan"  style = "width:{{windowWidth}}px;height:35px" bindtap='choose'></canvas>
   </view>
 
