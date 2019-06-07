@@ -22,7 +22,10 @@
     "pages/applyers/applyers",
     "pages/personCenter/personCenter",
     "pages/homeson/homeson",
-    "pages/Aboutus/Aboutus"
+    "pages/Aboutus/Aboutus",
+    "pages/MCM/MCM",
+    "pages/MCMQues/MCMQues",
+    "pages/Match/Match"
   ],
   "window": {
     "backgroundTextStyle": "light",
