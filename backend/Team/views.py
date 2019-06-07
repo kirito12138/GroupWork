@@ -61,6 +61,7 @@ def invitee_get_invitation(request):
             # 'if_attend_training': invitation.inviter.mcm_info.if_attend_training,
             'goal': invitation.inviter.mcm_info.goal,
             'team_id': invitation.inviter.mcm_info.team_id,
+            'isShow': False,
         })
 
     return JsonResponse(ret_data, safe=False)
@@ -90,6 +91,7 @@ def inviter_get_invitation(request):
             # 'if_attend_training': invitation.inviter.mcm_info.if_attend_training,
             'goal': invitation.inviter.mcm_info.goal,
             'state': invitation.state,
+            'isShow': False,
         })
 
     return JsonResponse(ret_data, safe=False)
@@ -274,6 +276,7 @@ def get_team_users(request):
             'avatar_url': mcm_info.user.avatar_url,
             'skill': mcm_info.skill,
             'is_captain': mcm_info.is_captain,
+            'is_self': mcm_info == user.mcm_info,
         })
     return JsonResponse(ret_data, safe=False)
 
