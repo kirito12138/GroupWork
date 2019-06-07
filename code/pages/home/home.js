@@ -221,6 +221,7 @@ Page({
   * 生命周期函数--监听页面加载，
   */
   onLoad: function (options) {
+    console.log("home")
     if (app.globalData.userInfo !== null) {
       this.setData({
         userimg: app.globalData.userInfo.avatarUrl,

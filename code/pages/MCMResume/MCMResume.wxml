@@ -1,0 +1,87 @@
+    
+<view class="page-container"  bindtap='noblur1'>
+
+  <!-- 个人信息-->
+  <view class='card-view' style='margin-top:40rpx;'>
+    <view class='item-title' >
+      <image src="{{userimg }}" class="userimage" />
+      <i-input placeholder="未填写" title="姓名:" style='font:"微软雅黑";font-size:18px; margin-left: 20rpx' value= "{{name}}" bind:change = "input_name" maxlength="20"/>
+    </view>
+    <i-input placeholder="未填写" title="本科就读专业:" style='font:"微软雅黑";font-size:18px; margin-left: 0rpx' value= "{{ben_major}}" bind:change = "input_ben_major" maxlength="10"/>
+    <i-input placeholder="未填写" title="现在就读专业:" style='font:"微软雅黑";font-size:18px; margin-left: 0rpx' value= "{{now_major}}" bind:change = "input_now_major" maxlength="10"/>
+    <i-input placeholder="未填写" title="本次参赛目标:" style='font:"微软雅黑";font-size:18px; margin-left: 0rpx' value= "{{target}}" bind:change = "input_target" maxlength="10"/>
+  
+  </view>
+
+
+  <view class='card-view' style='margin-top:40rpx;'>
+    <view class='item-title'>
+      <text class="item-info-title">本人能力侧重</text>
+    </view>
+    <view style='background:gray;margin-top:20rpx' >
+      <i-divider lineColor="gray" height = "1"></i-divider>
+    </view>
+      <i-radio-group current="{{ability}}" bindchange="handleFruitChange">
+          <i-radio wx:for="{{fruit}}" position="right" wx:key="{{item.id}}" value="{{item.name}}">
+          </i-radio>
+      </i-radio-group>
+  </view>
+
+
+  <view class='card-view' style='margin-top:40rpx;'>
+    <view class='item-title'>
+      <text class="item-info-title">能否全程参加暑假培训</text>
+    </view>
+    <view style='background:gray;margin-top:20rpx' >
+      <i-divider lineColor="gray" height = "1"></i-divider>
+    </view>
+      <i-radio-group current="{{part}}" bindchange="handlePartChange">
+          <i-radio wx:for="{{partin}}" position="right" wx:key="{{item.id}}" value="{{item.name}}">
+          </i-radio>
+      </i-radio-group>
+  </view>
+
+
+  <view class='card-view' style='margin-top:40rpx;'>
+    <view class='item-title'>
+      <text class="item-info-title">联系方式</text>
+    </view>
+
+    <view style='background:gray;margin-top:20rpx' >
+      <i-divider lineColor="gray" height = "1"></i-divider>
+    </view>
+    
+    <i-input placeholder="未填写"  title="电话:" value= "{{phone}}" bind:change = "input_phone" maxlength="11"/>
+    
+    <view style='background:gray' >
+      <i-divider lineColor="#CCCCCC" height = "1"></i-divider>
+    </view>
+
+    <i-input placeholder="未填写"  title="邮箱:" value= "{{email}}" bind:change = "input_email" maxlength="20"/>
+  </view>
+
+   <view class='card-view' style='margin-top:40rpx;'>
+    <view class='item-title'>
+      <text class="item-info-title" >参赛经历及获奖情况</text>
+    </view>
+
+    <view style='background:gray;margin-top:20rpx' >
+      <i-divider lineColor="#CCCCCC" height = "1"></i-divider>
+    </view>
+
+    <view style = "height: 160px">
+    
+    <i-input type='textarea' placeholder="未填写" style='font-size:14px; margin-top: 20rpx height: 60px' bind:change="input_rewards" value = "{{awards}}" maxlength='180'/>
+    </view>
+
+  </view>
+
+
+  <view class = "button">
+    <i-button bind:click="click_save_resume" type="primary" shape="circle" size="large">保存修改</i-button>
+  </view>
+  <i-message id="message" />
+  <i-toast id="toast" />
+  
+ <i-toast id="toast" />
+</view>

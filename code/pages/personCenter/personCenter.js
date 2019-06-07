@@ -19,6 +19,11 @@ Page({
       url: '../myResume/myResume',
     })
   },
+  goMCMresume: function (e) {
+    wx.navigateTo({
+      url: '../MCMResume/MCMResume',
+    })
+  },
   aboutUS:function(e)
   {
     wx.navigateTo({

@@ -20,6 +20,9 @@
 <i-cell bind:click = "goMyResume" title="我的简历" >
 <i-icon slot = 'icon' type="businesscard" size = "28" color='#FF9933' />
 </i-cell>
+<i-cell bind:click = "goMCMresume" title="美赛信息" >
+<i-icon slot = 'icon' type="businesscard" size = "28" color='#FF9933' />
+</i-cell>
 <i-cell bind:click = "aboutUS" title="关于我们" >
 <i-icon slot = 'icon' type="group" size = "28" color='#EE7600' />
 </i-cell>

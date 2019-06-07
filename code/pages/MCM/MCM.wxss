@@ -1,1 +1,314 @@
 /* pages/MCM/MCM.wxss */
+
+/* pages/postDetail/postDetail.wxss */
+page, .page {
+    height: 100%;
+}
+.search{  
+  width: 80%;  
+}  
+.search_arr {  
+  border: 1px solid #d0d0d0;  
+  border-radius: 10rpx;  
+  margin-left: 20rpx;  
+}  
+.search_arr input{  
+  margin-left: 60rpx;  
+  height: 60rpx;  
+  border-radius: 5px;  
+}  
+.bc_text {  
+  line-height: 68rpx;  
+  height: 68rpx;  
+  margin-top: 34rpx;  
+}  
+  
+.sousuo {  
+  margin-left: 15rpx;  
+  width: 15%;  
+  line-height: 150%;  
+  text-align: center;  
+  border: 1px solid #d0d0d0;  
+  border-radius: 10rpx;  
+}  
+.page_row{  
+  display: flex;  
+  flex-direction: row  
+}  
+.searchcion {  
+  margin: 10rpx 10rpx 10rpx 10rpx;  
+  position: absolute;  
+  left:25rpx;  
+  z-index: 2;  
+  width: 20px;  
+  height: 20px;  
+  text-align: center;  
+}  
+
+.half_1
+{
+  margin-top: 10rpx;
+  background-color: white;
+
+}
+.img
+{
+  height: 100rpx;
+  margin-top: 0rpx;
+  background-color: white;
+}
+.title{
+  margin-top:10rpx; 
+  background-color: white;
+  display: flex;
+  flex-direction:row ;
+  justify-content: space-between;
+  align-items: center;
+}
+.title_son
+{
+  align-items: center;
+  margin-left: 20rpx;
+  width: 70%;
+  display: flex;
+  white-space:nowrap;
+}
+
+.title_text
+{
+  align-items: center;
+  font-weight: 590;
+  font-size:20px;
+
+  margin-left: 10rpx;
+  width: 80%;
+  overflow:hidden;
+
+
+  text-overflow:ellipsis;
+
+  white-space:nowrap;
+
+
+
+
+}
+.date
+{
+  align-items: center;
+  margin-right: 20rpx;
+}
+
+.date_text
+{
+  align-items: center             ;
+  color:gray;
+  text-align: center;
+  font-size: 10px;
+}
+
+
+.second{
+  margin-top:10rpx; 
+  background-color: white;
+  display: flex;
+  flex-direction:row ;
+  justify-content: space-between;
+  align-items: center;
+}
+.useinfo
+{
+  margin-left: 20rpx;
+}
+.userimg
+{
+  align-content: center;
+  width: 40rpx;
+  height: 40rpx;
+  border-radius: 20rpx;
+}
+.username
+{
+  margin-left: 10rpx;
+  align-items: center;
+  color:gray;
+  text-align: center;
+  font-size: 15px;
+  position: absolute;
+
+}
+.username1
+{
+  margin-left: 15%;
+  align-items: center;
+  text-align: center;
+  font-size: 15px;
+
+}
+
+.card-view{
+  margin-top: 2%;
+  margin-bottom: 1%;
+  width: 90%;
+  margin-left: 2%;
+  padding: 20rpx;
+  flex-flow: column nowrap;
+  border: 3rpx solid #d8dcde;
+  border-radius: 10rpx;
+  justify-content: flex-start;
+  box-shadow: -2rpx 10rpx 8rpx #B0B0B0;
+  background: gray;
+}
+
+.num
+{
+  margin-right: 20rpx;
+}
+.num_text
+{
+  align-items: center;
+  color:gray;
+  text-align: center;
+  font-size: 10px;
+}
+
+
+
+
+
+.tags{
+  display: flex;
+  flex-flow: row wrap;
+  margin-bottom: 30rpx;
+}
+.i-tags
+{
+  flex-direction: column;
+  float: left;
+  margin-left: 30rpx; 
+}
+.date-num
+{
+  margin-top: 10rpx;
+  font-family:SimSun;
+  
+}
+
+
+
+.sv {
+  margin-top:10rpx;
+  background-color:#D9D9D9;
+  height: 100%;
+}
+
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  color: transparent;
+}
+
+
+
+.team
+{
+  border-radius: 10px;
+  background: white;
+  width: 94%;
+  margin-left: 3%;
+  margin-top: 20rpx;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  box-shadow: -2rpx 10rpx 8rpx #B0B0B0;
+}
+
+.intro
+{
+  border-radius: 10px;
+  background: white;
+  width: 94%;
+  margin-left: 3%;
+  margin-top: 20rpx;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  box-shadow: -2rpx 10rpx 8rpx #B0B0B0;
+}
+
+
+
+.filltext
+{
+  height: 60px;
+  align-items: center;
+  text-align: center;
+}
+
+.gotoque
+{
+  border-radius: 10px;
+  background: greenyellow;
+  width: 50%;
+  margin-left: 25%;
+  align-items: center;
+  text-align: center;
+}
+
+.invit
+{
+  margin-left: 0;
+  border-radius: 5px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%
+}
+.one
+{
+  display: flex;
+  
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  
+}
+
+.one1
+{
+  display: flex;
+  
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: 5%;
+}
+
+.left
+{
+  width:50%
+}
+
+.right
+{
+  width:50%
+}
+
+.card-view{
+  display: flex;
+  padding: 20rpx;
+  flex-flow: column nowrap;
+  border: 3rpx solid #d8dcde;
+  
+  justify-content: flex-start;
+  background: white;
+}
+.item-title{
+  display: flex;
+  align-items:center;
+}
+.item-info-title{
+  color: #d8dcde;
+  font-size: 30rpx;
+  margin-left: 20rpx;
+}
+

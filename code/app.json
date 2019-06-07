@@ -1,5 +1,10 @@
 {
   "pages": [
+    "pages/Invation/Invation",
+        "pages/MCMResume/MCMResume",
+    
+    "pages/MCM/MCM",
+
     "pages/index/index",
     "pages/home/home",
     "pages/postDetail/postDetail",
@@ -23,9 +28,9 @@
     "pages/personCenter/personCenter",
     "pages/homeson/homeson",
     "pages/Aboutus/Aboutus",
-    "pages/MCM/MCM",
     "pages/MCMQues/MCMQues",
     "pages/Match/Match"
+   
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -49,7 +54,9 @@
     "i-divider": "../../vant-weapp/dist/divider/index",
     "i-tag": "../../vant-weapp/dist/tag/index",
     "i-spin": "../../vant-weapp/dist/spin/index",
-    "i-modal": "../../vant-weapp/dist/modal/index"
+    "i-modal": "../../vant-weapp/dist/modal/index",
+    "i-radio-group": "../../vant-weapp/dist/radio-group/index",
+    "i-radio": "../../vant-weapp/dist/radio/index"
   },
   "tabBar": {
     "list": [
@@ -70,6 +77,12 @@
         "text": "我的申请",
         "iconPath": "image/apply1.png",
         "selectedIconPath": "image/apply2.png"
+      },
+      {
+        "pagePath": "pages/MCM/MCM",
+        "text": "美赛",
+        "iconPath": "image/user1.png",
+        "selectedIconPath": "image/user2.png"
       },
       {
         "pagePath": "pages/personCenter/personCenter",

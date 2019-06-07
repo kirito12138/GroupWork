@@ -1,0 +1,108 @@
+.page-container{
+  display: flex;
+  height: fit-content;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 0rpx 20rpx;
+}
+
+.info-top{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.info-top image{
+  width: 105rpx;
+  height: 148rpx;
+}
+.userimage{
+margin-top: 40rpx;
+align-content: center;
+width: 100rpx;
+height: 100rpx;
+border-radius: 100rpx;
+}
+
+.name{
+  color: white;
+  margin-top: 10rpx;
+  font-size: 30rpx;
+}
+
+.job{
+  color: #fae001;
+  margin-top: 20rpx;
+  font-size: 20rpx;
+}
+
+.item-title{
+  display: flex;
+  align-items:center;
+}
+
+.item-info-title-container{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border-bottom: 1rpx solid #d8dcde;
+  padding-bottom: 10rpx;
+}
+.margin-top15{
+  margin-top: 15rpx;
+}
+.item-info-title{
+  color: #d8dcde;
+  font-size: 30rpx;
+  margin-left: 20rpx;
+}
+
+.base-info-item{
+  display: flex;
+  padding: 10rpx 0rpx;
+  flex-direction: row;
+  align-items: center;
+}
+.base-info-item-title{
+  color: #d8dcde;
+  font-size: 30rpx;
+}
+.base-info-item-detail{
+  color: #919191;
+  font-size: 30rpx; 
+}
+
+.card-view{
+  display: flex;
+  padding: 20rpx;
+  flex-flow: column nowrap;
+  border: 3rpx solid #d8dcde;
+  border-radius: 10rpx;
+  justify-content: flex-start;
+  box-shadow: -2rpx 10rpx 8rpx #B0B0B0;
+  background: white;
+}
+.item-info-row{
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+}
+.item-info-container{
+  flex: 1;
+  font-size: 30rpx;
+}
+
+.margin-top{
+  margin-top: 10rpx;
+}
+
+.cell-30p{
+  flex: 0 0 33.33%;
+}
+
+.button
+{
+    margin-top: 30rpx;
+    margin-bottom: 10rpx;
+}
