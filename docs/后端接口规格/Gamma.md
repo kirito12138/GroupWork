@@ -284,7 +284,7 @@
           'skill': 被邀请者技能,
           'goal': 被邀请者获奖情况,
           'team_id': 被邀请者所在队伍ID,
-          'isShow'：false
+          'isShow'：false,
       },
       ......
   }
@@ -320,6 +320,7 @@
           'skill': 邀请者技能,
           'goal': 邀请者获奖情况,
           'team_id': 邀请者所在队伍ID,
+          'isShow'：false,
       },
       ......
   }
