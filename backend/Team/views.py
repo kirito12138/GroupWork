@@ -223,19 +223,19 @@ def search_user(request):
     if not user:
         return JsonResponse({'ret': False, 'error_code': 5})
 
-    # name = request.GET.get('name')
-    # if not name:
-    #     return JsonResponse({'ret': False, 'error_code': 2})
-
-    try:
-        data = json.loads(request.body)
-    except JSONDecodeError:
-        return JsonResponse({'ret': False, 'error_code': 3})
-
-    try:
-        name = data['name']
-    except KeyError:
+    name = request.GET.get('name')
+    if not name:
         return JsonResponse({'ret': False, 'error_code': 2})
+
+    # try:
+    #     data = json.loads(request.body)
+    # except JSONDecodeError:
+    #     return JsonResponse({'ret': False, 'error_code': 3})
+    #
+    # try:
+    #     name = data['name']
+    # except KeyError:
+    #     return JsonResponse({'ret': False, 'error_code': 2})
 
     mcm_info_set = McmInfo.objects.filter(name__contains=name, is_integrated=True)
     ret_data = []
