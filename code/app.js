@@ -167,31 +167,41 @@ App({
           "pagePath": "pages/home/home",
           "text": "首页",
           "iconPath": "image/main1.png",
-          "selectedIconPath": "image/main2.png"
+          "selectedIconPath": "image/main2.png",
+          "clas": "menu-item",
+          active: false
         },
         {
           "pagePath": "pages/myPost/myPost",
           "text": "我邀请的",
           "iconPath": "image/post1.png",
-          "selectedIconPath": "image/post2.png"
+          "selectedIconPath": "image/post2.png",
+          "clas": "menu-item",
+          active: false
         },
         {
           "pagePath": "pages/myApply/myApply",
           "text": "被谁邀请",
           "iconPath": "image/apply1.png",
-          "selectedIconPath": "image/apply2.png"
+          "selectedIconPath": "image/apply2.png",
+          "clas": "menu-item",
+          active: false
         },
         {
           "pagePath": "pages/MCM/MCM",
           "text": "美赛",
           "iconPath": "image/user1.png",
-          "selectedIconPath": "image/user2.png"
+          "selectedIconPath": "image/user2.png",
+          "clas": "menu-item",
+          active: false
         },
         {
           "pagePath": "pages/personCenter/personCenter",
           "text": "个人中心",
           "iconPath": "image/user1.png",
-          "selectedIconPath": "image/user2.png"
+          "selectedIconPath": "image/user2.png",
+          "clas": "menu-item",
+          active: false
         }
       ]
     },

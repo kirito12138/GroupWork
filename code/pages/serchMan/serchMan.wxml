@@ -1,67 +1,11 @@
-<!--pages/postDetail/postDetail.wxml-->
-
 <i-toast id="toast" />
  <i-message id="message" />
 
-
-
-
-<i-modal title="填写信息" visible="{{ visible }}" actions="{{ actions5 }}" bind:click="cancel_fil">
-  <view>未填写美赛信息，请填写后使用</view>
-</i-modal>
-
-<view class='page_row' >  
-    <view class="search">  
-      <view class="df search_arr">  
-        <icon class="searchcion" size='20' type='search'></icon>  
-        <input class=""  bindinput='inputser' placeholder="搜索用户" value="{{searchValue}}"/>  
-      </view>  
-    </view>  
-    <view class='sousuo' bindtap='searchkey'>搜索</view>  
-</view>  
-
-
-<scroll-view class='sv' scroll-y='true' style='z-index: -1;'>
-  <view class = "team" style = "">
-
-    <canvas canvas-id="myCanvas" class="myCanvas"  style = "width:{{windowWidth}}px;height:35px" ></canvas>
-  
-    <view wx:for = "{{team}}">
-      <view style = "margin-left:15px">
-        <view class = "one">
-          <view class='left1'>
-            <image class='userimg' style="width:40rpx;height:40rpx" src = "{{item.avatar_url}}"></image>
-            <text  class='username2' > {{item.name}}</text>  
-            <text  class='username1' > {{item.skill}}</text>
-            <text  class='username1' wx:if = "{{item.is_captain == true }}"> 队长</text>
-            <text  class='username1' wx:if = "{{item.is_captain == false }}"> 队员</text>
-          </view>
-          <view class='right1'>
-            <button  class='zou' bindtap = "quit" wx:if = "{{item.is_self == true}}">退出</button>
-          </view>
-        </view>
-        
-        
-      </view>
-      <view style="height:5rpx;background-color:#D9D9D9"/>
-    </view>
-
-    <view wx:for = "{{non}}">
-      <view style = "margin-left:15px">
-        <text  class='username3' > {{item.name}}</text>  
-      </view>
-      <view style="height:5rpx;background-color:#D9D9D9"/>
-    </view>
-    
-    <canvas canvas-id="bottcan1" class="bottcan1"  style = "width:{{windowWidth}}px;height:35px" bindtap='yaoqing'></canvas>
-
-  </view>
-
-  <view class = "intro">
+<view class = "intro">
     <canvas canvas-id="intr" class="intr"  style = "width:{{windowWidth}}px;height:35px" ></canvas>
 
     <view class = "fillQ" wx:if = "{{is_fill==false}}">
-      <view class='card-view' style = "margin-top: 20%;margin-bottom: 20%" >
+      <view class='card-view' >
         <view class = "filltext">请填写问卷后开启此功能</view>
         <view class = "gotoque" bindtap = "fillSurvey">填写问卷</view>
       </view>
@@ -164,15 +108,4 @@
 
     </view>
     <view style="height:5rpx;background-color:#D9D9D9"/>
-    <canvas canvas-id="bottcan" class="bottcan"  style = "width:{{windowWidth}}px;height:35px" bindtap='choose'></canvas>
   </view>
-
-
-</scroll-view>
-
-
-
-
-
-
-

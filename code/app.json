@@ -1,9 +1,11 @@
 {
   "pages": [
+    "pages/index/index",
+    "pages/serchMan/serchMan",
     "pages/MCM/MCM",
     "pages/MCMResume/MCMResume",
-    "pages/index/index",
     
+    "pages/que/que",
     "pages/home/home",
     "pages/postDetail/postDetail",
     "pages/login/login",
@@ -26,6 +28,7 @@
     "pages/personCenter/personCenter",
     "pages/homeson/homeson",
     "pages/Aboutus/Aboutus"
+    
     
   ],
   "window": {
@@ -78,8 +81,8 @@
       {
         "pagePath": "pages/MCM/MCM",
         "text": "美赛",
-        "iconPath": "image/user1.png",
-        "selectedIconPath": "image/user2.png"
+        "iconPath": "image/trophy11.png",
+        "selectedIconPath": "image/trophy.png"
       },
       {
         "pagePath": "pages/personCenter/personCenter",

@@ -23,7 +23,8 @@ Page({
     visible: false,
     partens: [],
     team: [],
-    p_pos: []
+    p_pos: [],
+    non: []
   },
 
   cancel_fil: function (e) {
@@ -61,8 +62,27 @@ Page({
 
   searchkey: function (e) {
     var that = this;
+
+    var para = JSON.stringify(this.data.searchValue);
+
+    para = encodeURIComponent(para)
+    wx.navigateTo({
+      url: '../serchMan/serchMan?info=' + para,
+    })
+
   
-    
+    /*const _jwt = wx.getStorageSync('jwt');
+    var _history = wx.getStorageSync('history');
+    var tk;
+
+    if (_jwt) {
+      tk = JSON.parse(_jwt);
+      console.log(tk);
+    }
+    else {
+      console.log("no token");
+      return;
+    }
     $Toast({
       content: '加载中',
       type: 'loading',
@@ -101,7 +121,7 @@ Page({
       fail(res) {
         $Toast.hide();
       }
-    })
+    })*/
 
   },
 
@@ -150,7 +170,7 @@ Page({
   {
     //TODO修改页面
     wx.navigateTo({
-      url: '../home/home',
+      url: '../que/que',
     })
   },
 
@@ -162,9 +182,11 @@ Page({
   invite: function(e)
   {
     //TODO invite
+    var that = this
     var i = e.currentTarget.dataset.index;
 
-    var user_id = this.data.p_pos[i];
+    console.log(this.data.p_pos[i])
+    var user_id = this.data.p_pos[i].user_id;
 
     const _jwt = wx.getStorageSync('jwt');
     var _history = wx.getStorageSync('history');
@@ -193,31 +215,64 @@ Page({
       },
       success(res) {
         $Toast.hide()
-        console.log()
+      
+        
+        
+      },
+      fail(res) {
+        $Toast.hide();
+      }
+    })
+    $Toast({
+      content: '加载中',
+      type: 'loading',
+      duration: 0
+    });
+    wx.request({
+      url: 'https://group.tttaaabbbccc.club/mcm/match/',
+      method: "GET",
+      header: {
+        "Content-Type": "application/json;charset=UTF-8",
+        'Authorization': tk
+      },
+      success(res) {
+        $Toast.hide()
+        console.log("match")
         console.log(res.data)
-        if (res.ret == true) {
+        if (res.ret == false) {
+
+          that.setData({
+            is_fill: false
+          })
+
+        }
+        else {
           var rans = []
           var i = 0;
 
           while (true) {
-            var x = Math.floor(Math.random() * (15 + 1));
+            var k = res.data.length;
+            var x = Math.floor(Math.random() * (k));
+            console.log(x)
             if (!rans.includes(x)) {
+              console.log(res.data[x])
               rans[i] = res.data[x];
               i = i + 1;
             }
-            if (i == 5)
+            if (i == 5) {
               break;
+            }
+            if (res.data.length == i) {
+              break
+            }
+
           }
           that.setData({
             partens: res.data,
             p_pos: rans,
           })
-        }
-        else {
-
-          that.setData({
-            is_fill: false
-          })
+          console.log(rans)
+          console.log(that.data.p_pos)
 
         }
       },
@@ -227,13 +282,57 @@ Page({
     })
   },
 
-  qu: function(e)
+  changeShow: function(e)
   {
-    var wid = this.data.windowWidth;
-    if (e.detail.x >= (wid / 2))
+    var that = this;
+    var i = e.currentTarget.dataset.index;
+    console.log(e)
+    console.log(this.data.p_pos[i])
+    if (this.data.p_pos[i].ifShow == false)
     {
-      this.quit(e)
+      let string = "p_pos[" + i + "].ifShow";
+      that.setData
+      ({
+        [string]: true,
+      })
     }
+    else
+    {
+      let string = "p_pos[" + i + "].ifShow";
+      that.setData
+      ({
+        [string]: false,
+      })
+    }
+  },
+
+  yaoqing: function(e)
+  {
+    console.log(e)
+    var wid = this.data.windowWidth;
+    if (e.detail.x < (wid / 2)) {
+      this.myInvite(e);
+    }
+    else if (e.detail.x >= (wid / 2)) {
+      this.whoInvite(e);
+    }
+  },
+
+  myInvite: function(e)
+  {
+    //TODO 我邀请的
+    wx.reLaunch({
+      url: '../home/home',
+    })
+
+  },
+
+  whoInvite: function (e) {
+    //TODO 被我邀请
+    wx.reLaunch({
+      url: '../Invation/Invation',
+    })
+
   },
 
   quit: function(e)
@@ -264,21 +363,84 @@ Page({
       },
       success(res) {
         $Toast.hide()
-        $Toast.hide()
 
-        that.setData({
-          team: res.data
-        })
-
-        $Message({
-          content: '退出成功',
-          type: 'success'
-        });
+        if(res.ret==false)
+        {
+          if(res.error_code == 3)
+          {
+            $Message({
+              content: '队长请勿退出队伍',
+              type: 'error'
+            });
+          }
+        }
+        else
+        {
+          
+          $Message({
+            content: '退出成功',
+            type: 'success'
+          });
+        }
+        
       },
       fail(res) {
         $Toast.hide();
       }
     })
+    $Toast({
+      content: '加载中',
+      type: 'loading',
+      duration: 0
+    });
+
+    wx.request({
+      url: 'https://group.tttaaabbbccc.club/mcm/team/',
+      method: "GET",
+      header: {
+        "Content-Type": "application/json;charset=UTF-8",
+        'Authorization': tk
+      },
+      success(res) {
+        $Toast.hide()
+        if (res.ret == false) {
+          if (res.error_code == 2) {
+            that.setData({
+              visible: true
+            })
+          }
+        }
+        else {
+          console.log("xxxxxxxx")
+          console.log(res.data)
+          console.log(res)
+
+          var noo = []
+
+          if (res.data.length == 1) {
+            noo = [{ 'name': "暂无" }, { 'name': "暂无" }]
+          }
+          else if (res.data.length == 2) {
+            noo = [{ 'name': "暂无" }]
+          }
+
+          that.setData({
+            team: res.data,
+            non: noo
+          })
+
+          console.log("kkkkkk")
+          console.log(that.data.team)
+        }
+
+
+
+      },
+      fail(res) {
+        $Toast.hide();
+      }
+    })
+
   },
 
 
@@ -370,17 +532,29 @@ Page({
     intr.draw()
 
     const quit = wx.createCanvasContext('bottcan1')
+    quit.moveTo(0, 0)
+    quit.lineTo(wid / 2 - 15, 0)
+    quit.lineTo(wid / 2 + 15, 35)
+    quit.lineTo(10, 35)
+    quit.arc(0 + 10, 35 - 10, 10, Math.PI * 0.5, Math.PI)
+    quit.setFillStyle('yellow')
+    quit.fill()
+    quit.setFillStyle('black')
+    quit.setFontSize(20)
+    quit.fillText('我邀请的', 50, 25)
+
+
     quit.beginPath()
     quit.moveTo(wid / 2 - 15, 0)
     quit.lineTo(wid, 0)
     quit.lineTo(wid, 25)
     quit.arc(wid - 10, 35 - 10, 10, 0, Math.PI * 0.5)
     quit.lineTo(wid / 2 + 15, 35)
-    quit.setFillStyle('red')
+    quit.setFillStyle('blue')
     quit.fill()
     quit.setFillStyle('black')
     quit.setFontSize(20)
-    quit.fillText('退出队伍', 230, 25)
+    quit.fillText('被谁邀请', 230, 25)
 
     quit.draw()
 
@@ -425,9 +599,22 @@ Page({
           console.log(res.data)
           console.log(res)
 
+          var noo = []
+
+          if (res.data.length == 1)
+          {
+            noo = [{ 'name': "暂无" }, { 'name': "暂无" }]
+          }
+          else if (res.data.length == 2)
+          {
+            noo = [{ 'name': "暂无" }]
+          }
+
           that.setData({
-            team: res.data
+            team: res.data,
+            non: noo
           })
+          
           console.log("kkkkkk")
           console.log(that.data.team)
         }
@@ -455,33 +642,44 @@ Page({
       },
       success(res) {
         $Toast.hide()
-        console.log()
+        console.log("match")
         console.log(res.data)
-        if (res.ret == true) {
-          var rans = []
-          var i = 0;
+        if (res.ret == false) {
 
-          while(true)
-          {
-            var x = Math.floor(Math.random() * (15 + 1));
-            if(!rans.includes(x))
-            {
-              rans[i] = res.data[x];
-              i = i+1;
-            }
-            if (i == 5)
-              break;
-          }
-          that.setData({
-            partens:res.data,
-            p_pos: rans,
-          })
-        }
-        else {
-          
           that.setData({
             is_fill: false
           })
+          
+        }
+        else {
+          var rans = []
+          var i = 0;
+
+          while (true) {
+            var k = res.data.length;
+            var x = Math.floor(Math.random() * (k));
+            console.log(x)
+            if (!rans.includes(x)) {
+              console.log(res.data[x])
+              rans[i] = res.data[x];
+              i = i + 1;
+            }
+            if (i == 5)
+            {
+              break;
+            }
+            if(res.data.length == i)
+            {
+              break
+            }
+
+          }
+          that.setData({
+            partens: res.data,
+            p_pos: rans,
+          })
+          console.log(rans)
+          console.log(that.data.p_pos)
 
         }
       },
@@ -504,7 +702,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    app.editTabBar(); 
+    this.onLoad()
   },
 
 

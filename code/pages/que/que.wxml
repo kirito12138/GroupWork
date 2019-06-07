@@ -1,0 +1,484 @@
+<view class="page-container">
+<i-message id="message" />
+<i-toast id="toast" />
+  
+ <!-- 获奖经历-->
+  <view class="weui-cells__title">获奖经历</view>
+
+  <view class='card-view' style='margin-top:40rpx;'>
+    <view class="weui-cells weui-cells_after-title">
+            <checkbox-group bindchange="checkboxChange0">
+                <label class="weui-cell weui-check__label" wx:for="{{checkboxItems0}}" wx:key="value">
+                    <checkbox class="weui-check" value="{{item.value}}" checked="{{item.checked}}"/>
+
+                    <view class="weui-cell__hd weui-check__hd_in-checkbox">
+                        <icon class="weui-icon-checkbox_circle" type="circle" size="23" wx:if="{{!item.checked}}"></icon>
+                        <icon class="weui-icon-checkbox_success" type="success" size="23" wx:if="{{item.checked}}"></icon>
+                    </view>
+                    <view class="weui-cell__bd">{{item.name}}</view>
+                </label>
+            </checkbox-group>
+        </view>
+    <view class="weui-cells__title"  wx:if="{{f0}}">对自己贡献度打分，满分100人均33：</view>    
+    <view class='user-info-item'>
+      <i-input placeholder="未填写"  value= "{{n0}}" bind:change = "input_n0" maxlength="3" wx:if="{{f0}}"/>
+    </view>
+
+
+    <view class="weui-cells weui-cells_after-title">
+            <checkbox-group bindchange="checkboxChange1">
+                <label class="weui-cell weui-check__label" wx:for="{{checkboxItems1}}" wx:key="value">
+                    <checkbox class="weui-check" value="{{item.value}}" checked="{{item.checked}}"/>
+
+                    <view class="weui-cell__hd weui-check__hd_in-checkbox">
+                        <icon class="weui-icon-checkbox_circle" type="circle" size="23" wx:if="{{!item.checked}}"></icon>
+                        <icon class="weui-icon-checkbox_success" type="success" size="23" wx:if="{{item.checked}}"></icon>
+                    </view>
+                    <view class="weui-cell__bd">{{item.name}}</view>
+                </label>
+            </checkbox-group>
+        </view>
+    <view class="weui-cells__title"  wx:if="{{f1}}">对自己贡献度打分，满分100人均33：</view>    
+    <view class='user-info-item'>
+      <i-input placeholder="未填写"  value= "{{n1}}" bind:change = "input_n1" maxlength="3" wx:if="{{f1}}"/>
+    </view>
+
+
+    <view class="weui-cells weui-cells_after-title">
+            <checkbox-group bindchange="checkboxChange2">
+                <label class="weui-cell weui-check__label" wx:for="{{checkboxItems2}}" wx:key="value">
+                    <checkbox class="weui-check" value="{{item.value}}" checked="{{item.checked}}"/>
+
+                    <view class="weui-cell__hd weui-check__hd_in-checkbox">
+                        <icon class="weui-icon-checkbox_circle" type="circle" size="23" wx:if="{{!item.checked}}"></icon>
+                        <icon class="weui-icon-checkbox_success" type="success" size="23" wx:if="{{item.checked}}"></icon>
+                    </view>
+                    <view class="weui-cell__bd">{{item.name}}</view>
+                </label>
+            </checkbox-group>
+        </view>
+    <view class="weui-cells__title"  wx:if="{{f2}}">对自己贡献度打分，满分100人均33：</view>    
+    <view class='user-info-item'>
+      <i-input placeholder="未填写"  value= "{{n2}}" bind:change = "input_n2" maxlength="3" wx:if="{{f2}}"/>
+    </view>
+
+    
+    <view class="weui-cells weui-cells_after-title">
+            <checkbox-group bindchange="checkboxChange3">
+                <label class="weui-cell weui-check__label" wx:for="{{checkboxItems3}}" wx:key="value">
+                    <checkbox class="weui-check" value="{{item.value}}" checked="{{item.checked}}"/>
+
+                    <view class="weui-cell__hd weui-check__hd_in-checkbox">
+                        <icon class="weui-icon-checkbox_circle" type="circle" size="23" wx:if="{{!item.checked}}"></icon>
+                        <icon class="weui-icon-checkbox_success" type="success" size="23" wx:if="{{item.checked}}"></icon>
+                    </view>
+                    <view class="weui-cell__bd">{{item.name}}</view>
+                </label>
+            </checkbox-group>
+        </view>
+    <view class="weui-cells__title"  wx:if="{{f3}}">对自己贡献度打分，满分100人均33：</view>    
+    <view class='user-info-item'>
+      <i-input placeholder="未填写"  value= "{{n3}}" bind:change = "input_n3" maxlength="3" wx:if="{{f3}}"/>
+    </view>
+
+
+    <view class="weui-cells weui-cells_after-title">
+            <checkbox-group bindchange="checkboxChange4">
+                <label class="weui-cell weui-check__label" wx:for="{{checkboxItems4}}" wx:key="value">
+                    <checkbox class="weui-check" value="{{item.value}}" checked="{{item.checked}}"/>
+
+                    <view class="weui-cell__hd weui-check__hd_in-checkbox">
+                        <icon class="weui-icon-checkbox_circle" type="circle" size="23" wx:if="{{!item.checked}}"></icon>
+                        <icon class="weui-icon-checkbox_success" type="success" size="23" wx:if="{{item.checked}}"></icon>
+                    </view>
+                    <view class="weui-cell__bd">{{item.name}}</view>
+                </label>
+            </checkbox-group>
+        </view>
+    <view class="weui-cells__title"  wx:if="{{f4}}">对自己贡献度打分，满分100人均33：</view>    
+    <view class='user-info-item'>
+      <i-input placeholder="未填写"  value= "{{n4}}" bind:change = "input_n4" maxlength="3" wx:if="{{f4}}"/>
+    </view>
+
+
+    <view class="weui-cells weui-cells_after-title">
+            <checkbox-group bindchange="checkboxChange5">
+                <label class="weui-cell weui-check__label" wx:for="{{checkboxItems5}}" wx:key="value">
+                    <checkbox class="weui-check" value="{{item.value}}" checked="{{item.checked}}"/>
+
+                    <view class="weui-cell__hd weui-check__hd_in-checkbox">
+                        <icon class="weui-icon-checkbox_circle" type="circle" size="23" wx:if="{{!item.checked}}"></icon>
+                        <icon class="weui-icon-checkbox_success" type="success" size="23" wx:if="{{item.checked}}"></icon>
+                    </view>
+                    <view class="weui-cell__bd">{{item.name}}</view>
+                </label>
+            </checkbox-group>
+        </view>
+    <view class="weui-cells__title"  wx:if="{{f5}}">对自己贡献度打分，满分100人均33：</view>    
+    <view class='user-info-item'>
+      <i-input placeholder="未填写"  value= "{{n5}}" bind:change = "input_n5" maxlength="3" wx:if="{{f5}}"/>
+    </view>
+
+
+    <view class="weui-cells weui-cells_after-title">
+            <checkbox-group bindchange="checkboxChange6">
+                <label class="weui-cell weui-check__label" wx:for="{{checkboxItems6}}" wx:key="value">
+                    <checkbox class="weui-check" value="{{item.value}}" checked="{{item.checked}}"/>
+
+                    <view class="weui-cell__hd weui-check__hd_in-checkbox">
+                        <icon class="weui-icon-checkbox_circle" type="circle" size="23" wx:if="{{!item.checked}}"></icon>
+                        <icon class="weui-icon-checkbox_success" type="success" size="23" wx:if="{{item.checked}}"></icon>
+                    </view>
+                    <view class="weui-cell__bd">{{item.name}}</view>
+                </label>
+            </checkbox-group>
+        </view>
+    <view class="weui-cells__title"  wx:if="{{f6}}">对自己贡献度打分，满分100人均33：</view>    
+    <view class='user-info-item'>
+      <i-input placeholder="未填写"  value= "{{n6}}" bind:change = "input_n6" maxlength="3" wx:if="{{f6}}"/>
+    </view>
+
+
+    <view class="weui-cells weui-cells_after-title">
+            <checkbox-group bindchange="checkboxChange7">
+                <label class="weui-cell weui-check__label" wx:for="{{checkboxItems7}}" wx:key="value">
+                    <checkbox class="weui-check" value="{{item.value}}" checked="{{item.checked}}"/>
+
+                    <view class="weui-cell__hd weui-check__hd_in-checkbox">
+                        <icon class="weui-icon-checkbox_circle" type="circle" size="23" wx:if="{{!item.checked}}"></icon>
+                        <icon class="weui-icon-checkbox_success" type="success" size="23" wx:if="{{item.checked}}"></icon>
+                    </view>
+                    <view class="weui-cell__bd">{{item.name}}</view>
+                </label>
+            </checkbox-group>
+        </view>
+    <view class="weui-cells__title"  wx:if="{{f7}}">对自己贡献度打分，满分100人均33：</view>    
+    <view class='user-info-item'>
+      <i-input placeholder="未填写"  value= "{{n7}}" bind:change = "input_n7" maxlength="3" wx:if="{{f7}}"/>
+    </view>
+
+
+    <view class="weui-cells weui-cells_after-title">
+            <checkbox-group bindchange="checkboxChange8">
+                <label class="weui-cell weui-check__label" wx:for="{{checkboxItems8}}" wx:key="value">
+                    <checkbox class="weui-check" value="{{item.value}}" checked="{{item.checked}}"/>
+
+                    <view class="weui-cell__hd weui-check__hd_in-checkbox">
+                        <icon class="weui-icon-checkbox_circle" type="circle" size="23" wx:if="{{!item.checked}}"></icon>
+                        <icon class="weui-icon-checkbox_success" type="success" size="23" wx:if="{{item.checked}}"></icon>
+                    </view>
+                    <view class="weui-cell__bd">{{item.name}}</view>
+                </label>
+            </checkbox-group>
+        </view>
+    <view class="weui-cells__title"  wx:if="{{f8}}">对自己贡献度打分，满分100人均33：</view>    
+    <view class='user-info-item'>
+      <i-input placeholder="未填写"  value= "{{n8}}" bind:change = "input_n8" maxlength="3" wx:if="{{f8}}"/>
+    </view>
+
+
+    <view class="weui-cells weui-cells_after-title">
+            <checkbox-group bindchange="checkboxChange9">
+                <label class="weui-cell weui-check__label" wx:for="{{checkboxItems9}}" wx:key="value">
+                    <checkbox class="weui-check" value="{{item.value}}" checked="{{item.checked}}"/>
+
+                    <view class="weui-cell__hd weui-check__hd_in-checkbox">
+                        <icon class="weui-icon-checkbox_circle" type="circle" size="23" wx:if="{{!item.checked}}"></icon>
+                        <icon class="weui-icon-checkbox_success" type="success" size="23" wx:if="{{item.checked}}"></icon>
+                    </view>
+                    <view class="weui-cell__bd">{{item.name}}</view>
+                </label>
+            </checkbox-group>
+        </view>
+    <view class="weui-cells__title"  wx:if="{{f9}}">对自己贡献度打分，满分100人均33：</view>    
+    <view class='user-info-item'>
+      <i-input placeholder="未填写"  value= "{{n9}}" bind:change = "input_n9" maxlength="3" wx:if="{{f9}}"/>
+    </view>
+
+
+    <view class="weui-cells weui-cells_after-title">
+            <checkbox-group bindchange="checkboxChange10">
+                <label class="weui-cell weui-check__label" wx:for="{{checkboxItems10}}" wx:key="value">
+                    <checkbox class="weui-check" value="{{item.value}}" checked="{{item.checked}}"/>
+
+                    <view class="weui-cell__hd weui-check__hd_in-checkbox">
+                        <icon class="weui-icon-checkbox_circle" type="circle" size="23" wx:if="{{!item.checked}}"></icon>
+                        <icon class="weui-icon-checkbox_success" type="success" size="23" wx:if="{{item.checked}}"></icon>
+                    </view>
+                    <view class="weui-cell__bd">{{item.name}}</view>
+                </label>
+            </checkbox-group>
+        </view>
+    <view class="weui-cells__title"  wx:if="{{f10}}">对自己数模方面综合能力打分，满分100：</view>    
+    <view class='user-info-item'>
+      <i-input placeholder="未填写"  value= "{{n10}}" bind:change = "input_n10" maxlength="3" wx:if="{{f10}}"/>
+    </view>
+  </view>
+
+
+
+ <!-- 最高预期与最低预期-->
+  <view class='card-view' style='margin-top:40rpx;'> 
+    <view class="weui-cells__title">参加本次比赛你的最高预期是：</view>
+    <view class="weui-cells weui-cells_after-title">
+            <radio-group bindchange="radioChange20">
+                <label class="weui-cell weui-check__label" wx:for="{{radioItems20}}" wx:key="value">
+                    <radio class="weui-check" value="{{item.value}}" checked="{{item.checked}}"/>
+
+                    <view class="weui-cell__bd">{{item.name}}</view>
+                    <view class="weui-cell__ft weui-cell__ft_in-radio" wx:if="{{item.checked}}">
+                        <icon class="weui-icon-radio" type="success_no_circle" size="16"></icon>
+                    </view>
+                </label>
+            </radio-group>
+    </view>
+
+    <view class="weui-cells__title">参加本次比赛你的最低预期是：</view>
+    <view class="weui-cells weui-cells_after-title">
+            <radio-group bindchange="radioChange21">
+                <label class="weui-cell weui-check__label" wx:for="{{radioItems21}}" wx:key="value">
+                    <radio class="weui-check" value="{{item.value}}" checked="{{item.checked}}"/>
+
+                    <view class="weui-cell__bd">{{item.name}}</view>
+                    <view class="weui-cell__ft weui-cell__ft_in-radio" wx:if="{{item.checked}}">
+                        <icon class="weui-icon-radio" type="success_no_circle" size="16"></icon>
+                    </view>
+                </label>
+            </radio-group>
+    </view>
+  </view>
+
+
+
+ <!-- 能力与侧重-->  
+  <view class='card-view' style='margin-top:40rpx;'> 
+    <view class="weui-cells__title">如果你负责建模，对于一个相对复杂的数学建模问题，你更倾向于：</view>
+    <view class="weui-cells weui-cells_after-title">
+            <radio-group bindchange="radioChange1">
+                <label class="weui-cell weui-check__label" wx:for="{{radioItems1}}" wx:key="value">
+                    <radio class="weui-check" value="{{item.value}}" checked="{{item.checked}}"/>
+
+                    <view class="weui-cell__bd">{{item.name}}</view>
+                    <view class="weui-cell__ft weui-cell__ft_in-radio" wx:if="{{item.checked}}">
+                        <icon class="weui-icon-radio" type="success_no_circle" size="16"></icon>
+                    </view>
+                </label>
+            </radio-group>
+    </view>
+
+    <view class="weui-cells__title">如果你负责建模，对于一个相对复杂的数学建模题目，你的态度是：</view>
+    <view class="weui-cells weui-cells_after-title">
+            <radio-group bindchange="radioChange2">
+                <label class="weui-cell weui-check__label" wx:for="{{radioItems2}}" wx:key="value">
+                    <radio class="weui-check" value="{{item.value}}" checked="{{item.checked}}"/>
+
+                    <view class="weui-cell__bd">{{item.name}}</view>
+                    <view class="weui-cell__ft weui-cell__ft_in-radio" wx:if="{{item.checked}}">
+                        <icon class="weui-icon-radio" type="success_no_circle" size="16"></icon>
+                    </view>
+                </label>
+            </radio-group>
+    </view>
+
+    <view class="weui-cells__title">对于一个很复杂的数学模型，有人向你详细讲述了具体思路，你更倾向于：</view>
+    <view class="weui-cells weui-cells_after-title">
+            <radio-group bindchange="radioChange3">
+                <label class="weui-cell weui-check__label" wx:for="{{radioItems3}}" wx:key="value">
+                    <radio class="weui-check" value="{{item.value}}" checked="{{item.checked}}"/>
+
+                    <view class="weui-cell__bd">{{item.name}}</view>
+                    <view class="weui-cell__ft weui-cell__ft_in-radio" wx:if="{{item.checked}}">
+                        <icon class="weui-icon-radio" type="success_no_circle" size="16"></icon>
+                    </view>
+                </label>
+            </radio-group>
+    </view>
+
+    <view class="weui-cells__title">针对数模论文排版问题,你更倾向于：</view>
+    <view class="weui-cells weui-cells_after-title">
+            <radio-group bindchange="radioChange4">
+                <label class="weui-cell weui-check__label" wx:for="{{radioItems4}}" wx:key="value">
+                    <radio class="weui-check" value="{{item.value}}" checked="{{item.checked}}"/>
+
+                    <view class="weui-cell__bd">{{item.name}}</view>
+                    <view class="weui-cell__ft weui-cell__ft_in-radio" wx:if="{{item.checked}}">
+                        <icon class="weui-icon-radio" type="success_no_circle" size="16"></icon>
+                    </view>
+                </label>
+            </radio-group>
+    </view>
+
+    <view class="weui-cells__title">对于MATLAB，SPSS、Python等工具软件你目前的情况是：</view>
+    <view class="weui-cells weui-cells_after-title">
+            <radio-group bindchange="radioChange5">
+                <label class="weui-cell weui-check__label" wx:for="{{radioItems5}}" wx:key="value">
+                    <radio class="weui-check" value="{{item.value}}" checked="{{item.checked}}"/>
+
+                    <view class="weui-cell__bd">{{item.name}}</view>
+                    <view class="weui-cell__ft weui-cell__ft_in-radio" wx:if="{{item.checked}}">
+                        <icon class="weui-icon-radio" type="success_no_circle" size="16"></icon>
+                    </view>
+                </label>
+            </radio-group>
+    </view>
+
+    <view class="weui-cells__title">假如你在数模编程过程中遇到了瓶颈，很久都不能解决，你更倾向于？</view>
+    <view class="weui-cells weui-cells_after-title">
+            <radio-group bindchange="radioChange6">
+                <label class="weui-cell weui-check__label" wx:for="{{radioItems6}}" wx:key="value">
+                    <radio class="weui-check" value="{{item.value}}" checked="{{item.checked}}"/>
+
+                    <view class="weui-cell__bd">{{item.name}}</view>
+                    <view class="weui-cell__ft weui-cell__ft_in-radio" wx:if="{{item.checked}}">
+                        <icon class="weui-icon-radio" type="success_no_circle" size="16"></icon>
+                    </view>
+                </label>
+            </radio-group>
+    </view>
+    
+
+    <view class="weui-cells__title">建模、编程、写作三个选项侧重负责哪一块</view>
+    <view class="weui-cells weui-cells_after-title">
+            <radio-group bindchange="radioChange22">
+                <label class="weui-cell weui-check__label" wx:for="{{radioItems22}}" wx:key="value">
+                    <radio class="weui-check" value="{{item.value}}" checked="{{item.checked}}"/>
+
+                    <view class="weui-cell__bd">{{item.name}}</view>
+                    <view class="weui-cell__ft weui-cell__ft_in-radio" wx:if="{{item.checked}}">
+                        <icon class="weui-icon-radio" type="success_no_circle" size="16"></icon>
+                    </view>
+                </label>
+            </radio-group>
+    </view>
+
+  </view>
+
+ <!-- 素质评价-->  
+  <view class='card-view' style='margin-top:40rpx;'> 
+    <view class="weui-cells__title">1、 生活中当你做错事时，你倾向于：</view>
+    <view class="weui-cells weui-cells_after-title">
+            <radio-group bindchange="radioChange7">
+                <label class="weui-cell weui-check__label" wx:for="{{radioItems7}}" wx:key="value">
+                    <radio class="weui-check" value="{{item.value}}" checked="{{item.checked}}"/>
+
+                    <view class="weui-cell__bd">{{item.name}}</view>
+                    <view class="weui-cell__ft weui-cell__ft_in-radio" wx:if="{{item.checked}}">
+                        <icon class="weui-icon-radio" type="success_no_circle" size="16"></icon>
+                    </view>
+                </label>
+            </radio-group>
+    </view>
+
+    <view class="weui-cells__title">2、 在内心的真实想法里，你觉得工作：</view>
+    <view class="weui-cells weui-cells_after-title">
+            <radio-group bindchange="radioChange8">
+                <label class="weui-cell weui-check__label" wx:for="{{radioItems8}}" wx:key="value">
+                    <radio class="weui-check" value="{{item.value}}" checked="{{item.checked}}"/>
+
+                    <view class="weui-cell__bd">{{item.name}}</view>
+                    <view class="weui-cell__ft weui-cell__ft_in-radio" wx:if="{{item.checked}}">
+                        <icon class="weui-icon-radio" type="success_no_circle" size="16"></icon>
+                    </view>
+                </label>
+            </radio-group>
+    </view>
+
+    <view class="weui-cells__title">3、如果你说出来要做某事，结果发现做此事很困难，你会怎么办？ </view>
+    <view class="weui-cells weui-cells_after-title">
+            <radio-group bindchange="radioChange9">
+                <label class="weui-cell weui-check__label" wx:for="{{radioItems9}}" wx:key="value">
+                    <radio class="weui-check" value="{{item.value}}" checked="{{item.checked}}"/>
+
+                    <view class="weui-cell__bd">{{item.name}}</view>
+                    <view class="weui-cell__ft weui-cell__ft_in-radio" wx:if="{{item.checked}}">
+                        <icon class="weui-icon-radio" type="success_no_circle" size="16"></icon>
+                    </view>
+                </label>
+            </radio-group>
+    </view>
+
+    <view class="weui-cells__title">4、我喜欢用相同的方法做事情，不喜欢去找其他的新的方法。</view>
+    <view class="weui-cells weui-cells_after-title">
+            <radio-group bindchange="radioChange10">
+                <label class="weui-cell weui-check__label" wx:for="{{radioItems10}}" wx:key="value">
+                    <radio class="weui-check" value="{{item.value}}" checked="{{item.checked}}"/>
+
+                    <view class="weui-cell__bd">{{item.name}}</view>
+                    <view class="weui-cell__ft weui-cell__ft_in-radio" wx:if="{{item.checked}}">
+                        <icon class="weui-icon-radio" type="success_no_circle" size="16"></icon>
+                    </view>
+                </label>
+            </radio-group>
+    </view>
+
+    <view class="weui-cells__title">5、遇到与同伴意见不合的事，能很好的与同伴进行沟通。</view>
+    <view class="weui-cells weui-cells_after-title">
+            <radio-group bindchange="radioChange11">
+                <label class="weui-cell weui-check__label" wx:for="{{radioItems11}}" wx:key="value">
+                    <radio class="weui-check" value="{{item.value}}" checked="{{item.checked}}"/>
+
+                    <view class="weui-cell__bd">{{item.name}}</view>
+                    <view class="weui-cell__ft weui-cell__ft_in-radio" wx:if="{{item.checked}}">
+                        <icon class="weui-icon-radio" type="success_no_circle" size="16"></icon>
+                    </view>
+                </label>
+            </radio-group>
+    </view>
+
+    <view class="weui-cells__title">6、我认为自己在整个人人生中，除了工作以外，在控制欲上面：</view>
+    <view class="weui-cells weui-cells_after-title">
+            <radio-group bindchange="radioChange12">
+                <label class="weui-cell weui-check__label" wx:for="{{radioItems12}}" wx:key="value">
+                    <radio class="weui-check" value="{{item.value}}" checked="{{item.checked}}"/>
+
+                    <view class="weui-cell__bd">{{item.name}}</view>
+                    <view class="weui-cell__ft weui-cell__ft_in-radio" wx:if="{{item.checked}}">
+                        <icon class="weui-icon-radio" type="success_no_circle" size="16"></icon>
+                    </view>
+                </label>
+            </radio-group>
+    </view>
+
+  </view>
+
+ <!-- 基本信息录入-->  
+  <view class='card-view' style='margin-top:40rpx;'> 
+    <view class="weui-cells__title">组队状态</view>
+    <view class="weui-cells weui-cells_after-title">
+            <radio-group bindchange="radioChange13">
+                <label class="weui-cell weui-check__label" wx:for="{{radioItems13}}" wx:key="value">
+                    <radio class="weui-check" value="{{item.value}}" checked="{{item.checked}}"/>
+
+                    <view class="weui-cell__bd">{{item.name}}</view>
+                    <view class="weui-cell__ft weui-cell__ft_in-radio" wx:if="{{item.checked}}">
+                        <icon class="weui-icon-radio" type="success_no_circle" size="16"></icon>
+                    </view>
+                </label>
+            </radio-group>
+    </view>
+
+    <view class='user-info-item'>
+        <i-row >
+            <i-input placeholder="未填写"  title="专业年级:" value= "{{degree}}" bind:change = "input_degree" maxlength="20"/> 
+        </i-row>   
+    </view>
+
+    <view class='user-info-item'>
+        <i-row >
+              <i-input placeholder="未填写"  title="性别：" value= "{{sex}}" bind:change = "input_sex" maxlength="3"/>
+          </i-row>   
+    </view>
+    
+    <view class='user-info-item'>
+        <i-row >
+            <i-input placeholder="未填写"  title="电话号码:" value= "{{phone}}" bind:change = "input_phone" maxlength="15"/>
+        </i-row>   
+    </view>
+ 
+  </view>
+
+  <view class = "button">
+    <i-button bind:click="click_submit" type="primary" shape="circle" size="large">提交</i-button>
+  </view>
+
+</view>
