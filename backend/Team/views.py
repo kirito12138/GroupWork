@@ -274,6 +274,7 @@ def get_team_users(request):
             'avatar_url': mcm_info.user.avatar_url,
             'skill': mcm_info.skill,
             'is_captain': mcm_info.is_captain,
+            'is_self': mcm_info == user.mcm_info,
         })
     return JsonResponse(ret_data, safe=False)
 
