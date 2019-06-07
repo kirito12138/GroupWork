@@ -656,6 +656,9 @@ Page({
           var i = 0;
 
           while (true) {
+            if (res.data.length == 0) {
+              break
+            }
             var k = res.data.length;
             var x = Math.floor(Math.random() * (k));
             console.log(x)
