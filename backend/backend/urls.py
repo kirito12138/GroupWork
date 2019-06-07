@@ -62,5 +62,11 @@ urlpatterns = [
     path('mcm/match/', Team.views.get_matched_users),
     path('mcm/score/', Team.views.submit_score),
 
+    path('mcm/invite/<int:user_id>/', Team.views.invite_user),
+    path('mcm/invitations/send/', Team.views.inviter_get_invitation),
+    path('mcm/invitations/received/', Team.views.invitee_get_invitation),
+    path('mcm/refuse/<int:invitation_id>/', Team.views.refuse_invitation),
+    path('mcm/accept/<int:invitation_id>/', Team.views.accept_invitation),
+
     path('signature/upyun/', user.views.get_upyun_signature),
 ]
