@@ -247,10 +247,14 @@ Page({
 
         }
         else {
+          
           var rans = []
           var i = 0;
 
           while (true) {
+            if (res.data.length == 0) {
+              break
+            }
             var k = res.data.length;
             var x = Math.floor(Math.random() * (k));
             console.log(x)
@@ -644,7 +648,7 @@ Page({
         $Toast.hide()
         console.log("match")
         console.log(res.data)
-        if (res.ret == false) {
+        if (res.data.ret == false) {
 
           that.setData({
             is_fill: false

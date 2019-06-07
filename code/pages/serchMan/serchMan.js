@@ -82,52 +82,25 @@ Page({
       duration: 0
     });
     wx.request({
-      url: 'https://group.tttaaabbbccc.club/mcm/match/',
+      url: 'https://group.tttaaabbbccc.club/mcm/search/user/',
       method: "GET",
       header: {
         "Content-Type": "application/json;charset=UTF-8",
         'Authorization': tk
       },
+      data: {
+        name: this.data.info
+      },
       success(res) {
         $Toast.hide()
-        console.log("match")
+        console.log(res)
         console.log(res.data)
-        if (res.ret == false) {
+        
 
-          that.setData({
-            is_fill: false
-          })
-
-        }
-        else {
-          var rans = []
-          var i = 0;
-
-          while (true) {
-            var k = res.data.length;
-            var x = Math.floor(Math.random() * (k));
-            console.log(x)
-            if (!rans.includes(x)) {
-              console.log(res.data[x])
-              rans[i] = res.data[x];
-              i = i + 1;
-            }
-            if (i == 5) {
-              break;
-            }
-            if (res.data.length == i) {
-              break
-            }
-
-          }
-          that.setData({
-            partens: res.data,
-            p_pos: rans,
-          })
-          console.log(rans)
-          console.log(that.data.p_pos)
-
-        }
+        that.setData({
+          partens: res.data,
+          p_pos: res.data,
+        })
       },
       fail(res) {
         $Toast.hide();
@@ -210,7 +183,7 @@ Page({
         'Authorization': tk
       },
       data: {
-        name: "ss"
+        name: this.data.info
       },
       success(res) {
         $Toast.hide()
