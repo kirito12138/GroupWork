@@ -237,7 +237,8 @@ def search_user(request):
     # except KeyError:
     #     return JsonResponse({'ret': False, 'error_code': 2})
 
-    mcm_info_set = McmInfo.objects.filter(name__contains=name, is_integrated=True)
+    mcm_info_set = McmInfo.objects.filter(name__contains=name, is_integrated=True).exclude(
+        user__invitations_received__inviter=user)
     ret_data = []
     for mcm_info in mcm_info_set:
         ret_data.append({
