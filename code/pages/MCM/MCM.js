@@ -227,7 +227,10 @@ Page({
       success(res) {
         $Toast.hide()
       
-        
+        $Message({
+          content: "邀请成功",
+          type: 'success'
+        });
         
       },
       fail(res) {

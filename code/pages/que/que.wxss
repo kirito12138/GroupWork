@@ -1,1 +1,5 @@
 /* pages/que/que.wxss */
+page .weui-cell__bd {
+  color: #414141;
+  font-size: 4mm;
+}
