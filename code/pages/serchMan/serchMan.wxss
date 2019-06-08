@@ -148,6 +148,7 @@ page, .page {
   align-items: center;
   text-align: center;
   font-size: 15px;
+  color: #414141
 
 }
 .username2
@@ -156,6 +157,7 @@ page, .page {
   align-items: center;
   text-align: center;
   font-size: 15px;
+  color: #414141
 
 }
 
@@ -165,6 +167,7 @@ page, .page {
   align-items: center;
   text-align: center;
   font-size: 15px;
+  color: #414141
 
 }
 
@@ -235,7 +238,7 @@ page, .page {
 .team
 {
   border-radius: 10px;
-  background: white;
+  background: #F8F8FA;
   width: 94%;
   margin-left: 3%;
   margin-top: 20rpx;
@@ -247,7 +250,7 @@ page, .page {
 .intro
 {
   border-radius: 10px;
-  background: white;
+  background: #F8F8FA;
   width: 94%;
   margin-left: 3%;
   margin-top: 20rpx;

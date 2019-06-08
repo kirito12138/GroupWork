@@ -140,10 +140,10 @@ Page({
     intr.lineTo(0, 10)
     intr.arc(0 + 10, 0 + 10, 10, Math.PI, Math.PI * 1.5)
 
-    intr.setFillStyle('blue')
+    intr.setFillStyle('#3075FF')
     intr.fill()
 
-    intr.setFillStyle('black')
+    intr.setFillStyle('white')
     intr.setFontSize(20)
     intr.fillText('搜索结果', 15, 25)
 

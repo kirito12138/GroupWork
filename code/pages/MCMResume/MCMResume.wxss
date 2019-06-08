@@ -105,4 +105,6 @@ border-radius: 100rpx;
 {
     margin-top: 30rpx;
     margin-bottom: 10rpx;
+    width: 100%;
+    margin-left: 0%
 }

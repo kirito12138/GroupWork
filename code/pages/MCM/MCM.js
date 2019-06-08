@@ -141,26 +141,37 @@ Page({
 
   newone: function(e)
   {
+    console.log(this.data.partens)
     var rans = []
     var i = 0; 
-    if(this.data.p_pos.length == 5)
-    {
+   // if(this.data.p_pos.length == 5)
+   // {
       while (true) {
-        var x = Math.floor(Math.random() * (15 + 1));
-        if (!rans.includes(x)) {
-          //rans[i] = x;
+        if (this.data.partens.length == 0) {
+          break
+        }
+        var k = this.data.partens.length;
+        var x = Math.floor(Math.random() * (k));
+        console.log("xxxx",x)
+        if (!rans.includes(this.data.partens[x])) {
+          console.log(this.data.partens[x])
           rans[i] = this.data.partens[x];
           i = i + 1;
         }
-        if (i == 5)
+        if (i == 5) {
           break;
+        }
+        if (this.data.partens.length == i) {
+          break
+        }
+
       }
     
       this.setData({
         p_pos: rans,
       })
     
-    }
+    //}
      
     
     console.log(rans)
@@ -494,9 +505,9 @@ Page({
     bot.lineTo(wid / 2 + 15, 35)
     bot.lineTo(10, 35)
     bot.arc(0 + 10, 35 - 10, 10, Math.PI * 0.5, Math.PI)
-    bot.setFillStyle('yellow')
+    bot.setFillStyle('#FF9955')
     bot.fill()
-    bot.setFillStyle('black')
+    bot.setFillStyle('#414141')
     bot.setFontSize(20)
     bot.fillText('重填问卷', 50, 25)
 
@@ -507,9 +518,9 @@ Page({
     bot.lineTo(wid, 25)
     bot.arc(wid - 10, 35 - 10, 10, 0, Math.PI * 0.5)
     bot.lineTo(wid / 2 + 15, 35)
-    bot.setFillStyle('blue')
+    bot.setFillStyle('#3075FF')
     bot.fill()
-    bot.setFillStyle('black')
+    bot.setFillStyle('white')
     bot.setFontSize(20)
     bot.fillText('换一批', 230, 25)
 
@@ -537,28 +548,30 @@ Page({
 
     const quit = wx.createCanvasContext('bottcan1')
     quit.moveTo(0, 0)
-    quit.lineTo(wid / 2 - 15, 0)
-    quit.lineTo(wid / 2 + 15, 35)
+    quit.lineTo(wid / 2 + 15, 0)
+    quit.lineTo(wid / 2 - 15, 35)
     quit.lineTo(10, 35)
     quit.arc(0 + 10, 35 - 10, 10, Math.PI * 0.5, Math.PI)
-    quit.setFillStyle('yellow')
+    quit.setFillStyle('#3075FF')
     quit.fill()
-    quit.setFillStyle('black')
+    quit.setFillStyle('white')
     quit.setFontSize(20)
-    quit.fillText('我邀请的', 50, 25)
+    quit.fillText('已发邀请', 50, 25)
+
+    //blue: 
 
 
     quit.beginPath()
-    quit.moveTo(wid / 2 - 15, 0)
+    quit.moveTo(wid / 2 + 15, 0)
     quit.lineTo(wid, 0)
     quit.lineTo(wid, 25)
     quit.arc(wid - 10, 35 - 10, 10, 0, Math.PI * 0.5)
-    quit.lineTo(wid / 2 + 15, 35)
-    quit.setFillStyle('blue')
+    quit.lineTo(wid / 2 - 15, 35)
+    quit.setFillStyle('#FF9955')
     quit.fill()
-    quit.setFillStyle('black')
+    quit.setFillStyle('#414141')
     quit.setFontSize(20)
-    quit.fillText('被谁邀请', 230, 25)
+    quit.fillText('受到邀请', 230, 25)
 
     quit.draw()
 
@@ -669,7 +682,7 @@ Page({
             var k = res.data.length;
             var x = Math.floor(Math.random() * (k));
             console.log(x)
-            if (!rans.includes(x)) {
+            if (!rans.includes(res.data[x])) {
               console.log(res.data[x])
               rans[i] = res.data[x];
               i = i + 1;
