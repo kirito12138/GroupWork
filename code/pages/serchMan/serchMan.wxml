@@ -12,7 +12,6 @@
     </view>
 
     <view class = "partener" wx:if = "{{is_fill==true}}">
-
       <view class = "wx:for  "   wx:for = "{{p_pos}}">
 
         <view class = "one" >

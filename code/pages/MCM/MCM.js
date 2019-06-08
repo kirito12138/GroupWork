@@ -45,8 +45,8 @@ Page({
     })
   },
   fil: function(e) {
-    wx.reLaunch({
-      url: '../home/home',
+    wx.navigateTo({
+      url: '../MCMResume/MCMResume',
     })
     this.setData({
       visible: false
@@ -478,10 +478,10 @@ Page({
     ctx.lineTo(0,10)
     ctx.arc(0 + 10, 0 + 10, 10, Math.PI, Math.PI * 1.5)
 
-    ctx.setFillStyle('blue')
+    ctx.setFillStyle('#3075FF')
     ctx.fill()
 
-    ctx.setFillStyle('black')
+    ctx.setFillStyle('white')
     ctx.setFontSize(20)
     ctx.fillText('我的队伍', 15, 25)
  
@@ -526,10 +526,10 @@ Page({
     intr.lineTo(wid-145,30)
     
 
-    intr.setFillStyle('blue')
+    intr.setFillStyle('#3075FF')
     intr.fill()
 
-    intr.setFillStyle('black')
+    intr.setFillStyle('white')
     intr.setFontSize(20)
     intr.fillText('推荐队友', wid-110, 25)
 
@@ -590,8 +590,8 @@ Page({
       },
       success(res) {
         $Toast.hide()
-        if (res.ret == false) {
-          if (res.error_code == 2) {
+        if (res.data.ret == false) {
+          if (res.data.error_code == 2) {
             that.setData({
               visible: true
             })
@@ -649,10 +649,13 @@ Page({
         console.log("match")
         console.log(res.data)
         if (res.data.ret == false) {
-
-          that.setData({
-            is_fill: false
-          })
+          if(res.data.error_code == 2)
+          {
+            that.setData({
+              is_fill: false
+            })
+          }
+          
           
         }
         else {

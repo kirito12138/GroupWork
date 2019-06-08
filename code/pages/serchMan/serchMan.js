@@ -10,6 +10,7 @@ Page({
   data: {
     partens:[],
     p_pos:[],
+    is_fill: true,
   },
 
   changeShow: function (e) {
@@ -101,6 +102,7 @@ Page({
           partens: res.data,
           p_pos: res.data,
         })
+        console.log(that.data.p_pos)
       },
       fail(res) {
         $Toast.hide();
@@ -189,13 +191,11 @@ Page({
         $Toast.hide()
         console.log(res)
         console.log(res.data)
-        if (res.ret == true) {
 
           that.setData({
             partens: res.data,
             p_pos: res.data,
           })
-        }
       },
       fail(res) {
         $Toast.hide();

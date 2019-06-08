@@ -148,6 +148,7 @@ page, .page {
   align-items: center;
   text-align: center;
   font-size: 15px;
+  color:#414141;
 
 }
 .username2
@@ -156,6 +157,7 @@ page, .page {
   align-items: center;
   text-align: center;
   font-size: 15px;
+  color:#414141;
 
 }
 
@@ -165,6 +167,7 @@ page, .page {
   align-items: center;
   text-align: center;
   font-size: 15px;
+  color:#414141;
 
 }
 
@@ -235,19 +238,21 @@ page, .page {
 .team
 {
   border-radius: 10px;
-  background: white;
+  background: #F8F8FA;
   width: 94%;
   margin-left: 3%;
   margin-top: 20rpx;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   box-shadow: -2rpx 10rpx 8rpx #B0B0B0;
+
+  
 }
 
 .intro
 {
   border-radius: 10px;
-  background: white;
+  background: #F8F8FA;
   width: 94%;
   margin-left: 3%;
   margin-top: 20rpx;
@@ -279,7 +284,7 @@ page, .page {
 {
   margin-left: 0;
   border-radius: 5px;
-  height: 35px;
+  height: 30px;
   display: flex;
   align-items: center;
   justify-content: center;
