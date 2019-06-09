@@ -272,24 +272,23 @@ def search_user(request):
     #     return JsonResponse({'ret': False, 'error_code': 2})
 
     mcm_info_set = McmInfo.objects.filter(name__contains=name, is_integrated=True).exclude(team=user.mcm_info.team)
-    mcm_info_set = mcm_info_set.exclude(
-        Q(user__invitations_received__inviter=user) & Q(user__invitations_received__state=0))
 
     ret_data = []
     for mcm_info in mcm_info_set:
-        ret_data.append({
-            'user_id': str(mcm_info.user.id),
-            'avatar_url': mcm_info.user.avatar_url,
-            'name': mcm_info.name,
-            'major': mcm_info.major,
-            'undergraduate_major': mcm_info.undergraduate_major,
-            'phone': mcm_info.phone,
-            'email': mcm_info.email,
-            'experience': mcm_info.experience,
-            'skill': mcm_info.skill,
-            'if_attend_training': mcm_info.if_attend_training,
-            'goal': mcm_info.goal,
-        })
+        if not mcm_info.user.invitations_received.filter(inviter=user, state=0):
+            ret_data.append({
+                'user_id': str(mcm_info.user.id),
+                'avatar_url': mcm_info.user.avatar_url,
+                'name': mcm_info.name,
+                'major': mcm_info.major,
+                'undergraduate_major': mcm_info.undergraduate_major,
+                'phone': mcm_info.phone,
+                'email': mcm_info.email,
+                'experience': mcm_info.experience,
+                'skill': mcm_info.skill,
+                'if_attend_training': mcm_info.if_attend_training,
+                'goal': mcm_info.goal,
+            })
     return JsonResponse(ret_data, safe=False)
 
 
@@ -379,25 +378,24 @@ def get_matched_users(request):
         return JsonResponse({'ret': False, 'error_code': 3})
 
     mcm_info_set = McmInfo.objects.filter(is_integrated=True, score__gt=-1).exclude(team=user.mcm_info.team)
-    mcm_info_set = mcm_info_set.exclude(
-        Q(user__invitations_received__inviter=user) & Q(user__invitations_received__state=0))
 
     ret_data = []
     for mcm_info in mcm_info_set:
-        ret_data.append({
-            'user_id': str(mcm_info.user.id),
-            'avatar_url': mcm_info.user.avatar_url,
-            'name': mcm_info.name,
-            'major': mcm_info.major,
-            'undergraduate_major': mcm_info.undergraduate_major,
-            'phone': mcm_info.phone,
-            'email': mcm_info.email,
-            'experience': mcm_info.experience,
-            'skill': mcm_info.skill,
-            'if_attend_training': mcm_info.if_attend_training,
-            'goal': mcm_info.goal,
-            'weight': abs(mcm_info.score - user.mcm_info.score),
-            'ifShow': False,
-        })
+        if not mcm_info.user.invitations_received.filter(inviter=user, state=0):
+            ret_data.append({
+                'user_id': str(mcm_info.user.id),
+                'avatar_url': mcm_info.user.avatar_url,
+                'name': mcm_info.name,
+                'major': mcm_info.major,
+                'undergraduate_major': mcm_info.undergraduate_major,
+                'phone': mcm_info.phone,
+                'email': mcm_info.email,
+                'experience': mcm_info.experience,
+                'skill': mcm_info.skill,
+                'if_attend_training': mcm_info.if_attend_training,
+                'goal': mcm_info.goal,
+                'weight': abs(mcm_info.score - user.mcm_info.score),
+                'ifShow': False,
+            })
     ret_data = sorted(ret_data, key=lambda info: info['weight'])[:15]
     return JsonResponse(ret_data, safe=False)
