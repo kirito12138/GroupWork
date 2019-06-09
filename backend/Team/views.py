@@ -275,7 +275,7 @@ def search_user(request):
 
     ret_data = []
     for mcm_info in mcm_info_set:
-        if not mcm_info.user.invitations_received.filter(inviter=user, state=0):
+        if not mcm_info.user.invitations_received.filter(inviter=user, state=0).exists():
             ret_data.append({
                 'user_id': str(mcm_info.user.id),
                 'avatar_url': mcm_info.user.avatar_url,
@@ -381,7 +381,7 @@ def get_matched_users(request):
 
     ret_data = []
     for mcm_info in mcm_info_set:
-        if not mcm_info.user.invitations_received.filter(inviter=user, state=0):
+        if not mcm_info.user.invitations_received.filter(inviter=user, state=0).exists():
             ret_data.append({
                 'user_id': str(mcm_info.user.id),
                 'avatar_url': mcm_info.user.avatar_url,
