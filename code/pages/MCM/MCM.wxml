@@ -32,9 +32,9 @@
           <view class='left1'>
             <image class='userimg' style="width:40rpx;height:40rpx" src = "{{item.avatar_url}}"></image>
             <text  class='username2' > {{item.name}}</text>  
-            <text  class='username1' > {{item.skill}}</text>
-            <text  class='username1' wx:if = "{{item.is_captain == true }}"> 队长</text>
-            <text  class='username1' wx:if = "{{item.is_captain == false }}"> 队员</text>
+            <text  class='username4' > {{item.skill}}</text>
+            <text  class='username4' wx:if = "{{item.is_captain == true }}"> 队长</text>
+            <text  class='username4' wx:if = "{{item.is_captain == false }}"> 队员</text>
           </view>
           <view class='right1'>
             <button  class='zou' bindtap = "quit" wx:if = "{{item.is_self == true}}">退出</button>
@@ -154,6 +154,8 @@
             </view>
 
           </view>
+
+          <view style="height:5rpx;background-color:#D9D9D9;margin-top:2%;margin-bottom:2%"/>
 
         </view>
 

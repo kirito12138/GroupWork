@@ -208,16 +208,29 @@ Page({
     });
     wx.request({
       url: 'https://group.tttaaabbbccc.club/mcm/invite/'+ user_id + '/',
-      method: "POST",
+      method: "GET",
       header: {
         "Content-Type": "application/json;charset=UTF-8",
         'Authorization': tk
       },
       success(res) {
         $Toast.hide()
-      
-        
-        
+        console.log("invit",res.data.ret)
+        if (res.data.ret == false || res.data.ret == undefined )
+        {
+          $Message({
+            content: "邀请失败",
+            type: 'error'
+          });
+          return
+        }
+        else if(res.data.ret == true)
+        {
+          $Message({
+            content: "邀请成功",
+            type: 'success'
+          });
+        }
       },
       fail(res) {
         $Toast.hide();
@@ -239,15 +252,16 @@ Page({
         $Toast.hide()
         console.log("match")
         console.log(res.data)
-        if (res.ret == false) {
+        if (res.data.ret == false) {
+          if (res.data.error_code == 2) {
+            that.setData({
+              is_fill: false
+            })
+          }
 
-          that.setData({
-            is_fill: false
-          })
 
         }
         else {
-          
           var rans = []
           var i = 0;
 
@@ -258,7 +272,7 @@ Page({
             var k = res.data.length;
             var x = Math.floor(Math.random() * (k));
             console.log(x)
-            if (!rans.includes(x)) {
+            if (!rans.includes(res.data[x])) {
               console.log(res.data[x])
               rans[i] = res.data[x];
               i = i + 1;
@@ -558,7 +572,9 @@ Page({
     quit.fill()
     quit.setFillStyle('black')
     quit.setFontSize(20)
-    quit.fillText('被谁邀请', 230, 25)
+
+    quit.fillText('收到邀请', 230, 25)
+
 
     quit.draw()
 
