@@ -1,4 +1,4 @@
-  <i-modal title="接受邀请" visible="{{ visible }}" actions="{{ actions5 }}" bind:click="cancelAccept">
+  <i-modal title="接受邀请" visible="{{ visible }}" actions="{{ actions5 }}" bind:click="cancelAccept" >
       <view>是否要退出当前队伍</view>
   </i-modal>
 
@@ -49,13 +49,22 @@
           竞赛经历：<text style = 'font-size:14px;color:gray;'>{{item.experience}}</text>
         </view>
         <view class = 'bn'>
-          <button class ='button' style='background-color:lightblue' bindtap='isAccept' data-index='{{index}}'>接受邀请</button>
-          <button class = 'button'style='background-color:lightred' bindtap='refuse' data-index='{{index}}'>拒绝邀请</button>
+          <view class ='button'  bindtap='isAccept' data-index='{{index}}'>
+            <icon   type="success" size = "23" />
+            <text style = 'color:green;margin-left:10rpx'>接受邀请</text>
+          </view>
+          <view class = 'button' bindtap='refuse' data-index='{{index}}'>
+            <icon   type="info" size = "23" color = 'red' />
+            <text style = 'color:red;margin-left:10rpx'>拒绝邀请</text>
+          </view>
         </view>
 
       </view>
       </view>
     </view>
+    <view wx:if = "{{is_non == true}}" class = "notui" >
+        暂无邀请
+      </view>
 
     
     <view style="height:5rpx;background-color:#D9D9D9"/>
