@@ -102,6 +102,22 @@ Page({
           f_posts: res.data
         });
         console.log('dasdas', res)
+        if(that.data.f_posts.length==0)
+        {
+          that.setData(
+            {
+              is_non:true
+            }
+          )
+        }
+        else
+        {
+          that.setData(
+            {
+              is_non: false
+            }
+          )
+        }
 
       },
       fail(res) {

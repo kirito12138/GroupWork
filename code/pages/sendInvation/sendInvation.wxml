@@ -9,7 +9,7 @@
         <view class='from' >
           <view class = 'from_son'  bindtap='changeShow'  data-index='{{index}}'>
             <view class = 'left' style = 'width:70%'>
-              <image class='userimg' style="width:40rpx;height:40rpx" src = "{{item.avatar}}"></image>
+              <image class='userimg' style="width:40rpx;height:40rpx;margin-left:20rpx;" src = "{{item.avatar}}"></image>
               <text  class='usr_name' > {{item.name}}</text>
               <text  class='skill' > {{item.skill}}</text>
             </view>
@@ -23,7 +23,7 @@
               </view>
 
               <view wx:elif="{{ item.state == '2' }}">
-                <icon   type="info" size = "20" />
+                <icon   type="info" size = "20" color = 'red' />
               </view>
             </view>
           </view>
@@ -65,6 +65,12 @@
         </view>
         </view>
       </view>
+      
+      
+      <view wx:if = "{{is_non == true}}" class = "notui" >
+        暂无邀请
+      </view>
+
 
     <view style="height:5rpx;background-color:#D9D9D9"/>
     </view>

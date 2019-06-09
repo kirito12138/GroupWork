@@ -269,6 +269,21 @@ Page({
           }
         )
         console.log('dasdas',that.data.f_posts)
+        if(that.data.f_posts.length == 0)
+        {
+          that.setData(
+            {
+              is_non:true
+            }
+          )
+        }
+        else {
+          that.setData(
+            {
+              is_non: false
+            }
+          )
+        }
 
       },
       fail(res) {
