@@ -24,7 +24,8 @@ Page({
     partens: [],
     team: [],
     p_pos: [],
-    non: []
+    non: [],
+    is_non: false
   },
 
   cancel_fil: function (e) {
@@ -281,6 +282,9 @@ Page({
 
           while (true) {
             if (res.data.length == 0) {
+              that.setData({
+                is_non: true
+              })
               break
             }
             var k = res.data.length;
@@ -539,7 +543,7 @@ Page({
     bot.fill()
     bot.setFillStyle('white')
     bot.setFontSize(20)
-    bot.fillText('换一批', 230, 25)
+    bot.fillText('换一批', 250, 25)
 
     bot.draw()
 
@@ -694,6 +698,9 @@ Page({
 
           while (true) {
             if (res.data.length == 0) {
+              that.setData({
+                is_non: true
+              })
               break
             }
             var k = res.data.length;
