@@ -264,6 +264,9 @@ Page({
 
         }
         else {
+          that.setData({
+            is_fill: true
+          })
           var rans = []
           var i = 0;
 
@@ -339,8 +342,8 @@ Page({
 
   myInvite: function (e) {
     //TODO 我邀请的
-    wx.reLaunch({
-      url: '../home/home',
+    wx.navigateTo({
+      url: '../sendInvation/sendInvation',
     })
 
   },
@@ -656,7 +659,7 @@ Page({
       success(res) {
         $Toast.hide()
         console.log("match")
-        console.log(res.data)
+        console.log(res.data.ret)
         if (res.data.ret == false) {
           if (res.data.error_code == 2) {
             that.setData({
@@ -667,6 +670,9 @@ Page({
 
         }
         else {
+          that.setData({
+            is_fill: true
+          })
           var rans = []
           var i = 0;
 
