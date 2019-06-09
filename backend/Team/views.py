@@ -23,12 +23,26 @@ def invite_user(request, user_id):
     except User.DoesNotExist:
         return JsonResponse({'ret': False, 'error_code': 3})
 
+    if invitee.mcm_info:
+        if invitee.mcm_info.team_id == inviter.mcm_info.team_id:
+            return JsonResponse({'ret': False, 'error_code': 4})
+    else:
+        return JsonResponse({'ret': False, 'error_code': 3})
+
     try:
         old = Invitation.objects.get(inviter=inviter, invitee=invitee)
     except Invitation.DoesNotExist:
         Invitation.objects.create(inviter=inviter, invitee=invitee, state=0)
         return JsonResponse({'ret': True})
+
     old.state = 0
+
+    try:
+        old.full_clean()
+        old.save()
+    except ValidationError:
+        return JsonResponse({'ret': False, 'error_code': 3})
+
     return JsonResponse({'ret': True})
 
 
@@ -59,7 +73,7 @@ def invitee_get_invitation(request):
             'email': invitation.inviter.mcm_info.email,
             'experience': invitation.inviter.mcm_info.experience,
             'skill': invitation.inviter.mcm_info.skill,
-            # 'if_attend_training': invitation.inviter.mcm_info.if_attend_training,
+            'if_attend_training': invitation.inviter.mcm_info.if_attend_training,
             'goal': invitation.inviter.mcm_info.goal,
             'team_id': invitation.inviter.mcm_info.team_id,
             'isShow': False,
@@ -81,16 +95,16 @@ def inviter_get_invitation(request):
     for invitation in invitations:
         ret_data.append({
             'id': invitation.id,
-            'name': invitation.inviter.mcm_info.name,
-            'avatar': invitation.inviter.avatar_url,
-            'major': invitation.inviter.mcm_info.major,
-            'undergraduate_major': invitation.inviter.mcm_info.undergraduate_major,
-            'phone': invitation.inviter.mcm_info.phone,
-            'email': invitation.inviter.mcm_info.email,
-            'experience': invitation.inviter.mcm_info.experience,
-            'skill': invitation.inviter.mcm_info.skill,
-            # 'if_attend_training': invitation.inviter.mcm_info.if_attend_training,
-            'goal': invitation.inviter.mcm_info.goal,
+            'name': invitation.invitee.mcm_info.name,
+            'avatar': invitation.invitee.avatar_url,
+            'major': invitation.invitee.mcm_info.major,
+            'undergraduate_major': invitation.invitee.mcm_info.undergraduate_major,
+            'phone': invitation.invitee.mcm_info.phone,
+            'email': invitation.invitee.mcm_info.email,
+            'experience': invitation.invitee.mcm_info.experience,
+            'skill': invitation.invitee.mcm_info.skill,
+            'if_attend_training': invitation.inviter.mcm_info.if_attend_training,
+            'goal': invitation.invitee.mcm_info.goal,
             'state': invitation.state,
             'isShow': False,
         })
@@ -115,14 +129,27 @@ def accept_invitation(request, invitation_id):
     if McmInfo.objects.filter(team=invitation.inviter.mcm_info.team).count() >= 3:
         return JsonResponse({'ret': False, 'error_code': 2})
 
+    sum_user_teammate = McmInfo.objects.filter(team=user.mcm_info.team).count()
+
     # 检查本用户是否为队伍
-    if McmInfo.objects.filter(team=user.mcm_info.team).count() > 1:
+    if sum_user_teammate > 1:
         # 检查本用户是否为队长
         if user.mcm_info.is_captain:
             return JsonResponse({'ret': False, 'error_code': 4})
+    else:
+        user.mcm_info.team.delete()
 
     user.mcm_info.team = invitation.inviter.mcm_info.team
     user.mcm_info.is_captain = False
+    invitation.state = 1
+
+    try:
+        user.mcm_info.full_clean()
+        user.mcm_info.save()
+        invitation.full_clean()
+        invitation.save()
+    except ValidationError:
+        return JsonResponse({'ret': False, 'error_code': 3})
 
     return JsonResponse({'ret': True})
 
@@ -141,6 +168,12 @@ def refuse_invitation(request, invitation_id):
         return JsonResponse({'ret': False, 'error_code': 3})
 
     invitation.state = 2
+
+    try:
+        invitation.full_clean()  # 检查格式
+        invitation.save()
+    except ValidationError:
+        return JsonResponse({'ret': False, 'error_code': 3})
 
     return JsonResponse({'ret': True})
 
