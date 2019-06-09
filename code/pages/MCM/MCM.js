@@ -253,15 +253,16 @@ Page({
         $Toast.hide()
         console.log("match")
         console.log(res.data)
-        if (res.ret == false) {
+        if (res.data.ret == false) {
+          if (res.data.error_code == 2) {
+            that.setData({
+              is_fill: false
+            })
+          }
 
-          that.setData({
-            is_fill: false
-          })
 
         }
         else {
-          
           var rans = []
           var i = 0;
 
@@ -272,7 +273,7 @@ Page({
             var k = res.data.length;
             var x = Math.floor(Math.random() * (k));
             console.log(x)
-            if (!rans.includes(x)) {
+            if (!rans.includes(res.data[x])) {
               console.log(res.data[x])
               rans[i] = res.data[x];
               i = i + 1;
@@ -347,7 +348,7 @@ Page({
 
   whoInvite: function (e) {
     //TODO 被我邀请
-    wx.reLaunch({
+    wx.navigateTo({
       url: '../Invation/Invation',
     })
 
