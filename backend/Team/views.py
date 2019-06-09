@@ -18,7 +18,7 @@ def invite_user(request, user_id):
         return JsonResponse({'ret': False, 'error_code': 5})
 
     try:
-        invitee = User.objects.get(user_id=user_id)
+        invitee = User.objects.get(id=user_id)
     except User.DoesNotExist:
         return JsonResponse({'ret': False, 'error_code': 3})
 
