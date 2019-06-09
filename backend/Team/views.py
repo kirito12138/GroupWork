@@ -22,6 +22,12 @@ def invite_user(request, user_id):
     except User.DoesNotExist:
         return JsonResponse({'ret': False, 'error_code': 3})
 
+    if invitee.mcm_info:
+        if invitee.mcm_info.team_id == inviter.mcm_info.team_id:
+            return JsonResponse({'ret': False, 'error_code': 4})
+    else:
+        return JsonResponse({'ret': False, 'error_code': 3})
+
     try:
         old = Invitation.objects.get(inviter=inviter, invitee=invitee)
     except Invitation.DoesNotExist:
