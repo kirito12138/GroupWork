@@ -46,8 +46,8 @@ Page({
     })
   },
   fil: function(e) {
-    wx.navigateTo({
-      url: '../MCMResume/MCMResume',
+    wx.reLaunch({
+      url: '../home/home',
     })
     this.setData({
       visible: false
@@ -142,37 +142,26 @@ Page({
 
   newone: function(e)
   {
-    console.log(this.data.partens)
     var rans = []
     var i = 0; 
-   // if(this.data.p_pos.length == 5)
-   // {
+    if(this.data.p_pos.length == 5)
+    {
       while (true) {
-        if (this.data.partens.length == 0) {
-          break
-        }
-        var k = this.data.partens.length;
-        var x = Math.floor(Math.random() * (k));
-        console.log("xxxx",x)
-        if (!rans.includes(this.data.partens[x])) {
-          console.log(this.data.partens[x])
+        var x = Math.floor(Math.random() * (15 + 1));
+        if (!rans.includes(x)) {
+          //rans[i] = x;
           rans[i] = this.data.partens[x];
           i = i + 1;
         }
-        if (i == 5) {
+        if (i == 5)
           break;
-        }
-        if (this.data.partens.length == i) {
-          break
-        }
-
       }
     
       this.setData({
         p_pos: rans,
       })
     
-    //}
+    }
      
     
     console.log(rans)
@@ -243,9 +232,6 @@ Page({
             type: 'success'
           });
         }
-
-       
-        
       },
       fail(res) {
         $Toast.hide();
@@ -357,8 +343,8 @@ Page({
   myInvite: function(e)
   {
     //TODO 我邀请的
-    wx.reLaunch({
-      url: '../home/home',
+    wx.navigateTo({
+      url: '../sendInvation/sendInvation',
     })
 
   },
@@ -510,10 +496,10 @@ Page({
     ctx.lineTo(0,10)
     ctx.arc(0 + 10, 0 + 10, 10, Math.PI, Math.PI * 1.5)
 
-    ctx.setFillStyle('#3075FF')
+    ctx.setFillStyle('blue')
     ctx.fill()
 
-    ctx.setFillStyle('white')
+    ctx.setFillStyle('black')
     ctx.setFontSize(20)
     ctx.fillText('我的队伍', 15, 25)
  
@@ -526,9 +512,9 @@ Page({
     bot.lineTo(wid / 2 + 15, 35)
     bot.lineTo(10, 35)
     bot.arc(0 + 10, 35 - 10, 10, Math.PI * 0.5, Math.PI)
-    bot.setFillStyle('#FF9955')
+    bot.setFillStyle('yellow')
     bot.fill()
-    bot.setFillStyle('#414141')
+    bot.setFillStyle('black')
     bot.setFontSize(20)
     bot.fillText('重填问卷', 50, 25)
 
@@ -539,9 +525,9 @@ Page({
     bot.lineTo(wid, 25)
     bot.arc(wid - 10, 35 - 10, 10, 0, Math.PI * 0.5)
     bot.lineTo(wid / 2 + 15, 35)
-    bot.setFillStyle('#3075FF')
+    bot.setFillStyle('blue')
     bot.fill()
-    bot.setFillStyle('white')
+    bot.setFillStyle('black')
     bot.setFontSize(20)
     bot.fillText('换一批', 250, 25)
 
@@ -558,10 +544,10 @@ Page({
     intr.lineTo(wid-145,30)
     
 
-    intr.setFillStyle('#3075FF')
+    intr.setFillStyle('blue')
     intr.fill()
 
-    intr.setFillStyle('white')
+    intr.setFillStyle('black')
     intr.setFontSize(20)
     intr.fillText('推荐队友', wid-110, 25)
 
@@ -569,30 +555,30 @@ Page({
 
     const quit = wx.createCanvasContext('bottcan1')
     quit.moveTo(0, 0)
-    quit.lineTo(wid / 2 + 15, 0)
-    quit.lineTo(wid / 2 - 15, 35)
+    quit.lineTo(wid / 2 - 15, 0)
+    quit.lineTo(wid / 2 + 15, 35)
     quit.lineTo(10, 35)
     quit.arc(0 + 10, 35 - 10, 10, Math.PI * 0.5, Math.PI)
-    quit.setFillStyle('#3075FF')
+    quit.setFillStyle('yellow')
     quit.fill()
-    quit.setFillStyle('white')
+    quit.setFillStyle('black')
     quit.setFontSize(20)
-    quit.fillText('已发邀请', 50, 25)
-
-    //blue: 
+    quit.fillText('我邀请的', 50, 25)
 
 
     quit.beginPath()
-    quit.moveTo(wid / 2 + 15, 0)
+    quit.moveTo(wid / 2 - 15, 0)
     quit.lineTo(wid, 0)
     quit.lineTo(wid, 25)
     quit.arc(wid - 10, 35 - 10, 10, 0, Math.PI * 0.5)
-    quit.lineTo(wid / 2 - 15, 35)
-    quit.setFillStyle('#FF9955')
+    quit.lineTo(wid / 2 + 15, 35)
+    quit.setFillStyle('blue')
     quit.fill()
-    quit.setFillStyle('#414141')
+    quit.setFillStyle('black')
     quit.setFontSize(20)
+
     quit.fillText('收到邀请', 230, 25)
+
 
     quit.draw()
 
@@ -624,8 +610,8 @@ Page({
       },
       success(res) {
         $Toast.hide()
-        if (res.data.ret == false) {
-          if (res.data.error_code == 2) {
+        if (res.ret == false) {
+          if (res.error_code == 2) {
             that.setData({
               visible: true
             })
@@ -683,13 +669,10 @@ Page({
         console.log("match")
         console.log(res.data)
         if (res.data.ret == false) {
-          if(res.data.error_code == 2)
-          {
-            that.setData({
-              is_fill: false
-            })
-          }
-          
+
+          that.setData({
+            is_fill: false
+          })
           
         }
         else {
@@ -706,7 +689,7 @@ Page({
             var k = res.data.length;
             var x = Math.floor(Math.random() * (k));
             console.log(x)
-            if (!rans.includes(res.data[x])) {
+            if (!rans.includes(x)) {
               console.log(res.data[x])
               rans[i] = res.data[x];
               i = i + 1;

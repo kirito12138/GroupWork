@@ -17,6 +17,12 @@ background: #D9D9D9;
     border-bottom-width: 1rpx;
   border-bottom-color:#A6A6A6;
   border-bottom-style: solid;
+  background-color: white;
+  display: flex;
+  flex-direction:row ;
+  justify-content: space-start;
+  align-items: center;
+
 }
 .userimg
 {
@@ -42,24 +48,35 @@ background: #D9D9D9;
   border-bottom-style: solid;
 
 }
-.bn
+.usr_name
 {
-  display: flex;
-  margin-top: 40px;
-  margin-bottom: 40px;
+  margin-left: 3%;
+  align-items: center;
+  text-align: center;
+  font-size: 15px;
+  color:#414141;
+  display: inline-block;
+  width: 30%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  margin-bottom:0%;
+  height: 20px
+
 }
-.button
+.skill
 {
-position:relative;
-margin-left:auto;
-margin-right:auto;
-padding-left:24px;
-padding-right:24px;
-font-size:18px;
-text-align:center;
-border-radius:5px;
-overflow:hidden;
-color:#000000;
-background-color:green;
+  margin-left: 10%;
+  
+  text-align: center;
+  display: inline-block;
+  font-size: 15px;
+  color:#414141;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  margin-bottom:0%;
+  height: 20px
+  
 
 }
