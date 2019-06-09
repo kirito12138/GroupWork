@@ -140,6 +140,62 @@ Page({
 
 
   },
+  refuse:function(e)
+  {
+    var i = e.currentTarget.dataset.index;
+    var that = this;
+    const _jwt = wx.getStorageSync('jwt');
+    var tk;
+    if (_jwt) {
+      tk = JSON.parse(_jwt);
+    }
+    else {
+      return;
+    }
+    $Toast({
+      content: '加载中',
+      type: 'loading',
+      duration: 0
+    });
+    console.log(this.data.inviteId)
+    wx.request({
+      url: 'https://group.tttaaabbbccc.club/mcm/refuse/' + this.data.f_posts[i].id + '/',
+      method: "GET",
+      header: {
+        "Content-Type": "application/json;charset=UTF-8",
+        'Authorization': tk
+      },
+      success(res) {
+        $Toast.hide()
+        if (res.data.ret) {
+          $Message({
+            content: '已拒绝',
+            type: 'success'
+          });
+        }
+        else {
+          if (res.data.error_code == 3) {
+            $Message({
+              content: '邀请信息缺失',
+              type: 'error'
+            });
+          }
+          else if (res.data.error_code == 5) {
+            $Message({
+              content: '登陆状态已失效',
+              type: 'error'
+            });
+          }
+
+        }
+        that.onLoad()
+
+      },
+      fail(res) {
+        $Toast.hide();
+      }
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
