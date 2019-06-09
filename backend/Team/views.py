@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.shortcuts import render
 import json
 from json import JSONDecodeError
@@ -270,8 +271,10 @@ def search_user(request):
     # except KeyError:
     #     return JsonResponse({'ret': False, 'error_code': 2})
 
-    mcm_info_set = McmInfo.objects.filter(name__contains=name, is_integrated=True).exclude(user=user).exclude(
-        user__invitations_received__inviter=user)
+    mcm_info_set = McmInfo.objects.filter(name__contains=name, is_integrated=True).exclude(team=user.mcm_info.team)
+    mcm_info_set = mcm_info_set.exclude(
+        Q(user__invitations_received__inviter=user) & Q(user__invitations_received__state=0))
+
     ret_data = []
     for mcm_info in mcm_info_set:
         ret_data.append({
@@ -375,8 +378,10 @@ def get_matched_users(request):
     if user.mcm_info.score == -1:  # 没填问卷，没有分数
         return JsonResponse({'ret': False, 'error_code': 3})
 
-    mcm_info_set = McmInfo.objects.filter(is_integrated=True, score__gt=-1).exclude(user=user).exclude(
-        user__invitations_received__inviter=user)
+    mcm_info_set = McmInfo.objects.filter(is_integrated=True, score__gt=-1).exclude(team=user.mcm_info.team)
+    mcm_info_set = mcm_info_set.exclude(
+        Q(user__invitations_received__inviter=user) & Q(user__invitations_received__state=0))
+
     ret_data = []
     for mcm_info in mcm_info_set:
         ret_data.append({
