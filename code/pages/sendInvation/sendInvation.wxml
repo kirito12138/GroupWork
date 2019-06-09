@@ -1,0 +1,68 @@
+<view class = 'title' style="font-size:30px;align-items:center;">已发送的邀请</view>
+
+  <scroll-view class='sv' scroll-y='true' style='z-index: -1;background-color: #F5F5F5'>
+    <view class = 'half_1' wx:for = "{{f_posts}}">
+      <view class='from' >
+        <view class = 'from_son'  bindtap='changeShow'  data-index='{{index}}'>
+          <view class = 'left' style = 'width:70%'>
+            <image class='userimg' style="width:40rpx;height:40rpx" src = "{{item.avatar}}"></image>
+            <text  class='usr_name' > {{item.name}}</text>
+            <text  class='skill' > {{item.skill}}</text>
+          </view>
+          <view class = "right" style='margin-left:20%'>
+            <view wx:if="{{ item.state == '1' }}">
+              <icon   type="success" size = "20" />
+            </view>
+
+            <view wx:elif="{{ item.state == '0' }}">
+              <icon   type="waiting" size = "20" />
+            </view>
+
+            <view wx:elif="{{ item.state == '2' }}">
+              <icon   type="info" size = "20" />
+            </view>
+          </view>
+        </view>
+        <view class = 'detail' wx:if="{{item.isShow}}" > 
+
+        <view class = 'detail_son'>
+          <view class = "left">
+            <view class = 'usr' style='margin-right:20px;margin-top:20rpx;'>
+               <image class = 'userimg' src = "{{item.avatar}}" />
+            </view>
+          </view>
+        
+          <view class = "right" style='margin-left: 20px;margin-top:20rpx;font-size:14px;'>
+            <view>
+            <text>姓名：{{item.name}}</text>
+            </view>
+            <view>
+            <text>专业：{{item.major}}</text>
+            </view>
+            <view>
+            <text>能力侧重：{{item.skill}}</text>
+            </view>
+          </view>
+        </view>
+        <view>
+          邮箱：<text style = 'font-size:18px;color:gray;'>{{item.email}}</text>
+        </view>
+        <view>
+          电话：<text style = 'font-size:18px;color:gray;'>{{item.phone}}</text>
+        </view>
+        <view>
+          参赛目标：<text style = 'font-size:18px;color:gray;'>{{item.goal}}</text>
+        </view>
+        <view>
+          竞赛经历：<text style = 'font-size:18px;color:gray;'>{{item.experience}}</text>
+        </view>
+
+
+      </view>
+      </view>
+    </view>
+
+      
+ </scroll-view>
+<i-message id="message" />
+ <i-toast id="toast" />
