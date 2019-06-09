@@ -23,6 +23,7 @@
             <view>
             <text>姓名：{{item.name}}</text>
             </view>
+
             <view>
             <text>专业：{{item.major}}</text>
             </view>
@@ -34,12 +35,21 @@
         <view>
           邮箱：<text style = 'font-size:18px;color:gray;'>{{item.email}}</text>
         </view>
+        <view style='background:gray;margin-top:20rpx' >
+              <i-divider lineColor="gray" height = "1"></i-divider>
+            </view>
         <view>
           电话：<text style = 'font-size:18px;color:gray;'>{{item.phone}}</text>
         </view>
+        <view style='background:gray;margin-top:20rpx' >
+              <i-divider lineColor="gray" height = "1"></i-divider>
+            </view>
         <view>
           参赛目标：<text style = 'font-size:18px;color:gray;'>{{item.goal}}</text>
         </view>
+        <view style='background:gray;margin-top:20rpx ;width: 90%; margin-left: 5%' >
+              <i-divider lineColor="gray" height = "1"></i-divider>
+            </view>
         <view>
           竞赛经历：<text style = 'font-size:18px;color:gray;'>{{item.experience}}</text>
         </view>
