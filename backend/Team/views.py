@@ -297,6 +297,7 @@ def quit_team(request):
         return JsonResponse({'ret': False, 'error_code': 3})
 
     user.mcm_info.team = Team.objects.create()
+    user.mcm_info.is_captain = True
     user.mcm_info.save()
     return JsonResponse({'ret': True})
 
