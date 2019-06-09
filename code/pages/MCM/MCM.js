@@ -339,8 +339,8 @@ Page({
 
   myInvite: function (e) {
     //TODO 我邀请的
-    wx.reLaunch({
-      url: '../home/home',
+    wx.navigateTo({
+      url: '../sendInvation/sendInvation',
     })
 
   },
