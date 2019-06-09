@@ -61,15 +61,16 @@ Page({
     }
   },
   getUserInfo: function (e) {
+    console.log("xxxxx")
     console.log(e)
     app.globalData.userInfo = e.detail.userInfo
     this.setData({
       userInfo: e.detail.userInfo,
       hasUserInfo: true
     })
-    console.log("xxxxx")
+    
     wx.reLaunch({
-      url: '/pages/home/home',
+      url: '../home/home',
     })
   },
   bindGetUserInfo: function (e) {
@@ -121,6 +122,10 @@ Page({
               }
             })
 
+
+            wx.reLaunch({
+              url: '../home/home',
+            })
 
 
 

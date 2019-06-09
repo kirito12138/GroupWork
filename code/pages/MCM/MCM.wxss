@@ -295,6 +295,20 @@ page, .page {
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   box-shadow: -2rpx 10rpx 8rpx #B0B0B0;
+ 
+ 
+}
+
+.notui
+{
+  
+  display: flex;
+  height: 100px;
+  align-items: center;
+  text-align: center;
+
+  justify-content: center;
+  color: gray
 }
 
 

@@ -1,8 +1,13 @@
-<view class = 'title' style="font-size:30px;align-items:center;">收到的邀请</view>
   <i-modal title="接受邀请" visible="{{ visible }}" actions="{{ actions5 }}" bind:click="cancelAccept">
       <view>是否要退出当前队伍</view>
   </i-modal>
-  <scroll-view class='sv' scroll-y='true' style='z-index: -1;background-color: #F5F5F5'>
+
+
+  <scroll-view class='sv' scroll-y='true' style='z-index: -1;'>
+
+  <view class = "intro">
+    <canvas canvas-id="intr" class="intr"  style = "width:{{windowWidth}}px;height:35px" ></canvas>
+
     <view class = 'half_1' wx:for = "{{f_posts}}">
       <view class='from' >
         <view class = 'from_son'  bindtap='changeShow'  data-index='{{index}}'>
@@ -31,27 +36,30 @@
             </view>
           </view>
         </view>
-        <view>
-          邮箱：<text style = 'font-size:18px;color:gray;'>{{item.email}}</text>
+        <view style = "margin-left:20rpx;font-size:17px">
+          邮箱：<text style = 'font-size:14px;color:gray;'>{{item.email}}</text>
         </view>
-        <view>
-          电话：<text style = 'font-size:18px;color:gray;'>{{item.phone}}</text>
+        <view style = "margin-left:20rpx;font-size:17px">
+          电话：<text style = 'font-size:14px;color:gray;'>{{item.phone}}</text>
         </view>
-        <view>
-          参赛目标：<text style = 'font-size:18px;color:gray;'>{{item.goal}}</text>
+        <view style = "margin-left:20rpx;font-size:17px">
+          参赛目标：<text style = 'font-size:14px;color:gray;'>{{item.goal}}</text>
         </view>
-        <view>
-          竞赛经历：<text style = 'font-size:18px;color:gray;'>{{item.experience}}</text>
+        <view style = "margin-left:20rpx;font-size:17px">
+          竞赛经历：<text style = 'font-size:14px;color:gray;'>{{item.experience}}</text>
         </view>
         <view class = 'bn'>
-          <button class ='button' bindtap='isAccept' data-index='{{index}}'>接受邀请</button>
-          <button class = 'button'style='background-color:red' bindtap='refuse' data-index='{{index}}'>拒绝邀请</button>
+          <button class ='button' style='background-color:lightblue' bindtap='isAccept' data-index='{{index}}'>接受邀请</button>
+          <button class = 'button'style='background-color:lightred' bindtap='refuse' data-index='{{index}}'>拒绝邀请</button>
         </view>
 
       </view>
       </view>
     </view>
 
+    
+    <view style="height:5rpx;background-color:#D9D9D9"/>
+    </view>
       
  </scroll-view>
 <i-message id="message" />

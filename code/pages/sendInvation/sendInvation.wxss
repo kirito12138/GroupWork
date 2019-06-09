@@ -3,12 +3,7 @@ background: #D9D9D9;
 }
 .title
 {
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #A6A6A6;
-  border-bottom-width: 2px;
-  border-bottom-color:#A6A6A6;
-  border-bottom-style: solid;
+margin-bottom:20px;
   text-align: center;
    
 }
@@ -79,4 +74,16 @@ background: #D9D9D9;
   height: 20px
   
 
+}
+
+.intro
+{
+  border-radius: 10px;
+  background: #F8F8FA;
+  width: 94%;
+  margin-left: 3%;
+  margin-top: 20rpx;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  box-shadow: -2rpx 10rpx 8rpx #B0B0B0;
 }

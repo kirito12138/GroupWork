@@ -57,7 +57,7 @@
 
   </view>
 
-  <view class = "intro">
+  <view class = "intro" style='margin-bottom:5%' >
     <canvas canvas-id="intr" class="intr"  style = "width:{{windowWidth}}px;height:35px" ></canvas>
 
     <view class = "fillQ" wx:if = "{{is_fill==false}}">
@@ -67,7 +67,8 @@
       </view>
     </view>
 
-    <view class = "partener" wx:if = "{{is_fill==true}}">
+    
+    <view class = "partener" wx:if = "{{is_fill==true}}" >
 
       <view class = "wx:for  "   wx:for = "{{p_pos}}">
 
@@ -122,7 +123,7 @@
 
           </view>
 
-           <view class='card-view' style='margin-top:4rpx;'>
+          <view class='card-view' style='margin-top:4rpx;'>
             <view class='item-title'>
               <text class="item-info-title">联系方式</text>
             </view>
@@ -162,9 +163,15 @@
         
 
       </view>
-      
+
+      <view wx:if = "{{is_non == true}}" class = "notui" >
+        暂无更多推荐队友
+      </view>
+    
 
     </view>
+
+    
     <view style="height:5rpx;background-color:#D9D9D9"/>
     <canvas canvas-id="bottcan" class="bottcan"  style = "width:{{windowWidth}}px;height:35px" bindtap='choose'></canvas>
   </view>
