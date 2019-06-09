@@ -9,6 +9,12 @@
 <i-modal title="填写信息" visible="{{ visible }}" actions="{{ actions5 }}" bind:click="cancel_fil">
   <view>未填写美赛信息，请填写后使用</view>
 </i-modal>
+<i-modal title="退出队伍" visible="{{ visible_qui }}" actions="{{ actions1 }}" bind:click="cancel_qui">
+  <view>确认退出队伍</view>
+</i-modal>
+
+
+
 
 <view class='page_row' >  
     <view class="search">  
@@ -24,7 +30,10 @@
 <scroll-view class='sv' scroll-y='true' style='z-index: -1;'>
   <view class = "team" style = "">
 
-    <canvas canvas-id="myCanvas" class="myCanvas"  style = "width:{{windowWidth}}px;height:35px" ></canvas>
+    <view wx:if = "{{!can1}}">
+     <canvas canvas-id="myCanvas" class="myCanvas"  style = "width:{{windowWidth}}px;height:35px" ></canvas>
+    </view>
+    <image wx:else src="{{radarImg}}" style="width: {{windowWidth}}px; height:35px;" />
   
     <view wx:for = "{{team}}">
       <view style = "margin-left:15px">
@@ -37,7 +46,7 @@
             <text  class='username4' wx:if = "{{item.is_captain == false }}"> 队员</text>
           </view>
           <view class='right1'>
-            <button  class='zou' bindtap = "quit" wx:if = "{{item.is_self == true}}">退出</button>
+            <button  class='zou' bindtap = "quququ" wx:if = "{{item.is_self == true}}">退出</button>
           </view>
         </view>
         
@@ -53,12 +62,21 @@
       <view style="height:5rpx;background-color:#D9D9D9"/>
     </view>
     
-    <canvas canvas-id="bottcan1" class="bottcan1"  style = "width:{{windowWidth}}px;height:35px" bindtap='yaoqing'></canvas>
+    <view wx:if = "{{!can2}}">
+      <canvas canvas-id="bottcan1" class="bottcan1"  style = "width:{{windowWidth}}px;height:35px" bindtap='yaoqing'></canvas>
+
+    </view>
+    <image wx:else src="{{bottimg}}" style="width: {{windowWidth}}px; height:35px;" />
 
   </view>
 
   <view class = "intro" style='margin-bottom:5%' >
+
+    <view wx:if = "{{!can3}}">
     <canvas canvas-id="intr" class="intr"  style = "width:{{windowWidth}}px;height:35px" ></canvas>
+    </view>
+    <image wx:else src="{{intrimg}}" style="width: {{windowWidth}}px; height:35px;" />
+
 
     <view class = "fillQ" wx:if = "{{is_fill==false}}">
       <view class='card-view' style = "margin-top: 20%;margin-bottom: 20%" >
@@ -173,7 +191,11 @@
 
     
     <view style="height:5rpx;background-color:#D9D9D9"/>
+    <view wx:if = "{{!can4}}">
     <canvas canvas-id="bottcan" class="bottcan"  style = "width:{{windowWidth}}px;height:35px" bindtap='choose'></canvas>
+    </view>
+    <image wx:else src="{{bottcanimg}}" style="width: {{windowWidth}}px; height:35px;" />
+
   </view>
 
 

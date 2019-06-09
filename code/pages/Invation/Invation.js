@@ -201,6 +201,41 @@ Page({
    */
   onLoad: function (options) {
     var that = this;
+
+    wx.getSystemInfo({
+      success: function (res) {
+        console.log(res.windowWidth)
+        that.setData
+          ({
+            windowWidth: res.windowWidth * 0.94
+          })
+
+      }
+    })
+
+    var wid = this.data.windowWidth;
+
+    const intr = wx.createCanvasContext('intr')
+    intr.moveTo(10, 0)
+    intr.lineTo(115, 0)
+    intr.lineTo(145, 30)
+    intr.lineTo(wid, 30)
+    intr.lineTo(wid, 35)
+    intr.lineTo(0, 35)
+    intr.lineTo(0, 10)
+    intr.arc(0 + 10, 0 + 10, 10, Math.PI, Math.PI * 1.5)
+
+    intr.setFillStyle('#3075FF')
+    intr.fill()
+
+    intr.setFillStyle('white')
+    intr.setFontSize(20)
+    intr.fillText('收到邀请', 15, 25)
+
+
+    intr.draw()
+
+    var that = this;
     const _jwt = wx.getStorageSync('jwt');
     var tk;
     if (_jwt) {

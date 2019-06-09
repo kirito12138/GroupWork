@@ -1099,6 +1099,7 @@ Page({
             content: '提交成功',
             type: 'success'
           });
+          wx.navigateBack(1);
         }
         if (res.data['ret'] == false) {
           if (res.data['error_code'] == 3) {

@@ -1,7 +1,7 @@
 <i-toast id="toast" />
  <i-message id="message" />
 
-<view class = "intro">
+<view class = "intro" style='margin-bottom:5%'>
     <canvas canvas-id="intr" class="intr"  style = "width:{{windowWidth}}px;height:35px" ></canvas>
 
     <view class = "fillQ" wx:if = "{{is_fill==false}}">

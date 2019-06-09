@@ -174,6 +174,7 @@ Page({
             content: '修改成功',
             type: 'success'
           });
+          wx.navigateBack(1);
         }
         else
         {

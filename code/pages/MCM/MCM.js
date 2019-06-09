@@ -16,16 +16,31 @@ Page({
       },
       {
         name: '填写',
+        color: 'green',
+        loading: false
+      }
+    ],
+    actions1: [
+      {
+        name: '取消'
+      },
+      {
+        name: '退出',
         color: '#ed3f14',
         loading: false
       }
     ],
     visible: false,
+    visible_qui:false,
     partens: [],
     team: [],
     p_pos: [],
     non: [],
-    is_non: false
+    is_non: false,
+    can1:false,
+    can2:false,
+    can3:false,
+    can4:false
   },
 
   cancel_fil: function (e) {
@@ -34,6 +49,66 @@ Page({
     }
     else {
       this.fil(e)
+    }
+  },
+
+  quququ: function(e)
+  {
+    var that = this
+    wx.canvasToTempFilePath({
+      width: that.data.windowWidth,
+      height: 35,
+      canvasId: 'myCanvas',
+      success: function (res) {
+        that.setData({ radarImg: res.tempFilePath });
+      }
+    });
+    wx.canvasToTempFilePath({
+      width: that.data.windowWidth,
+      height: 35,
+      canvasId: 'bottcan1',
+      success: function (res) {
+        that.setData({ bottimg: res.tempFilePath });
+      }
+    });
+    wx.canvasToTempFilePath({
+      width: that.data.windowWidth,
+      height: 35,
+      canvasId: 'intr',
+      success: function (res) {
+        that.setData({ intrimg: res.tempFilePath });
+      }
+    });
+    wx.canvasToTempFilePath({
+      width: that.data.windowWidth,
+      height: 35,
+      canvasId: 'bottcan',
+      success: function (res) {
+        console.log("bottcanimg suxc")
+        that.setData({ bottcanimg: res.tempFilePath });
+      }
+    });
+    this.setData({
+      visible_qui: true, can1: true,can2:true,can3:true,can4:true
+    })
+  },
+
+  cancel_qui: function(e) {
+    if (e.detail.index == 0) {
+      this.setData({
+        visible_qui: false,
+        can1: false,
+        can2: false, can3: false,can4:false
+      })
+      this.onLoad()
+    }
+    else {
+      this.setData({
+        visible_qui: false,
+        can1: false,
+        can2: false, can3: false, can4: false
+      })
+      this.quit(e)
     }
   },
 
@@ -238,74 +313,7 @@ Page({
         $Toast.hide();
       }
     })
-    $Toast({
-      content: '加载中',
-      type: 'loading',
-      duration: 0
-    });
-    wx.request({
-      url: 'https://group.tttaaabbbccc.club/mcm/match/',
-      method: "GET",
-      header: {
-        "Content-Type": "application/json;charset=UTF-8",
-        'Authorization': tk
-      },
-      success(res) {
-        $Toast.hide()
-        console.log("match")
-        console.log(res.data)
-        if (res.data.ret == false) {
-          if (res.data.error_code == 2) {
-            that.setData({
-              is_fill: false
-            })
-          }
-
-
-        }
-        else {
-          that.setData({
-            is_fill: true
-          })
-          var rans = []
-          var i = 0;
-
-          while (true) {
-            if (res.data.length == 0) {
-              that.setData({
-                is_non: true
-              })
-              break
-            }
-            var k = res.data.length;
-            var x = Math.floor(Math.random() * (k));
-            console.log(x)
-            if (!rans.includes(res.data[x])) {
-              console.log(res.data[x])
-              rans[i] = res.data[x];
-              i = i + 1;
-            }
-            if (i == 5) {
-              break;
-            }
-            if (res.data.length == i) {
-              break
-            }
-
-          }
-          that.setData({
-            partens: res.data,
-            p_pos: rans,
-          })
-          console.log(rans)
-          console.log(that.data.p_pos)
-
-        }
-      },
-      fail(res) {
-        $Toast.hide();
-      }
-    })
+    this.onLoad()
   },
 
   changeShow: function (e) {
@@ -411,54 +419,11 @@ Page({
       duration: 0
     });
 
-    wx.request({
-      url: 'https://group.tttaaabbbccc.club/mcm/team/',
-      method: "GET",
-      header: {
-        "Content-Type": "application/json;charset=UTF-8",
-        'Authorization': tk
-      },
-      success(res) {
-        $Toast.hide()
-        if (res.ret == false) {
-          if (res.error_code == 2) {
-            that.setData({
-              visible: true
-            })
-          }
-        }
-        else {
-          console.log("xxxxxxxx")
-          console.log(res.data)
-          console.log(res)
-
-          var noo = []
-
-          if (res.data.length == 1) {
-            noo = [{ 'name': "暂无" }, { 'name': "暂无" }]
-          }
-          else if (res.data.length == 2) {
-            noo = [{ 'name': "暂无" }]
-          }
-
-          that.setData({
-            team: res.data,
-            non: noo
-          })
-
-          console.log("kkkkkk")
-          console.log(that.data.team)
-        }
-
-
-
-      },
-      fail(res) {
-        $Toast.hide();
-      }
-    })
+    this.onLoad()
 
   },
+
+
 
 
   /**
@@ -663,7 +628,8 @@ Page({
         if (res.data.ret == false) {
           if (res.data.error_code == 2) {
             that.setData({
-              is_fill: false
+              is_fill: false,
+              is_non: false
             })
           }
 
