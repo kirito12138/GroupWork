@@ -67,7 +67,8 @@ Page({
       userInfo: e.detail.userInfo,
       hasUserInfo: true
     })
-    wx.switchTab({
+    console.log("xxxxx")
+    wx.reLaunch({
       url: '/pages/home/home',
     })
   },
