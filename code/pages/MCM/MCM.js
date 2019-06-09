@@ -32,12 +32,12 @@ Page({
     if (e.detail.index == 0) {
       this.gotoHome(e)
     }
-    else {     
+    else {
       this.fil(e)
     }
   },
 
-  gotoHome: function(e) {
+  gotoHome: function (e) {
     wx.reLaunch({
       url: '../home/home',
     })
@@ -45,9 +45,9 @@ Page({
       visible: false
     })
   },
-  fil: function(e) {
-    wx.reLaunch({
-      url: '../home/home',
+  fil: function (e) {
+    wx.navigateTo({
+      url: '../MCMResume/MCMResume',
     })
     this.setData({
       visible: false
@@ -71,11 +71,10 @@ Page({
       url: '../serchMan/serchMan?info=' + para,
     })
 
-  
+
     /*const _jwt = wx.getStorageSync('jwt');
     var _history = wx.getStorageSync('history');
     var tk;
-
     if (_jwt) {
       tk = JSON.parse(_jwt);
       console.log(tk);
@@ -89,7 +88,6 @@ Page({
       type: 'loading',
       duration: 0
     });
-
     wx.request({
       url: 'https://group.tttaaabbbccc.club/mcm/search/user/',
       method: "GET",
@@ -112,11 +110,9 @@ Page({
           })
         }
         else {
-
           that.setData({
             is_fill: false
           })
-
         }
       },
       fail(res) {
@@ -126,62 +122,66 @@ Page({
 
   },
 
-  choose: function(e)
-  {
+  choose: function (e) {
     console.log(e)
     var wid = this.data.windowWidth;
-    if(e.detail.x < (wid/2))
-    {
+    if (e.detail.x < (wid / 2)) {
       this.upQue(e);
     }
-    else if (e.detail.x >= (wid / 2))
-    {
+    else if (e.detail.x >= (wid / 2)) {
       this.newone(e);
     }
   },
 
-  newone: function(e)
-  {
+  newone: function (e) {
+    console.log(this.data.partens)
     var rans = []
-    var i = 0; 
-    if(this.data.p_pos.length == 5)
-    {
-      while (true) {
-        var x = Math.floor(Math.random() * (15 + 1));
-        if (!rans.includes(x)) {
-          //rans[i] = x;
-          rans[i] = this.data.partens[x];
-          i = i + 1;
-        }
-        if (i == 5)
-          break;
+    var i = 0;
+    // if(this.data.p_pos.length == 5)
+    // {
+    while (true) {
+      if (this.data.partens.length == 0) {
+        break
       }
-    
-      this.setData({
-        p_pos: rans,
-      })
-    
+      var k = this.data.partens.length;
+      var x = Math.floor(Math.random() * (k));
+      console.log("xxxx", x)
+      if (!rans.includes(this.data.partens[x])) {
+        console.log(this.data.partens[x])
+        rans[i] = this.data.partens[x];
+        i = i + 1;
+      }
+      if (i == 5) {
+        break;
+      }
+      if (this.data.partens.length == i) {
+        break
+      }
+
     }
-     
-    
+
+    this.setData({
+      p_pos: rans,
+    })
+
+    //}
+
+
     console.log(rans)
   },
 
-  upQue: function(e)
-  {
+  upQue: function (e) {
     //TODO修改页面
     wx.navigateTo({
       url: '../que/que',
     })
   },
 
-  fillSurvey: function(e)
-  {
+  fillSurvey: function (e) {
     this.upQue(e)
   },
 
-  invite: function(e)
-  {
+  invite: function (e) {
     //TODO invite
     var that = this
     var i = e.currentTarget.dataset.index;
@@ -208,7 +208,7 @@ Page({
       duration: 0
     });
     wx.request({
-      url: 'https://group.tttaaabbbccc.club/mcm/invite/'+ user_id + '/',
+      url: 'https://group.tttaaabbbccc.club/mcm/invite/' + user_id + '/',
       method: "GET",
       header: {
         "Content-Type": "application/json;charset=UTF-8",
@@ -216,22 +216,23 @@ Page({
       },
       success(res) {
         $Toast.hide()
-        console.log("invit",res.data.ret)
-        if (res.data.ret == false || res.data.ret == undefined )
-        {
+        console.log("invit", res.data.ret)
+        if (res.data.ret == false || res.data.ret == undefined) {
           $Message({
             content: "邀请失败",
             type: 'error'
           });
           return
         }
-        else if(res.data.ret == true)
-        {
+        else if (res.data.ret == true) {
           $Message({
             content: "邀请成功",
             type: 'success'
           });
         }
+
+
+
       },
       fail(res) {
         $Toast.hide();
@@ -304,32 +305,28 @@ Page({
     })
   },
 
-  changeShow: function(e)
-  {
+  changeShow: function (e) {
     var that = this;
     var i = e.currentTarget.dataset.index;
     console.log(e)
     console.log(this.data.p_pos[i])
-    if (this.data.p_pos[i].ifShow == false)
-    {
+    if (this.data.p_pos[i].ifShow == false) {
       let string = "p_pos[" + i + "].ifShow";
       that.setData
-      ({
-        [string]: true,
-      })
+        ({
+          [string]: true,
+        })
     }
-    else
-    {
+    else {
       let string = "p_pos[" + i + "].ifShow";
       that.setData
-      ({
-        [string]: false,
-      })
+        ({
+          [string]: false,
+        })
     }
   },
 
-  yaoqing: function(e)
-  {
+  yaoqing: function (e) {
     console.log(e)
     var wid = this.data.windowWidth;
     if (e.detail.x < (wid / 2)) {
@@ -340,11 +337,10 @@ Page({
     }
   },
 
-  myInvite: function(e)
-  {
+  myInvite: function (e) {
     //TODO 我邀请的
-    wx.navigateTo({
-      url: '../sendInvation/sendInvation',
+    wx.reLaunch({
+      url: '../home/home',
     })
 
   },
@@ -357,8 +353,7 @@ Page({
 
   },
 
-  quit: function(e)
-  {
+  quit: function (e) {
     const _jwt = wx.getStorageSync('jwt');
     var _history = wx.getStorageSync('history');
     var tk;
@@ -386,25 +381,22 @@ Page({
       success(res) {
         $Toast.hide()
 
-        if(res.ret==false)
-        {
-          if(res.error_code == 3)
-          {
+        if (res.ret == false) {
+          if (res.error_code == 3) {
             $Message({
               content: '队长请勿退出队伍',
               type: 'error'
             });
           }
         }
-        else
-        {
-          
+        else {
+
           $Message({
             content: '退出成功',
             type: 'success'
           });
         }
-        
+
       },
       fail(res) {
         $Toast.hide();
@@ -476,9 +468,9 @@ Page({
       success: function (res) {
         console.log(res.windowWidth)
         that.setData
-        ({
-          windowWidth:res.windowWidth*0.94
-        })
+          ({
+            windowWidth: res.windowWidth * 0.94
+          })
 
       }
     })
@@ -489,32 +481,32 @@ Page({
 
     ctx.moveTo(10, 0)
     ctx.lineTo(115, 0)
-    ctx.lineTo(145,30)
-    ctx.lineTo(wid,30)
-    ctx.lineTo(wid,35)
+    ctx.lineTo(145, 30)
+    ctx.lineTo(wid, 30)
+    ctx.lineTo(wid, 35)
     ctx.lineTo(0, 35)
-    ctx.lineTo(0,10)
+    ctx.lineTo(0, 10)
     ctx.arc(0 + 10, 0 + 10, 10, Math.PI, Math.PI * 1.5)
 
-    ctx.setFillStyle('blue')
+    ctx.setFillStyle('#3075FF')
     ctx.fill()
 
-    ctx.setFillStyle('black')
+    ctx.setFillStyle('white')
     ctx.setFontSize(20)
     ctx.fillText('我的队伍', 15, 25)
- 
+
     ctx.draw()
 
     const bot = wx.createCanvasContext('bottcan')
-    
+
     bot.moveTo(0, 0)
-    bot.lineTo(wid/2-15, 0)
+    bot.lineTo(wid / 2 - 15, 0)
     bot.lineTo(wid / 2 + 15, 35)
     bot.lineTo(10, 35)
     bot.arc(0 + 10, 35 - 10, 10, Math.PI * 0.5, Math.PI)
-    bot.setFillStyle('yellow')
+    bot.setFillStyle('#FF9955')
     bot.fill()
-    bot.setFillStyle('black')
+    bot.setFillStyle('#414141')
     bot.setFontSize(20)
     bot.fillText('重填问卷', 50, 25)
 
@@ -525,60 +517,60 @@ Page({
     bot.lineTo(wid, 25)
     bot.arc(wid - 10, 35 - 10, 10, 0, Math.PI * 0.5)
     bot.lineTo(wid / 2 + 15, 35)
-    bot.setFillStyle('blue')
+    bot.setFillStyle('#3075FF')
     bot.fill()
-    bot.setFillStyle('black')
+    bot.setFillStyle('white')
     bot.setFontSize(20)
     bot.fillText('换一批', 250, 25)
 
     bot.draw()
 
     const intr = wx.createCanvasContext('intr')
-    intr.moveTo(wid-115, 0)
-    intr.lineTo(wid-10, 0)
+    intr.moveTo(wid - 115, 0)
+    intr.lineTo(wid - 10, 0)
     intr.arc(wid - 10, 0 + 10, 10, Math.PI * 1.5, Math.PI * 2)
     intr.lineTo(wid, 35)
-    
-    intr.lineTo(0, 35)
-    intr.lineTo(0,30)
-    intr.lineTo(wid-145,30)
-    
 
-    intr.setFillStyle('blue')
+    intr.lineTo(0, 35)
+    intr.lineTo(0, 30)
+    intr.lineTo(wid - 145, 30)
+
+
+    intr.setFillStyle('#3075FF')
     intr.fill()
 
-    intr.setFillStyle('black')
+    intr.setFillStyle('white')
     intr.setFontSize(20)
-    intr.fillText('推荐队友', wid-110, 25)
+    intr.fillText('推荐队友', wid - 110, 25)
 
     intr.draw()
 
     const quit = wx.createCanvasContext('bottcan1')
     quit.moveTo(0, 0)
-    quit.lineTo(wid / 2 - 15, 0)
-    quit.lineTo(wid / 2 + 15, 35)
+    quit.lineTo(wid / 2 + 15, 0)
+    quit.lineTo(wid / 2 - 15, 35)
     quit.lineTo(10, 35)
     quit.arc(0 + 10, 35 - 10, 10, Math.PI * 0.5, Math.PI)
-    quit.setFillStyle('yellow')
+    quit.setFillStyle('#3075FF')
     quit.fill()
-    quit.setFillStyle('black')
+    quit.setFillStyle('white')
     quit.setFontSize(20)
-    quit.fillText('我邀请的', 50, 25)
+    quit.fillText('已发邀请', 50, 25)
+
+    //blue: 
 
 
     quit.beginPath()
-    quit.moveTo(wid / 2 - 15, 0)
+    quit.moveTo(wid / 2 + 15, 0)
     quit.lineTo(wid, 0)
     quit.lineTo(wid, 25)
     quit.arc(wid - 10, 35 - 10, 10, 0, Math.PI * 0.5)
-    quit.lineTo(wid / 2 + 15, 35)
-    quit.setFillStyle('blue')
+    quit.lineTo(wid / 2 - 15, 35)
+    quit.setFillStyle('#FF9955')
     quit.fill()
-    quit.setFillStyle('black')
+    quit.setFillStyle('#414141')
     quit.setFontSize(20)
-
     quit.fillText('收到邀请', 230, 25)
-
 
     quit.draw()
 
@@ -610,27 +602,24 @@ Page({
       },
       success(res) {
         $Toast.hide()
-        if (res.ret == false) {
-          if (res.error_code == 2) {
+        if (res.data.ret == false) {
+          if (res.data.error_code == 2) {
             that.setData({
               visible: true
             })
           }
         }
-        else
-        {
+        else {
           console.log("xxxxxxxx")
           console.log(res.data)
           console.log(res)
 
           var noo = []
 
-          if (res.data.length == 1)
-          {
+          if (res.data.length == 1) {
             noo = [{ 'name': "暂无" }, { 'name': "暂无" }]
           }
-          else if (res.data.length == 2)
-          {
+          else if (res.data.length == 2) {
             noo = [{ 'name': "暂无" }]
           }
 
@@ -638,13 +627,13 @@ Page({
             team: res.data,
             non: noo
           })
-          
+
           console.log("kkkkkk")
           console.log(that.data.team)
         }
-        
-        
-        
+
+
+
       },
       fail(res) {
         $Toast.hide();
@@ -669,11 +658,13 @@ Page({
         console.log("match")
         console.log(res.data)
         if (res.data.ret == false) {
+          if (res.data.error_code == 2) {
+            that.setData({
+              is_fill: false
+            })
+          }
 
-          that.setData({
-            is_fill: false
-          })
-          
+
         }
         else {
           var rans = []
@@ -689,17 +680,15 @@ Page({
             var k = res.data.length;
             var x = Math.floor(Math.random() * (k));
             console.log(x)
-            if (!rans.includes(x)) {
+            if (!rans.includes(res.data[x])) {
               console.log(res.data[x])
               rans[i] = res.data[x];
               i = i + 1;
             }
-            if (i == 5)
-            {
+            if (i == 5) {
               break;
             }
-            if(res.data.length == i)
-            {
+            if (res.data.length == i) {
               break
             }
 
