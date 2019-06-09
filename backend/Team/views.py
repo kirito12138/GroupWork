@@ -122,11 +122,15 @@ def accept_invitation(request, invitation_id):
     if McmInfo.objects.filter(team=invitation.inviter.mcm_info.team).count() >= 3:
         return JsonResponse({'ret': False, 'error_code': 2})
 
+    sum_user_teammate = McmInfo.objects.filter(team=user.mcm_info.team).count()
+
     # 检查本用户是否为队伍
-    if McmInfo.objects.filter(team=user.mcm_info.team).count() > 1:
+    if sum_user_teammate > 1:
         # 检查本用户是否为队长
         if user.mcm_info.is_captain:
             return JsonResponse({'ret': False, 'error_code': 4})
+    else:
+        user.mcm_info.team.delete()
 
     user.mcm_info.team = invitation.inviter.mcm_info.team
     user.mcm_info.is_captain = False
