@@ -144,11 +144,17 @@ page, .page {
 }
 .username1
 {
-  margin-left: 20%;
+  margin-left: 10%;
   align-items: center;
   text-align: center;
   font-size: 15px;
   color:#414141;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  margin-bottom:0%;
+  height: 20px;
+  display: inline-block;
 
 }
 .username2
@@ -158,6 +164,30 @@ page, .page {
   text-align: center;
   font-size: 15px;
   color:#414141;
+  display: inline-block;
+  width: 30%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  margin-bottom:0%;
+  height: 20px
+
+}
+
+.username4
+{
+  margin-left: 10%;
+  align-items: center;
+  text-align: center;
+  display: inline-block;
+  font-size: 15px;
+  color:#414141;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  margin-bottom:0%;
+  height: 20px
+  
 
 }
 
@@ -166,8 +196,14 @@ page, .page {
   margin-left: 3%;
   align-items: center;
   text-align: center;
+  display: inline-block;
   font-size: 15px;
   color:#414141;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  margin-bottom:0%;
+  height: 20px
 
 }
 

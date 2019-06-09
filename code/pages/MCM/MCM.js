@@ -219,18 +219,31 @@ Page({
     });
     wx.request({
       url: 'https://group.tttaaabbbccc.club/mcm/invite/'+ user_id + '/',
-      method: "POST",
+      method: "GET",
       header: {
         "Content-Type": "application/json;charset=UTF-8",
         'Authorization': tk
       },
       success(res) {
         $Toast.hide()
-      
-        $Message({
-          content: "邀请成功",
-          type: 'success'
-        });
+        console.log("invit",res.data.ret)
+        if (res.data.ret == false || res.data.ret == undefined )
+        {
+          $Message({
+            content: "邀请失败",
+            type: 'error'
+          });
+          return
+        }
+        else if(res.data.ret == true)
+        {
+          $Message({
+            content: "邀请成功",
+            type: 'success'
+          });
+        }
+
+       
         
       },
       fail(res) {
@@ -575,7 +588,7 @@ Page({
     quit.fill()
     quit.setFillStyle('#414141')
     quit.setFontSize(20)
-    quit.fillText('受到邀请', 230, 25)
+    quit.fillText('收到邀请', 230, 25)
 
     quit.draw()
 
