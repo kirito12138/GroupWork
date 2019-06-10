@@ -19,7 +19,7 @@ class GetPostITest(TestCase):
         user = User.objects.create(account='admin', password=gen_md5('admin_admin', SECRET_KEY))  # 数据库中插入用户
         post = Post.objects.create(title="test", post_detail="test_test", request_num=2, accept_num=1, if_end=True,
                                    poster=user)
-        self.token = create_token(user.id).decode()
+        self.token = create_token(user.id)
         self.url = '/p/' + str(post.id) + '/'
 
     # 正确性测试
@@ -93,8 +93,8 @@ class ModifyPostITest(TestCase):
         post = Post.objects.create(title="test", post_detail="test_test", request_num=2, accept_num=1, if_end=True,
                                    poster=user)
         PostLabel.objects.create(post=post, label='10')
-        self.token = create_token(user.id).decode()
-        self.token2 = create_token(user2.id).decode()
+        self.token = create_token(user.id)
+        self.token2 = create_token(user2.id)
         self.url = '/p/' + str(post.id) + '/modify/'
 
     # 正确性测试1：测试title字数上限
@@ -269,7 +269,7 @@ class GetPostIAppliesTest(TestCase):
         post = Post.objects.create(title="test", post_detail="test_test", request_num=2, accept_num=1, if_end=True,
                                    poster=user)
         apply = Apply.objects.create(resume=user.resume, post=post, applicant=self.user2)
-        self.token = create_token(user.id).decode()
+        self.token = create_token(user.id)
         self.url = '/p/' + str(post.id) + '/apply/'
 
     def test_get_post_applies_success(self):
@@ -311,7 +311,7 @@ class GetUserAppliesTest(TestCase):
         post = Post.objects.create(title="test", post_detail="test_test", request_num=2,
                                    deadline=datetime.datetime.strptime("2019-12-31", "%Y-%m-%d").date(), poster=user2)
         apply = Apply.objects.create(resume=user.resume, post=post, applicant=user)
-        self.token = create_token(user.id).decode()
+        self.token = create_token(user.id)
         self.url = '/my/' + str(user.id) + '/apply/'
 
     def test_get_user_applies_successful(self):
@@ -351,7 +351,7 @@ class GetUnclosedPostsTest(TestCase):
                                    deadline=datetime.datetime.strptime("2019-12-31", "%Y-%m-%d").date(), poster=user)
         post = Post.objects.create(title="test_rd", post_detail="test_test", request_num=2,
                                    deadline=datetime.datetime.strptime("2019-4-20", "%Y-%m-%d").date(), poster=user)
-        self.token = create_token(user.id).decode()
+        self.token = create_token(user.id)
         self.url = '/f/processing/'
 
     def test_get_unclosed_posts_successful(self):
@@ -404,7 +404,7 @@ class CreatPostTest(TestCase):
         user = User.objects.create(account='admin', password=gen_md5('admin_admin', SECRET_KEY))  # 数据库中插入用户
         post2 = Post.objects.create(title="test", post_detail="test_test2", request_num=5,
                                     deadline=datetime.datetime.strptime("2019-05-20", "%Y-%m-%d").date(), poster=user)
-        self.token = create_token(user.id).decode()
+        self.token = create_token(user.id)
         self.url = '/c/post/'
 
     def test_creat_post_successful(self):
@@ -605,7 +605,7 @@ class CreatApplyTest(TestCase):
                                          deadline="2019-5-20", if_end=False, poster=user, is_imported=False)
         self.post5 = Post.objects.create(title="test_c", post_detail="test_test2", request_num=1, accept_num=1,
                                          deadline="2019-5-20", if_end=False, poster=user, is_imported=True)
-        self.token = create_token(user.id).decode()
+        self.token = create_token(user.id)
         self.url = '/c/apply/'
         self.post_ID = self.post2.id
 
@@ -935,7 +935,7 @@ class GetApplyTest(TestCase):
                                        self_review='dasd')
 
         self.apply_exp = Apply.objects.create(resume=resume, post=self.post2, applicant=user)
-        self.token = create_token(user.id).decode()
+        self.token = create_token(user.id)
         self.url = '/apply/' + str(self.apply_exp.id) + '/'
         self.post_ID = self.post2.id
 
@@ -981,7 +981,7 @@ class GetApplyTest(TestCase):
         当前登陆的用户 既不是申请者 也不是发布者
         '''
         user_a = User.objects.create(account='bsh_adsad', password=gen_md5('admin_admin', SECRET_KEY))
-        tt = create_token(user_a.id).decode()
+        tt = create_token(user_a.id)
         response = self.client.get(self.url, HTTP_AUTHORIZATION=tt)
         ret_data = response.json()
         self.assertFalse(ret_data['ret'])
@@ -998,7 +998,7 @@ class AcceptApplyTest(TestCase):
                                             project_exp='dasda', self_review='dasd')
 
         self.apply_exp = Apply.objects.create(resume=self.resume, post=self.post2, applicant=self.user)
-        self.token = create_token(self.user.id).decode()
+        self.token = create_token(self.user.id)
         self.url = '/apply/' + str(self.apply_exp.id) + '/accept/'
         self.post_ID = self.post2.id
 
@@ -1048,7 +1048,7 @@ class AcceptApplyTest(TestCase):
         不是发布者
         '''
         user_a = User.objects.create(account='fake', password=gen_md5('admin_admin', SECRET_KEY))
-        tt = create_token(user_a.id).decode()
+        tt = create_token(user_a.id)
         response = self.client.post(self.url, HTTP_AUTHORIZATION=tt, content_type='application/json')
         ret_data = response.json()
         self.assertFalse(ret_data['ret'])
@@ -1074,7 +1074,7 @@ class GetProfileTest(TestCase):
         user = User.objects.create(account='wb_test', password=gen_md5('admin_admin', SECRET_KEY))  # 数据库中插入用户
         self.profile = User.objects.create(account="wbwb", name="test1", age=4, student_id='16061155',
                                            sex="female", major="CS", grade="three")
-        self.token = create_token(user.id).decode()
+        self.token = create_token(user.id)
         self.url = '/my/profile/'
         # self.post_ID = self.post2.id
 
@@ -1112,7 +1112,7 @@ class ModifyProfileTest(TestCase):
                                            sex="female", major="CS", grade="three")
         self.profile1 = User.objects.create(account="wbwb1", name="test1", age=4, student_id='16061155',
                                             sex="female", major="CS", grade="three")
-        self.token = create_token(user.id).decode()
+        self.token = create_token(user.id)
         self.url = '/my/profile/modify/'
         # self.post_ID = self.post2.id
 
@@ -1235,7 +1235,7 @@ class GetResumeTest(TestCase):
         self.profile = Resume.objects.create(name="wb", sex="male", age=4, degree="16061155",
                                              phone="131", email="a@qq.com", city="BJ", edu_exp="", awards="hah",
                                              english_skill="most", project_exp="", self_review="")
-        self.token = create_token(user.id).decode()
+        self.token = create_token(user.id)
         self.url = '/my/resume/'
         # self.post_ID = self.post2.id
 
@@ -1269,7 +1269,7 @@ class GetPostByLabelTest(TestCase):
         PostLabel.objects.create(post=post, label="1")
         post = Post.objects.create(title="test_nd", post_detail="test_test", request_num=2,
                                    deadline=datetime.datetime.strptime("2019-12-31", "%Y-%m-%d").date(), poster=user)
-        self.token = create_token(user.id).decode()
+        self.token = create_token(user.id)
         self.url = '/f/processing/'
 
     def test_get_unclosed_posts_by_label_successful(self):
@@ -1309,7 +1309,7 @@ class GetPostByKeyTest(TestCase):
                                    deadline=datetime.datetime.strptime("2019-12-31", "%Y-%m-%d").date(), poster=user)
         post = Post.objects.create(title="test_nd", post_detail="test_test", request_num=2,
                                    deadline=datetime.datetime.strptime("2019-12-31", "%Y-%m-%d").date(), poster=user)
-        self.token = create_token(user.id).decode()
+        self.token = create_token(user.id)
         self.url = '/f/processing/search/'
 
     def test_get_unclosed_posts_by_key_successful(self):
@@ -1362,7 +1362,7 @@ class DeletePostTest(TestCase):
         self.post3 = Post.objects.create(title="test3", post_detail="test_test", request_num=2, accept_num=1,
                                          if_end=True,
                                          poster=self.user1)
-        self.token = create_token(self.user1.id).decode()
+        self.token = create_token(self.user1.id)
         self.url = '/p/' + str(self.post1.id) + '/delete/'
 
     # 正确性测试
