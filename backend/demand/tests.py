@@ -12,6 +12,43 @@ from demand.models import Apply
 from user.models import Resume
 
 
+def create_team():
+    return Team.objects.create(name='')
+
+
+def create_mcm_info(name, score):
+    return McmInfo.objects.create(
+        name=name,
+        major='',
+        undergraduate_major='',
+        phone='',
+        email=name+'@mail.com',
+        experience='',
+        skill='',
+        if_attend_training=True,
+        goal='',
+        is_integrated=True,
+        team=create_team(),
+        is_captain=True,
+        score=score,
+    )
+
+
+def create_user(account, password, name, score):
+    return User.objects.create(
+        account=account,
+        password=password,
+        name=name,
+        age=21,
+        student_id='',
+        sex='male',
+        major='',
+        grade='',
+        resume=create_resume('name'),
+        mcm_info=create_mcm_info(name, score)
+    )
+
+
 def create_resume(key):
     return Resume.objects.create(
         name=key,
@@ -19,22 +56,11 @@ def create_resume(key):
         age=21,
         degree=key,
         phone=key,
-        email=key,
+        email=key + '@mail.com',
         city=key,
         edu_exp="", awards = "hah",
         english_skill = "most", project_exp = "", self_review = ""
     )
-
-
-def create_mcm_info(name):
-    return McmInfo.objects.create(
-        name=name,
-        team=create_team(),
-        is_captain=True
-    )
-
-def create_team():
-    return Team.objects.create()
 
 
 # ===============================ycd========================================================
@@ -324,6 +350,49 @@ class GetPostIAppliesTest(TestCase):
 
 
 # --------------------------------------------------------------------------------
+
+class GetUserPostsTest(TestCase):
+    def setUp(self):
+        self.user = create_user('001', gen_md5('001', SECRET_KEY), '001', 1)
+        for i in range(10):
+            Post.objects.create(title=str(i), post_detail=str(i), request_num=2, accept_num=1, if_end=False,
+                            poster=self.user)
+        self.token = create_token(self.user.id)
+        self.url = '/my/'+ str(self.user.id) + '/post/'
+
+    def test_success(self):
+        response = self.client.get(
+            self.url,
+            HTTP_AUTHORIZATION=self.token
+        )
+        ret_data = response.json()
+        self.assertEqual(len(ret_data), 10)
+
+    def test_fail_1(self):
+        response = self.client.post(
+            self.url,
+            HTTP_AUTHORIZATION=self.token
+        )
+        ret_data = response.json()
+        self.assertEqual(ret_data['ret'], False)
+        self.assertEqual(ret_data['error_code'], 1)
+
+    def test_fail_5(self):
+        response = self.client.get(
+            self.url,
+        )
+        ret_data = response.json()
+        self.assertEqual(ret_data['ret'], False)
+        self.assertEqual(ret_data['error_code'], 5)
+
+    def test_fail_3(self):
+        response = self.client.get(
+            '/my/' + str(self.user.id + 10) + '/post/',
+            HTTP_AUTHORIZATION=self.token
+        )
+        ret_data = response.json()
+        self.assertEqual(ret_data['ret'], False)
+        self.assertEqual(ret_data['error_code'], 3)
 
 
 # ===============================lqh========================================================
@@ -620,7 +689,7 @@ class CreatPostTest(TestCase):
 class CreatApplyTest(TestCase):
     def setUp(self):  # 测试所用数据库为空，需手动插入数据
         user = User.objects.create(account='bsh_test', password=gen_md5('admin_admin', SECRET_KEY),
-                                   resume=create_resume('001'), mcm_info=create_mcm_info('001'))  # 数据库中插入用户
+                                   resume=create_resume('001'), mcm_info=create_mcm_info('001', 1))  # 数据库中插入用户
         self.post2 = Post.objects.create(title="test_a", post_detail="test_test2", request_num=4, accept_num=1,
                                          deadline="2019-12-31", if_end=False, poster=user, is_imported=False)
         self.post3 = Post.objects.create(title="test_b", post_detail="test_test2", request_num=4, accept_num=1,
@@ -1135,7 +1204,7 @@ class GetProfileTest(TestCase):
 class ModifyProfileTest(TestCase):
     def setUp(self):  # 测试所用数据库为空，需手动插入数据
         user = User.objects.create(account='wb_test', password=gen_md5('admin_admin', SECRET_KEY),
-                                   resume=create_resume('001'), mcm_info=create_mcm_info('001'))  # 数据库中插入用户
+                                   resume=create_resume('001'), mcm_info=create_mcm_info('001', 1))  # 数据库中插入用户
         self.profile = User.objects.create(account="wbwb", name="test1", age=4, student_id='16061155',
                                            sex="female", major="CS", grade="three")
         self.profile1 = User.objects.create(account="wbwb1", name="test1", age=4, student_id='16061155',

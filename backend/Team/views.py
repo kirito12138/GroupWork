@@ -135,14 +135,8 @@ def accept_invitation(request, invitation_id):
     user.mcm_info.team = invitation.inviter.mcm_info.team
     user.mcm_info.is_captain = False
     invitation.state = 1
-
-    try:
-        user.mcm_info.full_clean()
-        user.mcm_info.save()
-        invitation.full_clean()
-        invitation.save()
-    except ValidationError:
-        return JsonResponse({'ret': False, 'error_code': 3})
+    user.mcm_info.save()
+    invitation.save()
 
     return JsonResponse({'ret': True})
 
@@ -161,12 +155,7 @@ def refuse_invitation(request, invitation_id):
         return JsonResponse({'ret': False, 'error_code': 3})
 
     invitation.state = 2
-
-    try:
-        invitation.full_clean()  # 检查格式
-        invitation.save()
-    except ValidationError:
-        return JsonResponse({'ret': False, 'error_code': 3})
+    invitation.save()
 
     return JsonResponse({'ret': True})
 
@@ -253,16 +242,6 @@ def search_user(request):
     name = request.GET.get('name')
     if not name:
         return JsonResponse({'ret': False, 'error_code': 2})
-
-    # try:
-    #     data = json.loads(request.body)
-    # except JSONDecodeError:
-    #     return JsonResponse({'ret': False, 'error_code': 3})
-    #
-    # try:
-    #     name = data['name']
-    # except KeyError:
-    #     return JsonResponse({'ret': False, 'error_code': 2})
 
     mcm_info_set = McmInfo.objects.filter(name__contains=name, is_integrated=True).exclude(team=user.mcm_info.team)
 

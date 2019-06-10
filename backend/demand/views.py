@@ -298,7 +298,6 @@ def get_post_detail(request, post_id):
     })
 
 
-# TODO 增加排序功能或重写具有排序功能的方法
 def get_user_posts(request, user_id):
     if request.method != "GET":
         return JsonResponse({'ret': False, 'error_code': 1})
