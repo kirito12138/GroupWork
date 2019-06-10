@@ -17,7 +17,6 @@ class User(models.Model):
     open_id = models.CharField(max_length=256, default='', blank=True)
     avatar_url = models.CharField(max_length=256, default='img/avatar/default.jpg', blank=True)
     mcm_info = models.OneToOneField('Team.McmInfo', on_delete=models.SET_NULL, null=True, blank=True)
-
     def __str__(self):
         return self.name
 

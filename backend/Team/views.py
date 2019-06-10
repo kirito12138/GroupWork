@@ -34,15 +34,8 @@ def invite_user(request, user_id):
     except Invitation.DoesNotExist:
         Invitation.objects.create(inviter=inviter, invitee=invitee, state=0)
         return JsonResponse({'ret': True})
-
     old.state = 0
-
-    try:
-        old.full_clean()
-        old.save()
-    except ValidationError:
-        return JsonResponse({'ret': False, 'error_code': 3})
-
+    old.save()
     return JsonResponse({'ret': True})
 
 

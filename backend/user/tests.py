@@ -1,9 +1,35 @@
 from django.test import TestCase
 
+from Team.models import McmInfo, Team
 from user.jwt_token import create_token
-from user.models import User
+from user.models import User, Resume
 from user.views import gen_md5
 from backend.settings import SECRET_KEY
+
+
+def create_resume(key):
+    return Resume.objects.create(
+        name=key,
+        sex=key,
+        age=21,
+        degree=key,
+        phone=key,
+        email=key,
+        city=key,
+        edu_exp="", awards = "hah",
+        english_skill = "most", project_exp = "", self_review = ""
+    )
+
+
+def create_mcm_info(name):
+    return McmInfo.objects.create(
+        name=name,
+        team=create_team(),
+        is_captain=True
+    )
+
+def create_team():
+    return Team.objects.create()
 
 
 # ===========LW==============================================================================
@@ -139,7 +165,7 @@ class RegisterViewTests(TestCase):
 class GetLoginStatusViewTests(TestCase):
     def setUp(self):  # 测试所用数据库为空，需手动插入数据
         user = User.objects.create(account='admin', password=gen_md5('admin_admin', SECRET_KEY))  # 数据库中插入用户
-        self.token = create_token(user.id).decode()  # 获取token
+        self.token = create_token(user.id)  # 获取token
 
     def test_get_login_status_successful(self):
         response = self.client.get('/GetLoginStatus/', HTTP_AUTHORIZATION=self.token)
@@ -162,7 +188,7 @@ class GetLoginStatusViewTests(TestCase):
 class ChangePasswordViewTests(TestCase):
     def setUp(self):  # 测试所用数据库为空，需手动插入数据
         user = User.objects.create(account='admin', password=gen_md5('admin_admin', SECRET_KEY))  # 数据库中插入用户
-        self.token = create_token(user.id).decode()  # 获取token
+        self.token = create_token(user.id)  # 获取token
 
     def test_change_password_successful(self):
         data = {'password': 'admin_admin', 'new_password': 'admin_new'}
@@ -223,8 +249,9 @@ class ChangePasswordViewTests(TestCase):
 
 class ModifyResumeTests(TestCase):
     def setUp(self):  # 测试所用数据库为空，需手动插入数据
-        user = User.objects.create(account='admin', password=gen_md5('admin_admin', SECRET_KEY))  # 数据库中插入用户
-        self.token = create_token(user.id).decode()  # 获取token
+        user = User.objects.create(account='admin', password=gen_md5('admin_admin', SECRET_KEY),
+                                   resume=create_resume('001'), mcm_info=create_mcm_info('001'))  # 数据库中插入用户
+        self.token = create_token(user.id) # 获取token
 
     def test_modify_resume_successful(self):
         data = {'name': 'User1', 'sex': 'male', 'age': 10, 'degree': 'high school', 'phone': '13579',
@@ -291,7 +318,7 @@ class ModifyResumeTests(TestCase):
 class GetMyProfileTests(TestCase):
     def setUp(self):  # 测试所用数据库为空，需手动插入数据
         user = User.objects.create(account='admin', password=gen_md5('admin_admin', SECRET_KEY))  # 数据库中插入用户
-        self.token = create_token(user.id).decode()  # 获取token
+        self.token = create_token(user.id)  # 获取token
         self.url = '/my/' + str(user.id) + '/detail/'
 
     def test_get_my_profile_successful(self):
@@ -323,7 +350,7 @@ class GetMyProfileTests(TestCase):
 class GetMyPostTests(TestCase):
     def setUp(self):  # 测试所用数据库为空，需手动插入数据
         user = User.objects.create(account='admin', password=gen_md5('admin_admin', SECRET_KEY))  # 数据库中插入用户
-        self.token = create_token(user.id).decode()  # 获取token
+        self.token = create_token(user.id)  # 获取token
         self.url = '/my/' + str(user.id) + '/post/'
 
     def test_get_my_post_successful(self):
