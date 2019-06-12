@@ -34,15 +34,8 @@ def invite_user(request, user_id):
     except Invitation.DoesNotExist:
         Invitation.objects.create(inviter=inviter, invitee=invitee, state=0)
         return JsonResponse({'ret': True})
-
     old.state = 0
-
-    try:
-        old.full_clean()
-        old.save()
-    except ValidationError:
-        return JsonResponse({'ret': False, 'error_code': 3})
-
+    old.save()
     return JsonResponse({'ret': True})
 
 
@@ -142,14 +135,8 @@ def accept_invitation(request, invitation_id):
     user.mcm_info.team = invitation.inviter.mcm_info.team
     user.mcm_info.is_captain = False
     invitation.state = 1
-
-    try:
-        user.mcm_info.full_clean()
-        user.mcm_info.save()
-        invitation.full_clean()
-        invitation.save()
-    except ValidationError:
-        return JsonResponse({'ret': False, 'error_code': 3})
+    user.mcm_info.save()
+    invitation.save()
 
     return JsonResponse({'ret': True})
 
@@ -168,12 +155,7 @@ def refuse_invitation(request, invitation_id):
         return JsonResponse({'ret': False, 'error_code': 3})
 
     invitation.state = 2
-
-    try:
-        invitation.full_clean()  # 检查格式
-        invitation.save()
-    except ValidationError:
-        return JsonResponse({'ret': False, 'error_code': 3})
+    invitation.save()
 
     return JsonResponse({'ret': True})
 
@@ -220,7 +202,7 @@ def modify_mcm_info(request):
     resume = user.resume
     resume.name = user.name
     resume.phone = mcm_info.phone
-    resume.email = mcm_info.phone
+    resume.email = mcm_info.email
     resume.save()
 
     return JsonResponse({'ret': True})
@@ -261,21 +243,11 @@ def search_user(request):
     if not name:
         return JsonResponse({'ret': False, 'error_code': 2})
 
-    # try:
-    #     data = json.loads(request.body)
-    # except JSONDecodeError:
-    #     return JsonResponse({'ret': False, 'error_code': 3})
-    #
-    # try:
-    #     name = data['name']
-    # except KeyError:
-    #     return JsonResponse({'ret': False, 'error_code': 2})
-
     mcm_info_set = McmInfo.objects.filter(name__contains=name, is_integrated=True).exclude(team=user.mcm_info.team)
 
     ret_data = []
     for mcm_info in mcm_info_set:
-        if not mcm_info.user.invitations_received.filter(inviter=user, state=0):
+        if not mcm_info.user.invitations_received.filter(inviter=user, state=0).exists():
             ret_data.append({
                 'user_id': str(mcm_info.user.id),
                 'avatar_url': mcm_info.user.avatar_url,
@@ -381,7 +353,7 @@ def get_matched_users(request):
 
     ret_data = []
     for mcm_info in mcm_info_set:
-        if not mcm_info.user.invitations_received.filter(inviter=user, state=0):
+        if not mcm_info.user.invitations_received.filter(inviter=user, state=0).exists():
             ret_data.append({
                 'user_id': str(mcm_info.user.id),
                 'avatar_url': mcm_info.user.avatar_url,

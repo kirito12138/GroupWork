@@ -7,7 +7,7 @@ class UserBehavior(TaskSet):
         super().__init__(parent)
         self.headers = {'Authorization': ''}
         self.user_id = '1'
-        self.post_id = '39'
+        self.post_id = '63'
 
     def on_start(self):
         """ on_start is called when a Locust start before any task is scheduled """
@@ -34,20 +34,20 @@ class UserBehavior(TaskSet):
             'history': '',
         }
         response = self.client.post("/f/processing/", json=data, headers=self.headers)
-        ret_data = response.json()
-        assert 'ret' not in ret_data
+        # ret_data = response.json()
+        # assert 'ret' not in ret_data
 
     @task(10)
     def get_user_posts(self):
         response = self.client.get("/my/" + self.user_id + "/post/", headers=self.headers)
-        ret_data = response.json()
-        assert 'ret' not in ret_data
+        # ret_data = response.json()
+        # assert 'ret' not in ret_data
 
     @task(10)
     def get_user_applies(self):
         response = self.client.get("/my/" + self.user_id + "/apply/", headers=self.headers)
-        ret_data = response.json()
-        assert 'ret' not in ret_data
+        # ret_data = response.json()
+        # assert 'ret' not in ret_data
 
     @task(10)
     def modify_post(self):
@@ -59,27 +59,27 @@ class UserBehavior(TaskSet):
             "labels": "1&2&3&4",
         }
         response = self.client.post('/p/' + self.post_id + '/modify/', json=data, headers=self.headers)
-        ret_data = response.json()
-        # print(ret_data)
-        assert ret_data['ret']
+        # ret_data = response.json()
+        # # print(ret_data)
+        # assert ret_data['ret']
 
     @task(10)
     def get_post_detail(self):
         response = self.client.get("/p/" + self.post_id + "/", headers=self.headers)
-        ret_data = response.json()
-        assert ret_data['ret']
+        # ret_data = response.json()
+        # assert ret_data['ret']
 
     @task(10)
     def get_my_profile(self):
         response = self.client.get('/my/profile/', headers=self.headers)
-        ret_data = response.json()
-        assert ret_data['ret']
+        # ret_data = response.json()
+        # assert ret_data['ret']
 
     @task(10)
     def get_my_resume(self):
         response = self.client.get('/my/resume/', headers=self.headers)
-        ret_data = response.json()
-        assert ret_data['ret']
+        # ret_data = response.json()
+        # assert ret_data['ret']
 
     @task(10)
     def modify_my_profile(self):
@@ -93,8 +93,8 @@ class UserBehavior(TaskSet):
             "grade": "one"
         }
         response = self.client.post('/my/profile/modify/', json=data, headers=self.headers)
-        ret_data = response.json()
-        assert ret_data['ret']
+        # ret_data = response.json()
+        # assert ret_data['ret']
 
     @task(10)
     def modify_my_resume(self):
@@ -103,8 +103,82 @@ class UserBehavior(TaskSet):
                 'project_exp': 'B',
                 'self_review': 'not bad'}
         response = self.client.post('/my/resume/modify/', json=data, headers=self.headers)
-        ret_data = response.json()
-        assert ret_data['ret']
+        # ret_data = response.json()
+        # assert ret_data['ret']
+
+    @task(10)
+    def get_my_mcm_info(self):
+        response = self.client.get('/mcm/get/info/', headers=self.headers)
+        # ret_data = response.json()
+        # assert ret_data['ret']
+
+    @task(10)
+    def search_user(self):
+        response = self.client.get('/mcm/search/user/?name=a', headers=self.headers)
+        # ret_data = response.json()
+        # assert 'ret' not in ret_data
+
+    @task(10)
+    def get_team_users(self):
+        response = self.client.get('/mcm/team/', headers=self.headers)
+        # ret_data = response.json()
+        # assert 'ret' not in ret_data
+
+    @task(10)
+    def get_matched_users(self):
+        response = self.client.get('/mcm/match/', headers=self.headers)
+        # ret_data = response.json()
+        # assert 'ret' not in ret_data
+
+    @task(10)
+    def inviter_get_invitation(self):
+        response = self.client.get('/mcm/invitations/send/', headers=self.headers)
+        # ret_data = response.json()
+        # assert 'ret' not in ret_data
+
+    @task(10)
+    def invitee_get_invitation(self):
+        response = self.client.get('/mcm/invitations/received/', headers=self.headers)
+        # ret_data = response.json()
+        # assert 'ret' not in ret_data
+
+    @task(10)
+    def modify_mcm_info(self):
+        data = {
+            'name': 'admin',
+            'major': '002',
+            'undergraduate_major': '002',
+            'phone': '002',
+            'email': '001@mail.com',
+            'experience': '002',
+            'skill': 'skill',
+            'if_attend_training': True,
+            'goal': '002',
+        }
+        response = self.client.post('/mcm/modify/info/', json=data, headers=self.headers)
+        # ret_data = response.json()
+        # assert ret_data['ret']
+
+    @task(10)
+    def quit_team(self):
+        response = self.client.post('/mcm/quit/', headers=self.headers)
+        # ret_data = response.json()
+        # assert not ret_data['ret']
+
+    @task(10)
+    def submit_score(self):
+        data = {
+            'score': 101,
+        }
+        response = self.client.post('/mcm/score/', json=data, headers=self.headers)
+        # ret_data = response.json()
+        # assert ret_data['ret']
+
+    @task(10)
+    def invite_user(self):
+        response = self.client.get('/mcm/invite/14/', headers=self.headers)
+        # ret_data = response.json()
+        # assert ret_data['ret']
 
 
 class WebsiteUser(HttpLocust):
