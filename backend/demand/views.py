@@ -429,7 +429,7 @@ def get_post_applies(request, post_id):
     ret_data = []
     for apply in applies:
         # 整理申请的标签
-        labelList = ApplyLabel.objects.filter(apply=apply).all()
+        labelList = PostLabel.objects.filter(post=apply.post).all()
         labels = encode_label(labelList)
         weight = grade_apply(apply.resume)
 
@@ -479,7 +479,7 @@ def get_user_applies(request, user_id):
     ret_data = []
     for apply in applies:
         # 整理申请的标签
-        labelList = ApplyLabel.objects.filter(apply=apply).all()
+        labelList = PostLabel.objects.filter(post=apply.post).all()
         labels = encode_label(labelList)
 
         ret_data.append({
@@ -584,10 +584,10 @@ def create_apply(request):
     apply = Apply.objects.create(resume=resume, post=post, applicant=user)
 
     # 将申请的标签添加至数据库
-    labelList = decode_label(labels)
-    check_applyLabel(labelList)
-    for label in labelList:
-        apply.applylabel_set.create(label=label)
+    # labelList = decode_label(labels)
+    # check_applyLabel(labelList)
+    # for label in labelList:
+    #     apply.applylabel_set.create(label=label)
 
     return JsonResponse({'ret': True, 'apply_id': str(apply.id)})
 
@@ -608,7 +608,7 @@ def get_apply_detail(request, apply_id):
         return JsonResponse({'ret': False, 'error_code': 3})
 
     # 整理申请的标签
-    labelList = ApplyLabel.objects.filter(apply=apply).all()
+    labelList = PostLabel.objects.filter(post=apply.post).all()
     labels = encode_label(labelList)
     print(
         {'ret': True, 'applyStatus': apply.status, 'name': apply.resume.name, 'sex': apply.resume.sex,
