@@ -202,7 +202,7 @@ def modify_mcm_info(request):
     resume = user.resume
     resume.name = user.name
     resume.phone = mcm_info.phone
-    resume.email = mcm_info.phone
+    resume.email = mcm_info.email
     resume.save()
 
     return JsonResponse({'ret': True})
