@@ -25,11 +25,11 @@ import Team.views
 urlpatterns = [
     path('admin/', admin.site.urls),
 
-    path('login/', user.views.login),
+    # path('login/', user.views.login),
     path('login/wechat/', user.views.wechat_login),
-    path('register/', user.views.register),
+    # path('register/', user.views.register),
     path('GetLoginStatus/', user.views.get_login_status),
-    path('my/change_password/', user.views.change_password),
+    # path('my/change_password/', user.views.change_password),
 
     path('my/profile/', user.views.get_my_profile),
     path('my/profile/modify/', user.views.modify_my_profile),
