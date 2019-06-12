@@ -16,7 +16,7 @@ def create_mcm_info(name, score):
         major='',
         undergraduate_major='',
         phone='',
-        email=name+'@mail.com',
+        email=name + '@mail.com',
         experience='',
         skill='',
         if_attend_training=True,
@@ -52,9 +52,10 @@ def create_resume(key):
         phone=key,
         email=key + '@mail.com',
         city=key,
-        edu_exp="", awards = "hah",
-        english_skill = "most", project_exp = "", self_review = ""
+        edu_exp="", awards="hah",
+        english_skill="most", project_exp="", self_review=""
     )
+
 
 class InviteUserTest(TestCase):
     def setUp(self):
@@ -82,7 +83,6 @@ class InviteUserTest(TestCase):
         ret_data = response.json()
         self.assertEqual(ret_data['ret'], True)
         self.assertEqual(Invitation.objects.filter(inviter=self.inviter, invitee=self.invitee).count(), 1)
-
 
     def test_fail_1(self):
         response = self.client.post(
@@ -128,6 +128,7 @@ class InviteUserTest(TestCase):
         ret_data = response.json()
         self.assertEqual(ret_data['ret'], False)
         self.assertEqual(ret_data['error_code'], 4)
+
 
 class InviteeGetInvitationTest(TestCase):
     def setUp(self):
@@ -177,6 +178,7 @@ class InviteeGetInvitationTest(TestCase):
         self.assertEqual(ret_data['ret'], False)
         self.assertEqual(ret_data['error_code'], 3)
 
+
 class InviterGetInvitationTest(TestCase):
     def setUp(self):
         self.inviter = create_user('001', gen_md5('001', SECRET_KEY), '001', 1)
@@ -213,6 +215,7 @@ class InviterGetInvitationTest(TestCase):
         ret_data = response.json()
         self.assertEqual(ret_data['ret'], False)
         self.assertEqual(ret_data['error_code'], 5)
+
 
 class AcceptInvitationTest(TestCase):
     def setUp(self):
@@ -313,6 +316,7 @@ class AcceptInvitationTest(TestCase):
         self.assertEqual(ret_data['ret'], False)
         self.assertEqual(ret_data['error_code'], 4)
 
+
 class RefuseInvitationTest(TestCase):
     def setUp(self):
         self.inviter_1 = create_user('001', gen_md5('001', SECRET_KEY), '001', 1)
@@ -356,6 +360,7 @@ class RefuseInvitationTest(TestCase):
         ret_data = response.json()
         self.assertEqual(ret_data['ret'], False)
         self.assertEqual(ret_data['error_code'], 3)
+
 
 class ModifyMcmInfoTest(TestCase):
     data_correct = {
@@ -460,6 +465,7 @@ class ModifyMcmInfoTest(TestCase):
         self.assertEqual(ret_data['ret'], False)
         self.assertEqual(ret_data['error_code'], 2)
 
+
 class GetMcmInfoTest(TestCase):
     def setUp(self):
         self.user_1 = create_user('001', gen_md5('001', SECRET_KEY), '001', 1)
@@ -493,11 +499,12 @@ class GetMcmInfoTest(TestCase):
         self.assertEqual(ret_data['ret'], False)
         self.assertEqual(ret_data['error_code'], 5)
 
+
 class SearchUserTest(TestCase):
     def setUp(self):
         self.users = []
         for i in range(50):
-            self.users.append(create_user(str(i+1), gen_md5(str(i+1), SECRET_KEY), str(i+1), (i+1) * 2))
+            self.users.append(create_user(str(i + 1), gen_md5(str(i + 1), SECRET_KEY), str(i + 1), (i + 1) * 2))
         self.token = create_token(self.users[0].id)
         self.url = '/mcm/search/user/'
 
@@ -544,6 +551,7 @@ class SearchUserTest(TestCase):
         ret_data = response.json()
         self.assertEqual(ret_data['ret'], False)
         self.assertEqual(ret_data['error_code'], 2)
+
 
 class GetTeamUsersTest(TestCase):
     def setUp(self):
@@ -594,6 +602,7 @@ class GetTeamUsersTest(TestCase):
         ret_data = response.json()
         self.assertEqual(ret_data['ret'], False)
         self.assertEqual(ret_data['error_code'], 2)
+
 
 class QuitTeamTest(TestCase):
     def setUp(self):
@@ -654,6 +663,7 @@ class QuitTeamTest(TestCase):
         ret_data = response.json()
         self.assertEqual(ret_data['ret'], False)
         self.assertEqual(ret_data['error_code'], 3)
+
 
 class SubmitScoreTest(TestCase):
     data_correct = {
@@ -744,11 +754,12 @@ class SubmitScoreTest(TestCase):
         self.assertEqual(ret_data['ret'], False)
         self.assertEqual(ret_data['error_code'], 4)
 
+
 class MatchUsersTest(TestCase):
     def setUp(self):
         self.users = []
         for i in range(50):
-            self.users.append(create_user(str(i+1), gen_md5(str(i+1), SECRET_KEY), str(i+1), (i+1) * 2))
+            self.users.append(create_user(str(i + 1), gen_md5(str(i + 1), SECRET_KEY), str(i + 1), (i + 1) * 2))
         self.token = create_token(self.users[20].id)
         self.token_2 = create_token(self.users[0].id)
         self.url = '/mcm/match/'
@@ -762,7 +773,7 @@ class MatchUsersTest(TestCase):
         self.assertEqual(len(ret_data), 15)
 
     def test_success_2(self):
-        Invitation.objects.create(inviter=self.users[0],invitee=self.users[1])
+        Invitation.objects.create(inviter=self.users[0], invitee=self.users[1])
         response = self.client.get(
             self.url,
             HTTP_AUTHORIZATION=self.token_2
@@ -809,14 +820,3 @@ class MatchUsersTest(TestCase):
         ret_data = response.json()
         self.assertEqual(ret_data['ret'], False)
         self.assertEqual(ret_data['error_code'], 3)
-
-
-
-
-
-
-
-
-
-
-
