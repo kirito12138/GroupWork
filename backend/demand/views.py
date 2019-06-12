@@ -610,7 +610,13 @@ def get_apply_detail(request, apply_id):
     # 整理申请的标签
     labelList = ApplyLabel.objects.filter(apply=apply).all()
     labels = encode_label(labelList)
-
+    print(
+        {'ret': True, 'applyStatus': apply.status, 'name': apply.resume.name, 'sex': apply.resume.sex,
+         'age': apply.resume.age, 'degree': apply.resume.degree, 'phone': apply.resume.phone,
+         'email': apply.resume.email, 'city': apply.resume.city, 'edu_exp': apply.resume.edu_exp,
+         'awards': apply.resume.awards, 'english_skill': apply.resume.english_skill,
+         'project_exp': apply.resume.project_exp, 'self_review': apply.resume.self_review,
+         'labels': labels})
     return JsonResponse(
         {'ret': True, 'applyStatus': apply.status, 'name': apply.resume.name, 'sex': apply.resume.sex,
          'age': apply.resume.age, 'degree': apply.resume.degree, 'phone': apply.resume.phone,
