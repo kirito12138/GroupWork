@@ -128,7 +128,9 @@ def accept_invitation(request, invitation_id):
     if sum_user_teammate > 1:
         # 检查本用户是否为队长
         if user.mcm_info.is_captain:
-            return JsonResponse({'ret': False, 'error_code': 4})
+            mcm_info = user.mcm_info.team.mcminfo_set.exclude(user=user).first()
+            mcm_info.is_captain = True
+            mcm_info.save()
     else:
         user.mcm_info.team.delete()
 
@@ -300,12 +302,16 @@ def quit_team(request):
     if not user.mcm_info.is_integrated:  # 美赛信息不完整
         return JsonResponse({'ret': False, 'error_code': 2})
 
-    if user.mcm_info.is_captain:  # 队长不能退队
-        return JsonResponse({'ret': False, 'error_code': 3})
+    mcm_info_set = user.mcm_info.team.mcminfo_set.exclude(user=user)
+    if mcm_info_set.exists():
+        if user.mcm_info.is_captain:  # 队长退队之后将队长职位传递给下一个成员
+            mcm_info = mcm_info_set.first()
+            mcm_info.is_captain = True
+            mcm_info.save()
+        user.mcm_info.team = Team.objects.create()
+        user.mcm_info.is_captain = True
+        user.mcm_info.save()
 
-    user.mcm_info.team = Team.objects.create()
-    user.mcm_info.is_captain = True
-    user.mcm_info.save()
     return JsonResponse({'ret': True})
 
 
