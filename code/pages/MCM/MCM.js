@@ -100,7 +100,9 @@ Page({
         can1: false,
         can2: false, can3: false,can4:false
       })
-      this.onLoad()
+      wx.reLaunch({
+        url: '../MCM/MCM',
+      })
     }
     else {
       this.setData({
@@ -392,12 +394,13 @@ Page({
       success(res) {
         $Toast.hide()
 
-        if (res.ret == false) {
+        if (res.data.ret == false) {
           if (res.error_code == 3) {
             $Message({
               content: '队长请勿退出队伍',
               type: 'error'
             });
+            
           }
         }
         else {
@@ -406,7 +409,13 @@ Page({
             content: '退出成功',
             type: 'success'
           });
+
+          
         }
+
+        wx.reLaunch({
+          url: '../MCM/MCM',
+        })
 
       },
       fail(res) {
@@ -419,7 +428,7 @@ Page({
       duration: 0
     });
 
-    this.onLoad()
+    //this.onLoad()
 
   },
 
@@ -478,6 +487,11 @@ Page({
     bot.setFontSize(20)
     bot.fillText('重填问卷', 50, 25)
 
+    bot.moveTo(50, 25+3)
+    bot.lineTo(50+80, 25+3)
+    bot.setStrokeStyle('#414141')
+    bot.stroke()
+
 
     bot.beginPath()
     bot.moveTo(wid / 2 - 15, 0)
@@ -490,6 +504,11 @@ Page({
     bot.setFillStyle('white')
     bot.setFontSize(20)
     bot.fillText('换一批', 250, 25)
+
+    bot.moveTo(250, 25 + 3)
+    bot.lineTo(250 + 60, 25 + 3)
+    bot.setStrokeStyle('white')
+    bot.stroke()
 
     bot.draw()
 
@@ -525,6 +544,11 @@ Page({
     quit.setFontSize(20)
     quit.fillText('已发邀请', 50, 25)
 
+    quit.moveTo(50, 25 + 3)
+    quit.lineTo(50 + 80, 25 + 3)
+    quit.setStrokeStyle('white')
+    quit.stroke()
+
     //blue: 
 
 
@@ -539,6 +563,12 @@ Page({
     quit.setFillStyle('#414141')
     quit.setFontSize(20)
     quit.fillText('收到邀请', 230, 25)
+
+
+    quit.moveTo(230, 25 + 3)
+    quit.lineTo(230 + 80, 25 + 3)
+    quit.setStrokeStyle('414141')
+    quit.stroke()
 
     quit.draw()
 

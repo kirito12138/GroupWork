@@ -243,7 +243,7 @@ Page({
       duration:0
     });
     wx.request({
-      url: 'https://group.tttaaabbbccc.club/apply/'+that.data.applyID,
+      url: 'https://group.tttaaabbbccc.club/apply/'+that.data.applyID + '/',
       method: "GET",
       header: {
         "Content-Type": "application/json;charset=UTF-8",
@@ -251,7 +251,7 @@ Page({
       },
       success(res) {
         $Toast.hide()
-        console.log("1111" + res.data.sex)
+        console.log("1111iphone" + res + "  " + tk + "  " + that.data.applyID)
         if (res.data.name != "") {
 
           that.setData({
@@ -344,6 +344,110 @@ Page({
         $Toast.hide()
       }
     })
+
+    /*wx.request({
+      url: 'https://group.tttaaabbbccc.club/apply/' + that.data.applyID,
+      method: "GET",
+      header: {
+        "Content-Type": "application/json;charset=UTF-8",
+        'Authorization': tk
+      },
+      success(res) {
+        $Toast.hide()
+
+        console.log("1111iphone" + res.data + tk)
+        if (res.data.name != "") {
+
+          that.setData({
+            name: res.data.name,
+          });
+        }
+        if (res.data.sex != "") {
+          that.setData({
+            sex: res.data.sex,
+          });
+        }
+        if (res.data.age != -1) {
+          that.setData({
+            age: res.data.age,
+          });
+        }
+        if (res.data.degree != "") {
+          console.log("1111" + res.data.degree);
+          that.setData({
+            degree: res.data.degree,
+          });
+        }
+        if (res.data.city != "") {
+          that.setData({
+            city: res.data.city,
+          });
+        }
+        if (res.data.phone != "") {
+          that.setData({
+            phone: res.data.phone,
+          });
+        }
+        if (res.data.email != "") {
+          that.setData({
+            email: res.data.email,
+          });
+        }
+        if (res.data.awards != "") {
+          that.setData({
+            awards: res.data.awards,
+          });
+        }
+        if (res.data.english_skill != "") {
+          that.setData({
+            english_skill: res.data.english_skill,
+          });
+        }
+        if (res.data.project_exp != "") {
+          that.setData({
+            project_exp: res.data.project_exp,
+          });
+        }
+        if (res.data.self_review != "") {
+          that.setData({
+            self_review: res.data.self_review,
+          });
+        }
+        if (res.data.edu_exp != "") {
+          var arr_deg;
+          console.log(res.data.edu_exp)
+          arr_deg = res.data.edu_exp.split("|");
+          if (arr_deg[0] != "") {
+            console.log(JSON.stringify(arr_deg[0].split("&")));
+            that.setData({
+              "expEdu1.year": arr_deg[0].split("&")[0],
+              "expEdu1.major": arr_deg[0].split("&")[1],
+              "expEdu1.school": arr_deg[0].split("&")[2]
+            });
+          }
+          if (arr_deg[1] != "") {
+
+            that.setData({
+              "expEdu2.year": arr_deg[1].split("&")[0],
+              "expEdu2.major": arr_deg[1].split("&")[1],
+              "expEdu2.school": arr_deg[1].split("&")[2]
+            });
+          }
+          if (arr_deg[2] != "") {
+
+            that.setData({
+              "expEdu3.year": arr_deg[2].split("&")[0],
+              "expEdu3.major": arr_deg[2].split("&")[1],
+              "expEdu3.school": arr_deg[2].split("&")[2]
+            });
+          }
+        }
+
+      },
+      fail(res) {
+        $Toast.hide()
+      }
+    })*/
   },
 
   /**

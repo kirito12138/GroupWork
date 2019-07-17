@@ -65,7 +65,7 @@ Page({
     console.log("kkkkkkkkkk");
     wx.request({
       
-      url: 'https://group.tttaaabbbccc.club/p/' + that.data.postID + '/apply',
+      url: 'https://group.tttaaabbbccc.club/p/' + that.data.postID + '/apply' + '/',
       method: "GET",
       header: {
         "Content-Type": "application/json;charset=UTF-8",
@@ -145,7 +145,7 @@ Page({
     console.log("kkkkkkkkkk");
     wx.request({
 
-      url: 'https://group.tttaaabbbccc.club/p/' + that.data.postID + '/apply',
+      url: 'https://group.tttaaabbbccc.club/p/' + that.data.postID + '/apply/',
       method: "GET",
       header: {
         "Content-Type": "application/json;charset=UTF-8",

@@ -9,7 +9,7 @@
     "pages/que/que",
 
     "pages/Invation/Invation",
-        
+    "pages/sendInvation/sendInvation",
     "pages/home/home",
     "pages/postDetail/postDetail",
     "pages/login/login",
@@ -85,7 +85,7 @@
       },
       {
         "pagePath": "pages/MCM/MCM",
-        "text": "美赛",
+        "text": "竞赛组队",
         "iconPath": "image/trophy11.png",
         "selectedIconPath": "image/trophy.png"
       },

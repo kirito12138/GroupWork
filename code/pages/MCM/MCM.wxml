@@ -93,8 +93,8 @@
         <view class = "one" >
           <view class='left1' style='margin-left:3%' bindtap='changeShow' data-index='{{index}}'>
             <image class='userimg' style="width:40rpx;height:40rpx; " src = "{{item.avatar_url}}"></image>
-            <text  class='username2' > {{item.name}}</text>  
-            <text  class='username1' > 擅长：{{item.skill}}</text>
+            <text  class='username2'  > {{item.name}}</text>  
+            <text  class='username1' style = "text-decoration-line: underline;"> 查看详情</text>
           </view>
           <view class='right1'>
             <button  class='invit' bindtap = "invite" data-index='{{index}}'>邀请</button>
@@ -122,14 +122,20 @@
 
             <i-input placeholder="未填写"  title="现读专业:" value= "{{item.major}}" disabled='true' maxlength="11"/>
 
+            <view style='background:gray' >
+              <i-divider lineColor="#CCCCCC" height = "1"></i-divider>
+            </view>
 
+            <i-input placeholder="未填写"  title="理想职位:" value= "{{item.skill}}" disabled='true' maxlength="11"/>
+
+            
 
             <view style='background:gray' >
               <i-divider lineColor="#CCCCCC" height = "1"></i-divider>
             </view>
 
-            <i-input placeholder="未填写"  title="能否参加全程培训:" wx:if = "{{item.if_attend == true}}" value= "能参加" disabled='true' maxlength="11"/>
-            <i-input placeholder="未填写"  title="能否参加全程培训:" wx:if = "{{item.if_attend == false}}" value= "不能参加" disabled='true' maxlength="11"/>
+            <i-input placeholder="未填写"  title="能否参加全程培训:" wx:if = "{{item.if_attend_training == true}}" value= "能参加" disabled='true' maxlength="11"/>
+            <i-input placeholder="未填写"  title="能否参加全程培训:" wx:if = "{{item.if_attend_training == false}}" value= "不能参加" disabled='true' maxlength="11"/>
 
 
             <view style='background:gray' >
@@ -137,7 +143,9 @@
             </view>
 
             <i-input placeholder="未填写"  title="参赛目标:" value= "{{item.goal}}" disabled='true' maxlength="11"/>
-
+            <view style='background:gray' >
+              <i-divider lineColor="#CCCCCC" height = "1"></i-divider>
+            </view>
 
           </view>
 
@@ -157,6 +165,9 @@
             </view>
 
             <i-input placeholder="未填写"  title="邮箱:" value= "{{item.email}}"  disabled='true'  maxlength="20"/>
+            <view style='background:gray' >
+              <i-divider lineColor="#CCCCCC" height = "1"></i-divider>
+            </view>
           </view>
       
           <view class='card-view' style='margin-top:4rpx;'>

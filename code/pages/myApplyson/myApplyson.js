@@ -75,14 +75,12 @@ Page({
       postImg: this.data.info.image_url,
       applyID: this.data.info.applyID,
       postID: this.data.info.postID,
-      posterID: this.data.info.posterID
+      posterID: this.data.info.posterID,
+      username: this.data.info.poster_name,
+      userimg: this.data.info.poster_avatar_url
     })
-    $Toast({
-      content: '加载中',
-      type: 'loading',
-      duration: 0
-    });
-    wx.request({
+
+    /*wx.request({
       url: 'https://group.tttaaabbbccc.club/my/' + that.data.posterID + '/detail/',
       method: "GET",
       header: {
@@ -102,7 +100,7 @@ Page({
       {
         $Toast.hide()
       }
-    })
+    })*/
   },
 
   goToHome: function (e) {

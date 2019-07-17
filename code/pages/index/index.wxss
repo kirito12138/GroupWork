@@ -24,17 +24,18 @@ page{
 }
 
 .usermotto {
-  margin-top: 30px;
+  
+  
   width: 500prx;
   height: 100rpx;
   border: 10rpx solid #DDD;
 }
 .usermid{
-  margin-top: 200rpx;
+  position: fixed;
   font-size: 43rpx;
    color:#6699CC; 
    font:bold;
-   margin-bottom: 100rpx;
+  bottom: 650rpx;
 }
 .user-mottoimg{
 
@@ -46,7 +47,8 @@ page{
   color: white;
 }
 .userdown{
-  margin-top: 40rpx;
+  position: fixed;
+  bottom: 500rpx;
   width: 300rpx;
   height: 100rpx;
 }

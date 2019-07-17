@@ -48,9 +48,9 @@
           </view>
 
           <view wx:elif="{{ item.applyStatus == 'rejected' }}">
-            <icon   type="info" size = "50" />
+            <icon   type="info" size = "50" color = 'red'/>
             <text>\n</text>
-            <text decode="{{true}}" class = "ictext" class='ictext'> 已结束</text>
+            <text decode="{{true}}" class = "ictext" class='ictext'> 已拒绝</text>
           </view>
             
         </view>      

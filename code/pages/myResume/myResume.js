@@ -581,7 +581,7 @@ Page({
       success(res) {
         $Toast.hide()
         
-        console.log("1111" + res.data.sex)
+        console.log("1111iphone" + res.data + tk)
         if (res.data.name != "") {
           
           that.setData({

@@ -75,6 +75,15 @@ Page({
   },
   bindGetUserInfo: function (e) {
     console.log(e.detail.userInfo)
+
+    if (app.globalData.userInfo != null)
+    {
+      wx.reLaunch({
+        url: '../home/home',
+      })
+      return 
+    }
+
     if (e.detail.userInfo) {
       app.globalData.userInfo = e.detail.userInfo
       this.setData({

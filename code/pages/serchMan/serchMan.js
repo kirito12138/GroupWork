@@ -62,7 +62,7 @@ Page({
     });
     wx.request({
       url: 'https://group.tttaaabbbccc.club/mcm/invite/' + user_id + '/',
-      method: "POST",
+      method: "GET",
       header: {
         "Content-Type": "application/json;charset=UTF-8",
         'Authorization': tk
