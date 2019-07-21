@@ -16,7 +16,9 @@
         "experience": "string",  # 与数学建模及相关方面的培训参赛经历及获奖情况说明,
         "skill": "string",  # 技能（本人能力侧重：建模，编程，写作)，不超过32个字符
         "if_attend_training": "bool",  # 能否全程参加暑假培训
-        "goal": "string"  # 参赛目标，不超过128个字符
+        "goal": "string",  # 参赛目标，不超过128个字符
+        "academy": "string",  # 现就读学院,不超过64个字符
+        "enrollment_year": "string"  # 入学年份,不超过4个数字
 }
 ```
 
@@ -57,7 +59,9 @@
         "experience": "string",  # 与数学建模及相关方面的培训参赛经历及获奖情况说明,
         "skill": "string",  # 技能（本人能力侧重：建模，编程，写作)，不超过32个字符
         "if_attend_training": "bool",  # 能否全程参加暑假培训
-        "goal": "string"  # 参赛目标，不超过128个字符
+        "goal": "string",  # 参赛目标，不超过128个字符
+        "academy": "string",  # 现就读学院,不超过64个字符
+        "enrollment_year": "string"  # 入学年份,不超过4个数字
 }
 ```
 | error_code | 含义                                                 |
@@ -95,6 +99,8 @@
         "skill": "string",  # 技能（本人能力侧重：建模，编程，写作)，不超过32个字符
         "if_attend_training": "bool",  # 能否全程参加暑假培训
         "goal": "string"  # 参赛目标，不超过128个字符
+        "academy": "string",  # 现就读学院,不超过64个字符
+        "enrollment_year": "string"  # 入学年份,不超过4个数字
     },
     ......
 ]
@@ -135,7 +141,7 @@
         "name": "string",  # 姓名，不超过20个字符
         "skill": "string",  # 技能，职位（本人能力侧重：建模，编程，写作)，不超过32个字符
         "is_captain": "bool",  # 是否是队长 
-        "is_self": "bool",  # 是否是当前用户 
+        "is_self": "bool"  # 是否是当前用户 
     },
     ......
 ]
@@ -200,6 +206,8 @@
         "skill": "string",  # 技能（本人能力侧重：建模，编程，写作)，不超过32个字符
         "if_attend_training": "bool",  # 能否全程参加暑假培训
         "goal": "string",  # 参赛目标，不超过128个字符
+        "academy": "string",  # 现就读学院,不超过64个字符
+        "enrollment_year": "string",  # 入学年份,不超过4个数字
         "ifShow": false
     },
     ......
@@ -284,6 +292,8 @@
           'experience': 被邀请者经历,
           'skill': 被邀请者技能,
           'goal': 被邀请者获奖情况,
+          "academy": "string",  # 现就读学院,不超过64个字符
+          "enrollment_year": "string",  # 入学年份,不超过4个数字
           'team_id': 被邀请者所在队伍ID,
           'state':邀请状态 0-未反馈；1-接收；2-拒绝
           'isShow'：false,
@@ -321,6 +331,8 @@
           'experience': 邀请者经历,
           'skill': 邀请者技能,
           'goal': 邀请者获奖情况,
+          "academy": "string",  # 现就读学院,不超过64个字符
+          "enrollment_year": "string",  # 入学年份,不超过4个数字
           'team_id': 邀请者所在队伍ID,
           'isShow'：false,
       },
