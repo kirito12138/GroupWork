@@ -69,6 +69,8 @@ def invitee_get_invitation(request):
             'skill': invitation.inviter.mcm_info.skill,
             'if_attend_training': invitation.inviter.mcm_info.if_attend_training,
             'goal': invitation.inviter.mcm_info.goal,
+            'academy': invitation.inviter.mcm_info.academy,
+            'enrollment_year': invitation.inviter.mcm_info.enrollment_year,
             'team_id': invitation.inviter.mcm_info.team_id,
             'isShow': False,
         })
@@ -99,6 +101,8 @@ def inviter_get_invitation(request):
             'skill': invitation.invitee.mcm_info.skill,
             'if_attend_training': invitation.inviter.mcm_info.if_attend_training,
             'goal': invitation.invitee.mcm_info.goal,
+            'academy': invitation.invitee.mcm_info.academy,
+            'enrollment_year': invitation.invitee.mcm_info.enrollment_year,
             'state': invitation.state,
             'isShow': False,
         })
@@ -187,6 +191,8 @@ def modify_mcm_info(request):
         mcm_info.skill = data['skill']
         mcm_info.if_attend_training = data['if_attend_training']
         mcm_info.goal = data['goal']
+        mcm_info.academy = data['academy']
+        mcm_info.enrollment_year = data['enrollment_year']
     except KeyError:
         return JsonResponse({'ret': False, 'error_code': 2})
 
@@ -231,6 +237,8 @@ def get_mcm_info(request):
         'skill': mcm_info.skill,
         'if_attend_training': mcm_info.if_attend_training,
         'goal': mcm_info.goal,
+        'academy': mcm_info.academy,
+        'enrollment_year': mcm_info.enrollment_year,
     })
 
 
@@ -263,6 +271,8 @@ def search_user(request):
                 'skill': mcm_info.skill,
                 'if_attend_training': mcm_info.if_attend_training,
                 'goal': mcm_info.goal,
+                'academy': mcm_info.academy,
+                'enrollment_year': mcm_info.enrollment_year,
             })
     return JsonResponse(ret_data, safe=False)
 
@@ -373,6 +383,8 @@ def get_matched_users(request):
                 'skill': mcm_info.skill,
                 'if_attend_training': mcm_info.if_attend_training,
                 'goal': mcm_info.goal,
+                'academy': mcm_info.academy,
+                'enrollment_year': mcm_info.enrollment_year,
                 'weight': abs(mcm_info.score - user.mcm_info.score),
                 'ifShow': False,
             })
