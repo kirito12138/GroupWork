@@ -1,12 +1,13 @@
-from django.db.models import Q
-from django.shortcuts import render
+import codecs
+import csv
+
 import json
 from json import JSONDecodeError
 
 from django.core.exceptions import ValidationError
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from user.jwt_token import verify_token
-from user.models import User, Resume
+from user.models import User
 from Team.models import Invitation, McmInfo, Team
 
 
@@ -68,6 +69,8 @@ def invitee_get_invitation(request):
             'skill': invitation.inviter.mcm_info.skill,
             'if_attend_training': invitation.inviter.mcm_info.if_attend_training,
             'goal': invitation.inviter.mcm_info.goal,
+            'academy': invitation.inviter.mcm_info.academy,
+            'enrollment_year': invitation.inviter.mcm_info.enrollment_year,
             'team_id': invitation.inviter.mcm_info.team_id,
             'isShow': False,
         })
@@ -98,6 +101,8 @@ def inviter_get_invitation(request):
             'skill': invitation.invitee.mcm_info.skill,
             'if_attend_training': invitation.inviter.mcm_info.if_attend_training,
             'goal': invitation.invitee.mcm_info.goal,
+            'academy': invitation.invitee.mcm_info.academy,
+            'enrollment_year': invitation.invitee.mcm_info.enrollment_year,
             'state': invitation.state,
             'isShow': False,
         })
@@ -186,6 +191,8 @@ def modify_mcm_info(request):
         mcm_info.skill = data['skill']
         mcm_info.if_attend_training = data['if_attend_training']
         mcm_info.goal = data['goal']
+        mcm_info.academy = data['academy']
+        mcm_info.enrollment_year = data['enrollment_year']
     except KeyError:
         return JsonResponse({'ret': False, 'error_code': 2})
 
@@ -230,6 +237,8 @@ def get_mcm_info(request):
         'skill': mcm_info.skill,
         'if_attend_training': mcm_info.if_attend_training,
         'goal': mcm_info.goal,
+        'academy': mcm_info.academy,
+        'enrollment_year': mcm_info.enrollment_year,
     })
 
 
@@ -262,6 +271,8 @@ def search_user(request):
                 'skill': mcm_info.skill,
                 'if_attend_training': mcm_info.if_attend_training,
                 'goal': mcm_info.goal,
+                'academy': mcm_info.academy,
+                'enrollment_year': mcm_info.enrollment_year,
             })
     return JsonResponse(ret_data, safe=False)
 
@@ -372,8 +383,33 @@ def get_matched_users(request):
                 'skill': mcm_info.skill,
                 'if_attend_training': mcm_info.if_attend_training,
                 'goal': mcm_info.goal,
+                'academy': mcm_info.academy,
+                'enrollment_year': mcm_info.enrollment_year,
                 'weight': abs(mcm_info.score - user.mcm_info.score),
                 'ifShow': False,
             })
     ret_data = sorted(ret_data, key=lambda info: info['weight'])[:15]
     return JsonResponse(ret_data, safe=False)
+
+
+def export_team_info(request):
+    if request.method != 'GET':
+        return JsonResponse({'ret': False, 'error_code': 1})
+
+    user = verify_token(request.META.get('HTTP_AUTHORIZATION'))
+    if not user:
+        return JsonResponse({'ret': False, 'error_code': 5})
+
+    response = HttpResponse(content_type='text/csv')
+    response.write(codecs.BOM_UTF8)
+    response['Content-Disposition'] = 'attachment; filename="team_{}_info.csv"'.format(user.mcm_info.team.id)
+
+    writer = csv.writer(response)
+    writer.writerow(['姓名', '本科专业', '现就读专业', '现所属学院', '入学年份', '联系电话', '邮箱', '本人能力侧重', '参赛目标'])
+    mcm_info_set = user.mcm_info.team.mcminfo_set.all().values_list('name', 'undergraduate_major', 'major', 'academy',
+                                                                    'enrollment_year', 'phone', 'email', 'skill',
+                                                                    'goal')
+    for mcm_info in mcm_info_set:
+        writer.writerow(mcm_info)
+
+    return response

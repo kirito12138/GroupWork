@@ -60,6 +60,7 @@ urlpatterns = [
     path('mcm/get/info/', Team.views.get_mcm_info),
     path('mcm/search/user/', Team.views.search_user),
     path('mcm/team/', Team.views.get_team_users),
+    path('mcm/team/export/', Team.views.export_team_info),
     path('mcm/quit/', Team.views.quit_team),
     path('mcm/match/', Team.views.get_matched_users),
     path('mcm/score/', Team.views.submit_score),

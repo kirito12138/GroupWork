@@ -347,6 +347,7 @@ def modify_my_resume(request):
         user.mcm_info.phone = resume.phone
     if resume.email != '':
         user.mcm_info.email = resume.email
+    user.mcm_info.save()
 
     return JsonResponse({'ret': True})
 

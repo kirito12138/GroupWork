@@ -576,6 +576,7 @@ def create_apply(request):
         user.mcm_info.phone = resume.phone
     if resume.email != '':
         user.mcm_info.email = resume.email
+    user.mcm_info.save()
 
     resume.pk = None  # 复制一个新的resume
     resume.save()
