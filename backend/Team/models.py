@@ -28,6 +28,8 @@ class McmInfo(models.Model):
     skill = models.CharField(max_length=32)  # 本人能力侧重(建模，编程，写作)
     if_attend_training = models.BooleanField(default=False)
     goal = models.CharField(max_length=128)
+    academy = models.CharField(max_length=64)
+    enrollment_year = models.CharField(max_length=4)
 
     is_integrated = models.BooleanField(default=False)  # 信息是否完整
     score = models.IntegerField(default=-1)  # -1代表没填问卷，没有分数
