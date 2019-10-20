@@ -6,6 +6,8 @@ from json import JSONDecodeError
 
 from django.core.exceptions import ValidationError
 from django.http import JsonResponse, HttpResponse
+from django.shortcuts import redirect, render
+
 from user.jwt_token import verify_token
 from user.models import User
 from Team.models import Invitation, McmInfo, Team
@@ -413,3 +415,26 @@ def export_team_info(request):
         writer.writerow(mcm_info)
 
     return response
+
+
+def download_team_info(request):
+    if not request.session.get('is_login', None):
+        request.session['message'] = "您尚未登录！"
+        return redirect("/login/")
+
+    if request.method == "POST":
+        response = HttpResponse(content_type='text/csv')
+        response.write(codecs.BOM_UTF8)
+        response['Content-Disposition'] = 'attachment; filename="all_team_info.csv"'
+
+        writer = csv.writer(response)
+        writer.writerow(['队伍编号', '姓名', '本科专业', '现就读专业', '现所属学院', '入学年份', '联系电话', '邮箱', '本人能力侧重', '参赛目标'])
+
+        mcm_info_set = McmInfo.objects.all().order_by('team_id').values_list(
+            'team_id', 'name', 'undergraduate_major', 'major', 'academy', 'enrollment_year', 'phone', 'email', 'skill',
+            'goal')
+        for mcm_info in mcm_info_set:
+            writer.writerow(mcm_info)
+        return response
+
+    return render(request, 'user/login.html', locals())

@@ -44,7 +44,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    # 'django.middleware.csrf.CsrfViewMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -128,3 +128,7 @@ APP_SECRET = '96f7d24c077626b944119b75bd587f4d'
 APP_ID_URL = "https://api.weixin.qq.com/sns/jscode2session"
 
 UPYUN_OPERATOR_MD5_PASSWORD = 'password'
+
+SESSION_COOKIE_AGE = 60 * 60
+SESSION_SAVE_EVERY_REQUEST = True
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False
