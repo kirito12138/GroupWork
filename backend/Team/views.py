@@ -7,6 +7,7 @@ from json import JSONDecodeError
 from django.core.exceptions import ValidationError
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import redirect, render
+from django.views.decorators.csrf import csrf_protect
 
 from user.jwt_token import verify_token
 from user.models import User
@@ -417,6 +418,7 @@ def export_team_info(request):
     return response
 
 
+@csrf_protect
 def download_team_info(request):
     if not request.session.get('is_login', None):
         # request.session['message'] = "您尚未登录！"
