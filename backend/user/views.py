@@ -64,7 +64,7 @@ def login(request):
             return render(request, 'user/login.html', locals())
 
         request.session['is_login'] = True
-        # request.session['account'] = account
+        request.session['account'] = account
         # request.session['message'] = "登录成功！"
         # request.session['redirect'] = True
         request.session.set_expiry(3600)
