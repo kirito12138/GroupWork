@@ -419,7 +419,7 @@ def export_team_info(request):
 
 def download_team_info(request):
     if not request.session.get('is_login', None):
-        request.session['message'] = "您尚未登录！"
+        # request.session['message'] = "您尚未登录！"
         return redirect("/login/")
 
     if request.method == "POST":
