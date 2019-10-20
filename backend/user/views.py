@@ -39,8 +39,8 @@ def gen_md5(s, salt='9527'):  # 加盐
 
 def login(request):
     if request.session.get('is_login', None):
-        request.session['message'] = "请勿重复登录！"
-        request.session['redirect'] = True
+        # request.session['message'] = "请勿重复登录！"
+        # request.session['redirect'] = True
         return redirect("/mcm/team/download/")
 
     if request.method == "POST":
@@ -64,9 +64,9 @@ def login(request):
             return render(request, 'user/login.html', locals())
 
         request.session['is_login'] = True
-        request.session['account'] = account
-        request.session['message'] = "登录成功！"
-        request.session['redirect'] = True
+        # request.session['account'] = account
+        # request.session['message'] = "登录成功！"
+        # request.session['redirect'] = True
         request.session.set_expiry(3600)
         return redirect('/mcm/team/download/')
 
@@ -76,13 +76,13 @@ def login(request):
 
 def logout(request):
     if not request.session.get('is_login', None):
-        request.session['message'] = "您尚未登录！"
-        request.session['redirect'] = True
+        # request.session['message'] = "您尚未登录！"
+        # request.session['redirect'] = True
         return redirect("/login/")
 
     request.session.flush()
-    request.session['message'] = "退出成功！"
-    request.session['redirect'] = True
+    # request.session['message'] = "退出成功！"
+    # request.session['redirect'] = True
     return redirect("/login/")
 
 
