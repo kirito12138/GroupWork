@@ -25,7 +25,10 @@ import Team.views
 urlpatterns = [
     path('admin/', admin.site.urls),
 
-    # path('login/', user.views.login),
+    path('login/', user.views.login),
+    path('logout/', user.views.logout),
+    path('mcm/team/download/', Team.views.download_team_info),
+
     path('login/wechat/', user.views.wechat_login),
     # path('register/', user.views.register),
     path('GetLoginStatus/', user.views.get_login_status),

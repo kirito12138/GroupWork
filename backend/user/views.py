@@ -10,9 +10,11 @@ from json import JSONDecodeError
 from django.core.exceptions import ValidationError
 from django.db.utils import IntegrityError
 from django.http import JsonResponse
+from django.shortcuts import render, redirect
 
 from Team.models import McmInfo, Team
 from user.models import User, Resume
+from user.forms import LoginForm
 from user.api_wechat import get_openid
 from user.jwt_token import create_token, verify_token
 from backend.settings import SECRET_KEY, UPYUN_OPERATOR_MD5_PASSWORD
@@ -36,32 +38,52 @@ def gen_md5(s, salt='9527'):  # 加盐
 
 
 def login(request):
-    if request.method != "POST":
-        return JsonResponse({'ret': False, 'error_code': 1})
+    if request.session.get('is_login', None):
+        request.session['message'] = "请勿重复登录！"
+        request.session['redirect'] = True
+        return redirect("/mcm/team/download/")
 
-    try:
-        data = json.loads(request.body)
-    except JSONDecodeError:
-        return JsonResponse({'ret': False, 'error_code': 3})
+    if request.method == "POST":
+        login_form = LoginForm(request.POST)
+        if not login_form.is_valid():
+            return render(request, 'user/login.html', locals())
 
-    try:
-        account = data['account']
-        password = data['password']
-    except KeyError:
-        return JsonResponse({'ret': False, 'error_code': 2})
+        account = login_form.cleaned_data['account'].strip()
+        password = login_form.cleaned_data['password']
 
-    if not account_pattern.match(account) or not password_pattern.match(password):
-        return JsonResponse({'ret': False, 'error_code': 3})
+        try:
+            user = User.objects.get(account=account)
+        except User.DoesNotExist:
+            error_message = "账号不存在！"
+            return render(request, 'user/login.html', locals())
+        if not user.is_admin:
+            error_message = "该账号不是管理员账号！"
+            return render(request, 'user/login.html', locals())
+        if user.password != gen_md5(password, SECRET_KEY):
+            error_message = "密码错误！"
+            return render(request, 'user/login.html', locals())
 
-    try:
-        user = User.objects.get(account=account)
-    except User.DoesNotExist:
-        return JsonResponse({'ret': False, 'error_code': 4})
+        request.session['is_login'] = True
+        request.session['account'] = account
+        request.session['message'] = "登录成功！"
+        request.session['redirect'] = True
+        request.session.set_expiry(3600)
+        return redirect('/mcm/team/download/')
 
-    if user.password != gen_md5(password, SECRET_KEY):
-        return JsonResponse({'ret': False, 'error_code': 5})
-    token = create_token(user.id)
-    return JsonResponse({'ret': True, 'ID': str(user.id), 'Token': token})
+    login_form = LoginForm()
+    return render(request, 'user/login.html', locals())
+
+
+def logout(request):
+    if not request.session.get('is_login', None):
+        request.session['message'] = "您尚未登录！"
+        request.session['redirect'] = True
+        return redirect("/login/")
+
+    request.session.flush()
+    request.session['message'] = "退出成功！"
+    request.session['redirect'] = True
+    return redirect("/login/")
 
 
 def wechat_login(request):
