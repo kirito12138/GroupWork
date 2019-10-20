@@ -11,6 +11,7 @@ from django.core.exceptions import ValidationError
 from django.db.utils import IntegrityError
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
+from django.views.decorators.csrf import csrf_protect
 
 from Team.models import McmInfo, Team
 from user.models import User, Resume
@@ -36,7 +37,7 @@ def gen_md5(s, salt='9527'):  # 加盐
 #     chars = string.ascii_letters + string.digits
 #     return ''.join([random.choice(chars) for _ in range(length)])  # 得出的结果中字符会有重复的
 
-
+@csrf_protect
 def login(request):
     if request.session.get('is_login', None):
         # request.session['message'] = "请勿重复登录！"
@@ -74,6 +75,7 @@ def login(request):
     return render(request, 'user/login.html', locals())
 
 
+@csrf_protect
 def logout(request):
     if not request.session.get('is_login', None):
         # request.session['message'] = "您尚未登录！"
