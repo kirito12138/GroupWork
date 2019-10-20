@@ -437,4 +437,4 @@ def download_team_info(request):
             writer.writerow(mcm_info)
         return response
 
-    return render(request, 'user/login.html', locals())
+    return render(request, 'team/download_team_info.html', locals())
