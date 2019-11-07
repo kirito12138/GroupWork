@@ -432,7 +432,7 @@ def download_team_info(request):
         writer = csv.writer(response)
         writer.writerow(['队伍编号', '姓名', '本科专业', '现就读专业', '现所属学院', '入学年份', '联系电话', '邮箱', '本人能力侧重', '参赛目标'])
 
-        mcm_info_set = McmInfo.objects.all().order_by('team_id').values_list(
+        mcm_info_set = McmInfo.objects.filter(is_integrated=True).order_by('team_id').values_list(
             'team_id', 'name', 'undergraduate_major', 'major', 'academy', 'enrollment_year', 'phone', 'email', 'skill',
             'goal')
         for mcm_info in mcm_info_set:
